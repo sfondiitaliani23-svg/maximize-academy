@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "server": "node server/index.js",
     "start": "node server/index.js",
-    "dev:full": "node server/runner.js"
+    "dev:full": "node server/runner.js",
+    "auto-deploy": "node auto-deploy.js"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

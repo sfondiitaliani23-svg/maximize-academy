@@ -1,4 +1,44 @@
+# -----------------------------------------------
+# Maximize Academy — robots.txt
+# -----------------------------------------------
+
+# Regole generali per tutti i crawler
 User-agent: *
 Allow: /
 
+# Blocca endpoint API (non devono essere indicizzati)
+Disallow: /api/
+Disallow: /api/contact
+Disallow: /api/barber-reset/
+Disallow: /api/sabey-recommend
+
+# Blocca path interni Vercel
+Disallow: /_vercel/
+Disallow: /.vercel/
+
+# Sitemap
 Sitemap: https://maximize-academy.vercel.app/sitemap.xml
+
+# -----------------------------------------------
+# Blocco bot AI che raccolgono dati per training
+# -----------------------------------------------
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
