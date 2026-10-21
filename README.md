@@ -1,47 +1,105 @@
-# MAXIMIZE ACADEMY — CONSEGNA TECNICA A ELISEO
+# 🌟 MAXIMIZE ACADEMY — Piattaforma Ufficiale
 
-## Scopo
-Questa cartella raccoglie **tutto ciò che è stato realmente recuperabile** del progetto esistente “Maximize Academy — Maurizio Pizzuto” dall'ambiente disponibile in ChatGPT.
+> **L'ecosistema definitivo per il Barber moderno.**
+> Formazione Internazionale · Barber Reset · Sabey Scissors · ANAQA · Treatwell · Barber Match Paestum 2026.
+> Fondato da **Maurizio Pizzuto** (Maximize Academy S.r.l.s., Foggia).
 
-L'obiettivo della consegna è consentire a Eliseo di proseguire lo sviluppo **senza confondere una ricostruzione con il sorgente originale**.
+[![Deploy con Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=maximize-academy)](https://maximize-academy.vercel.app)
+[![Node Version](https://img.shields.io/badge/Node.js-18%2B-brightgreen.svg)](https://nodejs.org)
+[![Vite](https://img.shields.io/badge/Vite-5.4-purple.svg)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg)](https://tailwindcss.com)
 
-## Stato importante
-Il progetto risulta presente come **Site** con:
-- Project ID: `appgprj_6abfae3798788191a148aeef3313c4bc`
-- Slug: `maximize-academy`
-- URL Site rilevato: `https://maximize-academy.pizzuto325.chatgpt.site`
-- Stato: `active`
-- Access mode: `custom`
-- Source version esposta dalla proiezione accessibile: `2`
-- Projection revision: `4`
-- Ultima modifica esposta: `2026-10-02T13:59:26.584122+00:00`
+---
 
-### Limite tecnico rilevato
-L'ambiente disponibile espone il sito come **proiezione testuale indicizzata**, ma **non espone il repository sorgente originale** (HTML/CSS/JS, React/TypeScript, package.json, lockfile, config, componenti o commit Git).
+## 🧭 Panoramica del Progetto
 
-È stato tentato anche il recupero dei byte originali del Site, ma il sistema ha restituito che la materializzazione non è disponibile per le Site projections.
+Maximize Academy è una Web Application luxury ad alte prestazioni sviluppata con **React 18**, **Vite** e **Tailwind CSS**, progettata per offrire un'esperienza visiva premium (palette scura con sfumature oro e glassmorphism) e un tasso di conversione elevato per la lead generation.
 
-Per questo motivo questa consegna **NON contiene sorgenti inventati o ricostruiti arbitrariamente**.
+### Moduli Principali
 
-## Contenuto della consegna
-- `recuperato/site_projection_extracted.txt` — contenuto testuale recuperato dalla proiezione del sito.
-- `recuperato/site_metadata.json` — metadati tecnici del Site accessibili.
-- `assets/screenshots_versione_2/` — screenshot mobile forniti e usati durante la revisione della Versione 2.
-- `assets/riferimenti/Sabey_Brand_Ambassador_Strategist.png` — immagine originale fornita per la correzione del badge Sabey.
-- `documentazione/STRUTTURA_CONTENUTI_FUNZIONALITA.md` — mappa del sito e delle funzioni rilevate.
-- `documentazione/STATO_COMPLETAMENTO_E_MANCANTI.md` — ciò che risulta completato, ancora da sviluppare o non esportabile.
-- `documentazione/MODIFICHE_PENDING.md` — ultime modifiche richieste e non ancora correttamente applicate.
-- `documentazione/HANDOFF_TECNICO_ELISEO.md` — istruzioni pratiche per la presa in carico tecnica.
+1. **Ecosistema di Crescita**: Guida interattiva step-by-step (*Impara → Migliora → Attrezzati → Organizzati → Confrontati → Cresci*).
+2. **Formazione Internazionale**: Presentazione degli Educator di rilievo (Gianni Cardinale, Yass The Barber) e sinergia unificata con **Men's Events Education** e **Sabey Scissors**.
+3. **Barber Reset & Calcolatore ROI**: Calcolatore interattivo per la ristrutturazione del listino e l'ottimizzazione del rendimento alla poltrona, con CTA WhatsApp diretta.
+4. **Sabey Scissors Italy**: Sezione forbici professionali giapponesi con configuratore interattivo su misura e badge ufficiale *Brand Ambassador Strategist*.
+5. **ANAQA Men Creation**: Linea prodotti e kit professionali per barberie.
+6. **Treatwell**: Integrazione dell'agenda digitale e gestione clienti.
+7. **Barber Match Paestum 2026**: Scheda evento della competizione barber più prestigiosa del sud Italia.
+8. **WhatsApp Concierge & Modali**: Canali diretti di contatto per candidature e acquisto strumenti.
 
-## Come procedere per una consegna 100% fedele del sorgente
-Per ottenere il progetto originale completo serve esportare direttamente dal sistema/superficie che conserva il Site sorgente o dal repository associato, includendo almeno:
-1. repository/cartella sorgente;
-2. cronologia o commit desiderato;
-3. `package.json` e lockfile, se presenti;
-4. configurazioni build/deploy;
-5. componenti e pagine;
-6. asset originali;
-7. variabili d'ambiente come **template** (`.env.example`), senza segreti reali;
-8. istruzioni di avvio/build.
+---
 
-Se Eliseo riceve l'export nativo del Site o il repository, questa cartella può essere usata come riferimento di contenuto, UX mobile e stato funzionale.
+## 🛠️ Stack Tecnologico
+
+- **Frontend**: React 18, Vite 5, Tailwind CSS, Lucide Icons, Google Fonts (Cinzel, Cormorant Garamond, Plus Jakarta Sans).
+- **Backend Serverless (Vercel)**:
+  - `/api/contact`: gestione lead e invio automatico notifiche via Resend.
+  - `/api/barber-reset/assess`: algoritmo serverless per il calcolo del ROI e rendimento poltrona.
+  - `/api/sabey-recommend`: motore di raccomandazione modelli forbici.
+  - `/api/health`: diagnostica e uptime.
+- **Backend Standalone (Java)**: microserver HTTP opzionale in `backend-java/` per la persistenza locale e l'esportazione dei lead in formato CSV.
+- **Monitoring**: `@vercel/analytics` e `@vercel/speed-insights` integrati per Web Vitals e statistiche reali a zero cookie.
+- **Compliance GDPR**: Privacy & Cookie Policy dedicata in `/public/privacy.html`, banner consensi con salvataggio locale.
+
+---
+
+## 🚀 Avvio Rapido
+
+### Prerequisiti
+- Node.js (v18 o superiore raccomandato)
+- npm oppure pnpm
+
+### 1. Installazione Dipendenze
+```bash
+npm install
+```
+
+### 2. Configurazione Ambiente
+Copia il file `.env.example` in `.env`:
+```bash
+cp .env.example .env
+```
+*(Imposta facoltativamente `RESEND_API_KEY` se desideri testare le notifiche email in locale)*
+
+### 3. Sviluppo Locale
+```bash
+# Avvia il server di sviluppo Vite
+npm run dev
+```
+La piattaforma sarà accessibile su `http://localhost:5173`.
+
+### 4. Build di Produzione
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## ⚡ Daemon di Auto-Deploy Continuo
+
+Il progetto include uno script daemon dedicato (`auto-deploy.js`) che monitora costantemente il file system, committa le modifiche e attiva il deploy automatico su GitHub e Vercel con debouncing:
+```bash
+npm run auto-deploy
+```
+
+---
+
+## 📄 Pagine e File Pubblici
+
+- `/` — Homepage principale SPA
+- `/privacy.html` — Informativa Privacy e Cookie Policy a norma GDPR
+- `/404.html` — Pagina di errore 404 personalizzata luxury
+- `/manifest.json` — PWA Web App Manifest per dispositivi mobili
+- `/robots.txt` — Istruzioni per web crawler e protezione da bot AI
+- `/sitemap.xml` — Mappa del sito XML per i motori di ricerca
+- `/humans.txt` — Crediti del team di sviluppo
+
+---
+
+## 📞 Contatti Ufficiali
+
+- **Sito Web**: [https://maximize-academy.vercel.app](https://maximize-academy.vercel.app)
+- **WhatsApp Maurizio Pizzuto**: [+39 391 716 3833](https://wa.me/393917163833)
+- **Email**: [mauriziomaximize@gmail.com](mailto:mauriziomaximize@gmail.com)
+- **Sede**: Via Benedetto Croce 8, 71121 Foggia (FG)
+- **P. IVA**: 02147290767

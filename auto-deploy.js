@@ -19,7 +19,7 @@ const ROOT = __dirname;
 
 // ── Configurazione ──────────────────────────────────────────
 const DEBOUNCE_MS = 4000;          // attende 4s dopo l'ultima modifica
-const WATCH_DIRS  = ['src', 'public', 'api'];
+const WATCH_DIRS  = ['src', 'public', 'api', 'scripts'];
 const WATCH_FILES = [
   'index.html',
   'vite.config.js',
@@ -27,6 +27,8 @@ const WATCH_FILES = [
   'postcss.config.js',
   'package.json',
   'vercel.json',
+  'README.md',
+  '.env.example',
   'public/robots.txt',
   'public/sitemap.xml',
 ];
