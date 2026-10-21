@@ -16,63 +16,101 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, phone, email, type, message } = req.body || {};
+  const body = req.body || {};
+  const name = body.name || body.nome;
+  const phone = body.phone || body.telefono || '';
+  const email = body.email || '';
+  const type = body.type || body.tipoRichiesta || body.course || 'Contatto Generale';
+  const message = body.message || body.messaggio || '';
 
   if (!name || (!phone && !email)) {
-    return res.status(400).json({ error: 'Nome e contatto (telefono/email) obbligatori' });
+    return res.status(400).json({ error: 'Nome e contatto (telefono o email) sono obbligatori' });
   }
 
   const lead = {
     id: 'LEAD_' + Date.now(),
     name,
-    phone: phone || '',
-    email: email || '',
-    type: type || 'Contatto Generale',
-    message: message || '',
+    phone,
+    email,
+    type,
+    message,
     timestamp: new Date().toISOString()
   };
 
   console.log('[VERCEL LEAD CAPTURED]', lead);
 
-  // --- Invio email notifica a Maurizio tramite Resend ---
+  // --- Invio email notifica tramite Resend ---
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (RESEND_API_KEY) {
     try {
       const emailBody = `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #08080a; color: #e5e7eb; border: 1px solid #d4af3730; border-radius: 12px; padding: 32px;">
-          <h2 style="color: #d4af37; margin-top: 0;">🔔 Nuovo Lead – Maximize Academy</h2>
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 8px 0; color: #9ca3af; width: 130px;">Nome</td><td style="padding: 8px 0; font-weight: bold;">${name}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Tipo richiesta</td><td style="padding: 8px 0; color: #d4af37;">${lead.type}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Telefono</td><td style="padding: 8px 0;">${lead.phone || '—'}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Email</td><td style="padding: 8px 0;">${lead.email || '—'}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Messaggio</td><td style="padding: 8px 0; font-style: italic;">${lead.message || '—'}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Data/Ora</td><td style="padding: 8px 0; font-size: 12px;">${new Date(lead.timestamp).toLocaleString('it-IT', { timeZone: 'Europe/Rome' })}</td></tr>
-            <tr><td style="padding: 8px 0; color: #9ca3af;">Lead ID</td><td style="padding: 8px 0; font-family: monospace; font-size: 11px; color: #6b7280;">${lead.id}</td></tr>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0b0c10; color: #f3f4f6; border: 1px solid #d4af3740; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div style="border-bottom: 2px solid #d4af37; padding-bottom: 16px; margin-bottom: 20px;">
+            <h2 style="color: #d4af37; margin: 0; font-size: 20px; letter-spacing: 0.5px;">🔔 NUOVO LEAD RICEVUTO — MAXIMIZE ACADEMY</h2>
+            <p style="color: #9ca3af; margin: 4px 0 0 0; font-size: 13px;">Un potenziale studente ha compilato il form sul sito web</p>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af; width: 140px; border-bottom: 1px solid #1f2937;">👤 Candidato</td>
+              <td style="padding: 10px 0; font-weight: 700; color: #ffffff; border-bottom: 1px solid #1f2937;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af; border-bottom: 1px solid #1f2937;">🎯 Corso / Richiesta</td>
+              <td style="padding: 10px 0; font-weight: 600; color: #d4af37; border-bottom: 1px solid #1f2937;">${lead.type}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af; border-bottom: 1px solid #1f2937;">📱 Telefono</td>
+              <td style="padding: 10px 0; color: #ffffff; border-bottom: 1px solid #1f2937;">
+                ${lead.phone ? `<a href="tel:${lead.phone}" style="color: #60a5fa; text-decoration: none; font-weight: bold;">${lead.phone}</a> (<a href="https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}" style="color: #22c55e; text-decoration: none;">Apri su WhatsApp</a>)` : '—'}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af; border-bottom: 1px solid #1f2937;">✉️ Email</td>
+              <td style="padding: 10px 0; color: #ffffff; border-bottom: 1px solid #1f2937;">
+                ${lead.email ? `<a href="mailto:${lead.email}" style="color: #60a5fa; text-decoration: none;">${lead.email}</a>` : '—'}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af; vertical-align: top; border-bottom: 1px solid #1f2937;">💬 Note / Messaggio</td>
+              <td style="padding: 10px 0; color: #e5e7eb; font-style: italic; border-bottom: 1px solid #1f2937; white-space: pre-wrap;">${lead.message || 'Nessun messaggio aggiuntivo'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #9ca3af;">⏱️ Data e Ora</td>
+              <td style="padding: 10px 0; font-size: 13px; color: #9ca3af;">${new Date(lead.timestamp).toLocaleString('it-IT', { timeZone: 'Europe/Rome' })}</td>
+            </tr>
           </table>
-          <hr style="border: none; border-top: 1px solid #d4af3730; margin: 24px 0;">
-          <p style="font-size: 12px; color: #4b5563; margin: 0;">Maximize Academy · Via Benedetto Croce 8, 71121 Foggia · P.IVA 02147290767</p>
+
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #1f2937; font-size: 12px; color: #6b7280; text-align: center;">
+            <p style="margin: 0;">Maximize Academy by Maurizio Barber Shop · Foggia</p>
+            <p style="margin: 4px 0 0 0; font-family: monospace; font-size: 11px;">ID: ${lead.id}</p>
+          </div>
         </div>
       `;
 
-      await fetch('https://api.resend.com/emails', {
+      // In modalità test (senza dominio personalizzato verificato su Resend), 
+      // l'email viene recapitata all'indirizzo dell'account proprietario (eliseeshop.official@gmail.com).
+      // Se viene configurato un dominio o specificata un'altra email tramite NOTIFICATION_EMAIL, usa quella.
+      const recipient = process.env.NOTIFICATION_EMAIL || 'eliseeshop.official@gmail.com';
+
+      const emailResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${RESEND_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Maximize Academy <noreply@resend.dev>',
-          to: ['mauriziomaximize@gmail.com'],
-          subject: `🔔 Nuovo lead: ${name} — ${lead.type}`,
+          from: 'Maximize Academy <onboarding@resend.dev>',
+          to: [recipient],
+          subject: `🔔 Nuovo Lead: ${name} (${lead.type})`,
           html: emailBody,
         }),
       });
 
-      console.log('[EMAIL SENT] Lead notified to mauriziomaximize@gmail.com');
+      const emailResult = await emailResponse.json();
+      console.log('[EMAIL RESPONSE]', emailResult);
     } catch (emailErr) {
       console.error('[EMAIL ERROR]', emailErr.message);
-      // Non blocca la risposta al client anche se l'email fallisce
     }
   }
 
