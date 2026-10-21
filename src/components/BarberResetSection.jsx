@@ -141,7 +141,7 @@ export default function BarberResetSection() {
 
             <div className="pt-2">
               <a
-                href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20candidarmi%20per%20il%20percorso%20Barber%20Reset"
+                href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20candidarmi%20per%20il%20percorso%20Barber%20Reset"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"
@@ -287,7 +287,7 @@ export default function BarberResetSection() {
                   {auditResult.summary}
                 </p>
                 <a
-                  href={`https://wa.me/393245878724?text=${encodeURIComponent(`Salve Maurizio, ho eseguito l'Audit Barber Reset sul sito per la mia barberia (${chairs} poltrone, ${weeklyClients} clienti a settimana). Vorrei fissare una consulenza per valutare l'intervento.`)}`}
+                  href={`https://wa.me/393917163833?text=${encodeURIComponent(`Salve Maurizio, ho eseguito l'Audit Barber Reset sul sito per la mia barberia (${chairs} poltrone, ${weeklyClients} clienti a settimana). Vorrei fissare una consulenza per valutare l'intervento.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-2.5 rounded-full btn-gold text-xs uppercase font-bold tracking-wider whitespace-nowrap"

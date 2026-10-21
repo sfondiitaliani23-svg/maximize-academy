@@ -63,7 +63,7 @@ export default function BarberMatchSection({ onSelectCourse }) {
 
               <div className="pt-2 flex flex-col sm:flex-row gap-4">
                 <a
-                  href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20sulla%20partecipazione%20a%20Barber%20Match%202026%20Paestum"
+                  href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20sulla%20partecipazione%20a%20Barber%20Match%202026%20Paestum"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider text-center shadow-gold-glow"
