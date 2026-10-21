@@ -101,12 +101,14 @@ export default function Footer() {
             © 2026 Maximize Academy S.r.l.s. · Tutti i diritti riservati.
           </div>
           <div className="flex items-center gap-6">
-            <button 
-              onClick={() => setShowPrivacy(true)}
+            <a 
+              href="/privacy.html"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-amber-300 underline underline-offset-4 transition-colors"
             >
-              Privacy & Cookie Policy
-            </button>
+              Privacy &amp; Cookie Policy
+            </a>
             <span className="text-amber-400 font-serif italic text-xs">Maximize Your Potential</span>
           </div>
         </div>
