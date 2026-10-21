@@ -88,7 +88,7 @@ export default function BarberResetSection() {
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden glass-panel-gold border border-amber-500/30 p-2 shadow-2xl group">
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black flex items-center justify-center">
-                <img 
+                <img loading="lazy" 
                   src="/assets/img/barber_reset.jpg" 
                   alt="Barber Reset - Intervento Strategico in Barberia" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
