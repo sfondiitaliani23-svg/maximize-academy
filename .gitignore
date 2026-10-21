@@ -1,0 +1,35 @@
+# Dipendenze Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Ambiente e segreti
+.env
+.env.local
+.env.*.local
+
+# Java build artifacts
+backend-java/bin/
+*.class
+*.jar
+
+# Dati runtime e log
+data/leads.json
+leads_repository.csv
+*.log
+
+# Editor e OS
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
