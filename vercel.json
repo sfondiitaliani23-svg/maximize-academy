@@ -6,6 +6,7 @@
     { "source": "/api/barber-reset/assess","destination": "/api/barber-reset.js" },
     { "source": "/api/sabey/recommend",   "destination": "/api/sabey-recommend.js" },
     { "source": "/api/health",            "destination": "/api/health.js" },
+    { "source": "/privacy",               "destination": "/privacy.html" },
     { "source": "/(.*)",                  "destination": "/index.html" }
   ],
   "headers": [
