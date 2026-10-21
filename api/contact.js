@@ -91,7 +91,9 @@ export default async function handler(req, res) {
       // In modalità test (senza dominio personalizzato verificato su Resend), 
       // l'email viene recapitata all'indirizzo dell'account proprietario (eliseeshop.official@gmail.com).
       // Se viene configurato un dominio o specificata un'altra email tramite NOTIFICATION_EMAIL, usa quella.
-      const recipient = process.env.NOTIFICATION_EMAIL || 'eliseeshop.official@gmail.com';
+      const recipients = process.env.NOTIFICATION_EMAIL 
+        ? process.env.NOTIFICATION_EMAIL.split(',').map(e => e.trim()) 
+        : ['eliseeshop.official@gmail.com'];
 
       const emailResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -101,7 +103,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           from: 'Maximize Academy <onboarding@resend.dev>',
-          to: [recipient],
+          to: recipients,
           subject: `🔔 Nuovo Lead: ${name} (${lead.type})`,
           html: emailBody,
         }),
