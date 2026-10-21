@@ -36,7 +36,7 @@ export default function CookieBanner() {
               Esperienza & Riservatezza
             </p>
             <p className="text-gray-400 mt-1 leading-relaxed text-[11px]">
-              Utilizziamo solo cookie tecnici e metriche aggregate anonime per ottimizzare la piattaforma Maximize Academy nel rispetto della privacy (GDPR).
+              Utilizziamo solo cookie tecnici e metriche aggregate anonime per ottimizzare la piattaforma Maximize Academy nel rispetto della privacy (GDPR). <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 underline underline-offset-2 hover:text-amber-200">Leggi informativa</a>.
             </p>
             <div className="mt-3 flex items-center gap-2">
               <button
