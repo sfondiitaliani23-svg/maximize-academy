@@ -74,7 +74,7 @@ export default function HeroSection({ onOpenQuiz }) {
               </a>
 
               <a
-                href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20sul%20percorso%20Maximize%20Academy"
+                href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20sul%20percorso%20Maximize%20Academy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-full btn-glass text-center text-sm font-semibold tracking-wider flex items-center justify-center gap-2.5 border-amber-500/30 text-amber-300 hover:border-amber-400"
