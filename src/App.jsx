@@ -16,6 +16,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppConcierge from './components/WhatsAppConcierge';
 import CourseModal from './components/CourseModal';
+import CookieBanner from './components/CookieBanner';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
@@ -93,6 +94,9 @@ export default function App() {
           onClose={() => setSelectedCourseId(null)} 
         />
       )}
+
+      {/* GDPR Privacy & Cookie Banner */}
+      <CookieBanner />
 
       {/* Vercel Web Analytics & Performance Insights */}
       <Analytics />
