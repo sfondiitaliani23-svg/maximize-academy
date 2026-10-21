@@ -1,0 +1,26 @@
+/* ══════════════════════════════════════════════════
+   HUMANS.TXT — The people behind Maximize Academy
+   humanstxt.org
+══════════════════════════════════════════════════ */
+
+/* TEAM */
+Fondatore & Barber Strategist: Maurizio Pizzuto
+Email: mauriziomaximize@gmail.com
+Instagram: @mauriziobarbershop_fg
+Sede: Foggia, Italia
+
+/* PROGETTO */
+Nome: Maximize Academy
+Sito: https://maximize-academy.vercel.app
+Categoria: Formazione Professionale / Barberia
+
+/* TECNOLOGIA */
+Framework: React 18 + Vite
+Styling: Tailwind CSS
+Hosting: Vercel
+Email: Resend API
+Analytics: Vercel Web Analytics
+Lingua: Italiano
+
+/* AGGIORNAMENTO */
+Ultima modifica: 21/10/2026
