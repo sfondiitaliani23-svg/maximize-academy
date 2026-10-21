@@ -87,7 +87,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
           {/* Bottom Fast Contact Bar */}
           <div className="pt-4 border-t border-amber-500/20 space-y-2">
             <a
-              href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
+              href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl btn-gold text-xs font-bold uppercase tracking-wider"
@@ -96,7 +96,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
               <span>Parla con Maurizio</span>
             </a>
             <a
-              href="https://wa.me/393783101416?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
+              href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl btn-glass text-xs font-semibold tracking-wider text-amber-300 border-amber-500/30"

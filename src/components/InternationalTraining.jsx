@@ -150,7 +150,7 @@ export default function InternationalTraining({ onSelectCourse }) {
               Vuoi partecipare al prossimo corso o organizzare una tappa nella tua città?
             </span>
             <a
-              href="https://wa.me/393783101416?text=Salve,%20vorrei%20informazioni%20sulle%20prossime%20date%20dei%20corsi%20di%20Formazione"
+              href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sulle%20prossime%20date%20dei%20corsi%20di%20Formazione"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded-full btn-gold text-xs uppercase font-bold tracking-wider whitespace-nowrap shadow-gold-glow"

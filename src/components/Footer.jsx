@@ -62,15 +62,9 @@ export default function Footer() {
             </h4>
             <div className="space-y-2.5">
               <div className="p-3 rounded-xl bg-black/40 border border-white/10">
-                <div className="text-[10px] uppercase text-amber-400 font-bold">Consulenza & Barber Reset</div>
-                <a href="https://wa.me/393245878724" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-white hover:text-amber-300 transition-colors">
-                  Maurizio Pizzuto: 324 587 8724
-                </a>
-              </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-white/10">
-                <div className="text-[10px] uppercase text-amber-400 font-bold">Corsi & Forbici Sabey</div>
-                <a href="https://wa.me/393783101416" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-white hover:text-amber-300 transition-colors">
-                  Operatore Maximize: 378 310 1416
+                <div className="text-[10px] uppercase text-amber-400 font-bold">Consulenza, Corsi & Barber Reset</div>
+                <a href="https://wa.me/393917163833" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-white hover:text-amber-300 transition-colors">
+                  Maurizio Pizzuto: +39 391 716 3833
                 </a>
               </div>
               {/* Social Links */}

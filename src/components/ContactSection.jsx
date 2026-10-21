@@ -83,10 +83,10 @@ export default function ContactSection() {
             <div className="space-y-4 pt-4 border-t border-amber-500/20">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Linea Diretta Maurizio</span>
-                <span className="text-sm font-bold font-mono text-white">324 587 8724</span>
+                <span className="text-sm font-bold font-mono text-white">+39 391 716 3833</span>
               </div>
               <a
-                href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20fissare%20una%20consulenza%20strategica%20per%20la%20mia%20barberia"
+                href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20fissare%20una%20consulenza%20strategica%20per%20la%20mia%20barberia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-6 rounded-xl btn-gold flex items-center justify-center gap-2 text-xs uppercase font-bold tracking-wider shadow-gold-glow"
@@ -107,17 +107,17 @@ export default function ContactSection() {
                 Il tuo prossimo passo professionale.
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                Un operatore Maximize dedicato per orientarti tra date e iscrizioni ai corsi internazionali, e per la prova delle forbici Sabey.
+                Un supporto dedicato per orientarti tra date e iscrizioni ai corsi internazionali, e per la prova delle forbici Sabey.
               </p>
             </div>
 
             <div className="space-y-4 pt-4 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Desk Operativo Maximize</span>
-                <span className="text-sm font-bold font-mono text-white">378 310 1416</span>
+                <span className="text-sm font-bold font-mono text-white">+39 391 716 3833</span>
               </div>
               <a
-                href="https://wa.me/393783101416?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20sulle%20forbici%20Sabey"
+                href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20sulle%20forbici%20Sabey"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-6 rounded-xl btn-glass flex items-center justify-center gap-2 text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30 hover:border-amber-400"

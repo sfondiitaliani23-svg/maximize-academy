@@ -34,7 +34,7 @@ export default function WhatsAppConcierge() {
             
             {/* Opzione 1: Maurizio */}
             <a
-              href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
+              href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
@@ -57,7 +57,7 @@ export default function WhatsAppConcierge() {
 
             {/* Opzione 2: Operatore */}
             <a
-              href="https://wa.me/393783101416?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
+              href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"

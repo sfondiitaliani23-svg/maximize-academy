@@ -31,7 +31,7 @@ export default function MensEventsSection() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/393783101416?text=Salve,%20vorrei%20informazioni%20sulle%20esperienze%20e%20sui%20corsi%20Men's%20Events%20Education"
+                  href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sulle%20esperienze%20e%20sui%20corsi%20Men's%20Events%20Education"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"

@@ -80,7 +80,7 @@ export default function AnaqaSection() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/393783101416?text=Salve,%20vorrei%20conoscere%20la%20linea%20prodotti%20e%20i%20kit%20ANAQA%20per%20la%20mia%20barberia"
+                  href="https://wa.me/393917163833?text=Salve,%20vorrei%20conoscere%20la%20linea%20prodotti%20e%20i%20kit%20ANAQA%20per%20la%20mia%20barberia"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"

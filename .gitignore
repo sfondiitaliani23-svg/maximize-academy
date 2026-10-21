@@ -33,3 +33,5 @@ leads_repository.csv
 *.sw?
 .DS_Store
 Thumbs.db
+
+.vercel

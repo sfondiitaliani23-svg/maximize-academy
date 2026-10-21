@@ -35,7 +35,7 @@ export default function SabeySection() {
       technique: selectedTechnique,
       size: selectedSize,
       desc,
-      waLink: `https://wa.me/393783101416?text=${encodeURIComponent(`Salve, vorrei provare la forbice Sabey consigliata dal configuratore (${name}, misura ${selectedSize}, mano ${selectedHand}).`)}`
+      waLink: `https://wa.me/393917163833?text=${encodeURIComponent(`Salve, vorrei provare la forbice Sabey consigliata dal configuratore (${name}, misura ${selectedSize}, mano ${selectedHand}).`)}`
     });
   };
 
@@ -108,7 +108,7 @@ export default function SabeySection() {
                   Trova la tua forbice
                 </a>
                 <a
-                  href="https://wa.me/393783101416?text=Salve,%20vorrei%20aiuto%20per%20scegliere%20la%20mia%20forbice%20Sabey"
+                  href="https://wa.me/393917163833?text=Salve,%20vorrei%20aiuto%20per%20scegliere%20la%20mia%20forbice%20Sabey"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-7 py-3.5 rounded-full btn-glass text-xs uppercase font-bold tracking-wider text-center text-amber-300 border-amber-500/30 flex items-center justify-center gap-2"
