@@ -19,7 +19,7 @@ const ROOT = __dirname;
 
 // ── Configurazione ──────────────────────────────────────────
 const DEBOUNCE_MS = 4000;          // attende 4s dopo l'ultima modifica
-const WATCH_DIRS  = ['src', 'public', 'api', 'scripts'];
+const WATCH_DIRS  = ['src', 'public', 'api', 'scripts', 'documentazione'];
 const WATCH_FILES = [
   'index.html',
   'vite.config.js',
