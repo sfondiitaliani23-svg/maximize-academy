@@ -116,6 +116,34 @@ export default async function handler(req, res) {
     }
   }
 
+  // --- Salvataggio Lead su Database Cloud Supabase ---
+  const SUPABASE_URL = process.env.SUPABASE_URL || 'https://hozyimhhrodazpssxmtt.supabase.co';
+  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+  if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          type: lead.type,
+          message,
+          status: 'Nuovo'
+        })
+      });
+      console.log('[SUPABASE CRM] Lead salvato nel database Maximize Academy');
+    } catch (dbErr) {
+      console.error('[SUPABASE CRM ERROR]', dbErr.message);
+    }
+  }
+
   return res.status(200).json({
     success: true,
     message: 'Richiesta ricevuta con successo. Il team di Maximize Academy ti risponderà al più presto.',
