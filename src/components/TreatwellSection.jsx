@@ -29,7 +29,7 @@ export default function TreatwellSection() {
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
             <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
-              05 / TREATWELL PARTNERSHIP
+              TREATWELL PARTNERSHIP
             </span>
           </div>
 

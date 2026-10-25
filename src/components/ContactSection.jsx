@@ -93,7 +93,7 @@ export default function ContactSection() {
             <div className="space-y-4 pt-4 border-t border-amber-500/20">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Linea Diretta Maurizio</span>
-                <span className="text-sm font-bold font-mono text-white">+39 391 716 3833</span>
+                <span className="text-sm font-bold text-white">+39 391 716 3833</span>
               </div>
               <a
                 href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20fissare%20una%20consulenza%20strategica%20per%20la%20mia%20barberia"
@@ -134,7 +134,7 @@ export default function ContactSection() {
             <div className="space-y-4 pt-4 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Desk Operativo Maximize</span>
-                <span className="text-sm font-bold font-mono text-white">+39 391 716 3833</span>
+                <span className="text-sm font-bold text-white">+39 391 716 3833</span>
               </div>
               <a
                 href="https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20sulle%20forbici%20Sabey"

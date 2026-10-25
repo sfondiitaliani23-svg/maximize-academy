@@ -63,16 +63,12 @@ export default function BarberResetSection() {
         <div className="flex flex-col items-center justify-center text-center space-y-3 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-gold border border-amber-500/40">
             <span className="font-display font-extrabold text-xs text-amber-300 tracking-[0.25em]">
-              02 / IL PERCORSO DI MAURIZIO PIZZUTO
+              IL PERCORSO DI MAURIZIO PIZZUTO
             </span>
           </div>
 
-          <div className="text-xs uppercase tracking-[0.3em] text-gray-400 font-semibold">
-            PROPOSTA DI IDENTITÀ · VERSIONE 2 · BY MAXIMIZE ACADEMY
-          </div>
-
           <h2 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight">
-            BARBER <span className="text-red-500">RESET</span>
+            BARBER <span className="text-amber-400">RESET</span>
           </h2>
           <div className="text-sm uppercase tracking-[0.25em] text-amber-400 font-bold">
             INTERVENTO STRATEGICO IN BARBERIA
@@ -87,7 +83,7 @@ export default function BarberResetSection() {
             <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden glass-panel-gold border border-amber-500/30 p-2 shadow-2xl group">
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black flex items-center justify-center">
                 <img loading="lazy" 
-                  src="/assets/img/barber_reset.webp" 
+                  src="/assets/img/barber-reset-logo.webp" width="606" height="626" 
                   alt="Barber Reset - Intervento Strategico in Barberia" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

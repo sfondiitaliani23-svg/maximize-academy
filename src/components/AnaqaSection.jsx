@@ -29,13 +29,13 @@ export default function AnaqaSection() {
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
             <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
-              04 / ANAQA MEN CREATION
+              ANAQA MEN CREATION
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Prodotti professionali.{' '}
-            <span className="font-serif italic font-normal gold-text-gradient">
+            <span className="font-serif italic font-normal gold-text-gradient sm:whitespace-nowrap">
               Risultati professionali.
             </span>
           </h2>

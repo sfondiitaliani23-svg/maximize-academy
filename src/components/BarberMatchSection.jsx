@@ -10,7 +10,7 @@ export default function BarberMatchSection({ onSelectCourse }) {
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
             <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
-              06 / BARBER MATCH PAESTUM
+              BARBER MATCH PAESTUM
             </span>
           </div>
 
@@ -85,14 +85,13 @@ export default function BarberMatchSection({ onSelectCourse }) {
               <div className="relative p-3 rounded-3xl glass-panel border border-amber-500/30 bg-black/70 shadow-2xl max-w-sm w-full group">
                 
                 {/* Visual Barber Match Paestum con bordi sfumati eleganti e cornice oro */}
-                <div className="relative rounded-2xl overflow-hidden aspect-square border border-white/10 bg-[#0d1b2a]">
+                <div className="relative rounded-2xl overflow-hidden aspect-[700/556] border border-white/10 bg-[#0d1b2a]">
                   <img loading="lazy" 
-                    src="/assets/img/barber_match_raw.webp" 
+                    src="/assets/img/barber-match-2026.webp" width="700" height="556" 
                     alt="Barber Match 2026 Paestum" 
                     className="w-full h-full object-cover object-center filter contrast-110 group-hover:scale-105 transition-transform duration-500"
                   />
                   {/* Subtle vignette gold reflection border */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none"></div>
                   <div className="absolute inset-0 ring-1 ring-inset ring-amber-500/30 pointer-events-none rounded-2xl"></div>
                 </div>
 

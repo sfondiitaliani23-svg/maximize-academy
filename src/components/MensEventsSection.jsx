@@ -15,7 +15,7 @@ export default function MensEventsSection() {
               
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
                 <Globe className="w-4 h-4 text-amber-400" />
-                <span>07 / MEN'S EVENTS EDUCATION</span>
+                <span>MEN'S EVENTS EDUCATION</span>
               </div>
 
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">

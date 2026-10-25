@@ -130,6 +130,10 @@ h1 .font-serif.italic, h2 .font-serif.italic, h3 .font-serif.italic { font-style
   .ticker__list { flex-wrap: wrap; justify-content: center; row-gap: .75rem; }
 }
 
+/* Pagine interne: meno vuoto sotto la barra in alto e tra due sezioni di fila */
+#main > section.py-24:first-child { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
+#main > section.py-24 + section.py-24 { padding-top: 0; }
+
 /* Loghi dei marchi cliccabili: leggero risalto al passaggio */
 .logo-link { display: inline-block; border-radius: 4px; transition: transform .22s cubic-bezier(.2,.7,.2,1), filter .22s; }
 .logo-link:hover, .logo-link:focus-visible { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); outline: none; }
