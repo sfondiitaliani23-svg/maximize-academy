@@ -51,13 +51,12 @@ export default function TreatwellSection() {
             <div className="lg:col-span-7 space-y-6">
               
               {/* Logo Treatwell */}
-              <div className="inline-block p-4 rounded-2xl bg-black/50 border border-white/10">
-                <img loading="lazy" 
-                  src="/assets/loghi/1000363514.webp" 
-                  alt="Treatwell Official Logo" 
-                  className="h-9 sm:h-11 object-contain opacity-95"
-                />
-              </div>
+              <img loading="lazy"
+                src="/assets/loghi/treatwell.webp"
+                alt="Treatwell"
+                width="1293" height="240"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
 
               <div className="space-y-1">
                 <div className="text-xs uppercase font-bold tracking-[0.25em] text-amber-400">

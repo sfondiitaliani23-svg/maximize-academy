@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import SidebarDrawer from './components/SidebarDrawer';
 import HeroSection from './components/HeroSection';
+import PartnerStrip from './components/PartnerStrip';
 import FounderStory from './components/FounderStory';
 import EcosystemGrid from './components/EcosystemGrid';
 import InternationalTraining from './components/InternationalTraining';
@@ -40,6 +41,9 @@ export default function App() {
       <main>
         {/* 1. Hero Luxury Presentation */}
         <HeroSection />
+
+        {/* Partner: loghi ben visibili, portano alle sezioni */}
+        <PartnerStrip />
 
         {/* 2. Dalla Barberia alla Formazione (Storytelling Maurizio) */}
         <FounderStory />

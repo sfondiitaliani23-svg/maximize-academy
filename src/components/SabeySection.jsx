@@ -71,10 +71,11 @@ export default function SabeySection() {
             <div className="lg:col-span-7 space-y-6">
               
               <div className="flex items-center gap-4">
-                <img loading="lazy" 
-                  src="/assets/loghi/1000363520.webp" 
-                  alt="Sabey Scissors Logo" 
-                  className="h-10 sm:h-12 object-contain filter brightness-125"
+                <img loading="lazy"
+                  src="/assets/loghi/sabey.webp"
+                  alt="Sabey Scissors Italy Hand Made"
+                  width="1549" height="240"
+                  className="h-14 sm:h-16 w-auto object-contain"
                 />
               </div>
 
@@ -120,17 +121,14 @@ export default function SabeySection() {
 
             </div>
 
-            {/* Right: OFFICIAL BADGE Circolare Richiesto (assets/riferimenti/Sabey_Brand_Ambassador_Strategist.png) */}
+            {/* Destra: badge ufficiale Brand Ambassador Strategist (sfondo trasparente) */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center">
-              <div className="relative p-3 rounded-full glass-panel border border-amber-500/40 shadow-gold-glow group">
-                <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden bg-white/5 flex items-center justify-center p-2">
-                  <img loading="lazy" 
-                    src="/assets/img/Sabey_Brand_Ambassador_Strategist.webp" 
-                    alt="Sabey Brand Ambassador Strategist Badge Ufficiale - Maurizio Pizzuto" 
-                    className="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
+              <img loading="lazy"
+                src="/assets/img/sabey-brand-ambassador.webp"
+                alt="Sabey Scissors, Brand Ambassador Strategist: Maurizio Pizzuto"
+                width="800" height="791"
+                className="w-64 h-auto sm:w-72 lg:w-80 object-contain"
+              />
               <div className="mt-4 text-[11px] uppercase tracking-[0.2em] text-gray-400 text-center font-semibold">
                 Certificazione Ufficiale Brand Ambassador
               </div>

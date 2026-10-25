@@ -51,13 +51,12 @@ export default function AnaqaSection() {
             <div className="lg:col-span-8 space-y-6">
               
               {/* Logo Anaqa Ufficiale */}
-              <div className="inline-block p-4 rounded-2xl bg-black/50 border border-white/10">
-                <img loading="lazy" 
-                  src="/assets/loghi/1000363516.webp" 
-                  alt="ANAQA Men Creation Official Logo" 
-                  className="h-10 sm:h-12 object-contain opacity-95"
-                />
-              </div>
+              <img loading="lazy"
+                src="/assets/loghi/anaqa.webp"
+                alt="ANAQA Men Creation"
+                width="1169" height="240"
+                className="h-14 sm:h-16 w-auto object-contain"
+              />
 
               <div className="space-y-2">
                 <div className="text-xs uppercase font-bold tracking-[0.25em] text-amber-400">
