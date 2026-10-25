@@ -117,7 +117,9 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Maximize Academy <onboarding@resend.dev>',
+          // Mittente: con un dominio verificato su Resend, imposta RESEND_FROM su Vercel
+          // (es. "Maximize Academy <lead@tuodominio.it>"). Senza, Resend consegna solo al proprietario dell'account.
+          from: process.env.RESEND_FROM || 'Maximize Academy <onboarding@resend.dev>',
           to: recipients,
           subject: `🔔 Nuovo Lead: ${name} (${lead.type})`.replace(/[\r\n]+/g, ' '),
           html: emailBody,
