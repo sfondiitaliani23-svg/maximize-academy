@@ -48,7 +48,7 @@ export default function MensEventsSection() {
               <img loading="lazy" 
                 src="/assets/loghi/1000363512.webp" 
                 alt="Men's Events Education Official Logo" 
-                className="w-full max-w-[260px] object-contain filter invert opacity-95 hover:opacity-100 transition-opacity"
+                className="w-full max-w-[260px] object-contain opacity-95 hover:opacity-100 transition-opacity"
               />
               <div className="mt-4 text-[10px] uppercase tracking-[0.25em] text-amber-400 font-semibold text-center">
                 Education Partner Ufficiale

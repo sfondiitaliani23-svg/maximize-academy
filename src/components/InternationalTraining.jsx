@@ -133,7 +133,7 @@ export default function InternationalTraining({ onSelectCourse }) {
               <img loading="lazy" 
                 src="/assets/loghi/1000363512.webp" 
                 alt="Men's Events Education Logo" 
-                className="h-10 sm:h-12 object-contain filter invert opacity-90 hover:opacity-100 transition-opacity"
+                className="h-10 sm:h-12 object-contain opacity-90 hover:opacity-100 transition-opacity"
               />
               <div className="w-full h-[1px] bg-white/10 hidden lg:block"></div>
               <img loading="lazy" 

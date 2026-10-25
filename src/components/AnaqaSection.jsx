@@ -55,7 +55,7 @@ export default function AnaqaSection() {
                 <img loading="lazy" 
                   src="/assets/loghi/1000363516.webp" 
                   alt="ANAQA Men Creation Official Logo" 
-                  className="h-10 sm:h-12 object-contain filter invert opacity-95"
+                  className="h-10 sm:h-12 object-contain opacity-95"
                 />
               </div>
 

@@ -55,7 +55,7 @@ export default function TreatwellSection() {
                 <img loading="lazy" 
                   src="/assets/loghi/1000363514.webp" 
                   alt="Treatwell Official Logo" 
-                  className="h-9 sm:h-11 object-contain filter invert opacity-95"
+                  className="h-9 sm:h-11 object-contain opacity-95"
                 />
               </div>
 
