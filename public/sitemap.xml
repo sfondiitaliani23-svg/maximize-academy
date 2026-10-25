@@ -1,23 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Home — priorità massima -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://maximize-academy.vercel.app/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Privacy Policy page -->
   <url>
-    <loc>https://maximize-academy.vercel.app/privacy.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <loc>https://maximize-academy.vercel.app/ecosistema</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/formazione</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/barber-reset</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/sabey</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/anaqa</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/treatwell</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/eventi</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/contatti</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maximize-academy.vercel.app/privacy</loc>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
-
 </urlset>

@@ -5,14 +5,14 @@ export default function SidebarDrawer({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const navItems = [
-    { label: 'Ecosistema Maximize', href: '#ecosistema', icon: Compass, sub: 'I 6 pilastri di crescita' },
-    { label: 'Formazione Internazionale', href: '#formazione', icon: Award, sub: 'Cardinale, Yass, Men’s Events' },
-    { label: 'Barber Reset', href: '#barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
-    { label: 'Sabey Scissors', href: '#sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
-    { label: 'ANAQA Prodotti', href: '#anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },
-    { label: 'Treatwell Agenda', href: '#treatwell', icon: Calendar, sub: 'Digitalizzazione e Prenotazioni' },
-    { label: 'Barber Match & Eventi', href: '#barber-match', icon: Users, sub: 'Paestum 2026 & Networking' },
-    { label: 'Contatti & Consulenza', href: '#contatti', icon: Phone, sub: 'Maurizio Pizzuto & Operatore' },
+    { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 6 pilastri di crescita' },
+    { label: 'Formazione Internazionale', href: '/formazione', icon: Award, sub: 'Cardinale, Yass, Men’s Events' },
+    { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
+    { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
+    { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },
+    { label: 'Treatwell Agenda', href: '/treatwell', icon: Calendar, sub: 'Digitalizzazione e Prenotazioni' },
+    { label: 'Barber Match & Eventi', href: '/eventi', icon: Users, sub: 'Paestum 2026 & Networking' },
+    { label: 'Contatti & Consulenza', href: '/contatti', icon: Phone, sub: 'Maurizio Pizzuto & Operatore' },
   ];
 
   return (

@@ -2,6 +2,17 @@ import React from 'react';
 
 // Hero con la stessa impaginazione di Maurizio Barber Shop:
 // testo a sinistra, ritratto a tutta altezza a destra con didascalia, striscia di dati sotto.
+const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</strong>;
+const tickerItems = [
+  <>{gold('Formazione')} internazionale</>,
+  <>{gold('Barber Reset')} in barberia</>,
+  <>Brand Ambassador {gold('Sabey')}</>,
+  <>Prodotti {gold('ANAQA')}</>,
+  <>Agenda digitale {gold('Treatwell')}</>,
+  <>{gold('Eventi')} e networking</>,
+  <>Foggia</>,
+];
+
 export default function HeroSection() {
   return (
     <section
@@ -26,7 +37,7 @@ export default function HeroSection() {
         <div className="flex flex-wrap items-center gap-x-12 gap-y-4 pt-2">
           {/* Pulsante principale inclinato, come «Prenota ora» */}
           <a
-            href="#ecosistema"
+            href="/ecosistema"
             className="group inline-block min-h-[44px] text-amber-400 border border-amber-400 bg-[#111111]/60 -skew-x-[14deg] shadow-[inset_0_0_0_3px_#111,inset_0_0_0_4px_rgba(191,161,106,.55)] hover:bg-amber-400/20 hover:text-amber-300 transition-colors"
           >
             <span className="inline-flex items-center gap-3 min-h-[42px] px-8 py-3 skew-x-[14deg] font-bold uppercase tracking-[0.12em]">
@@ -67,16 +78,21 @@ export default function HeroSection() {
         </figcaption>
       </figure>
 
-      {/* Striscia di dati */}
-      <ul
-        className="lg:col-span-2 flex flex-wrap justify-start lg:justify-between gap-x-8 gap-y-4 list-none m-0 px-[clamp(1.25rem,6vw,4.5rem)] py-6 border-y border-[#3d3d3d] text-sm uppercase tracking-[0.12em] text-[#bdbdbd]"
-        aria-label="In breve"
-      >
-        <li><strong className="text-amber-400 text-base font-bold">Formazione</strong> internazionale</li>
-        <li><strong className="text-amber-400 text-base font-bold">Barber Reset</strong> in barberia</li>
-        <li>Brand Ambassador <strong className="text-amber-400 text-base font-bold">Sabey</strong></li>
-        <li>Foggia</li>
-      </ul>
+      {/* Ticker: le voci scorrono all'infinito (si ferma passandoci sopra) */}
+      <div className="lg:col-span-2 ticker border-y border-[#3d3d3d] py-6 text-sm uppercase tracking-[0.12em] text-[#bdbdbd]" aria-label="In breve">
+        <div className="ticker__track">
+          {[0, 1].map((copy) => (
+            <ul key={copy} className="ticker__list" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {tickerItems.map((item, i) => (
+                <li key={i} className="ticker__item">
+                  <span>{item}</span>
+                  <span className="ticker__sep" aria-hidden="true">◆</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

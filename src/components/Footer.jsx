@@ -42,12 +42,12 @@ export default function Footer() {
               Ecosistema
             </h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#formazione" className="hover:text-amber-300 transition-colors">Formazione Internazionale</a></li>
-              <li><a href="#barber-reset" className="hover:text-amber-300 transition-colors">Barber Reset (Intervento Strategico)</a></li>
-              <li><a href="#sabey" className="hover:text-amber-300 transition-colors">Sabey Scissors Italy</a></li>
-              <li><a href="#anaqa" className="hover:text-amber-300 transition-colors">ANAQA Men Creation</a></li>
-              <li><a href="#treatwell" className="hover:text-amber-300 transition-colors">Treatwell Digital Agenda</a></li>
-              <li><a href="#barber-match" className="hover:text-amber-300 transition-colors">Barber Match Paestum 2026</a></li>
+              <li><a href="/formazione" className="hover:text-amber-300 transition-colors">Formazione Internazionale</a></li>
+              <li><a href="/barber-reset" className="hover:text-amber-300 transition-colors">Barber Reset (Intervento Strategico)</a></li>
+              <li><a href="/sabey" className="hover:text-amber-300 transition-colors">Sabey Scissors Italy</a></li>
+              <li><a href="/anaqa" className="hover:text-amber-300 transition-colors">ANAQA Men Creation</a></li>
+              <li><a href="/treatwell" className="hover:text-amber-300 transition-colors">Treatwell Digital Agenda</a></li>
+              <li><a href="/eventi" className="hover:text-amber-300 transition-colors">Barber Match Paestum 2026</a></li>
             </ul>
           </div>
 

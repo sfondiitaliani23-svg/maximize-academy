@@ -2,10 +2,10 @@ import React from 'react';
 
 // Fascia dei partner sotto la home: i loghi ben visibili, ognuno porta alla sua sezione.
 const partners = [
-  { href: '#formazione', src: '/assets/loghi/mens-events.webp', alt: "Men's Events Education", w: 1074 },
-  { href: '#sabey', src: '/assets/loghi/sabey.webp', alt: 'Sabey Scissors Italy Hand Made', w: 1549 },
-  { href: '#anaqa', src: '/assets/loghi/anaqa.webp', alt: 'ANAQA Men Creation', w: 1169 },
-  { href: '#treatwell', src: '/assets/loghi/treatwell.webp', alt: 'Treatwell', w: 1293, h: 'h-7 sm:h-9' },
+  { href: '/formazione', src: '/assets/loghi/mens-events.webp', alt: "Men's Events Education", w: 1074 },
+  { href: '/sabey', src: '/assets/loghi/sabey.webp', alt: 'Sabey Scissors Italy Hand Made', w: 1549 },
+  { href: '/anaqa', src: '/assets/loghi/anaqa.webp', alt: 'ANAQA Men Creation', w: 1169 },
+  { href: '/treatwell', src: '/assets/loghi/treatwell.webp', alt: 'Treatwell', w: 1293, h: 'h-7 sm:h-9' },
 ];
 
 export default function PartnerStrip() {

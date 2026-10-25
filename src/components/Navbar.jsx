@@ -2,21 +2,13 @@ import React from 'react';
 
 // Barra in alto come Maurizio Barber Shop: fondo nero pieno, menu in testo semplice,
 // azione principale in oro con un filo verticale, pulsante "Menu" su telefono.
-const links = [
-  { href: '#ecosistema', label: 'Ecosistema' },
-  { href: '#formazione', label: 'Formazione' },
-  { href: '#barber-reset', label: 'Barber Reset' },
-  { href: '#sabey', label: 'Sabey' },
-  { href: '#anaqa', label: 'ANAQA' },
-  { href: '#treatwell', label: 'Treatwell' },
-  { href: '#barber-match', label: 'Eventi' },
-  { href: '#contatti', label: 'Contatti' },
-];
+import { pages } from '../routes';
+const links = pages.map((p) => ({ href: p.path, label: p.label }));
 
-export default function Navbar({ onOpenMobileMenu }) {
+export default function Navbar({ currentPath = '/', onOpenMobileMenu }) {
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between gap-4 h-[var(--header-h)] px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
-      <a href="#" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
+      <a href="/" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
         <img
           src="/assets/img/logo-maximize.webp"
           alt="Maximize Academy"
@@ -29,7 +21,7 @@ export default function Navbar({ onOpenMobileMenu }) {
 
       <nav className="hidden xl:flex items-center gap-6 text-sm text-[#bdbdbd]" aria-label="Navigazione principale">
         {links.map((l) => (
-          <a key={l.href} href={l.href} className="min-h-[44px] inline-flex items-center whitespace-nowrap hover:text-amber-400 transition-colors">
+          <a key={l.href} href={l.href} aria-current={currentPath === l.href ? 'page' : undefined} className={`min-h-[44px] inline-flex items-center whitespace-nowrap hover:text-amber-400 transition-colors ${currentPath === l.href ? 'text-amber-400' : ''}`}>
             {l.label}
           </a>
         ))}

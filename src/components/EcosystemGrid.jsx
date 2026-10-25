@@ -9,7 +9,7 @@ export default function EcosystemGrid() {
       category: 'FORMAZIONE',
       title: 'Alza il livello.',
       desc: 'Educator, tecnica pura e confronto internazionale con i migliori maestri.',
-      link: '#formazione',
+      link: '/formazione',
       icon: GraduationCap,
       goldAccent: true
     },
@@ -19,7 +19,7 @@ export default function EcosystemGrid() {
       category: 'BUSINESS',
       title: 'Cambia prospettiva.',
       desc: 'Vendita, organizzazione e crescita dell’attività con il metodo Barber Reset.',
-      link: '#barber-reset',
+      link: '/barber-reset',
       icon: TrendingUp,
       highlight: true
     },
@@ -29,7 +29,7 @@ export default function EcosystemGrid() {
       category: 'STRUMENTI & PRODOTTI',
       title: 'Scegli con criterio.',
       desc: 'Sabey Scissors artigianali e soluzioni professionali ANAQA per valorizzare il servizio.',
-      link: '#sabey',
+      link: '/sabey',
       icon: Scissors
     },
     {
@@ -38,7 +38,7 @@ export default function EcosystemGrid() {
       category: 'INNOVAZIONE',
       title: 'Ripensa l’agenda.',
       desc: 'Prenotazioni online h24 e gestione digitale semplificata con Treatwell.',
-      link: '#treatwell',
+      link: '/treatwell',
       icon: Calendar
     },
     {
@@ -47,7 +47,7 @@ export default function EcosystemGrid() {
       category: 'NETWORK & EVENTI',
       title: 'Esci. Incontra. Cresci.',
       desc: 'Porta il tuo talento sul palco di Barber Match e negli eventi Men’s Events.',
-      link: '#barber-match',
+      link: '/eventi',
       icon: Users
     },
     {
@@ -56,7 +56,7 @@ export default function EcosystemGrid() {
       category: 'MAXIMIZE ACADEMY',
       title: 'Evolvi come leader.',
       desc: 'Un percorso su misura guidato direttamente dall’esperienza di Maurizio Pizzuto.',
-      link: '#contatti',
+      link: '/contatti',
       icon: Rocket,
       goldAccent: true
     }
