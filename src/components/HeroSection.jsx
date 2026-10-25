@@ -4,12 +4,11 @@ import React from 'react';
 // testo a sinistra, ritratto a tutta altezza a destra con didascalia, striscia di dati sotto.
 const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</strong>;
 // Ogni voce porta al sito del prodotto (marchi) o alla pagina di Maximize.
-// Sabey: sito ufficiale da confermare, per ora la pagina interna.
 const tickerItems = [
   { content: <>{gold('Formazione')} internazionale</>, href: '/formazione' },
   { content: <>{gold('Barber Reset')} in barberia</>, href: '/barber-reset' },
   { content: <>Partner {gold("Men's Events Education")}</>, href: 'https://www.instagram.com/mensevents_education/', external: true },
-  { content: <>Brand Ambassador {gold('Sabey')}</>, href: '/sabey' },
+  { content: <>Brand Ambassador {gold('Sabey')}</>, href: 'https://www.instagram.com/sabey_scissors_europa/', external: true },
   { content: <>Prodotti {gold('ANAQA')}</>, href: 'https://anaqaitalia.it/', external: true },
   { content: <>Agenda digitale {gold('Treatwell')}</>, href: 'https://www.treatwell.it/', external: true },
   { content: <>{gold('Eventi')} e networking</>, href: '/eventi' },
