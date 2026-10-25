@@ -40,9 +40,7 @@ export default function WhatsAppConcierge() {
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-14 h-9 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center px-1">
-                  <img src="/assets/img/logo-maurizio-barber-shop.webp" alt="" width="365" height="160" className="max-h-6 w-auto" aria-hidden="true" />
-                </div>
+                <span className="w-[72px] shrink-0 flex justify-center"><img src="/assets/img/logo-maurizio-barber-shop.webp" alt="" width="365" height="160" className="h-8 w-auto" aria-hidden="true" /></span>
                 <div>
                   <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
                     Maurizio Pizzuto
@@ -63,9 +61,7 @@ export default function WhatsAppConcierge() {
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-14 h-9 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center">
-                  <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-7 w-auto" aria-hidden="true" />
-                </div>
+                <span className="w-[72px] shrink-0 flex justify-center"><img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-9 w-auto" aria-hidden="true" /></span>
                 <div>
                   <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
                     Operatore Maximize
