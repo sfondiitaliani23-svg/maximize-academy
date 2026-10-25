@@ -24,7 +24,7 @@ export default function ContactSection() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      const data = await resp.json();
+      const data = await resp.json().catch(() => ({}));
 
       if (resp.ok && data.success) {
         setSubmitted(true);
@@ -32,8 +32,7 @@ export default function ContactSection() {
         setErrorMsg(data.error || 'Impossibile inviare la richiesta. Riprova o contattaci su WhatsApp.');
       }
     } catch (err) {
-      // Fallback
-      setSubmitted(true);
+      setErrorMsg('Connessione non riuscita: la richiesta non è stata inviata. Riprova o scrivici su WhatsApp al +39 391 716 3833.');
     } finally {
       setLoading(false);
     }

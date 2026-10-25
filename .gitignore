@@ -39,3 +39,6 @@ leads_repository.csv
 Thumbs.db
 
 .vercel
+
+# Cache locale della CLI Supabase
+supabase/.temp/

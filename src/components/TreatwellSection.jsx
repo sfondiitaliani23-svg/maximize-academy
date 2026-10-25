@@ -73,8 +73,8 @@ export default function TreatwellSection() {
               </p>
 
               {/* Digital Flow Diagram */}
-              <div className="py-2 overflow-x-auto">
-                <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-amber-300 bg-black/40 p-3 rounded-xl border border-white/10 whitespace-nowrap">
+              <div className="py-2">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[11px] font-semibold uppercase tracking-wider text-amber-300 bg-black/40 p-3 rounded-xl border border-white/10">
                   <span>Cliente</span>
                   <ChevronRight className="w-3.5 h-3.5 text-gray-500" />
                   <span>Smartphone</span>

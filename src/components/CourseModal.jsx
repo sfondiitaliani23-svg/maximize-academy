@@ -5,6 +5,7 @@ export default function CourseModal({ courseId, onClose }) {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', city: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   if (!courseId) return null;
 
@@ -55,9 +56,10 @@ export default function CourseModal({ courseId, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMsg('');
 
     try {
-      await fetch('/api/contact', {
+      const resp = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -68,9 +70,14 @@ export default function CourseModal({ courseId, onClose }) {
           message: `Città: ${formData.city}`
         })
       });
-      setSubmitted(true);
+      const data = await resp.json().catch(() => ({}));
+      if (resp.ok && data.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMsg(data.error || 'Invio non riuscito. Riprova o scrivici su WhatsApp al +39 391 716 3833.');
+      }
     } catch (err) {
-      setSubmitted(true);
+      setErrorMsg('Connessione non riuscita: la candidatura non è stata inviata. Riprova o scrivici su WhatsApp al +39 391 716 3833.');
     } finally {
       setLoading(false);
     }
@@ -186,6 +193,12 @@ export default function CourseModal({ courseId, onClose }) {
                 />
               </div>
             </div>
+
+            {errorMsg && (
+              <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-xs text-red-300">
+                {errorMsg}
+              </div>
+            )}
 
             <button
               type="submit"

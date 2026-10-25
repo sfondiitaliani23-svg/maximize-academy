@@ -17,8 +17,6 @@ import Footer from './components/Footer';
 import WhatsAppConcierge from './components/WhatsAppConcierge';
 import CourseModal from './components/CourseModal';
 import CookieBanner from './components/CookieBanner';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -97,10 +95,6 @@ export default function App() {
 
       {/* GDPR Privacy & Cookie Banner */}
       <CookieBanner />
-
-      {/* Vercel Web Analytics & Performance Insights */}
-      <Analytics />
-      <SpeedInsights />
 
     </div>
   );
