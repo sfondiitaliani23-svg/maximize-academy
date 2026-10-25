@@ -1,155 +1,87 @@
-import React, { useState } from 'react';
-import { Mail, MapPin, Shield, FileText, X } from 'lucide-react';
+import React from 'react';
+import { pages } from '../routes';
+
+// Footer minimale centrato: logo, motto, menu su una riga, social tondi, dati legali.
+const social = [
+  {
+    href: 'https://www.instagram.com/mauriziobarbershop_fg/',
+    label: 'Instagram di Maurizio Barber Shop',
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    href: 'https://www.tiktok.com/@mauriziobarbershop_fg',
+    label: 'TikTok di Maurizio Barber Shop',
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.7 5.7 0 1 0 4.9 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.2-1.6z" />
+      </svg>
+    ),
+  },
+  {
+    href: 'https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy',
+    label: 'Scrivi a Maurizio su WhatsApp',
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5Z" />
+      </svg>
+    ),
+  },
+];
 
 export default function Footer() {
-  const [showPrivacy, setShowPrivacy] = useState(false);
-
   return (
-    <footer className="bg-[#111111] border-t border-amber-500/20 text-gray-400 text-xs relative z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
-          
-          {/* Brand Info */}
-          <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-12 w-auto" aria-hidden="true" loading="lazy" />
-              <div>
-                <span className="font-display font-black text-white tracking-[0.2em] text-sm">
-                  MAXIMIZE<span className="text-amber-400 ml-1 font-light">ACADEMY</span>
-                </span>
-                <p className="text-[10px] uppercase text-amber-400/80 tracking-widest">
-                  Maurizio Pizzuto
-                </p>
-              </div>
-            </div>
+    <footer className="relative z-20 bg-[#111111] border-t border-[#3d3d3d] text-[#bdbdbd]">
+      <div className="flex flex-col items-center gap-6 px-[clamp(1.25rem,6vw,4.5rem)] pt-16 pb-12 text-center">
+        <a href="/" className="logo-link" aria-label="Maximize Academy, torna all'inizio">
+          <img src="/assets/img/logo-maximize.webp" alt="Maximize Academy" width="181" height="224" className="h-[90px] w-auto" loading="lazy" decoding="async" />
+        </a>
 
-            <p className="text-xs text-gray-400 max-w-sm leading-relaxed">
-              Dalla Barberia. Per le Barberie. Un ecosistema unico dedicato alla formazione d'eccellenza, al business strategico e agli strumenti per il Barber contemporaneo.
-            </p>
+        <p className="m-0 text-[0.8rem] uppercase tracking-[0.3em] text-amber-400">
+          Dalla barberia · Per le barberie
+        </p>
 
-            <div className="text-[11px] text-gray-400 space-y-1 pt-1">
-              <p className="font-semibold text-gray-300">MAXIMIZE ACADEMY S.r.l.s.</p>
-              <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-amber-400" /> Via Benedetto Croce 8 · 71121 Foggia</p>
-              <p>P. IVA: <span className="text-gray-300">02147290767</span></p>
-              <p className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-amber-400" /> <a href="mailto:mauriziomaximize@gmail.com" className="hover:text-amber-300 transition-colors">mauriziomaximize@gmail.com</a></p>
-            </div>
-          </div>
+        <nav aria-label="Pagine del sito" className="flex flex-wrap justify-center gap-x-6 sm:gap-x-8 gap-y-1 text-[0.9rem] uppercase tracking-[0.12em] text-[#f4f4f4]">
+          {pages.map((p) => (
+            <a key={p.path} href={p.path} className="min-h-[44px] inline-flex items-center hover:text-amber-400 transition-colors">
+              {p.label}
+            </a>
+          ))}
+        </nav>
 
-          {/* Nav Links Fast */}
-          <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white">
-              Ecosistema
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li><a href="/formazione" className="hover:text-amber-300 transition-colors">Formazione Internazionale</a></li>
-              <li><a href="/barber-reset" className="hover:text-amber-300 transition-colors">Barber Reset (Intervento Strategico)</a></li>
-              <li><a href="/sabey" className="hover:text-amber-300 transition-colors">Sabey Scissors Italy</a></li>
-              <li><a href="/anaqa" className="hover:text-amber-300 transition-colors">ANAQA Men Creation</a></li>
-              <li><a href="/treatwell" className="hover:text-amber-300 transition-colors">Treatwell Digital Agenda</a></li>
-              <li><a href="/eventi" className="hover:text-amber-300 transition-colors">Barber Match Paestum 2026</a></li>
-            </ul>
-          </div>
-
-          {/* Contacts Fast */}
-          <div className="md:col-span-4 space-y-3">
-            <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white">
-              Canali Ufficiali
-            </h4>
-            <div className="space-y-2.5">
-              <div className="p-3 rounded-xl bg-black/40 border border-white/10">
-                <div className="text-[10px] uppercase text-amber-400 font-bold">Consulenza, Corsi & Barber Reset</div>
-                <a href="https://wa.me/393917163833" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-white hover:text-amber-300 transition-colors">
-                  Maurizio Pizzuto: +39 391 716 3833
-                </a>
-              </div>
-              {/* Social Links */}
-              <div className="flex items-center gap-3 pt-1">
-                <a
-                  href="https://www.instagram.com/mauriziobarbershop_fg/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-[11px] text-gray-300 hover:text-amber-300 hover:border-amber-400/50 transition-all"
-                  aria-label="Instagram Maurizio Barber Shop Foggia"
-                >
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                  Instagram
-                </a>
-                <a
-                  href="https://www.tiktok.com/@mauriziobarbershop_fg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[11px] text-gray-300 hover:text-white hover:border-white/30 transition-all"
-                  aria-label="TikTok Maurizio Barber Shop Foggia"
-                >
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
-                  TikTok
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Bottom Rights */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
-          <div>
-            © 2026 Maximize Academy S.r.l.s. · Tutti i diritti riservati.
-          </div>
-          <div className="flex items-center gap-6">
-            <a 
-              href="/privacy.html"
+        <div className="flex gap-4">
+          {social.map((s) => (
+            <a
+              key={s.href}
+              href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-amber-300 underline underline-offset-4 transition-colors"
+              aria-label={s.label}
+              className="grid place-items-center w-[46px] h-[46px] rounded-full border border-[#3d3d3d] text-[#f4f4f4] hover:border-amber-400 hover:text-amber-400 transition-colors"
             >
-              Privacy &amp; Cookie Policy
+              {s.icon}
             </a>
-            <span className="text-amber-400 font-serif italic text-xs">Maximize Your Potential</span>
-          </div>
+          ))}
         </div>
-
       </div>
 
-      {/* Modal Privacy Policy Glass */}
-      {showPrivacy && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="glass-panel-gold max-w-xl w-full rounded-3xl p-6 sm:p-8 border border-amber-500/40 relative shadow-2xl max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
-                <Shield className="w-4 h-4" />
-                <span>Informativa Privacy & Trattamento Dati</span>
-              </div>
-              <button 
-                onClick={() => setShowPrivacy(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="mt-4 text-xs text-gray-300 space-y-3 leading-relaxed">
-              <p>
-                <strong>Titolare del Trattamento:</strong> MAXIMIZE ACADEMY S.r.l.s., Via Benedetto Croce 8, 71121 Foggia, P.IVA 02147290767. Email: mauriziomaximize@gmail.com.
-              </p>
-              <p>
-                I dati raccolti tramite moduli di contatto, calcolatore audit o canali WhatsApp sono trattati nel pieno rispetto del GDPR (Reg. UE 2016/679) al solo scopo di fornire le informazioni e i servizi commerciali/formativi richiesti dall'utente.
-              </p>
-              <p>
-                Nessun dato viene ceduto a terzi non autorizzati. I dati inseriti nel simulatore di business restano riservati.
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/10 text-right">
-              <button 
-                onClick={() => setShowPrivacy(false)}
-                className="px-5 py-2 rounded-xl btn-gold text-xs font-bold uppercase tracking-wider"
-              >
-                Chiudi
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
+      <div className="flex flex-col items-center gap-1 border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 text-center text-[0.8rem]">
+        <small className="text-[0.8rem]">
+          Maximize Academy S.r.l.s. · Via Benedetto Croce 8, 71121 Foggia · P. IVA 02147290767 ·{' '}
+          <a href="mailto:mauriziomaximize@gmail.com" className="hover:text-amber-400 transition-colors">mauriziomaximize@gmail.com</a>
+        </small>
+        <small className="text-[0.8rem]">
+          © 2026 ·{' '}
+          <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-amber-400 transition-colors">
+            Privacy e cookie
+          </a>
+        </small>
+      </div>
     </footer>
   );
 }
