@@ -3,14 +3,17 @@ import React from 'react';
 // Hero con la stessa impaginazione di Maurizio Barber Shop:
 // testo a sinistra, ritratto a tutta altezza a destra con didascalia, striscia di dati sotto.
 const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</strong>;
+// Ogni voce porta al sito del prodotto (marchi) o alla pagina di Maximize.
+// Sabey: sito ufficiale da confermare, per ora la pagina interna.
 const tickerItems = [
-  <>{gold('Formazione')} internazionale</>,
-  <>{gold('Barber Reset')} in barberia</>,
-  <>Brand Ambassador {gold('Sabey')}</>,
-  <>Prodotti {gold('ANAQA')}</>,
-  <>Agenda digitale {gold('Treatwell')}</>,
-  <>{gold('Eventi')} e networking</>,
-  <>Foggia</>,
+  { content: <>{gold('Formazione')} internazionale</>, href: '/formazione' },
+  { content: <>{gold('Barber Reset')} in barberia</>, href: '/barber-reset' },
+  { content: <>Partner {gold("Men's Events Education")}</>, href: 'https://www.instagram.com/mensevents_education/', external: true },
+  { content: <>Brand Ambassador {gold('Sabey')}</>, href: '/sabey' },
+  { content: <>Prodotti {gold('ANAQA')}</>, href: 'https://anaqaitalia.it/', external: true },
+  { content: <>Agenda digitale {gold('Treatwell')}</>, href: 'https://www.treatwell.it/', external: true },
+  { content: <>{gold('Eventi')} e networking</>, href: '/eventi' },
+  { content: <>Sede a Foggia</>, href: '/contatti' },
 ];
 
 export default function HeroSection() {
@@ -85,7 +88,15 @@ export default function HeroSection() {
             <ul key={copy} className="ticker__list" aria-hidden={copy === 1 ? 'true' : undefined}>
               {tickerItems.map((item, i) => (
                 <li key={i} className="ticker__item">
-                  <span>{item}</span>
+                  <a
+                    href={item.href}
+                    className="ticker__link"
+                    tabIndex={copy === 1 ? -1 : undefined}
+                    {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {item.content}
+                    {item.external && <span className="sr-only"> (si apre in una nuova scheda)</span>}
+                  </a>
                   <span className="ticker__sep" aria-hidden="true">◆</span>
                 </li>
               ))}
