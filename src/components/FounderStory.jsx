@@ -13,7 +13,7 @@ export default function FounderStory() {
             <div className="relative rounded-3xl overflow-hidden glass-panel-gold border border-amber-500/30 p-2 shadow-2xl">
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-black">
                 <img loading="lazy" 
-                  src="/assets/img/maurizio_barberia.png" 
+                  src="/assets/img/maurizio_barberia.webp" 
                   alt="Maurizio Pizzuto al lavoro in barberia" 
                   className="w-full h-full object-cover object-center filter contrast-105"
                 />

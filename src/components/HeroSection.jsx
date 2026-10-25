@@ -106,7 +106,7 @@ export default function HeroSection({ onOpenQuiz }) {
               
               <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black/60">
                 <img 
-                  src="/assets/img/maurizio_hero.jpg" 
+                  src="/assets/img/maurizio_hero.webp" 
                   alt="Maurizio Pizzuto - Maximize Academy" 
                   className="w-full h-full object-cover object-top filter contrast-[1.08] brightness-[0.96] group-hover:scale-105 transition-transform duration-700"
                 />

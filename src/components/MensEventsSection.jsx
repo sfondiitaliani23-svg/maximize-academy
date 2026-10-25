@@ -46,7 +46,7 @@ export default function MensEventsSection() {
             {/* Right: Partner Logo Inverted High Contrast */}
             <div className="lg:col-span-4 flex flex-col items-center justify-center p-8 rounded-2xl bg-black/60 border border-white/10">
               <img loading="lazy" 
-                src="/assets/loghi/1000363512.png" 
+                src="/assets/loghi/1000363512.webp" 
                 alt="Men's Events Education Official Logo" 
                 className="w-full max-w-[260px] object-contain filter invert opacity-95 hover:opacity-100 transition-opacity"
               />

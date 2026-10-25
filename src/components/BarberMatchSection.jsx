@@ -87,7 +87,7 @@ export default function BarberMatchSection({ onSelectCourse }) {
                 {/* Visual Barber Match Paestum con bordi sfumati eleganti e cornice oro */}
                 <div className="relative rounded-2xl overflow-hidden aspect-square border border-white/10 bg-[#0d1b2a]">
                   <img loading="lazy" 
-                    src="/assets/img/barber_match_raw.png" 
+                    src="/assets/img/barber_match_raw.webp" 
                     alt="Barber Match 2026 Paestum" 
                     className="w-full h-full object-cover object-center filter contrast-110 group-hover:scale-105 transition-transform duration-500"
                   />

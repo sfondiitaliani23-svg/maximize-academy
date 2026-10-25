@@ -53,7 +53,7 @@ export default function AnaqaSection() {
               {/* Logo Anaqa Ufficiale */}
               <div className="inline-block p-4 rounded-2xl bg-black/50 border border-white/10">
                 <img loading="lazy" 
-                  src="/assets/loghi/1000363516.png" 
+                  src="/assets/loghi/1000363516.webp" 
                   alt="ANAQA Men Creation Official Logo" 
                   className="h-10 sm:h-12 object-contain filter invert opacity-95"
                 />

@@ -131,13 +131,13 @@ export default function InternationalTraining({ onSelectCourse }) {
             {/* Partner Logos inside Box */}
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 items-center justify-center bg-black/40 p-6 rounded-2xl border border-white/10">
               <img loading="lazy" 
-                src="/assets/loghi/1000363512.png" 
+                src="/assets/loghi/1000363512.webp" 
                 alt="Men's Events Education Logo" 
                 className="h-10 sm:h-12 object-contain filter invert opacity-90 hover:opacity-100 transition-opacity"
               />
               <div className="w-full h-[1px] bg-white/10 hidden lg:block"></div>
               <img loading="lazy" 
-                src="/assets/loghi/1000363520.png" 
+                src="/assets/loghi/1000363520.webp" 
                 alt="Sabey Scissors Logo" 
                 className="h-7 sm:h-8 object-contain filter brightness-125"
               />

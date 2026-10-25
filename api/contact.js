@@ -47,7 +47,8 @@ export default async function handler(req, res) {
     timestamp: new Date().toISOString()
   };
 
-  console.log('[VERCEL LEAD CAPTURED]', lead);
+  // Nei log solo dati tecnici: niente nome, telefono, email o messaggio.
+  console.log('[LEAD RICEVUTO]', { id: lead.id, type: lead.type });
 
   // Tiene traccia di dove il lead è arrivato davvero.
   let channels = 0;
@@ -165,7 +166,9 @@ export default async function handler(req, res) {
         delivered++;
         console.log('[SUPABASE CRM] Lead salvato nel database Maximize Academy');
       } else {
-        console.error('[SUPABASE CRM ERROR]', dbResponse.status, await dbResponse.text().catch(() => ''));
+        // Solo codice e messaggio: il campo "details" di Postgres puo' contenere i dati del lead.
+        const dbErr = await dbResponse.json().catch(() => ({}));
+        console.error('[SUPABASE CRM ERROR]', dbResponse.status, dbErr.code || '', dbErr.message || '');
       }
     } catch (dbErr) {
       console.error('[SUPABASE CRM ERROR]', dbErr.message);

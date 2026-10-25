@@ -53,7 +53,7 @@ export default function TreatwellSection() {
               {/* Logo Treatwell */}
               <div className="inline-block p-4 rounded-2xl bg-black/50 border border-white/10">
                 <img loading="lazy" 
-                  src="/assets/loghi/1000363514.png" 
+                  src="/assets/loghi/1000363514.webp" 
                   alt="Treatwell Official Logo" 
                   className="h-9 sm:h-11 object-contain filter invert opacity-95"
                 />

@@ -48,7 +48,7 @@
     <header>
       <p class="logo">Maximize Academy S.r.l.s.</p>
       <h1>Privacy Policy &amp; <span>Cookie Policy</span></h1>
-      <p class="meta">Ultimo aggiornamento: 21 ottobre 2026 · Versione 1.0</p>
+      <p class="meta">Ultimo aggiornamento: 25 ottobre 2026 · Versione 1.1</p>
     </header>
 
     <h2>1. Titolare del Trattamento</h2>
@@ -65,7 +65,7 @@
     <ul>
       <li><strong>Dati di contatto</strong> — nome, cognome, numero di telefono/WhatsApp, indirizzo email forniti volontariamente tramite il modulo di contatto.</li>
       <li><strong>Dati della barberia</strong> — inseriti volontariamente nel simulatore Barber Reset (numero di sedie, ricavi, ecc.). Questi dati sono trattati in modo aggregato e anonimo.</li>
-      <li><strong>Dati di navigazione</strong> — indirizzo IP, tipo di browser, pagine visitate, durata della sessione. Raccolti automaticamente per finalità statistiche aggregate tramite Vercel Analytics.</li>
+      <li><strong>Dati di navigazione</strong> — pagine visitate, tipo di dispositivo e di browser, paese di provenienza e tempi di caricamento delle pagine. Sono raccolti automaticamente, in forma aggregata, tramite Vercel Web Analytics e Vercel Speed Insights, senza cookie. L'indirizzo IP è usato solo dal servizio di hosting per consegnare il sito e per la sicurezza.</li>
     </ul>
 
     <h2>3. Finalità e Base Giuridica del Trattamento</h2>
@@ -99,25 +99,28 @@
     <h2>4. Modalità di Trattamento e Conservazione</h2>
     <p>I dati sono trattati con strumenti elettronici, nel rispetto dei principi di minimizzazione, integrità e riservatezza. Sono conservati per il tempo strettamente necessario alle finalità per cui sono stati raccolti:</p>
     <ul>
-      <li><strong>Dati di contatto</strong>: massimo 24 mesi dall'ultimo contatto.</li>
+      <li><strong>Dati di contatto</strong>: massimo 24 mesi dall'ultimo contatto. Sono salvati nel database del sito (Supabase) e inviati per email al Titolare (Resend).</li>
       <li><strong>Dati del simulatore</strong>: elaborazione in tempo reale, non persistiti su database.</li>
-      <li><strong>Dati di navigazione aggregati</strong>: 90 giorni (Vercel Analytics).</li>
+      <li><strong>Dati di navigazione aggregati</strong>: secondo i tempi di conservazione di Vercel Analytics.</li>
+      <li><strong>Registri tecnici del server</strong> (log): conservati per pochi giorni dal fornitore di hosting. Non contengono il nome, il telefono o il messaggio inviati con il modulo.</li>
     </ul>
 
     <h2>5. Comunicazione a Terzi</h2>
     <p>I dati non sono ceduti a terzi per finalità commerciali. Possono essere comunicati esclusivamente a:</p>
     <ul>
       <li><strong>Resend Inc.</strong> (piattaforma di invio email transazionale) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
-      <li><strong>Vercel Inc.</strong> (hosting e analytics anonime) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
+      <li><strong>Supabase Inc.</strong> (database in cui sono salvate le richieste inviate con il modulo) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
+      <li><strong>Vercel Inc.</strong> (hosting, Web Analytics e Speed Insights) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
+      <li>Il fornitore che gestisce tecnicamente il sito per conto del Titolare, nominato responsabile del trattamento e tenuto alla riservatezza.</li>
       <li>Autorità pubbliche, su richiesta di legge.</li>
     </ul>
 
     <h2>6. Cookie Policy</h2>
-    <p>Questo sito utilizza esclusivamente <strong>cookie tecnici necessari</strong> al funzionamento della piattaforma:</p>
+    <p>Questo sito <strong>non usa cookie di profilazione</strong>. Salva soltanto una preferenza tecnica nella memoria locale del browser (localStorage):</p>
     <table>
       <thead>
         <tr>
-          <th>Cookie</th>
+          <th>Nome</th>
           <th>Tipo</th>
           <th>Scopo</th>
           <th>Durata</th>
@@ -126,17 +129,17 @@
       <tbody>
         <tr>
           <td><code>maximize_cookie_consent</code></td>
-          <td>Tecnico</td>
+          <td>Tecnico (localStorage)</td>
           <td>Memorizza la preferenza sul banner cookie</td>
-          <td>1 anno</td>
+          <td>Finché non viene cancellata dal browser</td>
         </tr>
       </tbody>
     </table>
     <p><strong>Non vengono utilizzati cookie di profilazione, tracciamento pubblicitario o terze parti di marketing.</strong></p>
-    <p>Le metriche di Vercel Analytics sono completamente anonime e aggregate — non identificano l'utente individuale e non richiedono consenso ai sensi del GDPR.</p>
+    <p>Vercel Web Analytics e Speed Insights non usano cookie e mostrano al Titolare solo dati aggregati, che non identificano il singolo visitatore.</p>
 
     <h2>7. Trasferimento Dati Extra-UE</h2>
-    <p>Vercel Inc. e Resend Inc. sono società statunitensi. Il trasferimento avviene nel rispetto delle garanzie previste dal GDPR (Standard Contractual Clauses — SCC) e dall'accordo Data Privacy Framework EU-USA.</p>
+    <p>Vercel Inc., Resend Inc. e Supabase Inc. sono società statunitensi. Se i dati sono trasferiti fuori dall'Unione Europea, il trasferimento avviene con le garanzie previste dal GDPR: Clausole Contrattuali Standard (SCC) o EU-U.S. Data Privacy Framework, dove applicabile.</p>
 
     <h2>8. Diritti dell'Interessato</h2>
     <p>Ai sensi degli artt. 15-22 del GDPR, l'interessato ha diritto di:</p>

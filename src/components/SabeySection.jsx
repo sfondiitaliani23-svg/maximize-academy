@@ -72,7 +72,7 @@ export default function SabeySection() {
               
               <div className="flex items-center gap-4">
                 <img loading="lazy" 
-                  src="/assets/loghi/1000363520.png" 
+                  src="/assets/loghi/1000363520.webp" 
                   alt="Sabey Scissors Logo" 
                   className="h-10 sm:h-12 object-contain filter brightness-125"
                 />
@@ -125,7 +125,7 @@ export default function SabeySection() {
               <div className="relative p-3 rounded-full glass-panel border border-amber-500/40 shadow-gold-glow group">
                 <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden bg-white/5 flex items-center justify-center p-2">
                   <img loading="lazy" 
-                    src="/assets/img/Sabey_Brand_Ambassador_Strategist.png" 
+                    src="/assets/img/Sabey_Brand_Ambassador_Strategist.webp" 
                     alt="Sabey Brand Ambassador Strategist Badge Ufficiale - Maurizio Pizzuto" 
                     className="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500"
                   />
