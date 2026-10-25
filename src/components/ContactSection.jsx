@@ -39,7 +39,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contatti" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#070709] via-[#0d0d14] to-[#070709]">
+    <section id="contatti" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#111111] via-[#181818] to-[#111111]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

@@ -40,7 +40,7 @@ export default function SabeySection() {
   };
 
   return (
-    <section id="sabey" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#08080b] via-[#0f0f15] to-[#08080b]">
+    <section id="sabey" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#111111] via-[#181818] to-[#111111]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

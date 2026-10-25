@@ -3,7 +3,7 @@ import { Trophy, Users, Sparkles, ArrowRight, MapPin, Calendar } from 'lucide-re
 
 export default function BarberMatchSection({ onSelectCourse }) {
   return (
-    <section id="barber-match" className="py-24 relative overflow-hidden bg-[#070709]">
+    <section id="barber-match" className="py-24 relative overflow-hidden bg-[#111111]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

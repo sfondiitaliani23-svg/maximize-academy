@@ -26,7 +26,7 @@ export default function CookieBanner() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-md z-40 animate-fade-in-up">
-      <div className="p-4 sm:p-5 rounded-2xl bg-[#0b0b0f]/95 backdrop-blur-xl border border-amber-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.8)] text-gray-300">
+      <div className="p-4 sm:p-5 rounded-2xl bg-[#181818]/95 backdrop-blur-xl border border-amber-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.8)] text-gray-300">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center flex-shrink-0 text-amber-400">
             <ShieldCheck className="w-4 h-4" />

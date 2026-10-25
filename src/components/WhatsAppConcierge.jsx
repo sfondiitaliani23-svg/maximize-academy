@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, Phone, X, Sparkles, User, ChevronRight } from 'lucide-react';
+import { MessageSquare, X, ChevronRight } from 'lucide-react';
 
 export default function WhatsAppConcierge() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,23 +87,15 @@ export default function WhatsAppConcierge() {
         </div>
       )}
 
-      {/* Floating Pill Button (Fedele al layout degli screenshot con tocco luxury rifinito) */}
+      {/* Pulsante tondo come quello di Maurizio Barber Shop: nero, anello oro, icona chat */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2.5 px-4 py-3 rounded-full btn-gold shadow-gold-glow-lg hover:scale-105 transition-all duration-300 group"
-        aria-label="Contattaci su WhatsApp"
+        className="relative w-14 h-14 rounded-full bg-[#181818] border border-amber-400/70 shadow-[inset_0_0_0_3px_#181818,inset_0_0_0_4px_rgba(191,161,106,.45),0_8px_30px_rgba(0,0,0,.28)] flex items-center justify-center text-[#f4f4f4] hover:text-amber-400 transition-colors"
+        aria-label={isOpen ? 'Chiudi i contatti WhatsApp' : 'Parla con noi su WhatsApp'}
+        aria-expanded={isOpen}
       >
-        <div className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center text-black">
-          <MessageSquare className="w-4 h-4 fill-current" />
-        </div>
-        <div className="text-left hidden sm:block">
-          <div className="text-[11px] font-black uppercase tracking-wider text-black leading-tight">
-            Parla con noi
-          </div>
-          <div className="text-[9px] font-semibold text-black/80 tracking-tight">
-            WhatsApp · Scrivi 24/7
-          </div>
-        </div>
+        <MessageSquare className="w-5 h-5" />
+        <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-[#111111]" aria-hidden="true"></span>
       </button>
 
     </div>

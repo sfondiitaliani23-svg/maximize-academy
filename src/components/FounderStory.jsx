@@ -3,7 +3,7 @@ import { CheckCircle2, Flame, Award, Sparkles } from 'lucide-react';
 
 export default function FounderStory() {
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent via-[#0d0d12] to-transparent">
+    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent via-[#181818] to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

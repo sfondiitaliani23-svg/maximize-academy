@@ -2,167 +2,126 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Stile allineato a Maurizio Barber Shop (stessa linea visiva, funzioni diverse).
+   Carattere Oswald (licenza OFL) ospitato sul sito: nessun font di terzi. */
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/assets/fonts/oswald-latin-wght-normal.woff2") format("woff2");
+}
+
 :root {
-  --gold-primary: #D4AF37;
-  --gold-light: #F3E5AB;
-  --gold-dark: #997A15;
-  --bg-deep: #070709;
+  --ink: #111;
+  --ink-2: #181818;
+  --ink-3: #222;
+  --gold: #bfa16a;
+  --gold-hover: #d2b67f;
+  --text: #f4f4f4;
+  --text-soft: #bdbdbd;
+  --line: #3d3d3d;
+  --sk: .9rem; /* inclinazione dei pulsanti */
+  --header-h: 88px;
 }
+@media (max-width: 760px) { :root { --header-h: 70px; } }
 
-/* Custom Scrollbar Luxury */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #09090c;
-}
-::-webkit-scrollbar-thumb {
-  background: #23232c;
-  border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #c5a059;
-}
+html { scroll-padding-top: var(--header-h); }
+body { background: var(--ink); color: var(--text); letter-spacing: .03em; }
 
-/* Glassmorphism Classes */
+/* Scrollbar sobria */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--ink-3); border: 1px solid var(--line); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* Pannelli: piatti, come le card di Maurizio Barber Shop (niente vetro, niente bagliori) */
 .glass-panel {
-  background: rgba(14, 14, 18, 0.65);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .18);
 }
-
 .glass-panel-gold {
-  background: linear-gradient(135deg, rgba(20, 20, 26, 0.75), rgba(11, 11, 15, 0.85));
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(212, 175, 55, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  background: var(--ink-2);
+  border: 1px solid color-mix(in srgb, var(--gold), transparent 55%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .28);
 }
-
-.glass-nav {
-  background: rgba(9, 9, 12, 0.78);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
+.glass-nav { background: var(--ink); border-bottom: 1px solid var(--line); }
 .glass-card {
-  background: rgba(16, 16, 22, 0.6);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  transition: border-color .22s cubic-bezier(.2, .7, .2, 1), background .22s cubic-bezier(.2, .7, .2, 1);
 }
+.glass-card:hover { background: var(--ink-3); border-color: color-mix(in srgb, var(--gold), transparent 40%); }
 
-.glass-card:hover {
-  background: rgba(22, 22, 30, 0.85);
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.12);
-  transform: translateY(-4px);
-}
+/* Testo oro: tinta piena, come gli <em> di Maurizio Barber Shop */
+.gold-text-gradient { color: var(--gold); font-style: normal; }
+.silver-text-gradient { color: var(--text); }
+h1 .font-serif.italic, h2 .font-serif.italic, h3 .font-serif.italic { font-style: normal; font-weight: 400; }
 
-/* Typography Gradient */
-.gold-text-gradient {
-  background: linear-gradient(135deg, #FFF0B8 0%, #DFBA6A 40%, #D4AF37 60%, #997A15 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.silver-text-gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #D1D5DB 60%, #9CA3AF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-/* Luxury Buttons */
-.btn-gold {
-  background: linear-gradient(135deg, #E8C878 0%, #D4AF37 50%, #B8860B 100%);
-  color: #08080a;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-gold:hover {
-  background: linear-gradient(135deg, #F3E5AB 0%, #DFBA6A 50%, #C5A059 100%);
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5), 0 0 30px rgba(212, 175, 55, 0.3);
-  transform: translateY(-2px);
-}
-
-.btn-glass {
-  background: rgba(255, 255, 255, 0.04);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  color: #F3F4F6;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(212, 175, 55, 0.45);
-  color: #DFBA6A;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-/* Luxury Glow Animations */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(212, 175, 55, 0.6);
-  }
-}
-
-.animate-gold-pulse {
-  animation: pulseGlow 3s infinite ease-in-out;
-}
-
-/* Shimmer Highlight Effect */
-.shimmer-badge {
+/* Pulsanti angolari (parallelogramma con doppio filo), come «Prenota ora» di Maurizio Barber Shop */
+.btn-gold, .btn-glass {
+  --fill: color-mix(in srgb, var(--ink), transparent 12%);
+  --bl: var(--gold);
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--fill);
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding-left: calc(1.75rem + var(--sk)) !important;
+  padding-right: calc(1.75rem + var(--sk)) !important;
+  clip-path: polygon(var(--sk) 0, 100% 0, calc(100% - var(--sk)) 100%, 0 100%);
+  transition: background .22s cubic-bezier(.2, .7, .2, 1), color .22s cubic-bezier(.2, .7, .2, 1);
 }
-.shimmer-badge::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-  transform: rotate(30deg);
-  animation: shimmer 5s infinite;
+.btn-glass { --bl: var(--text-soft); color: var(--text); }
+.btn-gold::before, .btn-glass::before, .btn-gold::after, .btn-glass::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+}
+.btn-gold::before, .btn-glass::before {
+  background: var(--bl);
+  clip-path: polygon(evenodd,
+    var(--sk) 0, 100% 0, calc(100% - var(--sk)) 100%, 0 100%,
+    calc(var(--sk) + 1.4px) 1px, calc(100% - 1px) 1px, calc(100% - var(--sk) - 1.4px) calc(100% - 1px), 1px calc(100% - 1px));
+}
+.btn-gold::after, .btn-glass::after {
+  background: color-mix(in srgb, var(--bl), transparent 55%);
+  clip-path: polygon(evenodd,
+    calc(var(--sk) + 4px) 3px, calc(100% - 3px) 3px, calc(100% - var(--sk) - 4px) calc(100% - 3px), 3px calc(100% - 3px),
+    calc(var(--sk) + 5.4px) 4px, calc(100% - 4px) 4px, calc(100% - var(--sk) - 5.4px) calc(100% - 4px), 4px calc(100% - 4px));
+}
+@media (hover: hover) {
+  .btn-gold:hover, .btn-glass:hover {
+    background: color-mix(in srgb, var(--gold), var(--ink) 82%);
+    color: var(--gold-hover);
+    --bl: var(--gold);
+    transform: none;
+  }
+}
+.btn-gold:focus-visible, .btn-glass:focus-visible { outline: none; --bl: #fff; }
+.btn-gold:disabled, .btn-glass:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 520px) {
+  .btn-gold, .btn-glass {
+    letter-spacing: .06em;
+    padding-left: calc(1.25rem + var(--sk)) !important;
+    padding-right: calc(1.25rem + var(--sk)) !important;
+  }
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%) rotate(30deg); }
-  25% { transform: translateX(100%) rotate(30deg); }
-  100% { transform: translateX(100%) rotate(30deg); }
-}
+/* Effetti decorativi spenti: Maurizio Barber Shop non ne usa */
+.animate-gold-pulse { animation: none; }
+.shimmer-badge::after { display: none; }
 
-/* Cookie Banner entrance animation */
+/* Comparsa del banner cookie */
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out forwards;
+.animate-fade-in-up { animation: fade-in-up 0.5s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

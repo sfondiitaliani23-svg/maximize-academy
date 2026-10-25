@@ -54,9 +54,7 @@ export default function BarberResetSection() {
   return (
     <section id="barber-reset" className="py-24 relative overflow-hidden">
       {/* Background Lighting */}
-      <div className="absolute inset-0 bg-[#08080b]">
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-950/10 rounded-full blur-[140px] pointer-events-none"></div>
-        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[#111111]">
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

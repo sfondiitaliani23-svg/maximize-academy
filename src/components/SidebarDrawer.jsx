@@ -31,7 +31,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
             <div className="flex items-center justify-between pb-6 border-b border-amber-500/20">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-700 p-[1px] shadow-gold-glow">
-                  <div className="w-full h-full bg-[#0a0a0e] rounded-[7px] flex items-center justify-center">
+                  <div className="w-full h-full bg-[#181818] rounded-[7px] flex items-center justify-center">
                     <span className="font-display font-black text-lg gold-text-gradient">M</span>
                   </div>
                 </div>

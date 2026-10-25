@@ -1,96 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, PhoneCall, Sparkles, Compass } from 'lucide-react';
+import React from 'react';
 
-export default function Navbar({ onOpenMobileMenu, onOpenContactModal }) {
-  const [scrolled, setScrolled] = useState(false);
+// Barra in alto come Maurizio Barber Shop: fondo nero pieno, menu in testo semplice,
+// azione principale in oro con un filo verticale, pulsante "Menu" su telefono.
+const links = [
+  { href: '#ecosistema', label: 'Ecosistema' },
+  { href: '#formazione', label: 'Formazione' },
+  { href: '#barber-reset', label: 'Barber Reset' },
+  { href: '#sabey', label: 'Sabey' },
+  { href: '#anaqa', label: 'ANAQA' },
+  { href: '#treatwell', label: 'Treatwell' },
+  { href: '#barber-match', label: 'Eventi' },
+  { href: '#contatti', label: 'Contatti' },
+];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+export default function Navbar({ onOpenMobileMenu }) {
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled 
-        ? 'py-3.5 glass-nav border-b border-amber-500/20' 
-        : 'py-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          
-          {/* Brand Logo Luxury */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 p-[1px] shadow-gold-glow group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full bg-[#09090c] rounded-[11px] flex items-center justify-center">
-                <span className="font-display font-black text-xl gold-text-gradient tracking-tighter">M</span>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-extrabold text-sm sm:text-base tracking-[0.22em] text-white group-hover:text-amber-300 transition-colors">
-                MAXIMIZE<span className="text-amber-400 ml-1 font-light">ACADEMY</span>
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.3em] text-amber-400/80 font-medium">
-                Maurizio Pizzuto
-              </span>
-            </div>
+    <header className="sticky top-0 z-50 flex items-center justify-between gap-4 h-[var(--header-h)] px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
+      <a href="#" className="flex flex-col leading-none shrink-0" aria-label="Maximize Academy, torna all'inizio">
+        <span className="text-white text-lg sm:text-xl font-bold uppercase tracking-[0.14em]">
+          Maximize <span className="text-amber-400 font-normal">Academy</span>
+        </span>
+        <span className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#bdbdbd]">Maurizio Pizzuto</span>
+      </a>
+
+      <nav className="hidden xl:flex items-center gap-6 text-sm text-[#bdbdbd]" aria-label="Navigazione principale">
+        {links.map((l) => (
+          <a key={l.href} href={l.href} className="min-h-[44px] inline-flex items-center whitespace-nowrap hover:text-amber-400 transition-colors">
+            {l.label}
           </a>
+        ))}
+      </nav>
 
-          {/* Desktop Nav Links Glass Pill */}
-          <nav className="hidden lg:flex items-center gap-1.5 px-5 py-2 rounded-full glass-panel border border-white/10 shadow-glass">
-            <a href="#ecosistema" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              Ecosistema
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#formazione" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              Formazione
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#barber-reset" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-200 transition-colors flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              Barber Reset
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#sabey" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              Sabey
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#anaqa" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              ANAQA
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#treatwell" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              Treatwell
-            </a>
-            <span className="text-white/20 text-xs">•</span>
-            <a href="#barber-match" className="px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-amber-300 transition-colors">
-              Eventi
-            </a>
-          </nav>
+      <div className="flex items-center gap-2">
+        <a
+          href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative inline-flex items-center gap-2 min-h-[44px] pr-4 mr-2 text-amber-400 font-bold whitespace-nowrap hover:text-white transition-colors after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-px after:h-6 after:bg-amber-400/45 xl:pr-0 xl:mr-0 xl:after:hidden"
+          aria-label="Parla con Maurizio su WhatsApp"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5Z" />
+          </svg>
+          <span className="hidden sm:inline">Parla con Maurizio</span>
+        </a>
 
-          {/* Right Action Buttons */}
-          <div className="flex items-center gap-3">
-            <a 
-              href="#contatti"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full btn-gold text-xs uppercase tracking-wider shadow-gold-glow"
-            >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>Parla con noi</span>
-            </a>
-
-            {/* Mobile / Tablet Menu Toggle */}
-            <button
-              onClick={onOpenMobileMenu}
-              className="p-2.5 rounded-xl glass-panel border border-amber-500/30 text-amber-400 hover:text-amber-200 hover:border-amber-400 transition-all lg:hidden"
-              aria-label="Apri menu di navigazione"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-
-        </div>
+        <button
+          type="button"
+          onClick={onOpenMobileMenu}
+          className="xl:hidden inline-flex items-center gap-2 min-h-[44px] px-2 text-white hover:text-amber-400 transition-colors"
+          aria-label="Apri il menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <span className="text-sm uppercase tracking-wider">Menu</span>
+        </button>
       </div>
     </header>
   );

@@ -23,7 +23,7 @@ export default function App() {
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   return (
-    <div className="relative min-h-screen bg-[#070709] text-gray-200 selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="relative min-h-screen bg-[#111111] text-gray-200 selection:bg-amber-500/30 selection:text-amber-200">
       
       {/* Glass Top Navbar */}
       <Navbar 

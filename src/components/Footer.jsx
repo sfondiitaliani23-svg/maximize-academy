@@ -5,7 +5,7 @@ export default function Footer() {
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   return (
-    <footer className="bg-[#050507] border-t border-amber-500/20 text-gray-400 text-xs relative z-20">
+    <footer className="bg-[#111111] border-t border-amber-500/20 text-gray-400 text-xs relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300 to-amber-700 p-[1px] shadow-gold-glow">
-                <div className="w-full h-full bg-[#08080a] rounded-[10px] flex items-center justify-center">
+                <div className="w-full h-full bg-[#111111] rounded-[10px] flex items-center justify-center">
                   <span className="font-display font-black text-lg gold-text-gradient">M</span>
                 </div>
               </div>

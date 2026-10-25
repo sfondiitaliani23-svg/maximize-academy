@@ -3,7 +3,7 @@ import { Users2, Globe, Compass, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function MensEventsSection() {
   return (
-    <section id="mens-events" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#070709] via-[#0c0c12] to-[#070709]">
+    <section id="mens-events" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#111111] via-[#181818] to-[#111111]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-14 border border-amber-500/30 relative shadow-2xl overflow-hidden">

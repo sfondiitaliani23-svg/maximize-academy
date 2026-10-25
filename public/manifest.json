@@ -4,8 +4,8 @@
   "description": "L'ecosistema definitivo per il Barber moderno — Maurizio Pizzuto",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070709",
-  "theme_color": "#D4AF37",
+  "background_color": "#111111",
+  "theme_color": "#111111",
   "orientation": "portrait-primary",
   "lang": "it",
   "icons": [
@@ -23,11 +23,15 @@
   ],
   "screenshots": [
     {
-      "src": "/assets/img/maurizio_hero.jpg",
-      "sizes": "1200x628",
-      "type": "image/jpeg"
+      "src": "/assets/img/anteprima-social.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide"
     }
   ],
-  "categories": ["education", "business"],
+  "categories": [
+    "education",
+    "business"
+  ],
   "related_applications": []
 }
