@@ -90,4 +90,5 @@ export const brandLinks = {
   sabey: 'https://www.instagram.com/sabey_scissors_europa/',
   anaqa: 'https://anaqaitalia.it/',
   treatwell: 'https://www.treatwell.it/',
+  maurizioBarberShop: 'https://maurizio-barbershop.it/',
 };
