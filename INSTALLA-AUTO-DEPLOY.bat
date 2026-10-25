@@ -1,59 +1,64 @@
-:: ================================================================
-::  MAXIMIZE ACADEMY — Installazione Auto-Deploy come Windows Service
-::  
-::  ▶  ESEGUI COME AMMINISTRATORE (click destro → "Esegui come amm.")
-::  ▶  Va eseguito UNA SOLA VOLTA.
-::  Dopo il riavvio, l'auto-deploy partirà automaticamente ad ogni
-::  accensione del PC senza bisogno di fare nulla.
-:: ================================================================
 @echo off
-NET SESSION >nul 2>&1
-IF %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo  ╔════════════════════════════════════════════╗
-    echo  ║  ERRORE: Esegui come Amministratore!       ║
-    echo  ║  Click destro sul file → "Esegui come amm."║
-    echo  ╚════════════════════════════════════════════╝
-    pause
-    exit /b 1
-)
-
-echo.
-echo  ╔══════════════════════════════════════════════════╗
-echo  ║   MAXIMIZE ACADEMY — Installazione Auto-Deploy   ║
-echo  ╚══════════════════════════════════════════════════╝
-echo.
+:: ================================================================
+::  MAXIMIZE ACADEMY - Installazione Auto-Deploy
+::
+::  Doppio click. Va eseguito UNA SOLA VOLTA.
+::  Da ora il watcher parte da solo ogni volta che entri in Windows.
+::  Usa la cartella "Esecuzione automatica" di Windows: niente admin.
+::
+::  Per disinstallare:  INSTALLA-AUTO-DEPLOY.bat rimuovi
+:: ================================================================
+setlocal
 
 SET TASK_NAME=MaximizeAcademy-AutoDeploy
-SET BAT_PATH=c:\Users\Eliseo Miraglia\Desktop\LAVORO\MAXIMIZE ACADEMY SITO\MAXIMIZE_ACADEMY_PROGETTO_COMPLETO\auto-deploy-launcher.bat
-SET USER_NAME=Eliseo Miraglia
-
-:: Rimuovi task precedente se esiste
-schtasks /delete /tn "%TASK_NAME%" /f >nul 2>&1
-
-:: Crea il task schedulato: all'avvio, sempre attivo, si riavvia se crasha
-schtasks /create ^
-  /tn "%TASK_NAME%" ^
-  /tr "cmd.exe /c \"%BAT_PATH%\"" ^
-  /sc ONSTART ^
-  /ru "%USER_NAME%" ^
-  /rl HIGHEST ^
-  /f
-
-IF %ERRORLEVEL% EQU 0 (
-    echo.
-    echo  ✅ Task registrato con successo!
-    echo.
-    echo  Il watcher si avvierà automaticamente ad ogni
-    echo  avvio di Windows senza bisogno di fare nulla.
-    echo.
-    echo  Avvio immediato del watcher...
-    start "" /min cmd.exe /c "%BAT_PATH%"
-    echo  ✅ Watcher avviato in background!
-) ELSE (
-    echo.
-    echo  ❌ Errore nella creazione del task. Riprova come Amministratore.
-)
+SET BAT_PATH=%~dp0auto-deploy-launcher.bat
+SET STARTUP_FILE=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\MaximizeAcademy-AutoDeploy.cmd
 
 echo.
+echo  ==================================================
+echo    MAXIMIZE ACADEMY - Installazione Auto-Deploy
+echo  ==================================================
+echo.
+
+:: 1) Toglie il vecchio task del Task Scheduler (versione precedente)
+schtasks /query /tn "%TASK_NAME%" >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    schtasks /delete /tn "%TASK_NAME%" /f >nul 2>&1
+    schtasks /query /tn "%TASK_NAME%" >nul 2>&1
+    if not errorlevel 1 (
+        echo  ATTENZIONE: c'e' ancora il vecchio task "%TASK_NAME%".
+        echo  Rilancia questo file con click destro - "Esegui come amministratore".
+        goto fine
+    )
+    echo  Vecchio task del Task Scheduler rimosso.
+)
+
+:: 2) Toglie il vecchio avvio automatico, se c'e'
+if exist "%STARTUP_FILE%" del "%STARTUP_FILE%"
+
+if /i "%~1"=="rimuovi" (
+    echo  Auto-deploy disinstallato. Non partira' piu' da solo.
+    echo  Se una finestra "Auto Deploy" e' aperta, chiudila a mano.
+    goto fine
+)
+
+:: 3) Crea l'avvio automatico al login
+> "%STARTUP_FILE%" echo @echo off
+>> "%STARTUP_FILE%" echo start "Maximize Academy - Auto Deploy" /min "%BAT_PATH%"
+
+if not exist "%STARTUP_FILE%" (
+    echo  ERRORE: non riesco a creare l'avvio automatico.
+    goto fine
+)
+
+echo  OK - Avvio automatico installato.
+echo  Il watcher partira' da solo a ogni accesso a Windows.
+echo.
+echo  Avvio immediato del watcher...
+start "Maximize Academy - Auto Deploy" /min "%BAT_PATH%"
+echo  OK - Watcher avviato in una finestra ridotta a icona.
+
+:fine
+echo.
 pause
+endlocal

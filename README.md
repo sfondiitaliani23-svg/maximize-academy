@@ -34,7 +34,7 @@ Maximize Academy è una Web Application luxury ad alte prestazioni sviluppata co
 - **Backend Serverless (Vercel)**:
   - `/api/contact`: gestione lead e invio automatico notifiche via Resend.
   - `/api/barber-reset/assess`: algoritmo serverless per il calcolo del ROI e rendimento poltrona.
-  - `/api/sabey-recommend`: motore di raccomandazione modelli forbici.
+  - `/api/sabey/recommend`: motore di raccomandazione modelli forbici.
   - `/api/health`: diagnostica e uptime.
 - **Backend Standalone (Java)**: microserver HTTP opzionale in `backend-java/` per la persistenza locale e l'esportazione dei lead in formato CSV.
 - **Monitoring**: `@vercel/analytics` e `@vercel/speed-insights` integrati per Web Vitals e statistiche reali a zero cookie.
@@ -75,15 +75,29 @@ npm run preview
 
 ---
 
-## ⚡ Daemon di Auto-Deploy Continuo
+## ⚡ Auto-Deploy
 
-Il progetto include uno script daemon dedicato (`auto-deploy.js`) che monitora costantemente il file system, committa le modifiche e attiva il deploy automatico su GitHub e Vercel con debouncing:
+`auto-deploy.js` guarda `src/`, `public/`, `api/` e i file di configurazione. Quando smetti di salvare:
+
+1. aspetta **30 secondi** di silenzio;
+2. esegue `npm run build` — **se la build fallisce, non pubblica nulla**;
+3. blocca tutto se trova un file `.env` vero tra le modifiche;
+4. fa commit e push su GitHub → Vercel pubblica.
+
+Modifiche a `documentazione/` e `README.md` **non** fanno partire il deploy.
+
 ```bash
-npm run auto-deploy
+npm run auto-deploy          # avvio manuale
 ```
 
----
+**Avvio automatico con Windows:** doppio click su `INSTALLA-AUTO-DEPLOY.bat` (una volta sola).
+Per toglierlo: `INSTALLA-AUTO-DEPLOY.bat rimuovi`.
 
+**Pausa:** crea un file vuoto `.auto-deploy-pausa` nella cartella del progetto. Finché c'è, niente va online.
+
+Gira un solo watcher alla volta (file `.auto-deploy.lock`).
+
+---
 ## 📄 Pagine e File Pubblici
 
 - `/` — Homepage principale SPA

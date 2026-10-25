@@ -8,10 +8,14 @@ yarn-error.log*
 dist/
 build/
 
-# Ambiente e segreti
+# Ambiente e segreti (tutti i .env tranne l'esempio)
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+# Auto-deploy (file locali del watcher)
+.auto-deploy.lock
+.auto-deploy-pausa
 
 # Java build artifacts
 backend-java/bin/
