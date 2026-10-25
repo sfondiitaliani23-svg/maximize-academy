@@ -83,3 +83,11 @@ export const legacyHash = {
 
 export const normalize = (p) => (p.length > 1 ? p.replace(/\/+$/, '') : p);
 export const findPage = (p) => pages.find((x) => x.path === normalize(p)) || null;
+
+// Siti e profili ufficiali dei marchi (ticker e loghi nelle pagine)
+export const brandLinks = {
+  mensEvents: 'https://www.instagram.com/mensevents_education/',
+  sabey: 'https://www.instagram.com/sabey_scissors_europa/',
+  anaqa: 'https://anaqaitalia.it/',
+  treatwell: 'https://www.treatwell.it/',
+};

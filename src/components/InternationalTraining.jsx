@@ -1,3 +1,4 @@
+import { brandLinks } from '../routes';
 import React from 'react';
 import { Award, Users, Scissors, Calendar, ArrowRight, Sparkles } from 'lucide-react';
 
@@ -130,19 +131,23 @@ export default function InternationalTraining({ onSelectCourse }) {
 
             {/* Partner Logos inside Box */}
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 items-center justify-center bg-black/40 p-6 rounded-2xl border border-white/10">
-              <img loading="lazy"
+              <a href={brandLinks.mensEvents} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Men's Events Education su Instagram (si apre in una nuova scheda)">
+                <img loading="lazy"
                 src="/assets/loghi/mens-events.webp"
                 alt="Men's Events Education"
                 width="1074" height="240"
                 className="h-12 sm:h-14 w-auto object-contain"
               />
+              </a>
               <div className="w-full h-[1px] bg-white/10 hidden lg:block"></div>
-              <img loading="lazy"
+              <a href={brandLinks.sabey} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Sabey Scissors Europa su Instagram (si apre in una nuova scheda)">
+                <img loading="lazy"
                 src="/assets/loghi/sabey.webp"
                 alt="Sabey Scissors Italy Hand Made"
                 width="1549" height="240"
                 className="h-10 sm:h-12 w-auto object-contain"
               />
+              </a>
             </div>
 
           </div>

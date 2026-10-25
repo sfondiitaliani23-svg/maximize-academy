@@ -1,3 +1,4 @@
+import { brandLinks } from '../routes';
 import React from 'react';
 import { Users2, Globe, Compass, ArrowRight, Sparkles } from 'lucide-react';
 
@@ -45,12 +46,14 @@ export default function MensEventsSection() {
 
             {/* Right: Partner Logo Inverted High Contrast */}
             <div className="lg:col-span-4 flex flex-col items-center justify-center p-8 rounded-2xl bg-black/60 border border-white/10">
-              <img loading="lazy"
+              <a href={brandLinks.mensEvents} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Men's Events Education su Instagram (si apre in una nuova scheda)">
+                <img loading="lazy"
                 src="/assets/loghi/mens-events.webp"
                 alt="Men's Events Education"
                 width="1074" height="240"
                 className="w-full max-w-[320px] h-auto object-contain"
               />
+              </a>
               <div className="mt-4 text-[10px] uppercase tracking-[0.25em] text-amber-400 font-semibold text-center">
                 Education Partner Ufficiale
               </div>

@@ -1,3 +1,4 @@
+import { brandLinks } from '../routes';
 import React from 'react';
 import { Sparkles, Package, ArrowRight, ShieldCheck, Droplets, Check } from 'lucide-react';
 
@@ -51,12 +52,14 @@ export default function AnaqaSection() {
             <div className="lg:col-span-8 space-y-6">
               
               {/* Logo Anaqa Ufficiale */}
-              <img loading="lazy"
+              <a href={brandLinks.anaqa} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="ANAQA Men Creation (si apre in una nuova scheda)">
+                <img loading="lazy"
                 src="/assets/loghi/anaqa.webp"
                 alt="ANAQA Men Creation"
                 width="1169" height="240"
                 className="h-14 sm:h-16 w-auto object-contain"
               />
+              </a>
 
               <div className="space-y-2">
                 <div className="text-xs uppercase font-bold tracking-[0.25em] text-amber-400">

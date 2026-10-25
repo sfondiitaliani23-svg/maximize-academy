@@ -130,6 +130,11 @@ h1 .font-serif.italic, h2 .font-serif.italic, h3 .font-serif.italic { font-style
   .ticker__list { flex-wrap: wrap; justify-content: center; row-gap: .75rem; }
 }
 
+/* Loghi dei marchi cliccabili: leggero risalto al passaggio */
+.logo-link { display: inline-block; border-radius: 4px; transition: transform .22s cubic-bezier(.2,.7,.2,1), filter .22s; }
+.logo-link:hover, .logo-link:focus-visible { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); outline: none; }
+.logo-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; }
+
 /* Effetti decorativi spenti: Maurizio Barber Shop non ne usa */
 .animate-gold-pulse { animation: none; }
 .shimmer-badge::after { display: none; }

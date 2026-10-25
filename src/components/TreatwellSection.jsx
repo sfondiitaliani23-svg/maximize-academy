@@ -1,3 +1,4 @@
+import { brandLinks } from '../routes';
 import React from 'react';
 import { Smartphone, Calendar, Clock, ArrowRight, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
 
@@ -51,12 +52,14 @@ export default function TreatwellSection() {
             <div className="lg:col-span-7 space-y-6">
               
               {/* Logo Treatwell */}
-              <img loading="lazy"
+              <a href={brandLinks.treatwell} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Treatwell (si apre in una nuova scheda)">
+                <img loading="lazy"
                 src="/assets/loghi/treatwell.webp"
                 alt="Treatwell"
                 width="1293" height="240"
                 className="h-10 sm:h-12 w-auto object-contain"
               />
+              </a>
 
               <div className="space-y-1">
                 <div className="text-xs uppercase font-bold tracking-[0.25em] text-amber-400">

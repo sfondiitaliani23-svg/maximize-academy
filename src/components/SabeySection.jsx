@@ -1,3 +1,4 @@
+import { brandLinks } from '../routes';
 import React, { useState } from 'react';
 import { Scissors, Check, MessageSquare, Sparkles, Shield, ChevronRight } from 'lucide-react';
 
@@ -71,12 +72,14 @@ export default function SabeySection() {
             <div className="lg:col-span-7 space-y-6">
               
               <div className="flex items-center gap-4">
-                <img loading="lazy"
+                <a href={brandLinks.sabey} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Sabey Scissors Europa su Instagram (si apre in una nuova scheda)">
+                  <img loading="lazy"
                   src="/assets/loghi/sabey.webp"
                   alt="Sabey Scissors Italy Hand Made"
                   width="1549" height="240"
                   className="h-14 sm:h-16 w-auto object-contain"
                 />
+                </a>
               </div>
 
               <div className="space-y-1">

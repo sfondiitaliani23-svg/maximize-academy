@@ -1,4 +1,5 @@
 import React from 'react';
+import { brandLinks } from '../routes';
 
 // Hero con la stessa impaginazione di Maurizio Barber Shop:
 // testo a sinistra, ritratto a tutta altezza a destra con didascalia, striscia di dati sotto.
@@ -7,10 +8,10 @@ const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</
 const tickerItems = [
   { content: <>{gold('Formazione')} internazionale</>, href: '/formazione' },
   { content: <>{gold('Barber Reset')} in barberia</>, href: '/barber-reset' },
-  { content: <>Partner {gold("Men's Events Education")}</>, href: 'https://www.instagram.com/mensevents_education/', external: true },
-  { content: <>Brand Ambassador {gold('Sabey')}</>, href: 'https://www.instagram.com/sabey_scissors_europa/', external: true },
-  { content: <>Prodotti {gold('ANAQA')}</>, href: 'https://anaqaitalia.it/', external: true },
-  { content: <>Agenda digitale {gold('Treatwell')}</>, href: 'https://www.treatwell.it/', external: true },
+  { content: <>Partner {gold("Men's Events Education")}</>, href: brandLinks.mensEvents, external: true },
+  { content: <>Brand Ambassador {gold('Sabey')}</>, href: brandLinks.sabey, external: true },
+  { content: <>Prodotti {gold('ANAQA')}</>, href: brandLinks.anaqa, external: true },
+  { content: <>Agenda digitale {gold('Treatwell')}</>, href: brandLinks.treatwell, external: true },
   { content: <>{gold('Eventi')} e networking</>, href: '/eventi' },
   { content: <>Sede a Foggia</>, href: '/contatti' },
 ];
