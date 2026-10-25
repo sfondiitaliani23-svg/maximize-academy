@@ -134,6 +134,10 @@ h1 .font-serif.italic, h2 .font-serif.italic, h3 .font-serif.italic { font-style
 #main > section.py-24:first-child { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
 #main > section.py-24 + section.py-24 { padding-top: 0; }
 
+/* I loghi non si selezionano e non si trascinano: niente riquadro colorato dopo un doppio clic */
+header img, footer img, .logo-link img { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+header a img::selection { background: transparent; }
+
 /* Loghi dei marchi cliccabili: leggero risalto al passaggio */
 .logo-link { display: inline-block; border-radius: 4px; transition: transform .22s cubic-bezier(.2,.7,.2,1), filter .22s; }
 .logo-link:hover, .logo-link:focus-visible { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); outline: none; }
