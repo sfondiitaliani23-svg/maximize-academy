@@ -4,6 +4,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import App from './App';
 import './index.css';
+import { startAutoUpdate } from './autoUpdate';
+
+startAutoUpdate();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
