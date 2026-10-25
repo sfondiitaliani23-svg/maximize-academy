@@ -86,12 +86,12 @@ export default function Footer() {
 
       <div
         aria-hidden="true"
-        className="select-none whitespace-nowrap text-center font-bold leading-[0.8] text-transparent text-[clamp(4.5rem,15vw,15rem)] tracking-[0.02em] pt-4 [-webkit-text-stroke:1px_rgba(191,161,106,0.55)]"
+        className="select-none whitespace-nowrap text-center font-bold leading-none text-transparent text-[clamp(4.5rem,15vw,15rem)] tracking-[0.02em] pt-4 pb-[clamp(1rem,2vw,2rem)] [-webkit-text-stroke:1px_rgba(191,161,106,0.55)]"
       >
         MAXIMIZE
       </div>
 
-      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 text-[0.8rem]">
+      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 sm:pr-[calc(clamp(1.25rem,6vw,4.5rem)+5rem)] text-[0.8rem]">
         <small className="text-[0.8rem]">© 2026 Maximize Academy S.r.l.s. · P. IVA 02147290767</small>
         <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-amber-400 transition-colors">
           Privacy e cookie
