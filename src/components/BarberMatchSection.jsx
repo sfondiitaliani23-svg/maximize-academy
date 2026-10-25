@@ -55,9 +55,9 @@ export default function BarberMatchSection({ onSelectCourse }) {
               {/* Pillars Tagline */}
               <div className="flex flex-wrap items-center gap-3 text-xs font-bold tracking-widest text-amber-400">
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/50 border border-white/10">COMPETIZIONE</span>
-                <span>•</span>
+                <span className="hidden sm:inline" aria-hidden="true">•</span>
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/50 border border-white/10">FORMAZIONE</span>
-                <span>•</span>
+                <span className="hidden sm:inline" aria-hidden="true">•</span>
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/50 border border-white/10">NETWORK</span>
               </div>
 

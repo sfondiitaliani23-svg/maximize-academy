@@ -98,9 +98,9 @@ export default function SabeySection() {
               {/* Pillars */}
               <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-amber-200">
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">La tua mano</span>
-                <span className="text-amber-500">•</span>
+                <span className="hidden sm:inline text-amber-500" aria-hidden="true">•</span>
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">La tua tecnica</span>
-                <span className="text-amber-500">•</span>
+                <span className="hidden sm:inline text-amber-500" aria-hidden="true">•</span>
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">Il tuo strumento</span>
               </div>
 
@@ -253,11 +253,11 @@ export default function SabeySection() {
                   <p className="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">
                     {recommendedModel.desc}
                   </p>
-                  <div className="mt-3 flex items-center gap-3 text-xs text-amber-300 font-semibold">
+                  <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-amber-300 font-semibold">
                     <span>Mano: {recommendedModel.hand}</span>
-                    <span>•</span>
+                    <span className="hidden sm:inline" aria-hidden="true">•</span>
                     <span>Misura: {recommendedModel.size}</span>
-                    <span>•</span>
+                    <span className="hidden sm:inline" aria-hidden="true">•</span>
                     <span>Garanzia A Vita Sabey</span>
                   </div>
                 </div>

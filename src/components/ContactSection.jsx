@@ -46,8 +46,8 @@ export default function ContactSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
-              IL TUO PROSSIMO PASSO COMINCIA DA UNA CONVERSAZIONE
+            <span className="text-[11px] uppercase tracking-[0.12em] sm:tracking-[0.25em] text-amber-400 font-bold">
+              TUTTO COMINCIA DA UNA CONVERSAZIONE
             </span>
           </div>
 
