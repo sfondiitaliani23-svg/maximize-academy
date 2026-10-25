@@ -18,7 +18,7 @@ Proseguire il progetto esistente senza ripartire da zero e senza perdere struttu
 - Conservare il percorso Impara → Migliora → Attrezzati → Organizzati → Confrontati → Cresci.
 
 ## Contatti funzionali
-- Operatore formazione/Sabey: `https://wa.me/393783101416`
+- Operatore formazione/Sabey: `https://wa.me/393917163833`
 - Maurizio: 324 587 8724
 
 ## Note di migrazione

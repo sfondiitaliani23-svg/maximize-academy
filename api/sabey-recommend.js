@@ -15,7 +15,7 @@ export default function handler(req, res) {
     steel: 'Acciaio Giapponese VG-10 Lavorazione Artigianale Italiana',
     description: 'Bilanciamento perfetto per sfumature ultra-pulite, forbice su pettine e precisione assoluta sul contorno.',
     badge: 'Consigliata da Maurizio Pizzuto',
-    waDirectLink: `https://wa.me/393783101416?text=${encodeURIComponent('Salve, vorrei informazioni sulla forbice Sabey consigliata dal configuratore Maximize: modello ' + sizePreference + ' per tecnica ' + primaryTechnique)}`
+    waDirectLink: `https://wa.me/393917163833?text=${encodeURIComponent('Salve, vorrei informazioni sulla forbice Sabey consigliata dal configuratore Maximize: modello ' + sizePreference + ' per tecnica ' + primaryTechnique)}`
   };
 
   if (primaryTechnique.includes('punta') || primaryTechnique.includes('dettaglio')) {
