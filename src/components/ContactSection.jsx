@@ -68,6 +68,14 @@ export default function ContactSection() {
           {/* Canale 1: Maurizio Pizzuto */}
           <div className="glass-panel-gold rounded-3xl p-8 sm:p-10 border border-amber-500/40 relative shadow-2xl flex flex-col justify-between group hover:border-amber-400">
             <div>
+              <img
+                src="/assets/img/logo-maurizio-barber-shop.webp"
+                alt="Maurizio Barber Shop"
+                width="365"
+                height="160"
+                loading="lazy"
+                className="h-16 sm:h-20 w-auto mb-6"
+              />
               <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400 mb-2">
                 CONSULENZA · PROGETTI · PARTNERSHIP
               </div>
@@ -99,6 +107,14 @@ export default function ContactSection() {
           {/* Canale 2: Operatore Formazione & Sabey */}
           <div className="glass-panel rounded-3xl p-8 sm:p-10 border border-white/10 relative shadow-2xl flex flex-col justify-between group hover:border-amber-500/40">
             <div>
+              <img
+                src="/assets/img/logo-maximize.webp"
+                alt="Maximize Academy"
+                width="181"
+                height="224"
+                loading="lazy"
+                className="h-16 sm:h-20 w-auto mb-6"
+              />
               <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400/80 mb-2">
                 FORMAZIONE · CORSI · SABEY SCISSORS
               </div>

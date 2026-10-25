@@ -16,11 +16,15 @@ const links = [
 export default function Navbar({ onOpenMobileMenu }) {
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between gap-4 h-[var(--header-h)] px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
-      <a href="#" className="flex flex-col leading-none shrink-0" aria-label="Maximize Academy, torna all'inizio">
-        <span className="text-white text-lg sm:text-xl font-bold uppercase tracking-[0.14em]">
-          Maximize <span className="text-amber-400 font-normal">Academy</span>
-        </span>
-        <span className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#bdbdbd]">Maurizio Pizzuto</span>
+      <a href="#" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
+        <img
+          src="/assets/img/logo-maximize.webp"
+          alt="Maximize Academy"
+          width="181"
+          height="224"
+          className="h-12 sm:h-14 w-auto"
+          decoding="async"
+        />
       </a>
 
       <nav className="hidden xl:flex items-center gap-6 text-sm text-[#bdbdbd]" aria-label="Navigazione principale">

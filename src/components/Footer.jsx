@@ -13,11 +13,7 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300 to-amber-700 p-[1px] shadow-gold-glow">
-                <div className="w-full h-full bg-[#111111] rounded-[10px] flex items-center justify-center">
-                  <span className="font-display font-black text-lg gold-text-gradient">M</span>
-                </div>
-              </div>
+              <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-12 w-auto" aria-hidden="true" loading="lazy" />
               <div>
                 <span className="font-display font-black text-white tracking-[0.2em] text-sm">
                   MAXIMIZE<span className="text-amber-400 ml-1 font-light">ACADEMY</span>

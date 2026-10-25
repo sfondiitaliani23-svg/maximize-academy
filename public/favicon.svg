@@ -1,17 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="22" fill="#070709"/>
-  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="url(#goldBorder)" stroke-width="2" stroke-opacity="0.4"/>
-  <path d="M22 75 L22 25 L38 52 L50 35 L62 52 L78 25 L78 75 L66 75 L66 43 L55 60 L45 60 L34 43 L34 75 Z" fill="url(#goldFill)"/>
-  <defs>
-    <linearGradient id="goldFill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FCEBA2"/>
-      <stop offset="35%" stop-color="#D4AF37"/>
-      <stop offset="70%" stop-color="#B8860B"/>
-      <stop offset="100%" stop-color="#8C6608"/>
-    </linearGradient>
-    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E8C878"/>
-      <stop offset="100%" stop-color="#AA820A"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 892 892" width="812" height="812">
+<defs>
+  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff0b3"/><stop offset=".22" stop-color="#e6bf5c"/>
+    <stop offset=".45" stop-color="#b98a2b"/><stop offset=".62" stop-color="#f2d37e"/>
+    <stop offset=".8" stop-color="#c79a3a"/><stop offset="1" stop-color="#7a5414"/>
+  </linearGradient>
+  <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7dc8f"/><stop offset=".35" stop-color="#d1a445"/>
+    <stop offset=".55" stop-color="#fbe7a6"/><stop offset=".78" stop-color="#b8892c"/>
+    <stop offset="1" stop-color="#8a6018"/>
+  </linearGradient>
+  <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f3d27c"/><stop offset=".5" stop-color="#c39233"/><stop offset="1" stop-color="#e8c56a"/>
+  </linearGradient>
+  <clipPath id="crest"><path id="crestpath" d="M470 46 C 380 52 270 95 228 175 C 205 222 205 300 250 380 L 300 380 C 285 330 278 260 300 205 C 330 140 400 82 470 46 Z"/></clipPath>
+</defs>
+<rect x="-40" y="-40" width="892" height="892" rx="160" fill="#111"/>
+<!-- corpo della M: cresta, tratto "\", gamba "/" e gamba destra, con la coda che scende -->
+<path fill="url(#g1)" d="M470 46 C 380 52 270 95 228 175 C 200 230 205 300 245 380 C 300 470 350 560 372 640 C 385 700 388 750 385 795 C 420 740 440 690 470 650 L 556 420 L 600 668 L 738 668 L 600 98 L 420 410 L 300 205 C 330 140 400 82 470 46 Z"/>
+<!-- luce sul tratto "\" -->
+<path fill="url(#g2)" opacity=".55" d="M470 46 C 380 52 270 95 228 175 C 200 230 205 300 245 380 C 300 470 350 560 372 640 C 385 700 388 750 385 795 C 420 740 440 690 470 650 L 420 410 L 300 205 C 330 140 400 82 470 46 Z"/>
+<!-- glitter sulla cresta -->
+
+<!-- ciocche a sinistra -->
+<path fill="url(#g3)" d="M300 150 C 220 190 175 260 190 360 C 205 450 280 520 300 600 C 318 660 318 730 322 795 C 355 730 360 650 340 585 C 310 500 245 440 228 360 C 215 280 245 200 300 150 Z"/>
+<path fill="url(#g1)" d="M240 165 C 160 215 120 300 140 390 C 160 470 230 530 250 610 C 262 670 250 735 240 790 C 280 730 290 650 275 590 C 255 510 190 460 175 380 C 160 300 185 220 240 165 Z" opacity=".95"/>
 </svg>

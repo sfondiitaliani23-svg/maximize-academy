@@ -30,11 +30,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
           <div>
             <div className="flex items-center justify-between pb-6 border-b border-amber-500/20">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-700 p-[1px] shadow-gold-glow">
-                  <div className="w-full h-full bg-[#181818] rounded-[7px] flex items-center justify-center">
-                    <span className="font-display font-black text-lg gold-text-gradient">M</span>
-                  </div>
-                </div>
+                <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-10 w-auto" aria-hidden="true" />
                 <div>
                   <h3 className="font-display font-bold text-white text-sm tracking-widest">MAXIMIZE</h3>
                   <p className="text-[10px] uppercase text-amber-400/80 tracking-wider">Maurizio Pizzuto</p>

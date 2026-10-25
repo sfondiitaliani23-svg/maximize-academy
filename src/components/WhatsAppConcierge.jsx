@@ -40,8 +40,8 @@ export default function WhatsAppConcierge() {
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold">
-                  MP
+                <div className="w-14 h-9 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center px-1">
+                  <img src="/assets/img/logo-maurizio-barber-shop.webp" alt="" width="365" height="160" className="max-h-6 w-auto" aria-hidden="true" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
@@ -63,8 +63,8 @@ export default function WhatsAppConcierge() {
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
-                  MA
+                <div className="w-14 h-9 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center">
+                  <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-7 w-auto" aria-hidden="true" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
