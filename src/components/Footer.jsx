@@ -1,5 +1,5 @@
 import React from 'react';
-import { pages } from '../routes';
+import { pages, brandLinks } from '../routes';
 
 // Footer con slogan, colonne Esplora / Seguici / Sede e la scritta MAXIMIZE gigante in filo d'oro.
 const WA = 'https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy';
@@ -64,6 +64,8 @@ export default function Footer() {
             {pages.map((p) => (
               <li key={p.path}><a href={p.path} className={link}>{p.label}</a></li>
             ))}
+            {/* Collegamento al negozio: ok di Maurizio del 26/10/2026. */}
+            <li><a href={brandLinks.maurizioBarberShop} target="_blank" rel="noopener noreferrer" className={link}>Maurizio Barber Shop</a></li>
           </ul>
         </nav>
 
