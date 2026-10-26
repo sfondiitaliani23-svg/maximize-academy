@@ -1,0 +1,45 @@
+/* Storie (stesso aspetto di Maurizio Barber Shop). Variabili che servono solo qui. */
+.story-bar, .story-overlay { --gold-ink: #80632f; --fs-xs: .875rem; --fw-bold: 700; --sp-2: .5rem; --sp-3: .75rem; --sp-5: 1.5rem; --sp-6: 2rem; --dur-base: 220ms; --ease-out: cubic-bezier(.2, .7, .2, 1); }
+.story-bar { display: flex; gap: var(--sp-5); margin-top: var(--sp-5); }
+.story-bar[hidden] { display: none; }
+.story-bar--lg { justify-content: center; margin: 0 0 var(--sp-6); }
+.story-bar--lg .story-ring { width: 112px; height: 112px; padding: 4px; }
+.wrapped-page { text-align: center; }
+.wrapped-page .actions { justify-content: center; }
+.story-bubble { display: grid; justify-items: center; gap: var(--sp-2); padding: 0; border: 0; background: none; color: var(--text); cursor: pointer; -webkit-user-select: none; user-select: none; }
+.story-ring { display: grid; place-items: center; width: 74px; height: 74px; padding: 3px; border-radius: 50%; background: conic-gradient(from 210deg, var(--gold-hover), var(--gold), var(--gold-ink), var(--gold), var(--gold-hover)); animation: story-spin 6s linear infinite; transition: transform var(--dur-base) var(--ease-out); }
+.story-ring__inner { display: grid; place-items: center; width: 100%; height: 100%; overflow: hidden; border: 3px solid var(--ink); border-radius: 50%; background: var(--ink); animation: story-spin 6s linear infinite reverse; }
+.story-ring__inner img { width: 70%; height: auto; }
+.story-bubble.is-seen .story-ring { background: color-mix(in srgb, var(--text), transparent 70%); animation: none; }
+.story-bubble.is-seen .story-ring__inner { animation: none; }
+.story-bubble__label { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .14em; text-transform: uppercase; }
+.story-bubble:focus-visible { outline: none; }
+.story-bubble:focus-visible .story-ring { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold), transparent 40%); }
+@media (hover: hover) { .story-bubble:hover .story-ring { transform: scale(1.06); } .story-cta:hover { background: var(--gold); color: var(--ink); } }
+@keyframes story-spin { to { transform: rotate(360deg); } }
+.story-overlay { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; background: var(--ink); }
+@keyframes story-in { from { opacity: 0; transform: scale(.97); } }
+.story-frame { position: relative; width: 100vw; height: 100dvh; overflow: hidden; background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--gold), transparent 78%), transparent 60%), var(--ink); color: var(--text); touch-action: none; -webkit-user-select: none; user-select: none; }
+@media (min-width: 640px) { .story-frame { width: min(100vw, calc(94dvh * 9 / 16)); height: min(94dvh, calc(100vw * 16 / 9)); border: 1px solid color-mix(in srgb, var(--gold), transparent 55%); } }
+.story-bars { position: absolute; top: 10px; left: 10px; right: 10px; z-index: 4; display: flex; gap: 4px; }
+.story-bars span { flex: 1; height: 3px; overflow: hidden; background: color-mix(in srgb, var(--text), transparent 72%); }
+.story-bars i { display: block; height: 100%; width: 0; background: var(--gold-hover); }
+.story-head { position: absolute; top: 22px; left: 14px; right: 8px; z-index: 4; display: flex; align-items: center; justify-content: space-between; }
+.story-head__label { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.story-head__actions { display: flex; }
+.story-icon { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--text); cursor: pointer; }
+.story-stage, .story-media { position: absolute; inset: 0; }
+.story-media { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.story-shade { position: absolute; inset: 0; background: linear-gradient(color-mix(in srgb, var(--ink), transparent 55%), transparent 22%, transparent 55%, color-mix(in srgb, var(--ink), transparent 20%)); }
+.story-text { position: absolute; left: 8%; right: 8%; z-index: 3; display: grid; gap: var(--sp-3); text-align: center; }
+.story-text--numero, .story-text--testo { top: 50%; transform: translateY(-50%); }
+.story-text--foto, .story-text--video { bottom: 6.5rem; text-align: left; }
+.story-eyebrow { margin: 0; font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .2em; text-transform: uppercase; color: var(--text-soft); }
+.story-big { margin: 0; font-size: clamp(2.6rem, 14vw, 5.2rem); line-height: 1; color: var(--gold); overflow-wrap: anywhere; text-transform: uppercase; }
+.story-title { margin: 0; font-size: clamp(1.6rem, 7vw, 2.4rem); line-height: 1.1; text-transform: uppercase; }
+.story-title--media { font-size: clamp(1.4rem, 6vw, 2rem); }
+.story-body { margin: 0; color: var(--text-soft); line-height: 1.5; }
+.story-foot { position: absolute; left: 0; right: 0; bottom: 1.6rem; z-index: 4; display: flex; justify-content: center; }
+.story-cta { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 48px; padding: 0 var(--sp-5); border: 1px solid var(--gold); background: color-mix(in srgb, var(--ink), transparent 25%); color: var(--gold-hover); font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .12em; text-transform: uppercase; }
+.story-paused { position: absolute; top: 74px; left: 50%; z-index: 4; transform: translateX(-50%); font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-soft); }
+@media (prefers-reduced-motion: reduce) { .story-ring, .story-ring__inner, .story-overlay { animation: none; } }

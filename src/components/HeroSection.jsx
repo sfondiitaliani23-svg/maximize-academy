@@ -1,5 +1,6 @@
 import React from 'react';
 import { brandLinks } from '../routes';
+import StoriesBar from './StoriesBar';
 
 // Hero con la stessa impaginazione di Maurizio Barber Shop:
 // testo a sinistra, ritratto a tutta altezza a destra con didascalia, striscia di dati sotto.
@@ -63,6 +64,9 @@ export default function HeroSection() {
             Parla con Maurizio
           </a>
         </div>
+
+        {/* Storie (cerchio «Novità»), come su Maurizio Barber Shop */}
+        <StoriesBar />
       </div>
 
       {/* Ritratto */}
