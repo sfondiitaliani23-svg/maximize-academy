@@ -3,6 +3,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/gestione",
+      "destination": "/index.html"
+    },
+    {
       "source": "/api/contact",
       "destination": "/api/contact.js"
     },
