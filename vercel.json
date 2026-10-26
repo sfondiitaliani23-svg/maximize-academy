@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/gestione",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/api/contact",
