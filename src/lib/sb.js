@@ -1,7 +1,7 @@
 // Collegamento al progetto Supabase di Maximize Academy (separato da Maurizio Barber Shop).
 // L'indirizzo e la chiave «publishable» sono pubblici per natura: compaiono nel browser. Le chiavi segrete non stanno mai qui.
-export const SB_URL = 'https://hozyimhhrodazpssxmtt.supabase.co';
-export const SB_KEY = ''; // Project Settings → API Keys → Publishable key (sb_publishable_…). Vuota = storie di base, gestione spenta.
+export const SB_URL = 'https://pxzdsgcdwqnipxggveuu.supabase.co';
+export const SB_KEY = 'sb_publishable_00_46kjntMiIX_Qowz3bYA__Y4QOcfW'; // Project Settings → API Keys → Publishable key
 
 const STORE = 'mx-sessione';
 const read = () => { try { return JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { return null; } };

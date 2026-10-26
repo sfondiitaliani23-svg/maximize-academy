@@ -157,7 +157,7 @@ app.post('/api/contact', async (req, res) => {
     } catch (e) {}
 
     // Sincronizza con Supabase Cloud se configurato
-    const SUPABASE_URL = process.env.SUPABASE_URL || 'https://hozyimhhrodazpssxmtt.supabase.co';
+    const SUPABASE_URL = process.env.SUPABASE_URL || 'https://pxzdsgcdwqnipxggveuu.supabase.co';
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       try {

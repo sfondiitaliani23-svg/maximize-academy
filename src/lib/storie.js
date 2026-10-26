@@ -47,7 +47,7 @@ async function load() {
   if (!URL_ || !KEY) return [];
   const c = new AbortController(); const t = setTimeout(() => c.abort(), 4000);
   try {
-    const get = (q) => fetch(`${URL_}/rest/v1/storie?select=*${q}&order=ordine.asc,creato_il.asc&limit=60`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }, cache: 'no-store', signal: c.signal });
+    const get = (q) => fetch(`${URL_}/rest/v1/storie?select=*${q}&order=ordine.asc,creato_il.asc&limit=60`, { headers: { apikey: KEY }, cache: 'no-store', signal: c.signal });
     const r = await get('');
     if (!r.ok) return []; // tabella non ancora creata: solo le storie di base
     const day = romeToday();

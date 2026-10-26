@@ -140,16 +140,16 @@ export default async function handler(req, res) {
   }
 
   // --- Salvataggio Lead su Database Cloud Supabase ---
-  const SUPABASE_URL = process.env.SUPABASE_URL || 'https://hozyimhhrodazpssxmtt.supabase.co';
-  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+  // Progetto Supabase di Maximize (26/10/2026). URL e chiave «publishable» sono pubblici: la tabella accetta solo nuove righe.
+  const SUPABASE_URL = 'https://pxzdsgcdwqnipxggveuu.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_00_46kjntMiIX_Qowz3bYA__Y4QOcfW';
   if (SUPABASE_URL && SUPABASE_ANON_KEY) {
     channels++;
     try {
       const dbResponse = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
         method: 'POST',
         headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_ANON_KEY, // chiave sb_publishable_: va solo in apikey, non in Authorization
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal' // il browser non può rileggere le richieste: solo inserirle
         },
