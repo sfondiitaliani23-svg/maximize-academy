@@ -1,0 +1,4 @@
+# Cloudflare Pages (dopo il passaggio da Vercel). Le funzioni /api/* hanno la precedenza.
+# Le pagine del sito sono già file veri (prerender). /privacy funziona da sola (privacy.html).
+# La pagina di gestione esiste solo nell'app: si serve la home e l'app mostra /gestione.
+/gestione / 200

@@ -1,0 +1,17 @@
+# Cloudflare Pages: stesse intestazioni di vercel.json.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+/version.json
+  Cache-Control: no-store, max-age=0
+/assets/img/*
+  Cache-Control: public, max-age=86400, must-revalidate
+/assets/loghi/*
+  Cache-Control: public, max-age=86400, must-revalidate
+/assets/fonts/*
+  Cache-Control: public, max-age=86400, must-revalidate
+/manifest.json
+  Cache-Control: public, max-age=86400
+  Content-Type: application/manifest+json
