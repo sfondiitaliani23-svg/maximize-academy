@@ -1,0 +1,37 @@
+/* Pagina /gestione (storie): stessi nomi di classe del portale di Maurizio Barber Shop, aspetto nero e oro di Maximize. */
+.mx-admin .pcontent { display: grid; gap: 1rem; }
+.mx-admin .pcard { display: grid; gap: .9rem; padding: 1.25rem; border: 1px solid color-mix(in srgb, var(--gold), transparent 60%); background: var(--ink-2); }
+.mx-admin .pcard__title { margin: 0; font-size: 1.25rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); }
+.mx-admin .pcard__note, .mx-admin .field__hint { margin: 0; color: var(--text-soft); font-size: .95rem; }
+.mx-admin .pcard__note[data-state="error"] { color: #f0a08a; }
+.mx-admin .pempty { margin: 0; color: var(--text-soft); }
+.mx-admin .filters, .mx-admin .actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.mx-admin .chip { min-height: 40px; padding: .4rem .9rem; border: 1px solid var(--line); background: var(--ink); color: var(--text); text-transform: uppercase; letter-spacing: .06em; font-size: .85rem; }
+.mx-admin .chip[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); background: color-mix(in srgb, var(--gold), transparent 88%); }
+.mx-admin .chip:disabled { opacity: .5; }
+.mx-admin .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .55rem 1.2rem; border: 1px solid var(--gold); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; font-size: .85rem; }
+.mx-admin .btn--primary { background: var(--gold); color: var(--ink); }
+.mx-admin .btn--secondary { background: transparent; color: var(--gold); }
+.mx-admin .btn:disabled { opacity: .45; }
+.mx-admin .field { display: grid; gap: .4rem; }
+.mx-admin .field label { font-weight: 700; }
+.mx-admin .field input, .mx-admin .field select, .mx-admin .pst-date { min-height: 44px; padding: .5rem .8rem; background: var(--ink); color: var(--text); border: 1px solid var(--line); color-scheme: dark; }
+.mx-admin .portal-switch { display: flex; gap: .6rem; align-items: flex-start; }
+.mx-admin .portal-switch input { margin-top: .3rem; }
+.mx-admin [hidden] { display: none !important; }
+.mx-admin details summary { cursor: pointer; color: var(--gold); }
+.mx-admin .pst-avviso { display: flex; gap: .8rem; align-items: center; padding: .8rem; border: 1px dashed var(--gold); }
+.mx-admin .pst-avviso strong { display: block; color: var(--gold); }
+.mx-admin .pst-avviso__ic { display: grid; place-items: center; width: 3rem; height: 4.6rem; border: 2px solid var(--gold); color: var(--gold); font-weight: 700; flex: none; }
+.mx-admin .pst-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.mx-admin .pst-item { display: grid; grid-template-columns: 2rem 3.4rem 1fr auto; gap: .8rem; align-items: center; padding: .6rem; border: 1px solid var(--line); }
+.mx-admin .pst-n { color: var(--gold); font-weight: 700; }
+.mx-admin .pst-thumb { display: grid; place-items: center; width: 3.4rem; aspect-ratio: 9 / 16; overflow: hidden; background: var(--ink); border: 1px solid var(--line); color: var(--gold); font-weight: 700; }
+.mx-admin .pst-thumb img, .mx-admin .pst-thumb video { width: 100%; height: 100%; object-fit: cover; }
+.mx-admin .pst-thumb--big { width: 8rem; }
+.mx-admin .pst-thumb--big:empty { display: none; }
+.mx-admin .pst-info { display: grid; min-width: 0; }
+.mx-admin .pst-info small { color: var(--text-soft); }
+.mx-admin .pst-actions { display: flex; flex-wrap: wrap; gap: .35rem; }
+.mx-admin .pst-btn { min-height: 36px; padding: .3rem .7rem; }
+@media (max-width: 640px) { .mx-admin .pst-item { grid-template-columns: 1.5rem 3rem 1fr; } .mx-admin .pst-actions { grid-column: 1 / -1; } }

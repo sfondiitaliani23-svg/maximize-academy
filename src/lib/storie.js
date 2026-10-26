@@ -1,12 +1,11 @@
+import { SB_URL as URL_, SB_KEY as KEY } from './sb.js';
 // Storie in home di Maximize Academy (stile Instagram): cerchio dorato «Novità», visore a schermo intero.
-// Stesso visore di Maurizio Barber Shop. Le storie si caricano dal portale di Maurizio Barber Shop (Storie → Maximize Academy)
-// e stanno nella stessa tabella, con sito = 'maximize'. Chiave pubblica: legge solo le storie attive oggi.
+// Stesso visore di Maurizio Barber Shop, ma dati separati: progetto Supabase di Maximize, gestione su /gestione.
+// Chiave pubblica: legge solo le storie attive oggi.
 // Senza storie caricate si vedono le storie di base di Maximize. Tutti i nodi sono costruiti a mano.
 
 const EN = false;
 const T = (it, en) => (EN ? en : it);
-const URL_ = 'https://jxtkgxdxvouwlowvqohm.supabase.co';
-const KEY = 'sb_publishable_SfTFCS_YxVYUOQzxI_tLpA_Kj10eSVj';
 const SEEN = 'maximize-storie-viste';
 
 const h = (tag, attrs, ...kids) => {
@@ -49,9 +48,8 @@ async function load() {
   const c = new AbortController(); const t = setTimeout(() => c.abort(), 4000);
   try {
     const get = (q) => fetch(`${URL_}/rest/v1/storie?select=*${q}&order=ordine.asc,creato_il.asc&limit=60`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }, cache: 'no-store', signal: c.signal });
-    // Solo le storie di Maximize Academy.
-    const r = await get('&sito=eq.maximize');
-    if (!r.ok) return []; // colonna «sito» non ancora creata: solo le storie di base
+    const r = await get('');
+    if (!r.ok) return []; // tabella non ancora creata: solo le storie di base
     const day = romeToday();
     return (await r.json()).filter((s) => isLive(s, day) && ((s.tipo !== 'foto' && s.tipo !== 'video') || s.media_path)).map((s) => toSlide(s));
   } catch { return []; } finally { clearTimeout(t); }

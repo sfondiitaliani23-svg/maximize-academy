@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import App from './App';
 import './index.css';
 import './storie.css';
+import './gestione.css';
 import { startAutoUpdate } from './autoUpdate';
 
 startAutoUpdate();
