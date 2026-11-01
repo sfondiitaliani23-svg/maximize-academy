@@ -178,6 +178,25 @@ body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-ins
 .cookie-bar { bottom: calc(1rem + env(safe-area-inset-bottom)); }
 .drawer-panel { padding-top: calc(1.5rem + env(safe-area-inset-top)); padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
 
+/* ---------- Menu laterale (01/11/2026): piatto, nero e oro, come Maurizio Barber Shop ---------- */
+.drawer-scroll { scrollbar-width: none; overscroll-behavior: contain; }
+.drawer-scroll::-webkit-scrollbar { display: none; }
+.drawer-link { position: relative; border-bottom: 1px solid color-mix(in srgb, var(--line), transparent 40%); transition: background .18s ease-out; }
+.drawer-link:active { background: rgba(255,255,255,.04); }
+.drawer-link.is-active::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: var(--gold); }
+@media (hover: hover) and (pointer: fine) { .drawer-link:hover { background: rgba(255,255,255,.035); } }
+.drawer-ico { display: inline-grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; border: 1px solid var(--line); color: var(--text-soft); background: var(--ink-2); }
+.drawer-ico--gold { border-color: color-mix(in srgb, var(--gold), transparent 45%); color: var(--gold); background: color-mix(in srgb, var(--gold), var(--ink) 90%); }
+.drawer-tag { flex-shrink: 0; padding: 1px 6px; font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); background: var(--gold); }
+.drawer-app { border: 1px solid color-mix(in srgb, var(--gold), transparent 55%); background: color-mix(in srgb, var(--gold), var(--ink) 92%); transition: background .18s ease-out, transform .1s ease-out; }
+.drawer-app:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) { .drawer-app:hover { background: color-mix(in srgb, var(--gold), var(--ink) 84%); } }
+.drawer-help { border: 1px dashed color-mix(in srgb, var(--gold), transparent 60%); background: var(--ink-2); }
+.drawer-step { display: inline-grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--ink); background: var(--gold); }
+.drawer-close { display: inline-grid; place-items: center; width: 44px; height: 44px; color: var(--text-soft); border: 1px solid var(--line); transition: color .18s, border-color .18s; }
+.drawer-close:active { color: var(--text); border-color: var(--gold); }
+@media (hover: hover) and (pointer: fine) { .drawer-close:hover { color: var(--text); border-color: var(--gold); } }
+
 /* Comparsa del banner cookie */
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(20px); }

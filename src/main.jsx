@@ -10,8 +10,10 @@ import './index.css';
 import './storie.css';
 import './gestione.css';
 import { startAutoUpdate } from './autoUpdate';
+import { initPwa } from './pwa';
 
 startAutoUpdate();
+initPwa();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

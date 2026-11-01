@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import SidebarDrawer from './components/SidebarDrawer';
 import HeroSection from './components/HeroSection';
@@ -45,6 +45,7 @@ function scrollToTarget(hash) {
 export default function App() {
   const [path, setPath] = useState(() => normalize(window.location.pathname));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMobileMenuOpen(false), []);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   // Navigazione tra le pagine senza ricaricare il sito
@@ -120,12 +121,12 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#111111] text-gray-200 selection:bg-amber-500/30 selection:text-amber-200">
       <Navbar currentPath={page?.path || '/'} onOpenMobileMenu={() => setMobileMenuOpen(true)} />
-      <SidebarDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <SidebarDrawer isOpen={mobileMenuOpen} onClose={closeMenu} currentPath={page?.path || '/'} />
 
       <main id="main">{content}</main>
 
       <Footer />
-      <WhatsAppConcierge />
+      {!mobileMenuOpen && <WhatsAppConcierge />}
 
       {selectedCourseId && (
         <CourseModal courseId={selectedCourseId} onClose={() => setSelectedCourseId(null)} />
