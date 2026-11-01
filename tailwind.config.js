@@ -15,6 +15,8 @@ const gold = {
 };
 
 export default {
+  // Hover solo con mouse o trackpad: sul telefono l'effetto non resta "incollato" dopo il tocco
+  future: { hoverOnlyWhenSupported: true },
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",

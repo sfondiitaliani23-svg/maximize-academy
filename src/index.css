@@ -26,14 +26,14 @@
 }
 @media (max-width: 760px) { :root { --header-h: 70px; } }
 
-html { scroll-padding-top: var(--header-h); }
+html { scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top)); }
 body { background: var(--ink); color: var(--text); letter-spacing: .03em; }
 
 /* Scrollbar sobria */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
 ::-webkit-scrollbar-thumb { background: var(--ink-3); border: 1px solid var(--line); }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+@media (hover: hover) and (pointer: fine) { ::-webkit-scrollbar-thumb:hover { background: var(--gold); } }
 
 /* Pannelli: piatti, come le card di Maurizio Barber Shop (niente vetro, niente bagliori) */
 .glass-panel {
@@ -52,7 +52,9 @@ body { background: var(--ink); color: var(--text); letter-spacing: .03em; }
   border: 1px solid var(--line);
   transition: border-color .22s cubic-bezier(.2, .7, .2, 1), background .22s cubic-bezier(.2, .7, .2, 1);
 }
-.glass-card:hover { background: var(--ink-3); border-color: color-mix(in srgb, var(--gold), transparent 40%); }
+@media (hover: hover) and (pointer: fine) {
+  .glass-card:hover { background: var(--ink-3); border-color: color-mix(in srgb, var(--gold), transparent 40%); }
+}
 
 /* Testo oro: tinta piena, come gli <em> di Maurizio Barber Shop */
 .gold-text-gradient { color: var(--gold); font-style: normal; }
@@ -114,12 +116,16 @@ h1 .font-serif.italic, h2 .font-serif.italic, h3 .font-serif.italic { font-style
 /* Ticker infinito sotto la home */
 .ticker { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .ticker__track { display: flex; width: max-content; animation: ticker 38s linear infinite; }
-.ticker:hover .ticker__track { animation-play-state: paused; }
+@media (hover: hover) and (pointer: fine) { .ticker:hover .ticker__track { animation-play-state: paused; } }
 .ticker__list { display: flex; flex-shrink: 0; list-style: none; margin: 0; padding: 0; }
 .ticker__item { display: inline-flex; align-items: center; white-space: nowrap; }
 .ticker__link { display: inline-block; padding: .35rem .25rem; color: inherit; text-decoration: none; text-decoration-color: transparent; text-underline-offset: .35em; transition: transform .22s cubic-bezier(.2,.7,.2,1), color .22s, text-decoration-color .22s; }
-.ticker__link:hover, .ticker__link:focus-visible { color: #f4f4f4; transform: scale(1.06); text-decoration: underline; text-decoration-color: var(--gold); outline: none; }
-.ticker__link:hover strong, .ticker__link:focus-visible strong { color: var(--gold-hover); }
+.ticker__link:focus-visible { color: #f4f4f4; transform: scale(1.06); text-decoration: underline; text-decoration-color: var(--gold); outline: none; }
+.ticker__link:focus-visible strong { color: var(--gold-hover); }
+@media (hover: hover) and (pointer: fine) {
+  .ticker__link:hover { color: #f4f4f4; transform: scale(1.06); text-decoration: underline; text-decoration-color: var(--gold); }
+  .ticker__link:hover strong { color: var(--gold-hover); }
+}
 .ticker:focus-within .ticker__track { animation-play-state: paused; }
 .ticker__sep { margin: 0 2.5rem; color: var(--gold); font-size: .55rem; opacity: .7; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -143,12 +149,34 @@ input, textarea, select, [contenteditable] { -webkit-user-select: text; user-sel
 
 /* Loghi dei marchi cliccabili: leggero risalto al passaggio */
 .logo-link { display: inline-block; border-radius: 4px; transition: transform .22s cubic-bezier(.2,.7,.2,1), filter .22s; }
-.logo-link:hover, .logo-link:focus-visible { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); outline: none; }
+.logo-link:focus-visible { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); outline: none; }
 .logo-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; }
+@media (hover: hover) and (pointer: fine) {
+  .logo-link:hover { transform: scale(1.05); filter: brightness(1.15) drop-shadow(0 0 14px rgba(191,161,106,.35)); }
+}
 
 /* Effetti decorativi spenti: Maurizio Barber Shop non ne usa */
 .animate-gold-pulse { animation: none; }
 .shimmer-badge::after { display: none; }
+
+/* ---------- Sul telefono come un'app (skill telefono-come-app, 01/11/2026) ---------- */
+/* Niente lampeggio grigio o blu al tocco: la risposta la danno gli stati :active qui sotto */
+html { -webkit-tap-highlight-color: transparent; }
+/* Tocco immediato: niente attesa del doppio tocco su link, pulsanti e campi */
+a, button, [role="button"], label, input, select, textarea, summary { touch-action: manipulation; }
+/* Risposta quando il dito tocca, non quando si alza */
+.btn-gold, .btn-glass { transition: background .22s cubic-bezier(.2, .7, .2, 1), color .22s cubic-bezier(.2, .7, .2, 1), transform .1s ease-out; }
+.btn-gold:active, .btn-glass:active { transform: scale(.97); }
+/* iPhone: i campi sotto 16px fanno ingrandire la pagina */
+@media (pointer: coarse) { input, textarea, select { font-size: 16px !important; } } /* !important: vince su text-sm */
+/* Barra in alto sotto orologio e batteria quando il sito è aperto dall'icona (PWA) */
+.site-header { height: calc(var(--header-h) + env(safe-area-inset-top)); padding-top: env(safe-area-inset-top); }
+/* In orizzontale il contenuto non va sotto il notch */
+body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+/* Pulsanti fissi sopra la barra home */
+.wa-fab { bottom: calc(1.5rem + env(safe-area-inset-bottom)); right: calc(1.5rem + env(safe-area-inset-right)); }
+.cookie-bar { bottom: calc(1rem + env(safe-area-inset-bottom)); }
+.drawer-panel { padding-top: calc(1.5rem + env(safe-area-inset-top)); padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
 
 /* Comparsa del banner cookie */
 @keyframes fade-in-up {

@@ -7,7 +7,7 @@ const links = pages.map((p) => ({ href: p.path, label: p.label }));
 
 export default function Navbar({ currentPath = '/', onOpenMobileMenu }) {
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between gap-4 h-[var(--header-h)] px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
+    <header className="site-header sticky top-0 z-50 flex items-center justify-between gap-4 px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
       <a href="/" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
         <img
           src="/assets/img/logo-maximize.webp"

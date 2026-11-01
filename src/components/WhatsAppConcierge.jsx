@@ -5,7 +5,7 @@ export default function WhatsAppConcierge() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="wa-fab fixed z-50 flex flex-col items-end">
       
       {/* Concierge Glass Panel Popover */}
       {isOpen && (

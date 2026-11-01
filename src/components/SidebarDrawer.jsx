@@ -24,7 +24,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-sm glass-panel-gold border-l border-amber-500/30 p-6 flex flex-col justify-between shadow-2xl relative">
+        <div className="w-screen max-w-sm drawer-panel glass-panel-gold border-l border-amber-500/30 p-6 flex flex-col justify-between shadow-2xl relative">
           
           {/* Header */}
           <div>
@@ -46,7 +46,7 @@ export default function SidebarDrawer({ isOpen, onClose }) {
             </div>
 
             {/* Menu Links */}
-            <div className="mt-6 space-y-1.5 overflow-y-auto max-h-[calc(100vh-280px)] pr-1">
+            <div className="mt-6 space-y-1.5 overflow-y-auto max-h-[calc(100dvh-280px)] pr-1">
               {navItems.map((item, idx) => {
                 const IconComponent = item.icon;
                 return (
