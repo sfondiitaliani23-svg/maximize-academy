@@ -13,16 +13,6 @@ export default function InternationalTraining({ onSelectCourse }) {
       description: 'Tecnica pura e confronto reale. Nuove prospettive metodologiche e chirurgiche da integrare direttamente nel lavoro quotidiano in barberia.',
       highlights: ['Sfumature millimetriche', 'Precisione geometrica', 'Work-flow alla poltrona'],
       badge: 'Docenza Tecnica'
-    },
-    {
-      id: 'yass-the-barber',
-      number: '02',
-      name: 'Yass The Barber',
-      role: 'International Barber',
-      focus: 'Visione Globale',
-      description: 'Esperienza internazionale, approccio visivo contemporaneo, osservazione dei volumi e lavoro pratico sul campo.',
-      highlights: ['Tecniche internazionali', 'Forme e texture contemporanee', 'Approccio visivo'],
-      badge: 'International Master'
     }
   ];
 
@@ -34,7 +24,7 @@ export default function InternationalTraining({ onSelectCourse }) {
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
             <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
-              FORMAZIONE INTERNAZIONALE
+              FORMAZIONE
             </span>
           </div>
 
@@ -46,12 +36,12 @@ export default function InternationalTraining({ onSelectCourse }) {
           </h2>
 
           <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-            Collaboro alla promozione e organizzazione di percorsi ed eventi con Educator del panorama Barber nazionale e internazionale. La tecnica si evolve. Anche tu puoi farlo.
+            Percorsi concreti, costruiti con partner coerenti con la nostra visione. La tecnica si evolve. Anche tu puoi farlo.
           </p>
         </div>
 
         {/* Educator Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 max-w-2xl mx-auto gap-8 mb-12">
           {educators.map((edu) => (
             <div 
               key={edu.id}
@@ -104,24 +94,24 @@ export default function InternationalTraining({ onSelectCourse }) {
           ))}
         </div>
 
-        {/* UNIFICAZIONE CONCETTUALE FORMAZIONE: MEN'S EVENTS EDUCATION & SABEY SCISSORS */}
+        {/* PERCORSO FORMATIVO: UAAMI (consenso ricevuto il 02/11/2026) & SABEY SCISSORS */}
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-10 border border-amber-500/30 relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>SINERGIA FORMATIVA UFFICIALE</span>
+                <span>PERCORSO PROFESSIONALE E FORMATIVO</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
-                Men’s Events Education & Sabey Scissors nella Formazione
+                UAAMI & Sabey Scissors nella Formazione
               </h3>
               <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                Nella macroarea Formazione, Maximize Academy collabora attivamente con <strong className="text-amber-300">Men’s Events Education</strong> e <strong className="text-amber-300">Sabey Scissors</strong> per dare vita a corsi, masterclass pratiche, eventi e stage con i più grandi Educator del panorama italiano ed europeo.
+                Maurizio Pizzuto è entrato nella famiglia <strong className="text-amber-300">UAAMI</strong> (Unione Artistica Acconciatori Misti Italiani, dal 1957) come <strong className="text-amber-300">Centro UAAMI Foggia</strong>. Con UAAMI Maximize Academy costruisce un nuovo percorso professionale e formativo per i colleghi di Foggia e provincia, e collabora con <strong className="text-amber-300">Sabey Scissors</strong> per corsi, masterclass pratiche e stage.
               </p>
               <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-gray-400">
                 <span className="flex items-center gap-1.5 text-white/90">
-                  <Award className="w-4 h-4 text-amber-400" /> Masterclass & Stage Accreditati
+                  <Award className="w-4 h-4 text-amber-400" /> Centro UAAMI Foggia
                 </span>
                 <span className="flex items-center gap-1.5 text-white/90">
                   <Scissors className="w-4 h-4 text-amber-400" /> Test Strumentale Sabey dal vivo
@@ -131,14 +121,12 @@ export default function InternationalTraining({ onSelectCourse }) {
 
             {/* Partner Logos inside Box */}
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 items-center justify-center bg-black/40 p-6 rounded-2xl border border-white/10">
-              <a href={brandLinks.mensEvents} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Men's Events Education su Instagram (si apre in una nuova scheda)">
-                <img loading="lazy"
-                src="/assets/loghi/mens-events.webp"
-                alt="Men's Events Education"
-                width="1074" height="240"
-                className="h-12 sm:h-14 w-auto object-contain"
+              <img loading="lazy"
+                src="/assets/loghi/uaami.webp"
+                alt="UAAMI – Unione Artistica Acconciatori Misti Italiani"
+                width="600" height="600"
+                className="h-28 sm:h-32 w-auto object-contain"
               />
-              </a>
               <div className="w-full h-[1px] bg-white/10 hidden lg:block"></div>
               <a href={brandLinks.sabey} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Sabey Scissors Europa su Instagram (si apre in una nuova scheda)">
                 <img loading="lazy"

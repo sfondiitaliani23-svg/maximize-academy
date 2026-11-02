@@ -13,17 +13,16 @@ Maximize Academy è impostato come ecosistema professionale per il mondo Barber,
 ## Sezioni principali rilevate
 1. Presentazione Maurizio / esperienza reale in barberia
 2. Ecosistema Maximize e percorso di crescita
-3. Formazione internazionale
+3. Formazione
    - Gianni Cardinale
-   - Yass The Barber
-   - Men’s Events Education
+   - UAAMI
 4. Barber Reset
 5. Sabey Scissors
 6. ANAQA
 7. Treatwell
 8. Manifesto “Non voglio venderti semplicemente qualcosa…”
 9. Barber Match
-10. Men’s Events Education / confronto e networking
+10. UAAMI / confronto e networking
 11. Contatti finali
 12. Footer societario, privacy e cookie
 

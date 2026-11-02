@@ -4,7 +4,7 @@
 - **Hero Section**: Posizionamento Maurizio Pizzuto, claim d'impatto, CTA primarie.
 - **Storytelling Fondatore**: Background reale di Maurizio, 12+ anni di esperienza, barber shop a Foggia.
 - **Ecosistema & Percorso di Crescita**: 6 tappe visuali ottimizzate per mobile.
-- **Formazione Internazionale**: Master Educator (Gianni Cardinale, Yass The Barber) + blocco Sinergia Men's Events Education & Sabey Scissors.
+- **Formazione**: Master Educator (Gianni Cardinale) + blocco Sinergia UAAMI & Sabey Scissors.
 - **Barber Reset**: Intervento di ristrutturazione economica, algoritmo di calcolo ROI/rendimento poltrona e CTA WhatsApp.
 - **Sabey Scissors**: Presentazione forbici giapponesi, badge ufficiale Brand Ambassador Strategist, configuratore interattivo.
 - **ANAQA Men Creation**: Linea cosmetica professionale per barberie e kit salone.

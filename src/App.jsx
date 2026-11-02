@@ -14,7 +14,6 @@ import SabeySection from './components/SabeySection';
 import AnaqaSection from './components/AnaqaSection';
 import TreatwellSection from './components/TreatwellSection';
 import BarberMatchSection from './components/BarberMatchSection';
-import MensEventsSection from './components/MensEventsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppConcierge from './components/WhatsAppConcierge';
@@ -103,7 +102,7 @@ export default function App() {
     case '/sabey': content = <SabeySection />; break;
     case '/anaqa': content = <AnaqaSection />; break;
     case '/treatwell': content = <TreatwellSection />; break;
-    case '/eventi': content = (<><BarberMatchSection onSelectCourse={openCourse} /><MensEventsSection /></>); break;
+    case '/eventi': content = <BarberMatchSection onSelectCourse={openCourse} />; break;
     case '/contatti': content = <ContactSection />; break;
     default:
       content = (

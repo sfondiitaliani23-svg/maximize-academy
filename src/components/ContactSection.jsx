@@ -127,7 +127,7 @@ export default function ContactSection() {
                 Il tuo prossimo passo professionale.
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                Un supporto dedicato per orientarti tra date e iscrizioni ai corsi internazionali, e per la prova delle forbici Sabey.
+                Un supporto dedicato per orientarti tra date e iscrizioni ai corsi, e per la prova delle forbici Sabey.
               </p>
             </div>
 
@@ -238,7 +238,7 @@ export default function ContactSection() {
                     className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-amber-400 focus:outline-none transition-colors"
                   >
                     <option value="Barber Reset & Crescita">Barber Reset & Crescita Barberia</option>
-                    <option value="Formazione Internazionale">Corsi di Formazione Internazionale</option>
+                    <option value="Formazione">Corsi di Formazione</option>
                     <option value="Sabey Scissors">Forbici Professionali Sabey Scissors</option>
                     <option value="ANAQA Prodotti">ANAQA Men Creation Prodotti</option>
                     <option value="Treatwell Digitalizzazione">Treatwell Digitalizzazione</option>

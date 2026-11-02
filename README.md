@@ -1,7 +1,7 @@
 # 🌟 MAXIMIZE ACADEMY — Piattaforma Ufficiale
 
 > **L'ecosistema definitivo per il Barber moderno.**
-> Formazione Internazionale · Barber Reset · Sabey Scissors · ANAQA · Treatwell · Barber Match Paestum 2026.
+> Formazione · Barber Reset · Sabey Scissors · ANAQA · Treatwell · Barber Match Paestum 2026.
 > Fondato da **Maurizio Pizzuto** (Maximize Academy S.r.l.s., Foggia).
 
 [![Deploy con Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=maximize-academy)](https://maximize-academy.vercel.app)
@@ -18,7 +18,7 @@ Maximize Academy è una Web Application luxury ad alte prestazioni sviluppata co
 ### Moduli Principali
 
 1. **Ecosistema di Crescita**: Guida interattiva step-by-step (*Impara → Migliora → Attrezzati → Organizzati → Confrontati → Cresci*).
-2. **Formazione Internazionale**: Presentazione degli Educator di rilievo (Gianni Cardinale, Yass The Barber) e sinergia unificata con **Men's Events Education** e **Sabey Scissors**.
+2. **Formazione**: Presentazione degli Educator di rilievo (Gianni Cardinale) e sinergia unificata con **UAAMI** e **Sabey Scissors**.
 3. **Barber Reset & Calcolatore ROI**: Calcolatore interattivo per la ristrutturazione del listino e l'ottimizzazione del rendimento alla poltrona, con CTA WhatsApp diretta.
 4. **Sabey Scissors Italy**: Sezione forbici professionali giapponesi con configuratore interattivo su misura e badge ufficiale *Brand Ambassador Strategist*.
 5. **ANAQA Men Creation**: Linea prodotti e kit professionali per barberie.
@@ -27,6 +27,10 @@ Maximize Academy è una Web Application luxury ad alte prestazioni sviluppata co
 8. **WhatsApp Concierge & Modali**: Canali diretti di contatto per candidature e acquisto strumenti.
 
 ---
+
+## 📌 Aggiornamento 02/11/2026
+- Tolti Men's Events Education (logo e sezione) e Yass The Barber; niente riferimenti a corsi internazionali. Il corso con Josh O P non si fa.
+- Formazione con **UAAMI** (consenso ricevuto): Maurizio Pizzuto è Centro UAAMI Foggia. Logo in `public/assets/loghi/uaami.webp`.
 
 ## 🛠️ Stack Tecnologico
 

@@ -4,7 +4,7 @@ import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdat
 
 const navItems = [
   { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 6 pilastri di crescita' },
-  { label: 'Formazione Internazionale', href: '/formazione', icon: Award, sub: 'Cardinale, Yass, Men’s Events' },
+  { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Cardinale, UAAMI, Sabey' },
   { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
   { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
   { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },

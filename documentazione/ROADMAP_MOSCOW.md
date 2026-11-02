@@ -26,7 +26,7 @@ Evitare il *feature creep* (richieste continue non prioritarie), garantire che l
 
 - [x] **Storytelling & Autorevolezza**: Posizionamento di Maurizio Pizzuto come *Barber Strategist & Brand Ambassador*, formato luxury (nero `#070709`, oro `#D4AF37`, tipografia Cinzel / Cormorant / Plus Jakarta Sans).
 - [x] **Percorso di Crescita a 6 Step**: *Impara → Migliora → Attrezzati → Organizzati → Confrontati → Cresci* perfettamente fruibile da mobile senza troncamenti di testo.
-- [x] **Formazione Internazionale**: Presentazione degli Educator di punta (Gianni Cardinale, Yass The Barber) e sinergia unificata *Men’s Events Education & Sabey Scissors*.
+- [x] **Formazione**: Presentazione degli Educator di punta (Gianni Cardinale) e sinergia unificata *UAAMI & Sabey Scissors*.
 - [x] **Barber Reset & Calcolatore ROI**: Modulo di consulenza direzionale con calcolatore interattivo sul rendimento poltrona e CTA personalizzata.
 - [x] **Sabey Scissors Italy**: Configurator interattivo per la scelta della forbice ideale e badge circolare ufficiale *Brand Ambassador Strategist*.
 - [x] **Canali Lead WhatsApp**: Pulsanti differenziati con testi preimpostati sul numero ufficiale `+39 391 716 3833`.

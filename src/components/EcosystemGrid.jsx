@@ -8,7 +8,7 @@ export default function EcosystemGrid() {
       action: 'IMPARA',
       category: 'FORMAZIONE',
       title: 'Alza il livello.',
-      desc: 'Educator, tecnica pura e confronto internazionale con i migliori maestri.',
+      desc: 'Educator, tecnica pura e un percorso professionale con UAAMI.',
       link: '/formazione',
       icon: GraduationCap,
       goldAccent: true
@@ -46,7 +46,7 @@ export default function EcosystemGrid() {
       action: 'CONFRONTATI',
       category: 'NETWORK & EVENTI',
       title: 'Esci. Incontra. Cresci.',
-      desc: 'Porta il tuo talento sul palco di Barber Match e negli eventi Men’s Events.',
+      desc: 'Porta il tuo talento sul palco di Barber Match.',
       link: '/eventi',
       icon: Users
     },

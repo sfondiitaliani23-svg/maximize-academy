@@ -12,7 +12,7 @@ Tutti i punti sotto elencati sono stati applicati, verificati visualmente e rila
 
 3. **Formazione — unificazione concettuale** ✅
    - **Stato**: RISOLTO.
-   - **Dettaglio**: Men’s Events Education e Sabey Scissors sono integrate congiuntamente nel blocco *“Sinergia Formativa Ufficiale”* all'interno di `InternationalTraining.jsx` con entrambi i loghi ad alta definizione e call to action per l'operatore formazione. Sabey mantiene in parallelo la propria sezione autonoma dedicata alle forbici professionali.
+   - **Dettaglio**: UAAMI e Sabey Scissors sono integrate congiuntamente nel blocco *“Sinergia Formativa Ufficiale”* all'interno di `InternationalTraining.jsx` con entrambi i loghi ad alta definizione e call to action per l'operatore formazione. Sabey mantiene in parallelo la propria sezione autonoma dedicata alle forbici professionali.
 
 4. **Barber Match — coerenza visiva** ✅
    - **Stato**: RISOLTO.

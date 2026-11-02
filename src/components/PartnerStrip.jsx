@@ -2,7 +2,7 @@ import React from 'react';
 
 // Fascia dei partner sotto la home: i loghi ben visibili, ognuno porta alla sua sezione.
 const partners = [
-  { href: '/formazione', src: '/assets/loghi/mens-events.webp', alt: "Men's Events Education", w: 1074 },
+  { href: '/formazione', src: '/assets/loghi/uaami.webp', alt: 'UAAMI – Unione Artistica Acconciatori Misti Italiani', w: 600, ht: 600, h: 'h-20 sm:h-24' },
   { href: '/sabey', src: '/assets/loghi/sabey.webp', alt: 'Sabey Scissors Italy Hand Made', w: 1549 },
   { href: '/anaqa', src: '/assets/loghi/anaqa.webp', alt: 'ANAQA Men Creation', w: 1169 },
   { href: '/treatwell', src: '/assets/loghi/treatwell.webp', alt: 'Treatwell', w: 1293, h: 'h-7 sm:h-9' },
@@ -18,7 +18,7 @@ export default function PartnerStrip() {
         {partners.map((p) => (
           <li key={p.src} className="flex justify-center">
             <a href={p.href} className="block opacity-90 hover:opacity-100 transition-opacity" aria-label={p.alt}>
-              <img src={p.src} alt={p.alt} width={p.w} height="240" loading="lazy" className={`${p.h || 'h-9 sm:h-11'} w-auto max-w-full object-contain`} />
+              <img src={p.src} alt={p.alt} width={p.w} height={p.ht || 240} loading="lazy" className={`${p.h || 'h-9 sm:h-11'} w-auto max-w-full object-contain`} />
             </a>
           </li>
         ))}

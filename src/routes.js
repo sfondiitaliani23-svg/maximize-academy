@@ -13,9 +13,9 @@ export const pages = [
   {
     path: '/formazione',
     label: 'Formazione',
-    title: 'Formazione internazionale | Maximize Academy',
-    description: 'Corsi e masterclass per Barber con Educator internazionali, in sinergia con Men’s Events Education e Sabey Scissors.',
-    intro: 'Corsi e masterclass con Educator internazionali.',
+    title: 'Formazione | Maximize Academy',
+    description: 'Corsi e masterclass per Barber: il percorso professionale con UAAMI e la collaborazione con Sabey Scissors.',
+    intro: 'Corsi, masterclass e il percorso con UAAMI.',
   },
   {
     path: '/barber-reset',
@@ -48,9 +48,9 @@ export const pages = [
   {
     path: '/eventi',
     label: 'Eventi',
-    title: 'Eventi: Barber Match e Men’s Events | Maximize Academy',
-    description: 'Barber Match Paestum 2026 e Men’s Events Education: competizioni, palco, formazione e networking.',
-    intro: 'Barber Match, Men’s Events e networking.',
+    title: 'Eventi: Barber Match | Maximize Academy',
+    description: 'Barber Match Paestum 2026: competizioni, palco, formazione e networking.',
+    intro: 'Barber Match, palco e networking.',
   },
   {
     path: '/contatti',
@@ -64,7 +64,7 @@ export const pages = [
 export const home = {
   path: '/',
   title: 'Maximize Academy | Maurizio Pizzuto — Non solo Barber. Molto di più.',
-  description: 'Maximize Academy è l’ecosistema per il Barber moderno: formazione internazionale, Barber Reset, Sabey Scissors, ANAQA, Treatwell ed eventi con Maurizio Pizzuto.',
+  description: 'Maximize Academy è l’ecosistema per il Barber moderno: formazione, Barber Reset, Sabey Scissors, ANAQA, Treatwell ed eventi con Maurizio Pizzuto.',
 };
 
 // Vecchi indirizzi interni (#sezione) verso le nuove pagine
@@ -77,7 +77,7 @@ export const legacyHash = {
   '#anaqa': '/anaqa',
   '#treatwell': '/treatwell',
   '#barber-match': '/eventi',
-  '#mens-events': '/eventi#mens-events',
+  '#mens-events': '/eventi',
   '#contatti': '/contatti',
 };
 
@@ -86,7 +86,6 @@ export const findPage = (p) => pages.find((x) => x.path === normalize(p)) || nul
 
 // Siti e profili ufficiali dei marchi (ticker e loghi nelle pagine)
 export const brandLinks = {
-  mensEvents: 'https://www.instagram.com/mensevents_education/',
   sabey: 'https://www.instagram.com/sabey_scissors_europa/',
   anaqa: 'https://anaqaitalia.it/',
   treatwell: 'https://www.treatwell.it/',

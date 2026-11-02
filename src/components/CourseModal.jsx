@@ -14,27 +14,14 @@ export default function CourseModal({ courseId, onClose }) {
       title: 'Masterclass Tecnica con Gianni Cardinale',
       educator: 'Gianni Cardinale',
       subtitle: 'Tecnica pura, precisione chirurgica e confronto professionale.',
-      partner: 'Men’s Events Education & Maximize Academy',
+      partner: 'Maximize Academy',
       topics: [
         'Geometria del taglio maschile avanzato',
         'Sfumature e transizioni a rasoio e trimmer',
         'Consulenza morfologica del viso',
         'Ottimizzazione dei tempi di esecuzione alla poltrona'
       ],
-      includes: 'Attestato Ufficiale Maximize & Men\'s Events, Dispensa Tecnica, Pranzo & Coffee Break'
-    },
-    'yass-the-barber': {
-      title: 'International Workshop con Yass The Barber',
-      educator: 'Yass The Barber',
-      subtitle: 'Esperienza internazionale, metodo visivo e lavoro pratico sul campo.',
-      partner: 'Men’s Events Education & Maximize Academy',
-      topics: [
-        'Trend internazionali contemporanei',
-        'Gestione delle texture e styling strutturato',
-        'Creazione di contenuti visivi e posizionamento social',
-        'Sessione pratica live su modelli'
-      ],
-      includes: 'Certificato Internazionale, Kit gadget formativo, Accesso al gruppo alumni riservato'
+      includes: 'Attestato Ufficiale Maximize Academy, Dispensa Tecnica, Pranzo & Coffee Break'
     },
     'barber-match-2026': {
       title: 'Barber Match 2026 — Paestum',
@@ -43,7 +30,7 @@ export default function CourseModal({ courseId, onClose }) {
       partner: 'Barber Match & Maurizio Pizzuto',
       topics: [
         'Categorie di gara: Fast Fade, Razor Fade, Creative Cut, Total Look',
-        'Show sul palco con Educator internazionali',
+        'Show sul palco con Educator del settore',
         'Stand espositivi con brand leader',
         'Cena di gala e premiazione'
       ],

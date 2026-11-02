@@ -179,8 +179,8 @@ export function baseSlides() {
   return [
     s('mx-base-sabey', 'testo', 'Quale Sabey fa per te?', '', 'Non è la mano che deve adattarsi alla forbice. È la forbice che deve adattarsi alla tua mano.', 'Trova la tua forbice', '/sabey#trova-forbice'),
     s('mx-base-reset', 'testo', 'Barber Reset', '', 'Listino, margini e vendita: scopri quanto puoi recuperare nella tua barberia.', 'Calcola il potenziale', '/barber-reset'),
-    s('mx-base-formazione', 'testo', 'Formazione internazionale', '', 'Corsi con Maurizio Pizzuto: tecnica, comunicazione e business.', 'Vedi i corsi', '/formazione'),
-    s('mx-base-eventi', 'testo', 'Eventi e networking', '', 'Barber Match e Men’s Events: palco, competizioni e incontri.', 'Scopri gli eventi', '/eventi'),
+    s('mx-base-formazione', 'testo', 'Centro UAAMI Foggia', '', 'Maurizio Pizzuto entra in UAAMI: un nuovo percorso formativo per i colleghi di Foggia e provincia.', 'Scopri di più', '/formazione'),
+    s('mx-base-eventi', 'testo', 'Eventi e networking', '', 'Barber Match: palco, competizioni e incontri.', 'Scopri gli eventi', '/eventi'),
   ];
 }
 

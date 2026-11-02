@@ -7,9 +7,8 @@ import StoriesBar from './StoriesBar';
 const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</strong>;
 // Ogni voce porta al sito del prodotto (marchi) o alla pagina di Maximize.
 const tickerItems = [
-  { content: <>{gold('Formazione')} internazionale</>, href: '/formazione' },
+  { content: <>{gold('Formazione')} con UAAMI</>, href: '/formazione' },
   { content: <>{gold('Barber Reset')} in barberia</>, href: '/barber-reset' },
-  { content: <>Partner {gold("Men's Events Education")}</>, href: brandLinks.mensEvents, external: true },
   { content: <>Brand Ambassador {gold('Sabey')}</>, href: brandLinks.sabey, external: true },
   { content: <>Prodotti {gold('ANAQA')}</>, href: brandLinks.anaqa, external: true },
   { content: <>Agenda digitale {gold('Treatwell')}</>, href: brandLinks.treatwell, external: true },
