@@ -125,3 +125,59 @@
   body.ap-stampa .ap-attestato { position: fixed; inset: 0; margin: 0; border-radius: 0; display: grid; align-content: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 @media (prefers-reduced-motion: reduce) { .ap-sheet, .ap-fade { animation: none; } .ap-btn, .ap-tab { transition: none; } }
+
+/* Computer (dal 960 px): non più «telefono al centro», ma un pannello vero (03/11/2026, richiesta di Eliseo).
+   Menu fisso a sinistra con marchio ed «Esci», contenuto largo, schede in griglia, fogli come finestre al centro.
+   Sul telefono e nell'app installata resta tutto com'è. */
+.ap-side-brand, .ap-side-out { display: none; }
+@media (min-width: 960px) {
+  .ap-tabbar { left: 0; right: auto; top: 0; bottom: 0; width: 248px; height: auto; max-width: none; margin: 0; display: flex; flex-direction: column; gap: 4px; padding: 22px 14px; border-radius: 0; border: 0; border-right: 1px solid color-mix(in srgb, var(--a-gold), transparent 70%); background: var(--a-ink2); box-shadow: none; }
+  .ap-side-brand { display: flex; align-items: center; gap: 12px; padding: 0 10px 22px; margin-bottom: 10px; border-bottom: 1px solid var(--a-line); color: inherit; text-decoration: none; }
+  .ap-side-brand strong { display: block; font-size: 17px; letter-spacing: .2em; text-transform: uppercase; color: #fff; }
+  .ap-side-brand small { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--a-gold); }
+  .ap-tab, .ap-side-out { display: flex; align-items: center; gap: 14px; height: 48px; padding: 0 14px; border-radius: 8px; font-size: 13px; text-align: left; }
+  .ap-tab[aria-current="page"] { background: rgba(191, 161, 106, .12); }
+  .ap-tab[aria-current="page"]::before { top: 10px; bottom: 10px; left: 0; right: auto; width: 3px; height: auto; border-radius: 0 3px 3px 0; }
+  .ap-tab:active { transform: none; }
+  .ap-side-out { margin-top: auto; border: 0; background: transparent; color: var(--a-soft); font: inherit; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+  .ap-side-out svg { width: 22px; height: 22px; }
+
+  .ap-wrap { max-width: none; margin: 0; padding: 28px 48px 60px calc(248px + 48px); }
+  .ap-wrap > * { max-width: 1080px; }
+  .ap-top .ap-logo { display: none; }
+  .ap-top { justify-content: flex-end; gap: 14px; }
+  .ap-title { font-size: 52px; margin-bottom: 22px; }
+  .ap-title em { display: inline; margin-right: .25em; }
+  .ap-title small { font-size: 15px; }
+
+  .ap-seg { max-width: 560px; }
+  .ap-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1px; background: var(--a-line); }
+  .ap-list li { background: var(--a-ink2); }
+  .ap-list li + li { border-top: 0; }
+  .ap-list li:nth-child(n + 3) { border-top: 1px solid #2a2a2a; }
+  .ap-grid2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ap-hero { padding: 28px 32px 36px; }
+  .ap-big { font-size: 34px; }
+  .ap-form.ap-card, .ap-card.ap-form { max-width: 720px; }
+  article.ap-card { max-width: 880px; }
+
+  .ap-veil { backdrop-filter: blur(3px); }
+  .ap-sheet { top: 50%; bottom: auto; left: 50%; right: auto; width: min(620px, calc(100vw - 80px)); max-height: 86dvh; padding: 22px 26px 28px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--a-gold), transparent 55%); transform: translate(-50%, -50%); animation: ap-pop .22s ease; }
+  .ap-grip { display: none; }
+  @keyframes ap-pop { from { opacity: 0; transform: translate(-50%, -46%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+  /* Accesso: due colonne, presentazione a sinistra e modulo a destra */
+  .ap-login { max-width: 1160px; margin: 0 auto; padding: 32px 48px 60px; }
+  .ap-login > * { max-width: none; }
+  .ap-login .ap-top .ap-logo { display: block; }
+  .ap-login .ap-top { justify-content: space-between; }
+  .ap-login { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "top top" "intro form" "steps form"; column-gap: 56px; align-content: start; }
+  .ap-login > .ap-top { grid-area: top; }
+  .ap-login-intro { grid-area: intro; }
+  .ap-login-form { grid-area: form; align-self: start; padding-top: 6px; }
+  .ap-login-steps { grid-area: steps; }
+  .ap-login .ap-title { font-size: 72px; }
+  .ap-login .ap-title em { display: block; }
+}
+@media (min-width: 960px) and (prefers-reduced-motion: reduce) { .ap-sheet { animation: none; } }
+@media (min-width: 960px) { .ap-sheet .ap-list { display: block; background: var(--a-ink2); } .ap-sheet .ap-list li + li { border-top: 1px solid #2a2a2a; } }

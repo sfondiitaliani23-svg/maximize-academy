@@ -139,17 +139,20 @@ function Accesso({ onEntrato, avviso }) {
   };
 
   return (
-    <div className="ap-wrap ap-fade" style={{ paddingBottom: 40 }}>
+    <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
       <header className="ap-top">
         <a href="/" aria-label="Torna al sito"><img className="ap-logo" src="/assets/img/logo-maximize.webp" alt="" width="40" height="40" /></a>
         <span className="ap-pill">Area privata</span>
         <a className="ap-link" href="/">Sito</a>
       </header>
+      <div className="ap-login-intro">
       <Titolo oro="Maximize" bianco="Academy" sotto="I tuoi corsi, i materiali e gli attestati in un posto solo." />
       <div className="ap-hero" style={{ marginBottom: 16 }}>
         <span className="ap-eyebrow">Un solo account</span>
         <span className="ap-soft" style={{ color: '#f4f4f4' }}>Sei già registrato su Maurizio Barber Shop? Entra con la stessa email e la stessa password, o con Google.</span>
       </div>
+      </div>
+      <div className="ap-login-form">
       {modo !== 'recupera' && (
         <div className="ap-seg" style={{ marginBottom: 14 }}>
           <button type="button" aria-pressed={modo === 'entra'} onClick={() => cambia('entra')}>Accedi</button>
@@ -172,6 +175,8 @@ function Accesso({ onEntrato, avviso }) {
         {modo === 'entra' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('recupera')}>Password dimenticata?</button>}
         {modo === 'recupera' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('entra')}>Torna all'accesso</button>}
       </form>
+      </div>
+      <div className="ap-login-steps">
       <h2 className="ap-h2">Come funziona</h2>
       <ol className="ap-steps">
         <li>Entra o crea il tuo account</li>
@@ -179,6 +184,7 @@ function Accesso({ onEntrato, avviso }) {
         <li>Trovi date, materiali e avvisi</li>
         <li>A fine corso scarichi l'attestato</li>
       </ol>
+      </div>
     </div>
   );
 }
@@ -651,9 +657,11 @@ export default function AreaPrivata() {
         </div>
       </div>
       <nav className="ap-tabbar" aria-label="Sezioni">
+        <a className="ap-side-brand" href="/"><img src="/assets/img/logo-maximize.webp" alt="" width="36" height="36" /><span><strong>Maximize</strong><small>{admin ? 'Gestione' : 'Area allievo'}</small></span></a>
         {tabs.map(([k, l, d]) => (
           <button key={k} type="button" className="ap-tab" aria-current={tab === k ? 'page' : undefined} onClick={() => vai(k)}><Ic d={d} />{l}</button>
         ))}
+        <button type="button" className="ap-side-out" onClick={esci}><Ic d={P.user} />Esci</button>
       </nav>
     </div>
   );
