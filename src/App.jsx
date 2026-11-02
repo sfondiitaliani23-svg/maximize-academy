@@ -127,7 +127,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#111111] text-gray-200 selection:bg-amber-500/30 selection:text-amber-200">
-      <Navbar currentPath={page?.path || '/'} onOpenMobileMenu={() => setMobileMenuOpen(true)} />
+      <Navbar currentPath={page?.path || '/'} menuOpen={mobileMenuOpen} onOpenMobileMenu={() => setMobileMenuOpen((o) => !o)} />
       <SidebarDrawer isOpen={mobileMenuOpen} onClose={closeMenu} currentPath={page?.path || '/'} />
 
       <main id="main">{content}</main>

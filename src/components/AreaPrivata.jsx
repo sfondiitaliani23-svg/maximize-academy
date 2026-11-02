@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
+import GoogleButton from './GoogleButton';
 import '../area.css';
 
 // Pagina /area (02/11/2026): area privata di Maximize Academy, come un'app.
@@ -167,7 +168,7 @@ function Accesso({ onEntrato, avviso }) {
         </div>
       )}
       <form className="ap-card ap-form" onSubmit={submit}>
-        {modo !== 'recupera' && <a className="ap-google" href={googleUrl()}><GoogleIc /> Continua con Google</a>}
+        {modo !== 'recupera' && <GoogleButton onEntrato={onEntrato} onErrore={(m) => { setErr(true); setMsg(m); }} />}
         {modo !== 'recupera' && <div className="ap-or">oppure</div>}
         {modo === 'nuovo' && <Campo label="Nome e cognome" id="nome" required maxLength={120} autoComplete="name" />}
         <Campo label="Email" id="email" type="email" required autoComplete={modo === 'nuovo' ? 'email' : 'username'} />

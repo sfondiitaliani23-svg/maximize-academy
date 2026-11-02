@@ -278,3 +278,4 @@
   .ap-steps li { padding: 8px 12px; font-size: 13px; }
   .ap-steps li::before { width: 22px; height: 22px; font-size: 12px; background: var(--p-gold); color: #111; }
 }
+.ap-gsi { display: flex; justify-content: center; min-height: 44px; }

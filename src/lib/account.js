@@ -30,6 +30,14 @@ const salva = (d) => { const s = { access: d.access_token, refresh: d.refresh_to
 
 export const login = async (email, password) => salva(await call('/auth/v1/token?grant_type=password', { email, password }));
 export const hasSession = () => Boolean(read());
+// Client ID di Google del progetto «Maximize Academy» (Google Cloud). Non è segreto.
+// Con questo il pulsante di Google si apre sul dominio di Maximize e mostra il nome dell'app al posto di supabase.co.
+// Vuoto = si usa il vecchio percorso (pagina di Google con l'indirizzo di Supabase).
+export const GOOGLE_CLIENT_ID = '';
+
+/** Accesso con il token di Google ottenuto sul dominio del sito. */
+export const conGoogleToken = async (idToken, nonce) => salva(await call('/auth/v1/token?grant_type=id_token', { provider: 'google', id_token: idToken, nonce }));
+
 export const googleUrl = () => `${AC_URL}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(back())}`;
 
 /** Iscrizione (vale anche per Maurizio Barber Shop: è lo stesso account). */

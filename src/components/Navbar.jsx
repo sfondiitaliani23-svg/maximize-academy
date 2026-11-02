@@ -5,7 +5,7 @@ import React from 'react';
 import { pages } from '../routes';
 const links = pages.map((p) => ({ href: p.path, label: p.label }));
 
-export default function Navbar({ currentPath = '/', onOpenMobileMenu }) {
+export default function Navbar({ currentPath = '/', onOpenMobileMenu, menuOpen = false }) {
   return (
     <header className="site-header sticky top-0 z-50 flex items-center justify-between gap-4 px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
       <a href="/" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
@@ -45,12 +45,14 @@ export default function Navbar({ currentPath = '/', onOpenMobileMenu }) {
           type="button"
           onClick={onOpenMobileMenu}
           className="xl:hidden inline-flex items-center gap-2 min-h-[44px] px-2 text-white hover:text-amber-400 transition-colors"
-          aria-label="Apri il menu"
+          aria-label={menuOpen ? 'Chiudi il menu' : 'Apri il menu'}
+          aria-expanded={menuOpen}
+          aria-controls="menu-laterale"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d={menuOpen ? 'M6 6l12 12M18 6 6 18' : 'M3 6h18M3 12h18M3 18h18'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <span className="text-sm uppercase tracking-wider">Menu</span>
+          <span className="text-sm uppercase tracking-wider">{menuOpen ? 'Chiudi' : 'Menu'}</span>
         </button>
       </div>
     </header>

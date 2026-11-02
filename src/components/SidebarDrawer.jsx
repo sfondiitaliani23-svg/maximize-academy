@@ -124,19 +124,19 @@ export default function SidebarDrawer({ isOpen, onClose, currentPath = '/' }) {
   if (!mounted) return null;
 
   return (
-    <div className={`drawer-root fixed inset-0 z-[60] overflow-hidden lg:hidden${visible ? ' is-open' : ''}`} role="dialog" aria-modal="true" aria-label="Menu">
+    <div id="menu-laterale" className={`drawer-root fixed inset-0 z-[45] overflow-hidden xl:hidden${visible ? ' is-open' : ''}`} role="dialog" aria-label="Menu">
       {/* Tocco sullo spazio vuoto a sinistra: il menu si chiude */}
-      <div className="drawer-veil fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
+      <div className="drawer-veil fixed inset-0" onClick={onClose} aria-hidden="true" />
 
       <div
         className="drawer-slide fixed inset-y-0 right-0 flex"
         onPointerDown={(e) => { x0.current = e.clientX; }}
         onPointerUp={(e) => { if (x0.current != null && e.clientX - x0.current > 70) onClose(); x0.current = null; }}
       >
-        <div className="drawer-panel w-[86vw] max-w-sm bg-[#111111] border-l border-[color-mix(in_srgb,var(--gold),transparent_55%)] flex flex-col shadow-2xl">
+        <div className="drawer-panel w-[86vw] max-w-[360px] bg-[#181818] border-l border-[color-mix(in_srgb,var(--gold),transparent_55%)] flex flex-col shadow-2xl">
 
           {/* Intestazione */}
-          <div className="flex items-center justify-between px-6 pb-5 border-b border-[#3d3d3d]">
+          <div className="drawer-head hidden items-center justify-between px-6 pb-5 border-b border-[#3d3d3d]">
             <a href="/" onClick={onClose} className="flex items-center gap-3" aria-label="Maximize Academy, torna all'inizio">
               <img src="/assets/img/logo-maximize.webp" alt="" width="181" height="224" className="h-10 w-auto" aria-hidden="true" />
               <span>
