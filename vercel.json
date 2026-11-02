@@ -37,6 +37,15 @@
   ],
   "headers": [
     {
+      "source": "/((?!assets/|api/|icons/).*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
       "source": "/sw.js",
       "headers": [
         {
