@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle } from 'lucide-react';
 import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdate, currentVersion } from '../pwa';
 
@@ -97,6 +97,21 @@ function AppItem() {
 }
 
 export default function SidebarDrawer({ isOpen, onClose, currentPath = '/' }) {
+  // Apertura e chiusura a scorrimento (da destra), come su Maurizio Barber Shop (02/11/2026).
+  const [mounted, setMounted] = useState(isOpen);
+  const [visible, setVisible] = useState(false);
+  const x0 = useRef(null);
+  useEffect(() => {
+    if (isOpen) {
+      setMounted(true);
+      const id = requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+      return () => cancelAnimationFrame(id);
+    }
+    setVisible(false);
+    const t = setTimeout(() => setMounted(false), 320);
+    return () => clearTimeout(t);
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) return undefined;
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
@@ -106,14 +121,19 @@ export default function SidebarDrawer({ isOpen, onClose, currentPath = '/' }) {
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] overflow-hidden lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+    <div className={`drawer-root fixed inset-0 z-[60] overflow-hidden lg:hidden${visible ? ' is-open' : ''}`} role="dialog" aria-modal="true" aria-label="Menu">
+      {/* Tocco sullo spazio vuoto a sinistra: il menu si chiude */}
+      <div className="drawer-veil fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="drawer-panel w-screen max-w-sm bg-[#111111] border-l border-[color-mix(in_srgb,var(--gold),transparent_55%)] flex flex-col shadow-2xl">
+      <div
+        className="drawer-slide fixed inset-y-0 right-0 flex"
+        onPointerDown={(e) => { x0.current = e.clientX; }}
+        onPointerUp={(e) => { if (x0.current != null && e.clientX - x0.current > 70) onClose(); x0.current = null; }}
+      >
+        <div className="drawer-panel w-[86vw] max-w-sm bg-[#111111] border-l border-[color-mix(in_srgb,var(--gold),transparent_55%)] flex flex-col shadow-2xl">
 
           {/* Intestazione */}
           <div className="flex items-center justify-between px-6 pb-5 border-b border-[#3d3d3d]">

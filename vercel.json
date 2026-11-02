@@ -7,6 +7,10 @@
       "destination": "/"
     },
     {
+      "source": "/area",
+      "destination": "/"
+    },
+    {
       "source": "/api/contact",
       "destination": "/api/contact.js"
     },

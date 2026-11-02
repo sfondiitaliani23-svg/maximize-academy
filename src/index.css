@@ -179,6 +179,11 @@ body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-ins
 .drawer-panel { padding-top: calc(1.5rem + env(safe-area-inset-top)); padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
 
 /* ---------- Menu laterale (01/11/2026): piatto, nero e oro, come Maurizio Barber Shop ---------- */
+.drawer-veil { opacity: 0; transition: opacity .3s ease; }
+.drawer-slide { transform: translateX(100%); transition: transform .32s cubic-bezier(.22, 1, .36, 1); will-change: transform; }
+.drawer-root.is-open .drawer-veil { opacity: 1; }
+.drawer-root.is-open .drawer-slide { transform: none; }
+@media (prefers-reduced-motion: reduce) { .drawer-veil, .drawer-slide { transition: none; } }
 .drawer-scroll { scrollbar-width: none; overscroll-behavior: contain; }
 .drawer-scroll::-webkit-scrollbar { display: none; }
 .drawer-link { position: relative; border-bottom: 1px solid color-mix(in srgb, var(--line), transparent 40%); transition: background .18s ease-out; }
