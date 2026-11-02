@@ -26,6 +26,13 @@ const Ic = ({ d, size = 22 }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth={d === P.more ? 3.4 : 1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 );
 
+function useLargo() {
+  const q = '(min-width: 960px)';
+  const [largo, setLargo] = useState(() => window.matchMedia(q).matches);
+  useEffect(() => { const m = window.matchMedia(q); const f = () => setLargo(m.matches); m.addEventListener?.('change', f); return () => m.removeEventListener?.('change', f); }, []);
+  return largo;
+}
+
 const oggi = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
 const periodo = (c) => (c?.data_inizio ? (c.data_fine && c.data_fine !== c.data_inizio ? `${fmtData(c.data_inizio)} – ${fmtData(c.data_fine)}` : fmtData(c.data_inizio)) : 'Date da definire');
 const waLink = (tel) => { let n = String(tel || '').replace(/\D/g, ''); if (n.startsWith('00')) n = n.slice(2); if (n.length <= 10) n = `39${n}`; return `https://wa.me/${n}`; };
@@ -149,7 +156,7 @@ function Accesso({ onEntrato, avviso }) {
       <Titolo oro="Maximize" bianco="Academy" sotto="I tuoi corsi, i materiali e gli attestati in un posto solo." />
       <div className="ap-hero" style={{ marginBottom: 16 }}>
         <span className="ap-eyebrow">Un solo account</span>
-        <span className="ap-soft" style={{ color: '#f4f4f4' }}>Sei già registrato su Maurizio Barber Shop? Entra con la stessa email e la stessa password, o con Google.</span>
+        <span className="ap-lead">Sei già registrato su Maurizio Barber Shop? Entra con la stessa email e la stessa password, o con Google.</span>
       </div>
       </div>
       <div className="ap-login-form">
@@ -231,7 +238,7 @@ function AllievoHome({ profilo, iscr, vai }) {
       {avvisi?.map((a) => (
         <article key={a.id} className="ap-card">
           <span className="ap-chip">{a.mx_corsi?.titolo || 'Per tutti'} · {fmtQuando(a.creato_il)}</span>
-          <strong style={{ fontSize: 17, color: '#fff' }}>{a.titolo}</strong>
+          <strong className="ap-strong">{a.titolo}</strong>
           {a.testo && <p className="ap-soft" style={{ margin: 0, whiteSpace: 'pre-line' }}>{a.testo}</p>}
         </article>
       ))}
@@ -417,7 +424,7 @@ function SchedaAllievo({ a, corsi, onClose }) {
       <Stato errore={errore} dati={iscr} vuoto="Non è iscritto a nessun corso." />
       {iscr?.map((i) => (
         <div key={i.id} className="ap-card">
-          <strong style={{ color: '#fff' }}>{i.mx_corsi?.titolo}</strong>
+          <strong className="ap-strong">{i.mx_corsi?.titolo}</strong>
           <span className={`ap-chip${i.stato === 'completato' ? ' ap-chip--ok' : ''}`}>{i.stato === 'completato' ? `Completato${i.completato_il ? ` il ${fmtData(i.completato_il)}` : ''}` : 'Iscritto'}</span>
           <div className="ap-actions">
             {i.stato === 'completato'
@@ -571,7 +578,7 @@ function AdminAvvisi() {
       {dati?.map((a) => (
         <article key={a.id} className="ap-card">
           <span className="ap-chip">{a.mx_corsi?.titolo || 'Per tutti'} · {fmtQuando(a.creato_il)}</span>
-          <strong style={{ color: '#fff' }}>{a.titolo}</strong>
+          <strong className="ap-strong">{a.titolo}</strong>
           {a.testo && <p className="ap-soft" style={{ margin: 0, whiteSpace: 'pre-line' }}>{a.testo}</p>}
           <button type="button" className="ap-btn ap-btn--danger ap-btn--sm" style={{ justifySelf: 'start' }} onClick={() => { if (window.confirm('Eliminare l\'avviso?')) rest(`mx_avvisi?id=eq.${a.id}`, { method: 'DELETE' }).then(carica).catch((x) => setMsg(x.message)); }}>Elimina</button>
         </article>
@@ -580,12 +587,79 @@ function AdminAvvisi() {
   );
 }
 
+/* Bacheca (solo computer): riquadri come un pannello di gestione classico */
+function Box({ titolo, children, azione }) {
+  return (
+    <section className="ap-box">
+      <header className="ap-box-head"><h2>{titolo}</h2>{azione}</header>
+      <div className="ap-box-body">{children}</div>
+    </section>
+  );
+}
+
+function AdminBacheca({ vai, nome }) {
+  const [rich] = useDati('mx_richieste?select=id,created_at,name,type,status&order=created_at.desc&limit=50');
+  const [allievi] = useDati('mx_profili?select=id&limit=1000');
+  const [corsi] = useDati('mx_corsi?select=id,titolo,data_inizio,data_fine,luogo,attivo&order=data_inizio.asc.nullslast');
+  const [avvisi, , caricaAvvisi] = useDati('mx_avvisi?select=id&limit=1000');
+  const [msg, setMsg] = useState('');
+  const t = oggi();
+  const nuove = rich?.filter((r) => r.status === 'Nuovo') || [];
+  const prossimi = (corsi || []).filter((c) => c.attivo && (c.data_fine || c.data_inizio || '') >= t).slice(0, 5);
+  const n = (x) => (x ? x.length : '–');
+  const pubblica = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const f = new FormData(form);
+    try { await rest('mx_avvisi', { method: 'POST', body: { titolo: String(f.get('titolo')).trim(), testo: String(f.get('testo')).trim() || null } }); form.reset(); setMsg('Avviso pubblicato per tutti gli allievi.'); caricaAvvisi(); } catch (x) { setMsg(x.message); }
+  };
+  return (
+    <div className="ap-dash">
+      <div className="ap-dash-col">
+        <Box titolo="In sintesi">
+          <ul className="ap-glance">
+            <li><button type="button" onClick={() => vai('richieste')}><Ic d={P.inbox} size={18} /><span><b>{nuove.length}</b> richieste nuove</span></button></li>
+            <li><button type="button" onClick={() => vai('allievi')}><Ic d={P.people} size={18} /><span><b>{n(allievi)}</b> allievi</span></button></li>
+            <li><button type="button" onClick={() => vai('corsi')}><Ic d={P.corsi} size={18} /><span><b>{n(corsi)}</b> corsi</span></button></li>
+            <li><button type="button" onClick={() => vai('avvisi')}><Ic d={P.bell} size={18} /><span><b>{n(avvisi)}</b> avvisi</span></button></li>
+          </ul>
+          <p className="ap-box-note">Bentornato{nome ? `, ${nome}` : ''}. Gli allievi entrano con lo stesso account di Maurizio Barber Shop.</p>
+        </Box>
+        <Box titolo="Ultime richieste" azione={<button type="button" className="ap-box-link" onClick={() => vai('richieste')}>Vedi tutte</button>}>
+          {!rich ? <p className="ap-soft">Caricamento…</p> : !rich.length ? <p className="ap-soft">Nessuna richiesta per ora.</p> : (
+            <table className="ap-table"><tbody>
+              {rich.slice(0, 6).map((r) => <tr key={r.id}><td><button type="button" className="ap-box-link" onClick={() => vai('richieste')}>{r.name}</button><div className="ap-sub">{r.type || 'Richiesta'}</div></td><td className="ap-right">{r.status === 'Nuovo' ? <span className="ap-chip ap-chip--new">Nuovo</span> : <span className="ap-sub">{r.status}</span>}<div className="ap-sub">{fmtQuando(r.created_at)}</div></td></tr>)}
+            </tbody></table>
+          )}
+        </Box>
+      </div>
+      <div className="ap-dash-col">
+        <Box titolo="Avviso rapido">
+          <form className="ap-form" onSubmit={pubblica}>
+            <Campo label="Titolo" id="q-titolo" name="titolo" required minLength={2} maxLength={120} />
+            <Campo label="Testo" id="q-testo" name="testo" as="textarea" maxLength={1500} placeholder="Cosa devono sapere gli allievi?" />
+            <div><button className="ap-btn ap-btn--sm" type="submit">Pubblica</button></div>
+            {msg && <p className="ap-msg" role="status">{msg}</p>}
+          </form>
+        </Box>
+        <Box titolo="Prossimi corsi" azione={<button type="button" className="ap-box-link" onClick={() => vai('corsi')}>Gestisci</button>}>
+          {!corsi ? <p className="ap-soft">Caricamento…</p> : !prossimi.length ? <p className="ap-soft">Nessun corso in programma. <button type="button" className="ap-box-link" onClick={() => vai('corsi')}>Crea un corso</button></p> : (
+            <table className="ap-table"><tbody>
+              {prossimi.map((c) => <tr key={c.id}><td><b>{c.titolo}</b><div className="ap-sub">{c.luogo || ''}</div></td><td className="ap-right ap-sub">{periodo(c)}</td></tr>)}
+            </tbody></table>
+          )}
+        </Box>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- pagina ---------- */
 const TAB_ALLIEVO = [['home', 'Home', P.home], ['corsi', 'Corsi', P.corsi], ['materiali', 'Materiali', P.file], ['attestati', 'Attestati', P.award], ['profilo', 'Profilo', P.user]];
 const TAB_ADMIN = [['richieste', 'Richieste', P.inbox], ['allievi', 'Allievi', P.people], ['corsi', 'Corsi', P.corsi], ['avvisi', 'Avvisi', P.bell], ['profilo', 'Altro', P.more]];
 const TITOLI = {
   corsi: ['I miei', 'corsi', 'Date, luogo e programma.'], materiali: ['I tuoi', 'materiali'], attestati: ['I tuoi', 'attestati'], profilo: ['Il tuo', 'profilo'],
-  richieste: ['Nuove', 'richieste', 'Dal modulo contatti del sito.'], allievi: ['Gli', 'allievi', 'Chi è entrato nell\'area privata.'], admin_corsi: ['I', 'corsi', 'Date, materiali e attestati.'], avvisi: ['Avvisi', 'agli allievi'], admin_profilo: ['Altro', ''],
+  richieste: ['Nuove', 'richieste', 'Dal modulo contatti del sito.'], allievi: ['Gli', 'allievi', 'Chi è entrato nell\'area privata.'], admin_corsi: ['I', 'corsi', 'Date, materiali e attestati.'], avvisi: ['Avvisi', 'agli allievi'], admin_profilo: ['Altro', ''], bacheca: ['Bacheca', ''],
 };
 
 export default function AreaPrivata() {
@@ -593,6 +667,7 @@ export default function AreaPrivata() {
   const [stato, setStato] = useState(() => (ritorno?.tipo === 'recovery' ? 'recovery' : hasSession() ? 'check' : 'login'));
   const [io, setIo] = useState(null);
   const [tab, setTab] = useState('');
+  const largo = useLargo();
 
   useEffect(() => {
     const robots = document.createElement('meta');
@@ -610,7 +685,7 @@ export default function AreaPrivata() {
       const admin = ['admin', 'cofounder'].includes(me.ruolo);
       // Primo ingresso: la riga del profilo Maximize la crea l'utente stesso (se c'è già, non cambia nulla)
       await rest('mx_profili?on_conflict=id', { method: 'POST', prefer: 'resolution=ignore-duplicates,return=minimal', body: { id: me.id, email: me.email.slice(0, 200), nome: me.nome.slice(0, 120) || null } }).catch(() => {});
-      setIo({ ...me, admin }); setTab((x) => x || (admin ? 'richieste' : 'home')); setStato('ok');
+      setIo({ ...me, admin }); setTab((x) => x || (admin ? (window.matchMedia('(min-width: 960px)').matches ? 'bacheca' : 'richieste') : 'home')); setStato('ok');
     });
   }, [stato]);
 
@@ -627,19 +702,26 @@ export default function AreaPrivata() {
   if (!ok || !tab) return <div className="ap"><div className="ap-wrap"><p className="ap-soft">Caricamento…</p></div></div>;
 
   const admin = io.admin;
-  const tabs = admin ? TAB_ADMIN : TAB_ALLIEVO;
+  if (!largo && tab === 'bacheca') setTimeout(() => setTab('richieste'), 0);
+  const tabs = admin ? (largo ? [['bacheca', 'Bacheca', P.home], ...TAB_ADMIN.slice(0, 4), ['profilo', 'Profilo', P.user]] : TAB_ADMIN) : TAB_ALLIEVO;
   const nome = (profilo?.nome || io.nome || '').split(' ')[0];
-  const t = tab === 'home' ? ['Ciao', nome || 'allievo', 'Ecco cosa c\'è di nuovo.'] : TITOLI[admin && (tab === 'corsi' || tab === 'profilo') ? `admin_${tab}` : tab];
+  const t = tab === 'home' ? ['Ciao', nome || 'allievo', 'Ecco cosa c\'è di nuovo.'] : TITOLI[admin && (tab === 'corsi' || tab === 'profilo') ? (largo && tab === 'profilo' ? 'profilo' : `admin_${tab}`) : tab];
   const sezione = admin ? 'Gestione' : 'Allievo';
 
   return (
     <div className="ap">
+      <div className="ap-adminbar" aria-hidden={!largo}>
+        <a href="/" className="ap-adminbar-site"><img src="/assets/img/logo-maximize.webp" alt="" width="20" height="20" />Maximize Academy</a>
+        {admin && <button type="button" onClick={() => vai('corsi')}><Ic d={P.plus} size={16} />Nuovo corso</button>}
+        <span className="ap-adminbar-me">Ciao, {nome || io.email}<span className="ap-adminbar-av">{(nome || io.email || '?').charAt(0).toUpperCase()}</span></span>
+      </div>
       <div className="ap-wrap" key={tab}>
         <Head sezione={sezione} profilo={profilo || io} onAvatar={() => vai('profilo')} />
         <div className="ap-fade">
           <Titolo oro={t[0]} bianco={t[1]} sotto={t[2]} />
           {admin ? (
             <>
+              {tab === 'bacheca' && <AdminBacheca vai={vai} nome={nome} />}
               {tab === 'richieste' && <AdminRichieste />}
               {tab === 'allievi' && <AdminAllievi />}
               {tab === 'corsi' && <AdminCorsi />}

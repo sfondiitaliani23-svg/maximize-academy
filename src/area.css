@@ -126,58 +126,155 @@
 }
 @media (prefers-reduced-motion: reduce) { .ap-sheet, .ap-fade { animation: none; } .ap-btn, .ap-tab { transition: none; } }
 
-/* Computer (dal 960 px): non più «telefono al centro», ma un pannello vero (03/11/2026, richiesta di Eliseo).
-   Menu fisso a sinistra con marchio ed «Esci», contenuto largo, schede in griglia, fogli come finestre al centro.
-   Sul telefono e nell'app installata resta tutto com'è. */
-.ap-side-brand, .ap-side-out { display: none; }
+/* Computer (dal 960 px, 03/11/2026): pannello di gestione classico, sullo schema delle bacheche professionali
+   (barra in alto, menu scuro a sinistra, area chiara con riquadri). Caratteri di sistema, angoli quasi dritti,
+   oro solo per la voce attiva e i pulsanti. Sul telefono e nell'app installata resta la grafica da app. */
+.ap-side-brand, .ap-side-out, .ap-adminbar { display: none; }
+.ap-strong { font-size: 17px; color: #fff; }
+.ap-lead { color: var(--a-text); font-size: 14px; line-height: 1.5; }
+.ap-dash { display: grid; gap: 12px; }
 @media (min-width: 960px) {
-  .ap-tabbar { left: 0; right: auto; top: 0; bottom: 0; width: 248px; height: auto; max-width: none; margin: 0; display: flex; flex-direction: column; gap: 4px; padding: 22px 14px; border-radius: 0; border: 0; border-right: 1px solid color-mix(in srgb, var(--a-gold), transparent 70%); background: var(--a-ink2); box-shadow: none; }
-  .ap-side-brand { display: flex; align-items: center; gap: 12px; padding: 0 10px 22px; margin-bottom: 10px; border-bottom: 1px solid var(--a-line); color: inherit; text-decoration: none; }
-  .ap-side-brand strong { display: block; font-size: 17px; letter-spacing: .2em; text-transform: uppercase; color: #fff; }
-  .ap-side-brand small { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--a-gold); }
-  .ap-tab, .ap-side-out { display: flex; align-items: center; gap: 14px; height: 48px; padding: 0 14px; border-radius: 8px; font-size: 13px; text-align: left; }
-  .ap-tab[aria-current="page"] { background: rgba(191, 161, 106, .12); }
-  .ap-tab[aria-current="page"]::before { top: 10px; bottom: 10px; left: 0; right: auto; width: 3px; height: auto; border-radius: 0 3px 3px 0; }
+  .ap {
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --p-bg: #f1f0ed; --p-box: #fff; --p-line: #d7d4cc; --p-text: #1f1d1a; --p-soft: #646970; --p-gold: #80632f; --p-gold2: #6b5226;
+    background: var(--p-bg); background-image: none; color: var(--p-text); font-family: var(--ui); font-size: 13px; letter-spacing: 0;
+  }
+  /* Barra in alto */
+  .ap-adminbar { display: flex; align-items: center; gap: 4px; position: fixed; z-index: 70; top: 0; left: 0; right: 0; height: 32px; padding: 0 12px; background: #111; color: #e6e6e6; font-size: 13px; }
+  .ap-adminbar a, .ap-adminbar button { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border: 0; background: none; color: inherit; font: inherit; text-decoration: none; cursor: pointer; }
+  .ap-adminbar-me { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; padding: 0 6px; }
+  .ap-adminbar-av { display: grid; place-items: center; width: 20px; height: 20px; background: var(--a-gold); color: #111; font-weight: 700; font-size: 11px; }
+  @media (hover: hover) { .ap-adminbar a:hover, .ap-adminbar button:hover { background: #2c2c2c; color: var(--a-gold2); } }
+
+  /* Menu a sinistra */
+  .ap-tabbar { left: 0; right: auto; top: 32px; bottom: 0; width: 180px; height: auto; max-width: none; margin: 0; display: flex; flex-direction: column; gap: 0; padding: 0 0 10px; border-radius: 0; border: 0; background: #181818; box-shadow: none; }
+  .ap-side-brand { display: flex; align-items: center; gap: 10px; padding: 14px 12px; color: inherit; text-decoration: none; border-bottom: 1px solid #2a2a2a; margin-bottom: 6px; }
+  .ap-side-brand img { width: 28px; height: 28px; }
+  .ap-side-brand strong { display: block; font-family: "Oswald", sans-serif; font-size: 15px; letter-spacing: .16em; text-transform: uppercase; color: #fff; }
+  .ap-side-brand small { display: block; font-size: 11px; color: var(--a-gold); }
+  .ap-tab, .ap-side-out { display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 12px; border-radius: 0; font-family: var(--ui); font-size: 14px; letter-spacing: 0; text-transform: none; color: #e6e6e6; text-align: left; }
+  .ap-tab svg, .ap-side-out svg { width: 20px; height: 20px; color: #9ca2a7; }
+  .ap-tab[aria-current="page"] { background: var(--a-gold); color: #111; font-weight: 600; }
+  .ap-tab[aria-current="page"] svg { color: #111; }
+  .ap-tab[aria-current="page"]::before { top: 50%; bottom: auto; left: auto; right: 0; width: 0; height: 0; border-radius: 0; background: none; border: 8px solid transparent; border-right-color: var(--p-bg); transform: translateY(-50%); }
   .ap-tab:active { transform: none; }
-  .ap-side-out { margin-top: auto; border: 0; background: transparent; color: var(--a-soft); font: inherit; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
-  .ap-side-out svg { width: 22px; height: 22px; }
+  .ap-side-out { margin-top: auto; border: 0; background: transparent; font: inherit; font-size: 13px; color: #9ca2a7; cursor: pointer; }
+  @media (hover: hover) { .ap-tab:not([aria-current="page"]):hover, .ap-side-out:hover { background: #222; color: var(--a-gold2); } .ap-tab:not([aria-current="page"]):hover svg { color: var(--a-gold2); } }
 
-  .ap-wrap { max-width: none; margin: 0; padding: 28px 48px 60px calc(248px + 48px); }
-  .ap-wrap > * { max-width: 1080px; }
-  .ap-top .ap-logo { display: none; }
-  .ap-top { justify-content: flex-end; gap: 14px; }
-  .ap-title { font-size: 52px; margin-bottom: 22px; }
-  .ap-title em { display: inline; margin-right: .25em; }
-  .ap-title small { font-size: 15px; }
+  /* Area di lavoro */
+  .ap-wrap { max-width: none; margin: 0; padding: 52px 24px 48px 204px; }
+  .ap-wrap > * { max-width: 1100px; }
+  .ap-top { display: none; }
+  .ap-fade { animation: none; }
+  .ap-title { margin: 0 0 16px; font-family: var(--ui); font-size: 23px; font-weight: 400; line-height: 1.3; text-transform: none; letter-spacing: 0; color: var(--p-text); }
+  .ap-title em { display: inline; margin-right: .3em; color: inherit; }
+  .ap-title em::first-letter { text-transform: uppercase; }
+  .ap-title small { display: block; margin-top: 2px; font-size: 13px; color: var(--p-soft); letter-spacing: 0; }
+  .ap-h2 { margin: 22px 0 8px; font-family: var(--ui); font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--p-text); }
+  .ap-soft, .ap-row-main span, .ap-sub { color: var(--p-soft); font-size: 13px; letter-spacing: 0; }
+  .ap-strong, .ap-big, .ap-row-main strong { color: var(--p-text); font-family: var(--ui); text-transform: none; letter-spacing: 0; }
+  .ap-strong { font-size: 14px; font-weight: 600; }
+  .ap-lead { color: var(--p-text); font-size: 13px; }
+  .ap-eyebrow { font-size: 11px; letter-spacing: .06em; color: var(--p-gold); }
+  .ap-msg { color: var(--p-gold); font-size: 13px; }
+  .ap-link, .ap-box-link { color: var(--p-gold); font-size: 13px; }
 
-  .ap-seg { max-width: 560px; }
-  .ap-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1px; background: var(--a-line); }
-  .ap-list li { background: var(--a-ink2); }
-  .ap-list li + li { border-top: 0; }
-  .ap-list li:nth-child(n + 3) { border-top: 1px solid #2a2a2a; }
+  /* Riquadri */
+  .ap-card, .ap-hero, .ap-list, .ap-stat, .ap-steps li { background: var(--p-box); border: 1px solid var(--p-line); border-radius: 2px; box-shadow: 0 1px 1px rgba(0, 0, 0, .04); color: var(--p-text); }
+  .ap-card + .ap-card { margin-top: 10px; }
+  .ap-hero { padding: 16px 18px; }
+  .ap-hero::before, .ap-hero::after { display: none; }
+  .ap-big { font-size: 20px; font-weight: 600; }
   .ap-grid2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .ap-hero { padding: 28px 32px 36px; }
-  .ap-big { font-size: 34px; }
-  .ap-form.ap-card, .ap-card.ap-form { max-width: 720px; }
-  article.ap-card { max-width: 880px; }
+  .ap-stat { padding: 14px 16px; }
+  .ap-num { font-family: var(--ui); font-size: 28px; color: var(--p-text); }
+  .ap-stat span:last-child { font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--p-soft); }
+  .ap-chip { border-radius: 2px; letter-spacing: .02em; text-transform: none; font-size: 11px; background: #f3ecdf; color: var(--p-gold2); }
+  .ap-chip--ok { background: #e6f4ea; color: #1e6b3a; }
+  .ap-chip--new { background: var(--a-gold); color: #111; }
+  .ap-list li + li { border-top-color: #ece9e2; }
+  .ap-row { padding: 10px 14px; }
+  .ap-row:active { background: #f6f4ef; }
+  .ap-ic, .ap-ic--soft { width: 30px; height: 30px; border: 0; border-radius: 2px; background: #f3ecdf; color: var(--p-gold); }
+  .ap-ic svg { width: 18px; height: 18px; }
+  .ap-row-main strong { font-size: 14px; font-weight: 600; }
+  .ap-chev { color: #b9b5ab; }
+  @media (hover: hover) { .ap-row:hover { background: #faf8f4; } .ap-row:hover .ap-row-main strong { color: var(--p-gold); } }
 
-  .ap-veil { backdrop-filter: blur(3px); }
-  .ap-sheet { top: 50%; bottom: auto; left: 50%; right: auto; width: min(620px, calc(100vw - 80px)); max-height: 86dvh; padding: 22px 26px 28px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--a-gold), transparent 55%); transform: translate(-50%, -50%); animation: ap-pop .22s ease; }
+  /* Pulsanti e moduli */
+  .ap-btn { clip-path: none; border-radius: 3px; min-height: 32px; padding: 0 14px; font-family: var(--ui); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; background: var(--p-gold); color: #fff; border: 1px solid var(--p-gold2); }
+  .ap-btn::after { display: none; }
+  .ap-btn--sm { min-height: 30px; padding: 0 12px; font-size: 13px; }
+  .ap-btn--ghost { background: #f6f5f2; color: var(--p-gold2); border-color: var(--p-gold); }
+  .ap-btn--danger { background: #fff; color: #b32d2e; border-color: #d63638; }
+  .ap-btn--block { width: auto; }
+  @media (hover: hover) { .ap-btn:hover { background: var(--p-gold2); } .ap-btn--ghost:hover { background: #f0ebe0; } .ap-btn--danger:hover { background: #fcf0f1; } }
+  .ap-field label { font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--p-text); font-weight: 500; }
+  .ap-field input, .ap-field select, .ap-field textarea { min-height: 34px; padding: 6px 10px; border-radius: 3px; border-color: #8c8f94; background: #fff; color: var(--p-text); font-family: var(--ui); font-size: 14px; letter-spacing: 0; }
+  .ap-field input:focus, .ap-field select:focus, .ap-field textarea:focus { border-color: var(--p-gold); box-shadow: 0 0 0 1px var(--p-gold); }
+  .ap-check { color: var(--p-text); font-size: 13px; }
+  .ap-form.ap-card, .ap-card.ap-form { max-width: 640px; }
+  article.ap-card { max-width: 820px; }
+
+  /* Filtri come link in fila */
+  .ap-seg { display: inline-flex; gap: 0; padding: 0; border: 0; border-radius: 0; background: none; overflow: visible; }
+  .ap-seg button { flex: none; min-height: 0; padding: 0 8px; border-radius: 0; font-family: var(--ui); font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--p-gold); border-left: 1px solid #c3c0b8; }
+  .ap-seg button:first-child { padding-left: 0; border-left: 0; }
+  .ap-seg button[aria-pressed="true"] { background: none; color: var(--p-text); font-weight: 600; }
+
+  /* Elenchi su due colonne */
+  .ap-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ap-list li:nth-child(even) { border-left: 1px solid #ece9e2; }
+  .ap-list li + li { border-top: 0; }
+  .ap-list li:nth-child(n + 3) { border-top: 1px solid #ece9e2; }
+  .ap-sheet .ap-list { display: block; }
+  .ap-sheet .ap-list li { border-left: 0; }
+  .ap-sheet .ap-list li + li { border-top: 1px solid #ece9e2; }
+
+  /* Bacheca */
+  .ap-dash { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .ap-dash-col { display: grid; gap: 20px; }
+  .ap-box { background: var(--p-box); border: 1px solid var(--p-line); box-shadow: 0 1px 1px rgba(0, 0, 0, .04); }
+  .ap-box-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--p-line); }
+  .ap-box-head h2 { margin: 0; font-size: 14px; font-weight: 600; color: var(--p-text); }
+  .ap-box-body { padding: 12px; }
+  .ap-box-link { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .ap-box-note { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid #ece9e2; color: var(--p-soft); }
+  .ap-glance { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ap-glance button { display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; color: var(--p-gold); font: inherit; font-size: 14px; cursor: pointer; }
+  .ap-glance svg { color: #8c8f94; }
+  .ap-glance b { font-weight: 600; }
+  .ap-table { width: 100%; border-collapse: collapse; }
+  .ap-table td { padding: 8px 0; border-top: 1px solid #ece9e2; vertical-align: top; }
+  .ap-table tr:first-child td { border-top: 0; padding-top: 0; }
+  .ap-right { text-align: right; white-space: nowrap; }
+  .ap-sub { margin-top: 2px; }
+
+  /* Finestre al centro */
+  .ap-veil { background: rgba(0, 0, 0, .55); }
+  .ap-sheet { top: 50%; bottom: auto; left: 50%; right: auto; width: min(600px, calc(100vw - 80px)); max-height: 86dvh; padding: 0 18px 18px; border-radius: 2px; border: 1px solid var(--p-line); background: var(--p-box); color: var(--p-text); transform: translate(-50%, -50%); animation: none; box-shadow: 0 10px 40px rgba(0, 0, 0, .3); }
+  .ap-sheet > .ap-h2:first-of-type { margin: 0 -18px 14px; padding: 12px 18px; border-bottom: 1px solid var(--p-line); font-size: 16px; }
+  .ap-sheet .ap-card { background: #faf9f6; }
   .ap-grip { display: none; }
-  @keyframes ap-pop { from { opacity: 0; transform: translate(-50%, -46%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+  .ap-attestato { box-shadow: 0 1px 3px rgba(0, 0, 0, .1); }
 
-  /* Accesso: due colonne, presentazione a sinistra e modulo a destra */
-  .ap-login { max-width: 1160px; margin: 0 auto; padding: 32px 48px 60px; }
+  /* Accesso: colonna stretta al centro */
+  .ap-login { display: block; max-width: 400px; margin: 0 auto; padding: 48px 0 48px; }
   .ap-login > * { max-width: none; }
-  .ap-login .ap-top .ap-logo { display: block; }
-  .ap-login .ap-top { justify-content: space-between; }
-  .ap-login { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "top top" "intro form" "steps form"; column-gap: 56px; align-content: start; }
-  .ap-login > .ap-top { grid-area: top; }
-  .ap-login-intro { grid-area: intro; }
-  .ap-login-form { grid-area: form; align-self: start; padding-top: 6px; }
-  .ap-login-steps { grid-area: steps; }
-  .ap-login .ap-title { font-size: 72px; }
-  .ap-login .ap-title em { display: block; }
+  .ap-login > .ap-top { display: flex; justify-content: center; margin-bottom: 14px; }
+  .ap-login > .ap-top .ap-pill, .ap-login > .ap-top .ap-link { display: none; }
+  .ap-login > .ap-top .ap-logo { display: block; width: 64px; height: 64px; }
+  .ap-login .ap-title { text-align: center; font-size: 20px; font-weight: 600; }
+  .ap-login .ap-title em { display: inline; }
+  .ap-login .ap-hero { display: none; }
+  .ap-login .ap-seg { display: flex; justify-content: center; margin: 0 0 12px !important; }
+  .ap-login .ap-card { padding: 22px 24px; }
+  .ap-login .ap-btn--block { width: 100%; min-height: 36px; }
+  .ap-login .ap-google { border-radius: 3px; min-height: 36px; border-color: #8c8f94; font-family: var(--ui); font-size: 14px; letter-spacing: 0; }
+  .ap-login .ap-or { color: var(--p-soft); font-size: 11px; }
+  .ap-login .ap-or::before, .ap-login .ap-or::after { background: #dcdcde; }
+  .ap-login-steps { margin-top: 22px; }
+  .ap-login-steps .ap-h2 { text-align: center; margin-top: 0; }
+  .ap-steps li { padding: 8px 12px; font-size: 13px; }
+  .ap-steps li::before { width: 22px; height: 22px; font-size: 12px; background: var(--p-gold); color: #fff; }
 }
-@media (min-width: 960px) and (prefers-reduced-motion: reduce) { .ap-sheet { animation: none; } }
-@media (min-width: 960px) { .ap-sheet .ap-list { display: block; background: var(--a-ink2); } .ap-sheet .ap-list li + li { border-top: 1px solid #2a2a2a; } }
