@@ -21,6 +21,7 @@ import WhatsAppConcierge from './components/WhatsAppConcierge';
 import CourseModal from './components/CourseModal';
 import CookieBanner from './components/CookieBanner';
 import AdminStorie from './components/AdminStorie';
+import AreaPrivata from './components/AreaPrivata';
 import AppDock from './components/AppDock';
 import { isAppMode } from './pwa';
 import { SITE, home, findPage, legacyHash, normalize } from './routes';
@@ -91,7 +92,7 @@ export default function App() {
   }, []);
 
   const page = findPage(path);
-  useEffect(() => { if (path !== '/gestione') setMeta(page); }, [path]);
+  useEffect(() => { if (path !== '/gestione' && path !== '/area') setMeta(page); }, [path]);
 
   const openCourse = (id) => setSelectedCourseId(id);
 
@@ -121,6 +122,8 @@ export default function App() {
 
   // Gestione delle storie: pagina a parte, fuori dal menu (solo per chi ha l'accesso).
   if (path === '/gestione') return <AdminStorie />;
+  // Area privata di allievi e gestione (02/11/2026): stessi account di Maurizio Barber Shop.
+  if (path === '/area') return <AreaPrivata />;
 
   return (
     <div className="relative min-h-screen bg-[#111111] text-gray-200 selection:bg-amber-500/30 selection:text-amber-200">

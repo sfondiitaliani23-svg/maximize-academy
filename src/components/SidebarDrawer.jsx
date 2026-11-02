@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical } from 'lucide-react';
+import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle } from 'lucide-react';
 import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdate, currentVersion } from '../pwa';
 
 const navItems = [
@@ -11,6 +11,7 @@ const navItems = [
   { label: 'Treatwell Agenda', href: '/treatwell', icon: Calendar, sub: 'Digitalizzazione e Prenotazioni' },
   { label: 'Barber Match & Eventi', href: '/eventi', icon: Users, sub: 'Paestum 2026 & Networking' },
   { label: 'Contatti & Consulenza', href: '/contatti', icon: Phone, sub: 'Maurizio Pizzuto & Operatore' },
+  { label: 'Area privata', href: '/area', icon: UserCircle, sub: 'Corsi, materiali e attestati' },
 ];
 
 /** Voce "Installa l'app" / "Aggiorna l'app" in fondo all'elenco. */

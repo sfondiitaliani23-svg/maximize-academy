@@ -140,38 +140,35 @@ export default async function handler(req, res) {
   }
 
   // --- Salvataggio Lead su Database Cloud Supabase ---
-  // Progetto Supabase di Maximize (26/10/2026). URL e chiave «publishable» sono pubblici: la tabella accetta solo nuove righe.
-  const SUPABASE_URL = 'https://pxzdsgcdwqnipxggveuu.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_00_46kjntMiIX_Qowz3bYA__Y4QOcfW';
-  if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-    channels++;
+  // Dal 02/11/2026 le richieste vanno nella tabella mx_richieste (progetto «maurizio-barber-shop», stessi account
+  // dell'area privata /area, dove l'admin le legge). Se quella tabella non c'è ancora, si usa la vecchia «leads» di Maximize.
+  // URL e chiavi «publishable» sono pubblici: le tabelle accettano solo nuove righe.
+  const DB = [
+    { url: 'https://jxtkgxdxvouwlowvqohm.supabase.co', key: 'sb_publishable_SfTFCS_YxVYUOQzxI_tLpA_Kj10eSVj', table: 'mx_richieste', extra: {} },
+    { url: 'https://pxzdsgcdwqnipxggveuu.supabase.co', key: 'sb_publishable_00_46kjntMiIX_Qowz3bYA__Y4QOcfW', table: 'leads', extra: { status: 'Nuovo' } },
+  ];
+  channels++;
+  for (const db of DB) {
     try {
-      const dbResponse = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      const dbResponse = await fetch(`${db.url}/rest/v1/${db.table}`, {
         method: 'POST',
         headers: {
-          'apikey': SUPABASE_ANON_KEY, // chiave sb_publishable_: va solo in apikey, non in Authorization
+          'apikey': db.key, // chiave sb_publishable_: va solo in apikey, non in Authorization
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal' // il browser non può rileggere le richieste: solo inserirle
         },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          type: lead.type,
-          message,
-          status: 'Nuovo'
-        })
+        body: JSON.stringify({ name, phone: phone || null, email: email || null, type: lead.type, message, ...db.extra })
       });
       if (dbResponse.ok) {
         delivered++;
-        console.log('[SUPABASE CRM] Lead salvato nel database Maximize Academy');
-      } else {
-        // Solo codice e messaggio: il campo "details" di Postgres puo' contenere i dati del lead.
-        const dbErr = await dbResponse.json().catch(() => ({}));
-        console.error('[SUPABASE CRM ERROR]', dbResponse.status, dbErr.code || '', dbErr.message || '');
+        console.log('[SUPABASE CRM] Lead salvato in', db.table);
+        break;
       }
+      // Solo codice e messaggio: il campo "details" di Postgres puo' contenere i dati del lead.
+      const dbErr = await dbResponse.json().catch(() => ({}));
+      console.error('[SUPABASE CRM ERROR]', db.table, dbResponse.status, dbErr.code || '', dbErr.message || '');
     } catch (dbErr) {
-      console.error('[SUPABASE CRM ERROR]', dbErr.message);
+      console.error('[SUPABASE CRM ERROR]', db.table, dbErr.message);
     }
   }
 
