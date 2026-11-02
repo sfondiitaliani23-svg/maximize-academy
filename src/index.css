@@ -207,3 +207,51 @@ body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-ins
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* App installata (02/11/2026): comportamento da app e barra in basso (src/components/AppDock.jsx),
+   come su Maurizio Barber Shop: barra fluttuante «neumorphic» nero e oro. */
+html[data-app] { -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; touch-action: manipulation; }
+html[data-app] body { -webkit-user-select: none; user-select: none; }
+html[data-app] input, html[data-app] textarea, html[data-app] select, html[data-app] [contenteditable] { -webkit-user-select: text; user-select: text; }
+html[data-app] a, html[data-app] img, html[data-app] button, html[data-app] svg { -webkit-user-drag: none; }
+html[data-app] body { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+html[data-app] .wa-fab { display: none; } /* WhatsApp è già nella barra */
+
+.mx-dock {
+  --dock-bg: var(--ink-2);
+  --dock-dark: color-mix(in srgb, var(--ink), black 55%);
+  --dock-light: color-mix(in srgb, #fff, transparent 93%);
+  --dock-glow: color-mix(in srgb, var(--gold), transparent 45%);
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60;
+  display: flex; align-items: center; gap: 16px; padding: 14px 22px; border-radius: 36px; background: var(--dock-bg);
+  box-shadow: 14px 14px 28px var(--dock-dark), -10px -10px 24px var(--dock-light);
+  transform: translateX(-50%); animation: mx-dock-in .6s cubic-bezier(.22, 1, .36, 1) both;
+}
+.mx-dock-item {
+  position: relative; display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%;
+  background: var(--dock-bg); text-decoration: none; -webkit-tap-highlight-color: transparent;
+  box-shadow: 6px 6px 12px var(--dock-dark), -6px -6px 12px var(--dock-light);
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s ease;
+  animation: mx-dock-pop .5s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(.25s + var(--i, 0) * 80ms);
+}
+.mx-dock-item:active, .mx-dock-item.is-active {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--dock-bg), black 35%) 0%, var(--dock-bg) 100%);
+  transform: translateY(1px) scale(.94);
+  box-shadow: inset 4px 4px 8px var(--dock-dark), inset -4px -4px 8px var(--dock-light), 0 0 12px var(--dock-glow);
+}
+.mx-dock-icon { width: 22px; height: 22px; stroke: var(--text-soft); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke .3s ease, transform .3s ease; }
+.mx-dock-item:active .mx-dock-icon, .mx-dock-item.is-active .mx-dock-icon { stroke: var(--gold); filter: drop-shadow(0 0 6px var(--dock-glow)); transform: scale(1.1); }
+.mx-dock-dot { position: absolute; left: 50%; bottom: -11px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); transform: translateX(-50%) scale(0); transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+.mx-dock-item.is-active .mx-dock-dot { transform: translateX(-50%) scale(1); }
+.mx-dock-item::before {
+  content: attr(data-tooltip); position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%) translateY(8px) scale(.8);
+  background: var(--gold); color: var(--ink); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 8px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: all .2s cubic-bezier(.34, 1.56, .64, 1);
+}
+.mx-dock-item:active::before, .mx-dock-item:focus-visible::before { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+.mx-dock-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+@media (hover: hover) { .mx-dock-item:hover { transform: translateY(-4px); } .mx-dock-item:hover::before { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
+@keyframes mx-dock-in { from { opacity: 0; transform: translateX(-50%) translateY(40px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes mx-dock-pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .mx-dock, .mx-dock-item { animation: none; } }
+html[data-app] .cookie-bar { bottom: calc(118px + env(safe-area-inset-bottom)) !important; } /* nell'app sta sopra la barra */

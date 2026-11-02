@@ -21,6 +21,8 @@ import WhatsAppConcierge from './components/WhatsAppConcierge';
 import CourseModal from './components/CourseModal';
 import CookieBanner from './components/CookieBanner';
 import AdminStorie from './components/AdminStorie';
+import AppDock from './components/AppDock';
+import { isAppMode } from './pwa';
 import { SITE, home, findPage, legacyHash, normalize } from './routes';
 
 function setMeta(page) {
@@ -47,6 +49,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMobileMenuOpen(false), []);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const [inApp] = useState(() => isAppMode());
 
   // Navigazione tra le pagine senza ricaricare il sito
   useEffect(() => {
@@ -126,7 +129,8 @@ export default function App() {
       <main id="main">{content}</main>
 
       <Footer />
-      {!mobileMenuOpen && <WhatsAppConcierge />}
+      {!mobileMenuOpen && !inApp && <WhatsAppConcierge />}
+      {inApp && !mobileMenuOpen && <AppDock currentPath={page?.path || '/'} />}
 
       {selectedCourseId && (
         <CourseModal courseId={selectedCourseId} onClose={() => setSelectedCourseId(null)} />

@@ -9,7 +9,29 @@ let deferred = null;
 const listeners = new Set();
 const notify = () => listeners.forEach((fn) => fn());
 
+/** Dentro l'app installata (o con ?app=1 per provarla nel browser). */
+export function isAppMode() {
+  try { if (new URLSearchParams(window.location.search).get('app') === '1') return true; } catch { /* indirizzo strano */ }
+  return isStandalone();
+}
+
+// Comportamento da app, come su Maurizio Barber Shop: niente menu del tocco lungo, niente trascinamento,
+// niente selezione del testo fuori dai campi. Nel browser normale non parte.
+function startAppMode() {
+  const root = document.documentElement;
+  root.dataset.app = '1';
+  const editable = (t) => !!(t && t.closest && t.closest('input, textarea, select, [contenteditable=""], [contenteditable="true"]'));
+  addEventListener('contextmenu', (e) => { if (!editable(e.target)) e.preventDefault(); }, { capture: true });
+  addEventListener('dragstart', (e) => { if (!editable(e.target)) e.preventDefault(); }, { capture: true });
+  addEventListener('selectstart', (e) => { if (!editable(e.target)) e.preventDefault(); }, { capture: true });
+}
+
 export function initPwa() {
+  if (isAppMode()) startAppMode();
+  // Service worker: rende l'app installabile e mostra la pagina offline. Non tiene in memoria il sito.
+  if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+  }
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault(); // niente banner automatico: si installa dal menu
     deferred = e;
