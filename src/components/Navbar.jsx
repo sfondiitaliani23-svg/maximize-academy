@@ -29,7 +29,7 @@ export default function Navbar({ currentPath = '/', onOpenMobileMenu }) {
 
       <div className="flex items-center gap-2">
         <a
-          href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy"
+          href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy"
           target="_blank"
           rel="noopener noreferrer"
           className="relative inline-flex items-center gap-2 min-h-[44px] pr-4 mr-2 text-amber-400 font-bold whitespace-nowrap hover:text-white transition-colors after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-px after:h-6 after:bg-amber-400/45 xl:pr-0 xl:mr-0 xl:after:hidden"

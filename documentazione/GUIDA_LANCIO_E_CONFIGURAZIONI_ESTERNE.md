@@ -63,6 +63,6 @@ Permette di ricevere una notifica via email sia a Maurizio (`mauriziomaximize@gm
 ---
 
 ## 📞 Riepilogo Contatti di Supporto
-- **WhatsApp Ufficiale**: `+39 391 716 3833`
+- **WhatsApp Ufficiale**: `+39 324 587 8724`
 - **Sito Produzione**: `https://maximize-academy.vercel.app`
 - **Pannello Vercel**: `https://vercel.com/eliseeshop/maximize-academy`

@@ -5,6 +5,7 @@ import HeroSection from './components/HeroSection';
 import PartnerStrip from './components/PartnerStrip';
 import FounderStory from './components/FounderStory';
 import HomeAreas from './components/HomeAreas';
+import PercorsoCard from './components/PercorsoCard';
 import ManifestoSection from './components/ManifestoSection';
 import ContactCta from './components/ContactCta';
 import EcosystemGrid from './components/EcosystemGrid';
@@ -110,6 +111,7 @@ export default function App() {
           <HeroSection />
           <PartnerStrip />
           <FounderStory />
+          <PercorsoCard />
           <HomeAreas />
           <ManifestoSection />
           <ContactCta />

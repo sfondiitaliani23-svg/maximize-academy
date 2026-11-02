@@ -61,10 +61,10 @@ export default function CourseModal({ courseId, onClose }) {
       if (resp.ok && data.success) {
         setSubmitted(true);
       } else {
-        setErrorMsg(data.error || 'Invio non riuscito. Riprova o scrivici su WhatsApp al +39 391 716 3833.');
+        setErrorMsg(data.error || 'Invio non riuscito. Riprova o scrivici su WhatsApp al +39 324 587 8724.');
       }
     } catch (err) {
-      setErrorMsg('Connessione non riuscita: la candidatura non è stata inviata. Riprova o scrivici su WhatsApp al +39 391 716 3833.');
+      setErrorMsg('Connessione non riuscita: la candidatura non è stata inviata. Riprova o scrivici su WhatsApp al +39 324 587 8724.');
     } finally {
       setLoading(false);
     }

@@ -36,8 +36,8 @@ Maximize Academy è impostato come ecosistema professionale per il mondo Barber,
 
 ## Contatti rilevati
 - Maurizio: 324 587 8724
-- Operatore Maximize per formazione e Sabey: 391 716 3833
-- Link operatore: https://wa.me/393917163833
+- Operatore Maximize per formazione e Sabey: 324 587 8724
+- Link operatore: https://wa.me/393245878724
 
 ## Funzioni/UX rilevate
 - Navigazione mobile con menu

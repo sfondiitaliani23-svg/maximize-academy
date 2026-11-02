@@ -2,7 +2,7 @@ import React from 'react';
 import { pages, brandLinks } from '../routes';
 
 // Footer con slogan, colonne Esplora / Seguici / Sede e la scritta MAXIMIZE gigante in filo d'oro.
-const WA = 'https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy';
+const WA = 'https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy';
 const ico = 'w-[18px] h-[18px] shrink-0';
 const social = [
   {

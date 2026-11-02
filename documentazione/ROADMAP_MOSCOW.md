@@ -29,7 +29,7 @@ Evitare il *feature creep* (richieste continue non prioritarie), garantire che l
 - [x] **Formazione**: Presentazione degli Educator di punta (Gianni Cardinale) e sinergia unificata *UAAMI & Sabey Scissors*.
 - [x] **Barber Reset & Calcolatore ROI**: Modulo di consulenza direzionale con calcolatore interattivo sul rendimento poltrona e CTA personalizzata.
 - [x] **Sabey Scissors Italy**: Configurator interattivo per la scelta della forbice ideale e badge circolare ufficiale *Brand Ambassador Strategist*.
-- [x] **Canali Lead WhatsApp**: Pulsanti differenziati con testi preimpostati sul numero ufficiale `+39 391 716 3833`.
+- [x] **Canali Lead WhatsApp**: Pulsanti differenziati con testi preimpostati sul numero ufficiale `+39 324 587 8724`.
 - [x] **Legal & Privacy GDPR**: Pagina statica dedicata `/privacy.html` (e rewrite `/privacy`) con titolare, P.IVA, tabelle trattamenti, cookie banner e pagina `404.html` brandizzata.
 - [x] **Infrastruttura & Auto-Deploy**: Progetto Vite React con compilazione a zero errori e daemon permanente di auto-commit e push verso GitHub e Vercel.
 

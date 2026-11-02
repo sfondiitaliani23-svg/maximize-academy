@@ -117,7 +117,7 @@ Gira un solo watcher alla volta (file `.auto-deploy.lock`).
 ## 📞 Contatti Ufficiali
 
 - **Sito Web**: [https://maximize-academy.vercel.app](https://maximize-academy.vercel.app)
-- **WhatsApp Maurizio Pizzuto**: [+39 391 716 3833](https://wa.me/393917163833)
+- **WhatsApp Maximize Academy**: [+39 324 587 8724](https://wa.me/393245878724)
 - **Email**: [mauriziomaximize@gmail.com](mailto:mauriziomaximize@gmail.com)
 - **Sede**: Via Benedetto Croce 8, 71121 Foggia (FG)
 - **P. IVA**: 02147290767

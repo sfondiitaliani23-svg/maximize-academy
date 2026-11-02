@@ -11,7 +11,7 @@
 - **Treatwell**: Integrazione dell'agenda digitale e gestione prenotazioni.
 - **Barber Match Paestum 2026**: Scheda evento della competizione barber, integrata senza stacchi visivi.
 - **Manifesto**: Dichiarazione di valore e standard di settore.
-- **Canali di Contatto WhatsApp**: Collegati coerentemente a `+39 391 716 3833`.
+- **Canali di Contatto WhatsApp**: Collegati coerentemente a `+39 324 587 8724`.
 - **Form Contatti & Serverless API**: Gestione lead `/api/contact` con template email Resend pronto.
 - **Compliance GDPR**: Privacy e Cookie Policy dedicata su `/privacy.html` e `/privacy`, cookie banner persistente in `localStorage`.
 - **Pagina 404 Personalizzata**: Pagina di errore luxury su `/404.html`.

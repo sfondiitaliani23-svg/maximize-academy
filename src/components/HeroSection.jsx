@@ -52,7 +52,7 @@ export default function HeroSection() {
           </a>
 
           <a
-            href="https://wa.me/393917163833?text=Salve%20Maurizio,%20vorrei%20informazioni%20sul%20percorso%20Maximize%20Academy"
+            href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20sul%20percorso%20Maximize%20Academy"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 min-h-[44px] text-[#f4f4f4] border-b border-amber-400/70 hover:text-amber-400 hover:border-amber-400 transition-colors"

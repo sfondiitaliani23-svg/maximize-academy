@@ -2,7 +2,7 @@ import React from 'react';
 
 // Barra in basso dell'app installata (02/11/2026), come su Maurizio Barber Shop e Barberia Garofalo:
 // Home · Formazione · Contatti · WhatsApp. Nel browser normale non compare (decide App.jsx con isAppMode()).
-const WA = 'https://wa.me/393917163833?text=Salve,%20vorrei%20informazioni%20su%20Maximize%20Academy';
+const WA = 'https://wa.me/393245878724?text=Salve,%20vorrei%20informazioni%20su%20Maximize%20Academy';
 
 const ICONS = {
   home: (<><path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h14V9.5" /><path d="M10 21v-6h4v6" /></>),

@@ -181,7 +181,7 @@ export default async function handler(req, res) {
   } else if (delivered === 0) {
     return res.status(502).json({
       success: false,
-      error: 'Invio non riuscito. Riprova tra poco o scrivici su WhatsApp al +39 391 716 3833.'
+      error: 'Invio non riuscito. Riprova tra poco o scrivici su WhatsApp al +39 324 587 8724.'
     });
   }
 
