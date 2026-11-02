@@ -15,7 +15,7 @@ const AIUTO = {
   foto: 'Solo verticale 9:16 (es. 1080x1920). JPG, PNG o WebP fino a 8 MB.',
   video: 'Solo verticale 9:16 (es. 1080x1920), fino a 15 secondi e 20 MB.',
   testo: 'Un annuncio, una promo, un orario speciale.',
-  numero: 'Stile Wrapped: un numero grande, per esempio "1.862 recensioni".',
+  numero: 'Un numero grande, per esempio "1.862 recensioni".',
 };
 const IMG = ['image/jpeg', 'image/png', 'image/webp'];
 const VID = ['video/mp4', 'video/webm', 'video/quicktime'];
