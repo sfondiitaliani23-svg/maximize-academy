@@ -10,19 +10,6 @@ export default function CourseModal({ courseId, onClose }) {
   if (!courseId) return null;
 
   const coursesDetails = {
-    'gianni-cardinale': {
-      title: 'Masterclass Tecnica con Gianni Cardinale',
-      educator: 'Gianni Cardinale',
-      subtitle: 'Tecnica pura, precisione chirurgica e confronto professionale.',
-      partner: 'Maximize Academy',
-      topics: [
-        'Geometria del taglio maschile avanzato',
-        'Sfumature e transizioni a rasoio e trimmer',
-        'Consulenza morfologica del viso',
-        'Ottimizzazione dei tempi di esecuzione alla poltrona'
-      ],
-      includes: 'Attestato Ufficiale Maximize Academy, Dispensa Tecnica, Pranzo & Coffee Break'
-    },
     'barber-match-2026': {
       title: 'Barber Match 2026 — Paestum',
       educator: 'Palco & Competizioni Nazionali',
@@ -38,7 +25,8 @@ export default function CourseModal({ courseId, onClose }) {
     }
   };
 
-  const current = coursesDetails[courseId] || coursesDetails['gianni-cardinale'];
+  const current = coursesDetails[courseId];
+  if (!current) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

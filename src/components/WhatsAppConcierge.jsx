@@ -67,7 +67,7 @@ export default function WhatsAppConcierge() {
                     Operatore Maximize
                   </div>
                   <div className="text-[10px] text-gray-400">
-                    Formazione · Corsi · Forbici Sabey
+                    Corsi di formazione · Forbici Sabey
                   </div>
                 </div>
               </div>

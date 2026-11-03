@@ -13,23 +13,31 @@ const msgTitolare = encodeURIComponent('Salve, sono titolare di una barberia: vo
 const stato = [
   {
     icon: Award,
-    tag: 'Ufficiale',
-    title: 'Già attivo',
-    items: ['Maximize Academy di Maurizio Pizzuto', 'Centro UAAMI Foggia (Unione Artistica Acconciatori Misti Italiani)'],
+    tag: 'Percorso formativo',
+    title: 'Solo Maximize Academy e UAAMI',
+    items: [
+      'Maximize Academy di Maurizio Pizzuto',
+      'UAAMI, Centro UAAMI Foggia (Unione Artistica Acconciatori Misti Italiani)',
+      'La collaborazione per il 2027 è ancora in fase di definizione',
+    ],
     tone: 'border-amber-400/60 bg-amber-500/10',
   },
   {
     icon: Handshake,
-    tag: 'Collaborazioni',
-    title: 'Partner del percorso',
-    items: ['Sabey Scissors: strumenti e prove dal vivo', 'ANAQA Men Creation: prodotti professionali', 'M×E Barber Lab: presenza digitale della barberia'],
+    tag: 'Altri ruoli',
+    title: 'Non sono formazione',
+    items: [
+      'Sabey Scissors: solo strumenti professionali e forbici',
+      'ANAQA: prodotti professionali',
+      'M×E Barber Lab: progettazione e sviluppo di siti web e soluzioni digitali per le barberie',
+    ],
     tone: 'border-white/15 bg-white/[0.03]',
   },
   {
     icon: Hammer,
     tag: 'In sviluppo',
     title: 'Barber National Academy 2027',
-    items: ['Programma, sedi e date in definizione', 'Il ruolo di UAAMI nel progetto 2027 è in fase di accordo'],
+    items: ['Programma, sedi e date in definizione', 'La collaborazione con UAAMI per il 2027 non è ancora chiusa'],
     tone: 'border-dashed border-white/25 bg-transparent',
   },
 ];
@@ -42,7 +50,7 @@ const moduli = [
   { icon: MessageCircle, n: '05', title: 'Vendita in barberia', text: 'Consigliare servizi e prodotti con naturalezza, senza forzare. Il valore prima del prezzo.' },
   { icon: Scissors, n: '06', title: 'Linea stilistica', text: 'Taglio geometrico, separazioni in verticale e in orizzontale, dissolvenze. Per ogni scelta: cosa vuoi ottenere e perché.' },
   { icon: GraduationCap, n: '07', title: 'Come si affronta un corso', text: 'Cosa osservare, quali domande fare ai formatori, come prendere appunti. Preparazione al corso di formazione di fine 2027.' },
-  { icon: Globe, n: '08', title: 'Barberia e digitale', text: 'Perché una barberia oggi ha bisogno di un sito che lavora davvero: prenotazioni, contatti, fiducia. Con M×E Barber Lab.' },
+  { icon: Globe, n: '08', title: 'Barberia e digitale', text: 'Perché una barberia ha bisogno di un sito che lavora: prenotazioni, contatti, fiducia. I siti li progetta M×E Barber Lab, che non è un ente di formazione.' },
 ];
 
 const metodo = [
@@ -91,7 +99,7 @@ export default function NationalAcademy() {
       {/* Stato del progetto */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20" aria-labelledby="na-stato">
         <h2 id="na-stato" className="text-sm font-bold uppercase tracking-[0.16em] text-amber-400">A che punto siamo</h2>
-        <p className="mt-2 text-gray-400 text-sm max-w-2xl">Per chiarezza: cosa è già ufficiale, chi collabora e cosa stiamo ancora costruendo.</p>
+        <p className="mt-2 text-gray-400 text-sm max-w-2xl">Il percorso formativo è solo Maximize Academy e UAAMI. La collaborazione per il 2027 è ancora in fase di definizione. Gli altri marchi hanno un ruolo diverso, e non insegnano.</p>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           {stato.map((s) => (
             <div key={s.tag} className={`rounded-2xl border p-6 ${s.tone}`}>

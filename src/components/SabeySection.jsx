@@ -1,50 +1,25 @@
 import { brandLinks } from '../routes';
-import React, { useState } from 'react';
-import { Scissors, Check, MessageSquare, Sparkles, Shield, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { Scissors, MessageSquare } from 'lucide-react';
+
+// Modelli del catalogo Sabey (foto autorizzate da Maurizio). Nessuna scheda inventata:
+// misure, nome commerciale completo e garanzia si pubblicano solo con dati ufficiali.
+const modelli = [
+  { id: '3040', src: '/assets/img/sabey/sabey-3040.png' },
+  { id: '40D', src: '/assets/img/sabey/sabey-40d.png' },
+  { id: '40DS', src: '/assets/img/sabey/sabey-40ds.png' },
+  { id: 'Francis', src: '/assets/img/sabey/sabey-francis.png' },
+  { id: 'GT', src: '/assets/img/sabey/sabey-gt.png' },
+  { id: 'VR', src: '/assets/img/sabey/sabey-vr.png' },
+];
+
+const WA = 'https://wa.me/393245878724?text=' + encodeURIComponent('Salve, vorrei aiuto per scegliere una forbice Sabey.');
 
 export default function SabeySection() {
-  const [selectedHand, setSelectedHand] = useState('Destra');
-  const [selectedTechnique, setSelectedTechnique] = useState('Sfumatura & Pettine/Forbice');
-  const [selectedSize, setSelectedSize] = useState('6.0"');
-  const [recommendedModel, setRecommendedModel] = useState(null);
-
-  const techniques = [
-    { label: 'Sfumatura & Pettine/Forbice', desc: 'Precisione, stabilità e taglio pieno' },
-    { label: 'Point-Cutting & Dettagli', desc: 'Punte affilate per rifiniture millimetriche' },
-    { label: 'Sfoltitura & Texturizzazione', desc: 'Denti micropettinati senza creare barrature' },
-    { label: 'Taglio Geometrico & Volumi', desc: 'Lame a rasoio per linee nette e decise' }
-  ];
-
-  const sizes = ['5.5"', '6.0"', '6.5"', '7.0"'];
-
-  const handleRecommend = (e) => {
-    e.preventDefault();
-    let name = 'SABEY MASTER TITANIUM GOLD';
-    let desc = 'La forbice d’elezione per il Barber che cerca fluidità assoluta, bilanciamento anatomico e nessuna fatica al polso.';
-
-    if (selectedTechnique.includes('Point-Cutting')) {
-      name = 'SABEY PRECISION SLIM 5.5"';
-      desc = 'Lama affilatissima a doppio filo giapponese per il massimo controllo nei dettagli e contorni.';
-    } else if (selectedTechnique.includes('Sfoltitura')) {
-      name = 'SABEY TEXTURE 30T ERGONOMIC';
-      desc = '30 denti con scanalatura a V per alleggerire le masse con naturalezza sartoriale.';
-    }
-
-    setRecommendedModel({
-      name,
-      hand: selectedHand,
-      technique: selectedTechnique,
-      size: selectedSize,
-      desc,
-      waLink: `https://wa.me/393245878724?text=${encodeURIComponent(`Salve, vorrei provare la forbice Sabey consigliata dal configuratore (${name}, misura ${selectedSize}, mano ${selectedHand}).`)}`
-    });
-  };
-
   return (
     <section id="sabey" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#111111] via-[#181818] to-[#111111]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
+
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-amber-500/30">
             <span className="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-bold">
@@ -60,25 +35,24 @@ export default function SabeySection() {
           </h2>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-            Una forbice non si compra a catalogo: si sceglie a partire dalla tua mano, dalla tua tecnica e dal lavoro che vuoi realizzare ogni giorno.
+            Sabey Scissors è strumenti professionali e forbici. Non è un percorso di formazione.
+            La scelta dello strumento la fai con un operatore, a partire dalla tua mano e dal lavoro di ogni giorno.
           </p>
         </div>
 
-        {/* Presentation Card: Sabey Identity + Official Badge */}
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/30 mb-16 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left: Sabey Brand Content */}
+
             <div className="lg:col-span-7 space-y-6">
-              
+
               <div className="flex items-center gap-4">
                 <a href={brandLinks.sabey} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="Sabey Scissors Europa su Instagram (si apre in una nuova scheda)">
                   <img loading="lazy"
-                  src="/assets/loghi/sabey.webp"
-                  alt="Sabey Scissors Italy Hand Made"
-                  width="1549" height="240"
-                  className="h-14 sm:h-16 w-auto object-contain"
-                />
+                    src="/assets/loghi/sabey.webp"
+                    alt="Sabey Scissors Italy Hand Made"
+                    width="1549" height="240"
+                    className="h-14 sm:h-16 w-auto object-contain"
+                  />
                 </a>
               </div>
 
@@ -95,7 +69,6 @@ export default function SabeySection() {
                 Forbici professionali artigianali per Barber e Parrucchieri. Ti accompagno personalmente o tramite il mio team nella scelta dello strumento ideale, mettendo al centro comfort muscolare, angolo di taglio e obiettivi professionali.
               </p>
 
-              {/* Pillars */}
               <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-amber-200">
                 <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">La tua mano</span>
                 <span className="hidden sm:inline text-amber-500" aria-hidden="true">•</span>
@@ -106,13 +79,13 @@ export default function SabeySection() {
 
               <div className="pt-2 flex flex-col sm:flex-row gap-4">
                 <a
-                  href="#trova-forbice"
+                  href="#modelli"
                   className="px-7 py-3.5 rounded-full btn-gold text-xs uppercase font-bold tracking-wider text-center shadow-gold-glow"
                 >
-                  Trova la tua forbice
+                  Vedi i modelli
                 </a>
                 <a
-                  href="https://wa.me/393245878724?text=Salve,%20vorrei%20aiuto%20per%20scegliere%20la%20mia%20forbice%20Sabey"
+                  href={WA}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-7 py-3.5 rounded-full btn-glass text-xs uppercase font-bold tracking-wider text-center text-amber-300 border-amber-500/30 flex items-center justify-center gap-2"
@@ -124,7 +97,6 @@ export default function SabeySection() {
 
             </div>
 
-            {/* Destra: badge ufficiale Brand Ambassador Strategist (sfondo trasparente) */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center">
               <img loading="lazy"
                 src="/assets/img/sabey-brand-ambassador.webp"
@@ -140,140 +112,51 @@ export default function SabeySection() {
           </div>
         </div>
 
-        {/* INTERACTIVE TOOL: TROVA LA TUA FORBICE IDEALE */}
-        <div id="trova-forbice" className="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10">
+        <div id="modelli" className="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10">
+          <span id="trova-forbice" className="block scroll-mt-24" />
           <div className="max-w-2xl mb-8">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-400 mb-2">
               <Scissors className="w-4 h-4" />
-              <span>CONFIGURATORE SARTORIALE SABEY</span>
+              <span>Strumenti professionali</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
-              Qual è la forbice perfetta per il tuo stile?
+              Modelli dal catalogo Sabey
             </h3>
-            <p className="text-xs sm:text-sm text-gray-400 mt-1">
-              Seleziona la tua impostazione e ricevi la raccomandazione tecnica con filo rasoio e bilanciamento personalizzato.
+            <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+              Foto del catalogo ufficiale. Il codice è quello del modello.
+              Misure, nome commerciale completo e garanzia si aggiungono qui solo quando Sabey li conferma.
             </p>
           </div>
 
-          <form onSubmit={handleRecommend} className="space-y-6">
-            
-            {/* Step 1: Mano */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">
-                1. Impugnatura
-              </label>
-              <div className="grid grid-cols-2 gap-4 max-w-md">
-                {['Destra', 'Mancina'].map((hand) => (
-                  <button
-                    type="button"
-                    key={hand}
-                    onClick={() => setSelectedHand(hand)}
-                    className={`py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                      selectedHand === hand 
-                        ? 'bg-amber-400 text-black shadow-gold-glow' 
-                        : 'bg-black/50 text-gray-300 border border-white/10 hover:border-amber-400/50'
-                    }`}
-                  >
-                    Mano {hand}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 list-none p-0 m-0">
+            {modelli.map((m) => (
+              <li key={m.id} className="rounded-2xl border border-white/10 bg-white p-4 flex flex-col">
+                <img
+                  src={m.src}
+                  alt={`Forbice Sabey ${m.id}`}
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                  className="w-full h-44 sm:h-56 object-contain"
+                />
+                <p className="mt-3 text-center text-sm font-bold tracking-wide text-black">Sabey {m.id}</p>
+              </li>
+            ))}
+          </ul>
 
-            {/* Step 2: Tecnica */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">
-                2. Tecnica principale di utilizzo
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {techniques.map((t) => (
-                  <button
-                    type="button"
-                    key={t.label}
-                    onClick={() => setSelectedTechnique(t.label)}
-                    className={`p-4 rounded-xl text-left transition-all ${
-                      selectedTechnique === t.label 
-                        ? 'bg-amber-500/15 border-2 border-amber-400 shadow-gold-glow' 
-                        : 'bg-black/40 border border-white/10 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="text-xs font-bold text-white mb-1">{t.label}</div>
-                    <div className="text-[11px] text-gray-400">{t.desc}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Step 3: Misura */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">
-                3. Misura preferita (Pollici)
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {sizes.map((s) => (
-                  <button
-                    type="button"
-                    key={s}
-                    onClick={() => setSelectedSize(s)}
-                    className={`w-16 py-2.5 rounded-xl text-xs font-bold tracking-wider transition-all ${
-                      selectedSize === s 
-                        ? 'bg-amber-400 text-black shadow-gold-glow' 
-                        : 'bg-black/50 text-gray-300 border border-white/10 hover:border-amber-400/50'
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Submit */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl btn-gold text-xs uppercase font-extrabold tracking-widest shadow-gold-glow"
-              >
-                Genera Configurazione Sabey
-              </button>
-            </div>
-
-          </form>
-
-          {/* Risultato Configurazione */}
-          {recommendedModel && (
-            <div className="mt-8 p-6 rounded-2xl glass-panel-gold border border-amber-500/40 animate-fadeIn">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                <div>
-                  <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400 mb-1">
-                    MODELLO CONSIGLIATO PER TE
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-display font-bold text-white mb-2">
-                    {recommendedModel.name}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">
-                    {recommendedModel.desc}
-                  </p>
-                  <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-amber-300 font-semibold">
-                    <span>Mano: {recommendedModel.hand}</span>
-                    <span className="hidden sm:inline" aria-hidden="true">•</span>
-                    <span>Misura: {recommendedModel.size}</span>
-                    <span className="hidden sm:inline" aria-hidden="true">•</span>
-                    <span>Garanzia A Vita Sabey</span>
-                  </div>
-                </div>
-
-                <a
-                  href={recommendedModel.waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-full btn-gold text-xs uppercase font-bold tracking-wider whitespace-nowrap shadow-gold-glow"
-                >
-                  Richiedi Prova con Operatore
-                </a>
-              </div>
-            </div>
-          )}
-
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <p className="text-xs text-gray-400 max-w-xl">
+              Per la prova con un operatore scrivi su WhatsApp: ti risponde una persona, con i dati del modello che ti interessa.
+            </p>
+            <a
+              href={WA}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-full btn-gold text-xs uppercase font-bold tracking-wider whitespace-nowrap shadow-gold-glow text-center"
+            >
+              Richiedi prova con operatore
+            </a>
+          </div>
         </div>
 
       </div>

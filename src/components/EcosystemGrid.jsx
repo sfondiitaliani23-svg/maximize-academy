@@ -8,7 +8,7 @@ export default function EcosystemGrid() {
       action: 'IMPARA',
       category: 'FORMAZIONE',
       title: 'Alza il livello.',
-      desc: 'Educator, tecnica pura e un percorso professionale con UAAMI.',
+      desc: 'Percorso formativo di Maximize Academy con UAAMI. La collaborazione per il 2027 è ancora in fase di definizione.',
       link: '/formazione',
       icon: GraduationCap,
       goldAccent: true
@@ -28,7 +28,7 @@ export default function EcosystemGrid() {
       action: 'ATTREZZATI',
       category: 'STRUMENTI & PRODOTTI',
       title: 'Scegli con criterio.',
-      desc: 'Sabey Scissors artigianali e soluzioni professionali ANAQA per valorizzare il servizio.',
+      desc: 'Sabey Scissors: forbici e strumenti professionali. ANAQA: prodotti professionali. Non sono formazione.',
       link: '/sabey',
       icon: Scissors
     },
@@ -66,7 +66,7 @@ export default function EcosystemGrid() {
       action: 'DIGITALIZZA',
       category: 'M×E BARBER LAB',
       title: 'Porta la tua impresa nel digitale.',
-      desc: 'Strategia, comunicazione e tecnologia per il settore barber: il progetto di Maurizio Pizzuto ed Eliseo.',
+      desc: 'Progettazione e sviluppo di siti web e soluzioni digitali per le barberie. Non è un percorso di formazione.',
       link: 'https://mxe-barber-lab.pages.dev',
       external: true,
       wide: true,

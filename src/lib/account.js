@@ -21,12 +21,49 @@ function messaggio(d, status) {
 }
 
 async function call(path, body, t) {
-  const r = await fetch(`${AC_URL}${path}`, { method: 'POST', headers: { apikey: AC_KEY, 'Content-Type': 'application/json', ...(t ? { Authorization: `Bearer ${t}` } : {}) }, body: JSON.stringify(body) });
+  let r;
+  try {
+    r = await fetch(`${AC_URL}${path}`, { method: 'POST', headers: { apikey: AC_KEY, 'Content-Type': 'application/json', ...(t ? { Authorization: `Bearer ${t}` } : {}) }, body: JSON.stringify(body) });
+  } catch {
+    const err = new Error('Non riusciamo a collegarci. Controlla la connessione e riprova.');
+    err.network = true;
+    throw err;
+  }
   const d = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(messaggio(d, r.status));
+  if (!r.ok) {
+    const err = new Error(messaggio(d, r.status));
+    err.authDead = r.status === 400 || r.status === 401;
+    throw err;
+  }
   return d;
 }
-const salva = (d) => { const s = { access: d.access_token, refresh: d.refresh_token, exp: Date.now() + (Number(d.expires_in) || 3600) * 1000 }; write(s); return s; };
+
+function scadenzaJwt(access) {
+  try {
+    const p = JSON.parse(decodeURIComponent(escape(atob(String(access).split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))));
+    const e = Number(p.exp);
+    return e > 1e9 ? e * 1000 : 0;
+  } catch { return 0; }
+}
+
+function scadenza(d, access) {
+  const jwt = scadenzaJwt(access);
+  if (jwt) return jwt;
+  const at = Number(d.expires_at);
+  if (at > 1e12) return at;
+  if (at > 1e9) return at * 1000;
+  const inn = Number(d.expires_in);
+  if (inn > 0) return Date.now() + inn * 1000;
+  return Date.now() + 3600 * 1000;
+}
+
+const salva = (d, prev) => {
+  const access = d.access_token || prev?.access || '';
+  if (!access) return null;
+  const s = { access, refresh: d.refresh_token || prev?.refresh || '', exp: scadenza(d, access) };
+  write(s);
+  return s;
+};
 
 export const login = async (email, password) => salva(await call('/auth/v1/token?grant_type=password', { email, password }));
 export const hasSession = () => Boolean(read());
@@ -48,22 +85,56 @@ export async function iscriviti({ nome, email, password }) {
 }
 export async function recuperaPassword(email) { await call(`/auth/v1/recover?redirect_to=${encodeURIComponent(back())}`, { email }).catch(() => {}); }
 
-/** Ritorno da Google, dal link di conferma o da quello per la nuova password: la sessione è dopo il «#». */
+let indirizzoLetto = false;
+let esitoIndirizzo = null;
+
+function pulisciIndirizzo() {
+  const q = new URLSearchParams(window.location.search);
+  ['access_token', 'refresh_token', 'expires_in', 'expires_at', 'token_type', 'type', 'error', 'error_description', 'error_code'].forEach((k) => q.delete(k));
+  const search = q.toString();
+  window.history.replaceState(null, '', window.location.pathname + (search ? `?${search}` : ''));
+}
+
+/** Ritorno da Google, dal link di conferma o da quello per la nuova password.
+ *  I token possono arrivare sulla home (link in Gmail) o su /area. Si leggono una volta, prima della schermata d'ingresso. */
 export function sessioneDaIndirizzo() {
+  if (indirizzoLetto) return esitoIndirizzo;
+  indirizzoLetto = true;
   const h = new URLSearchParams(window.location.hash.slice(1));
-  if (!h.get('access_token')) return h.get('error_description') ? { errore: 'Accesso non riuscito. Riprova.' } : null;
-  salva({ access_token: h.get('access_token'), refresh_token: h.get('refresh_token'), expires_in: h.get('expires_in') });
-  window.history.replaceState(null, '', window.location.pathname);
-  return { tipo: h.get('type') || '' };
+  const q = new URLSearchParams(window.location.search);
+  const access = h.get('access_token') || q.get('access_token');
+  const err = h.get('error_description') || q.get('error_description');
+  if (!access) {
+    if (err) { pulisciIndirizzo(); esitoIndirizzo = { errore: 'Accesso non riuscito. Riprova.' }; }
+    return esitoIndirizzo;
+  }
+  salva({
+    access_token: access,
+    refresh_token: h.get('refresh_token') || q.get('refresh_token') || '',
+    expires_in: h.get('expires_in') || q.get('expires_in') || '',
+    expires_at: h.get('expires_at') || q.get('expires_at') || '',
+  });
+  pulisciIndirizzo();
+  esitoIndirizzo = { tipo: h.get('type') || q.get('type') || '' };
+  return esitoIndirizzo;
 }
 
 let pending = null;
 /** Token valido (si rinnova da solo). Vuoto se non c'è accesso. */
 export async function token() {
   const s = read();
-  if (!s) return '';
+  if (!s?.access) return '';
   if (s.exp - Date.now() > 60000) return s.access;
-  if (!pending) pending = call('/auth/v1/token?grant_type=refresh_token', { refresh_token: s.refresh }).then(salva).catch(() => { write(null); return null; }).finally(() => { setTimeout(() => { pending = null; }, 0); });
+  if (!s.refresh) return s.exp > Date.now() ? s.access : '';
+  if (!pending) {
+    pending = call('/auth/v1/token?grant_type=refresh_token', { refresh_token: s.refresh })
+      .then((d) => salva(d, s))
+      .catch((e) => {
+        if (e.authDead) { write(null); return null; }
+        return s.exp > Date.now() ? s : null;
+      })
+      .finally(() => { setTimeout(() => { pending = null; }, 0); });
+  }
   const n = await pending;
   return n ? n.access : '';
 }

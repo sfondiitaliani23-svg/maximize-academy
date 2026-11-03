@@ -77,7 +77,7 @@ export default function AnaqaSection() {
               <div className="flex flex-wrap items-center gap-4 text-xs text-amber-200">
                 <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Kit campionatura per barberie</span>
                 <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Margini di rivendita protetti</span>
-                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Formazione tecnica all'uso</span>
+                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Prodotti professionali per la barberia</span>
               </div>
 
               <div className="pt-2">

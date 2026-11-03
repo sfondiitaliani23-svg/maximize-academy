@@ -121,13 +121,13 @@ export default function ContactSection() {
                 />
               </a>
               <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400/80 mb-2">
-                FORMAZIONE · CORSI · SABEY SCISSORS
+                CORSI DI FORMAZIONE
               </div>
               <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
                 Il tuo prossimo passo professionale.
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                Un supporto dedicato per orientarti tra date e iscrizioni ai corsi, e per la prova delle forbici Sabey.
+                Date e iscrizioni ai corsi di Maximize Academy e UAAMI. Per le forbici Sabey, che sono strumenti e non un corso, lo stesso operatore ti aiuta a scegliere.
               </p>
             </div>
 

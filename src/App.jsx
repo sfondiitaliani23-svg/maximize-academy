@@ -100,7 +100,7 @@ export default function App() {
   let content;
   switch (page?.path) {
     case '/ecosistema': content = <EcosystemGrid />; break;
-    case '/formazione': content = <InternationalTraining onSelectCourse={openCourse} />; break;
+    case '/formazione': content = <InternationalTraining />; break;
     case '/barber-national-academy': content = <NationalAcademy />; break;
     case '/barber-reset': content = <BarberResetSection />; break;
     case '/sabey': content = <SabeySection />; break;

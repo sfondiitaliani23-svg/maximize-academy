@@ -93,32 +93,12 @@ app.post('/api/barber-reset/assess', async (req, res) => {
   });
 });
 
-// 3. Quiz / Raccomandazione Forbice Sabey
+// 3. Il configuratore Sabey non è più attivo: niente modelli inventati.
 app.post('/api/sabey/recommend', (req, res) => {
-  const { hand = 'right', primaryTechnique = 'sfumatura', sizePreference = '6.0' } = req.body;
-
-  let recommendation = {
-    model: 'SABEY DAMASCUS MASTER EDITION',
-    size: sizePreference || '6.0"',
-    steel: 'Acciaio Giapponese VG-10 Lavorazione Artigianale Italiana',
-    description: 'Bilanciamento perfetto per sfumature ultra-pulite, forbice su pettine e precisione assoluta sul contorno.',
-    badge: 'Consigliata da Maurizio Pizzuto',
-    waDirectLink: `https://wa.me/393917163833?text=${encodeURIComponent('Salve, vorrei informazioni sulla forbice Sabey consigliata dal sito Maximize: modello ' + sizePreference + ' per tecnica ' + primaryTechnique)}`
-  };
-
-  if (primaryTechnique === 'punta' || primaryTechnique === 'dettaglio') {
-    recommendation.model = 'SABEY PRECISION BLADE LINE';
-    recommendation.size = '5.5"';
-    recommendation.description = 'Lama affilata a rasoio per rifiniture micrometriche e lavoro point-cutting.';
-  } else if (primaryTechnique === 'sfoltitura') {
-    recommendation.model = 'SABEY TEXTURE 30T ERGO';
-    recommendation.size = '6.0" (30 Denti)';
-    recommendation.description = 'Denti micropettinati per alleggerire i volumi senza lasciare tacche visibili.';
-  }
-
   res.json({
-    status: 'SUCCESS',
-    recommendation
+    status: 'UNAVAILABLE',
+    message: 'Il configuratore non è attivo. Sabey Scissors è strumenti e forbici: per la scelta scrivi a un operatore.',
+    waDirectLink: `https://wa.me/393245878724?text=${encodeURIComponent('Salve, vorrei aiuto per scegliere una forbice Sabey.')}`
   });
 });
 
@@ -194,24 +174,6 @@ app.post('/api/contact', async (req, res) => {
 // 5. Elenco corsi ed eventi attivi
 app.get('/api/courses', (req, res) => {
   res.json([
-    {
-      id: 'gianni-cardinale',
-      title: 'Gianni Cardinale — Masterclass Tecnica',
-      subtitle: 'Tecnica pura, precisione chirurgica e confronto professionale.',
-      tag: 'Formazione Internazionale',
-      educator: 'Gianni Cardinale',
-      description: 'Nuove prospettive e metodologie operative da portare immediatamente nel lavoro quotidiano per alzare il livello del servizio.',
-      partner: 'Men\'s Events Education & Maximize Academy'
-    },
-    {
-      id: 'yass-the-barber',
-      title: 'Yass The Barber — International Workshop',
-      subtitle: 'Esperienza internazionale, metodo visivo e lavoro pratico sul campo.',
-      tag: 'Formazione Internazionale',
-      educator: 'Yass The Barber',
-      description: 'Osservazione analitica, gestione delle proporzioni e transizioni avanzate per un barber contemporaneo.',
-      partner: 'Men\'s Events Education & Maximize Academy'
-    },
     {
       id: 'barber-reset',
       title: 'Barber Reset — Intervento Strategico in Barberia',

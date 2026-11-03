@@ -13,9 +13,13 @@ import { startAutoUpdate } from './autoUpdate';
 import { initPwa } from './pwa';
 import './benvenuto.css';
 import { avviaBenvenuto } from './lib/benvenuto-maximize';
+import { sessioneDaIndirizzo } from './lib/account';
 
 startAutoUpdate();
 initPwa();
+// Prima della schermata d'ingresso: il ritorno da Google o dal link in Gmail resta salvato,
+// anche se atterra sulla home e non su /area.
+sessioneDaIndirizzo();
 avviaBenvenuto();
 
 ReactDOM.createRoot(document.getElementById('root')).render(

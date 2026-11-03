@@ -4,10 +4,10 @@ import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdat
 
 const navItems = [
   { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 7 pilastri di crescita, con M×E Barber Lab' },
-  { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Cardinale, UAAMI, Sabey' },
+  { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Maximize Academy e UAAMI' },
   { label: 'Barber National Academy', href: '/barber-national-academy', icon: Trophy, sub: 'Progetto formativo 2027 · in sviluppo' },
   { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
-  { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
+  { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Strumenti e forbici, non formazione' },
   { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },
   { label: 'Treatwell Agenda', href: '/treatwell', icon: Calendar, sub: 'Digitalizzazione e Prenotazioni' },
   { label: 'Barber Match & Eventi', href: '/eventi', icon: Users, sub: 'Paestum 2026 & Networking' },
