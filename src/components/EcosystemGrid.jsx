@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraduationCap, TrendingUp, Scissors, Calendar, Users, Rocket, ArrowUpRight } from 'lucide-react';
+import { GraduationCap, TrendingUp, Scissors, Calendar, Users, Rocket, ArrowUpRight, Cpu } from 'lucide-react';
 
 export default function EcosystemGrid() {
   const steps = [
@@ -59,6 +59,19 @@ export default function EcosystemGrid() {
       link: '/contatti',
       icon: Rocket,
       goldAccent: true
+    },
+    {
+      // Richiesta di Maurizio (03/11/2026): il progetto M×E Barber Lab fa parte dell'ecosistema
+      num: '07',
+      action: 'DIGITALIZZA',
+      category: 'M×E BARBER LAB',
+      title: 'Porta la tua impresa nel digitale.',
+      desc: 'Strategia, comunicazione e tecnologia per il settore barber: il progetto di Maurizio Pizzuto ed Eliseo.',
+      link: 'https://mxe-barber-lab.pages.dev',
+      external: true,
+      wide: true,
+      icon: Cpu,
+      goldAccent: true
     }
   ];
 
@@ -95,7 +108,8 @@ export default function EcosystemGrid() {
               <a
                 key={idx}
                 href={step.link}
-                className={`group relative p-7 rounded-2xl transition-all duration-400 flex flex-col justify-between ${
+                {...(step.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className={`group relative p-7 rounded-2xl transition-all duration-400 flex flex-col justify-between ${step.wide ? 'md:col-span-2 lg:col-span-3 ' : ''}${
                   step.highlight 
                     ? 'glass-panel-gold border-amber-500/40 shadow-gold-glow hover:border-amber-400' 
                     : 'glass-card hover:border-amber-500/40'

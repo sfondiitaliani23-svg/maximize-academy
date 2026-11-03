@@ -3,7 +3,7 @@ import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, Shoppi
 import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdate, currentVersion } from '../pwa';
 
 const navItems = [
-  { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 6 pilastri di crescita' },
+  { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 7 pilastri di crescita, con M×E Barber Lab' },
   { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Cardinale, UAAMI, Sabey' },
   { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
   { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
