@@ -1,5 +1,6 @@
 /* Schermata di benvenuto dell'app (03/11/2026). I colori arrivano dalle variabili --bv-* di ogni sito. */
 html.bv-aperto, html.bv-aperto body { overflow: hidden; }
+.bv, .bv *, .bv *::before, .bv *::after { box-sizing: border-box; }
 .bv { position: fixed; inset: 0; overflow: clip; z-index: 2147483000; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; background: var(--bv-fondo); color: var(--bv-testo); font-family: var(--bv-font); opacity: 0; transition: opacity .3s ease; -webkit-tap-highlight-color: transparent; }
 .bv.dentro { opacity: 1; }
 .bv.via { opacity: 0; pointer-events: none; }
