@@ -11,7 +11,7 @@ export default function HomeAreas() {
         <h2 id="aree-title" className="mt-3 text-[clamp(2.1rem,1.4rem+3vw,3.6rem)] leading-[1.1] font-bold text-[#f4f4f4]">
           Tutto quello che serve <em className="not-italic font-normal text-amber-400">per crescere.</em>
         </h2>
-        <ul className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#3d3d3d] border border-[#3d3d3d] list-none p-0 m-0">
+        <ul className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#3d3d3d] border border-[#3d3d3d] list-none p-0 m-0">
           {areas.map((a, i) => (
             <li key={a.path} className="bg-[#111111]">
               <a href={a.path} className="group flex flex-col h-full p-6 sm:p-8 hover:bg-[#181818] transition-colors">

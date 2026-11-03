@@ -1,11 +1,11 @@
-import { brandLinks } from '../routes';
+import { brandLinks, WA_KEPLERO, waLink } from '../routes';
 import React from 'react';
 import { Scissors, MessageSquare } from 'lucide-react';
 
 // Modelli del catalogo Sabey (foto autorizzate da Maurizio). Nessuna scheda inventata:
 // misure, nome commerciale completo e garanzia si pubblicano solo con dati ufficiali.
 const modelli = [
-  { id: '3040', src: '/assets/img/sabey/sabey-3040.png' },
+  { id: '40-30', src: '/assets/img/sabey/sabey-3040.png' },
   { id: '40D', src: '/assets/img/sabey/sabey-40d.png' },
   { id: '40DS', src: '/assets/img/sabey/sabey-40ds.png' },
   { id: 'Francis', src: '/assets/img/sabey/sabey-francis.png' },
@@ -13,7 +13,7 @@ const modelli = [
   { id: 'VR', src: '/assets/img/sabey/sabey-vr.png' },
 ];
 
-const WA = 'https://wa.me/393245878724?text=' + encodeURIComponent('Salve, vorrei aiuto per scegliere una forbice Sabey.');
+const WA = waLink(WA_KEPLERO, 'Salve, vorrei informazioni su una forbice Sabey.');
 
 export default function SabeySection() {
   return (
@@ -35,8 +35,8 @@ export default function SabeySection() {
           </h2>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-            Sabey Scissors: strumenti professionali e forbici. Non è un percorso di formazione.
-            La scelta dello strumento la fai con un operatore, a partire dalla tua mano e dal lavoro di ogni giorno.
+            Sabey Scissors propone forbici professionali.
+            La scelta la fai con Keplero, a partire dalla tua mano e dal lavoro di ogni giorno.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export default function SabeySection() {
           <div className="max-w-2xl mb-8">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-400 mb-2">
               <Scissors className="w-4 h-4" />
-              <span>Strumenti professionali</span>
+              <span>Forbici professionali</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
               Modelli dal catalogo Sabey
@@ -146,7 +146,7 @@ export default function SabeySection() {
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <p className="text-xs text-gray-400 max-w-xl">
-              Per la prova con un operatore scrivi su WhatsApp: ti risponde una persona, con i dati del modello che ti interessa.
+              Per informazioni su un modello scrivi a Keplero su WhatsApp e indica la forbice che ti interessa.
             </p>
             <a
               href={WA}

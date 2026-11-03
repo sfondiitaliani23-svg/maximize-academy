@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle, Trophy } from 'lucide-react';
+import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle, Trophy, Cpu } from 'lucide-react';
+import { WA_KEPLERO, WA_MAURIZIO, waLink } from '../routes';
 import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdate, currentVersion } from '../pwa';
 
 const navItems = [
@@ -7,9 +8,10 @@ const navItems = [
   { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Maximize Academy e UAAMI' },
   { label: 'Barber National Academy', href: '/barber-national-academy', icon: Trophy, sub: 'Progetto formativo 2027 · in sviluppo' },
   { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
-  { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Strumenti e forbici, non formazione' },
-  { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },
+  { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici professionali' },
+  { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti per professionisti' },
   { label: 'Treatwell Agenda', href: '/treatwell', icon: Calendar, sub: 'Digitalizzazione e Prenotazioni' },
+  { label: 'M×E Barber Lab', href: '/mxe', icon: Cpu, sub: 'Siti e soluzioni digitali' },
   { label: 'Barber Match & Eventi', href: '/eventi', icon: Users, sub: 'Paestum 2026 & Networking' },
   { label: 'Contatti & Consulenza', href: '/contatti', icon: Phone, sub: 'Maurizio Pizzuto & Operatore' },
   { label: 'Area privata', href: '/area', icon: UserCircle, sub: 'Corsi, materiali e attestati' },
@@ -184,7 +186,7 @@ export default function SidebarDrawer({ isOpen, onClose, currentPath = '/' }) {
           {/* Contatti veloci */}
           <div className="px-6 pt-4 border-t border-[#3d3d3d] space-y-2.5">
             <a
-              href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
+              href={waLink(WA_MAURIZIO, 'Salve Maurizio, vorrei informazioni su Barber Reset e consulenza')}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 btn-gold text-xs font-bold uppercase tracking-wider"
@@ -193,13 +195,22 @@ export default function SidebarDrawer({ isOpen, onClose, currentPath = '/' }) {
               <span>Parla con Maurizio</span>
             </a>
             <a
-              href="https://wa.me/393245878724?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
+              href={waLink(WA_MAURIZIO, 'Salve, vorrei informazioni sui corsi di formazione')}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 btn-glass text-xs font-semibold uppercase tracking-wider"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Operatore Formazione & Sabey</span>
+              <span>Corsi di formazione</span>
+            </a>
+            <a
+              href={waLink(WA_KEPLERO, 'Salve, vorrei informazioni su Sabey Scissors, ANAQA o Treatwell')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 btn-glass text-xs font-semibold uppercase tracking-wider"
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>Keplero · Sabey, ANAQA, Treatwell</span>
             </a>
           </div>
         </div>

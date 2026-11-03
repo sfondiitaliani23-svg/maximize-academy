@@ -7,8 +7,8 @@ export const pages = [
     path: '/ecosistema',
     label: 'Ecosistema',
     title: 'Ecosistema Maximize | Maximize Academy',
-    description: 'Impara, migliora, attrezzati, organizzati, confrontati, cresci: i sei passi del percorso Maximize Academy per il Barber.',
-    intro: 'I sei passi del percorso: dalla formazione alla crescita dell’attività.',
+    description: 'Impara, migliora, attrezzati, organizzati, confrontati, cresci, digitalizza: il percorso Maximize Academy per il Barber, con M×E Barber Lab.',
+    intro: 'I passi del percorso, dalla formazione al digitale.',
   },
   {
     path: '/formazione',
@@ -36,8 +36,8 @@ export const pages = [
     path: '/sabey',
     label: 'Sabey',
     title: 'Sabey Scissors | Maximize Academy',
-    description: 'Sabey Scissors: strumenti professionali e forbici. Non è un percorso di formazione. Modelli dal catalogo ufficiale.',
-    intro: 'Strumenti professionali e forbici, non formazione.',
+    description: 'Sabey Scissors propone forbici professionali. Modelli dal catalogo ufficiale.',
+    intro: 'Forbici professionali, dal catalogo ufficiale.',
   },
   {
     path: '/anaqa',
@@ -54,6 +54,14 @@ export const pages = [
     intro: 'Agenda digitale e prenotazioni online.',
   },
   {
+    path: '/mxe',
+    label: 'M×E Barber Lab',
+    nav: 'M×E',
+    title: 'M×E Barber Lab | Maximize Academy',
+    description: 'M×E Barber Lab: strategia, comunicazione e tecnologia per le imprese barber. Siti e soluzioni digitali. Sito ufficiale collegato.',
+    intro: 'Siti e soluzioni digitali per le barberie.',
+  },
+  {
     path: '/eventi',
     label: 'Eventi',
     title: 'Eventi: Barber Match | Maximize Academy',
@@ -64,16 +72,21 @@ export const pages = [
     path: '/contatti',
     label: 'Contatti',
     title: 'Contatti | Maximize Academy',
-    description: 'Parla con Maurizio Pizzuto o con l’operatore Maximize: consulenza, corsi, Sabey Scissors e Barber Reset.',
-    intro: 'Maurizio Pizzuto o l’operatore Maximize.',
+    description: 'Consulenza e corsi con Maurizio Pizzuto. Forbici Sabey, prodotti ANAQA e Treatwell con Keplero.',
+    intro: 'Maurizio per formazione e consulenza. Keplero per Sabey, ANAQA e Treatwell.',
   },
 ];
 
 export const home = {
   path: '/',
   title: 'Maximize Academy | Maurizio Pizzuto — Non solo Barber. Molto di più.',
-  description: 'Maximize Academy è l’ecosistema per il Barber moderno: formazione, Barber Reset, Sabey Scissors, ANAQA, Treatwell ed eventi con Maurizio Pizzuto.',
+  description: 'Maximize Academy è l’ecosistema per il Barber moderno: formazione, Barber Reset, Sabey Scissors, ANAQA, Treatwell, M×E Barber Lab ed eventi con Maurizio Pizzuto.',
 };
+
+// Maurizio: formazione, consulenza, collaborazioni. Keplero: richieste commerciali già coperte (Sabey, ANAQA, Treatwell).
+export const WA_MAURIZIO = '393245878724';
+export const WA_KEPLERO = '393783101417';
+export const waLink = (number, text) => `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 
 // Vecchi indirizzi interni (#sezione) verso le nuove pagine
 export const legacyHash = {
@@ -84,6 +97,7 @@ export const legacyHash = {
   '#trova-forbice': '/sabey#modelli',
   '#anaqa': '/anaqa',
   '#treatwell': '/treatwell',
+  '#mxe': '/mxe',
   '#barber-match': '/eventi',
   '#mens-events': '/eventi',
   '#contatti': '/contatti',
@@ -97,5 +111,6 @@ export const brandLinks = {
   sabey: 'https://www.instagram.com/sabey_scissors_europa/',
   anaqa: 'https://anaqaitalia.it/',
   treatwell: 'https://www.treatwell.it/',
+  mxe: 'https://mxe-barber-lab.pages.dev/',
   maurizioBarberShop: 'https://maurizio-barbershop.it/',
 };

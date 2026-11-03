@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, X, ChevronRight } from 'lucide-react';
+import { WA_KEPLERO, WA_MAURIZIO, waLink } from '../routes';
 
 export default function WhatsAppConcierge() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ export default function WhatsAppConcierge() {
             
             {/* Opzione 1: Maurizio */}
             <a
-              href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Barber%20Reset%20e%20consulenza"
+              href={waLink(WA_MAURIZIO, 'Salve Maurizio, vorrei informazioni su Barber Reset e consulenza')}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
@@ -55,7 +56,7 @@ export default function WhatsAppConcierge() {
 
             {/* Opzione 2: Operatore */}
             <a
-              href="https://wa.me/393245878724?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20forbici%20Sabey"
+              href={waLink(WA_MAURIZIO, 'Salve, vorrei informazioni sui corsi di formazione')}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
@@ -67,7 +68,27 @@ export default function WhatsAppConcierge() {
                     Operatore Maximize
                   </div>
                   <div className="text-[10px] text-gray-400">
-                    Corsi di formazione · Forbici Sabey
+                    Corsi di Maximize Academy e UAAMI
+                  </div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+            </a>
+
+            <a
+              href={waLink(WA_KEPLERO, 'Salve, vorrei informazioni su Sabey Scissors, ANAQA o Treatwell')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-3 rounded-2xl bg-black/50 border border-white/10 hover:border-amber-400/60 hover:bg-black/70 transition-all group"
+            >
+              <div className="flex items-center gap-3">
+                <span className="w-[72px] shrink-0 flex justify-center text-[11px] font-bold uppercase tracking-wider text-amber-300">Keplero</span>
+                <div>
+                  <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
+                    Keplero
+                  </div>
+                  <div className="text-[10px] text-gray-400">
+                    Forbici Sabey · ANAQA · Treatwell
                   </div>
                 </div>
               </div>

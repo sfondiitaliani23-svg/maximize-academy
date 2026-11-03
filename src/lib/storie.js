@@ -177,7 +177,7 @@ export function openViewer(slides, { label, onSeen = () => {}, onClose = () => {
 export function baseSlides() {
   const s = (id, tipo, titolo, numero, testo, pulsante, link) => ({ id, tipo, titolo, numero, testo, media: null, pulsante, link, durata: tipo === 'numero' ? 6000 : 7000 });
   return [
-    s('mx-base-sabey', 'testo', 'Forbici Sabey', '', 'Sabey Scissors: strumenti professionali e forbici. La scelta la fai con un operatore.', 'Vedi i modelli', '/sabey#modelli'),
+    s('mx-base-sabey', 'testo', 'Forbici Sabey', '', 'Sabey Scissors propone forbici professionali. La scelta la fai con Keplero.', 'Vedi i modelli', '/sabey#modelli'),
     s('mx-base-reset', 'testo', 'Barber Reset', '', 'Listino, margini e vendita: scopri quanto puoi recuperare nella tua barberia.', 'Calcola il potenziale', '/barber-reset'),
     s('mx-base-formazione', 'testo', 'Centro UAAMI Foggia', '', 'Maurizio Pizzuto entra in UAAMI: un nuovo percorso formativo per i colleghi di Foggia e provincia.', 'Scopri di più', '/formazione'),
     s('mx-base-eventi', 'testo', 'Eventi e networking', '', 'Barber Match: palco, competizioni e incontri.', 'Scopri gli eventi', '/eventi'),

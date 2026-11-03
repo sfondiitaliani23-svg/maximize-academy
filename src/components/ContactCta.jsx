@@ -9,7 +9,7 @@ export default function ContactCta() {
         Hai un progetto? <em className="not-italic font-normal text-amber-400">Parliamone.</em>
       </h2>
       <p className="mt-4 max-w-[40rem] mx-auto text-lg text-[#bdbdbd]">
-        Corsi, Barber Reset, Sabey, ANAQA, Treatwell o eventi: raccontaci dove sei e dove vuoi arrivare.
+        Corsi, Barber Reset, Sabey, ANAQA, Treatwell, M×E o eventi: raccontaci dove sei e dove vuoi arrivare.
       </p>
       <a href="/contatti" className="btn-gold inline-flex items-center gap-3 mt-8 min-h-[44px] py-3 font-bold">
         Vai ai contatti

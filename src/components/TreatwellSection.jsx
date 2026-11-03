@@ -1,4 +1,4 @@
-import { brandLinks } from '../routes';
+import { brandLinks, WA_KEPLERO, waLink } from '../routes';
 import React from 'react';
 import { Smartphone, Calendar, Clock, ArrowRight, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
 
@@ -93,7 +93,7 @@ export default function TreatwellSection() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20consigli%20su%20come%20attivare%20Treatwell%20nella%20mia%20barberia"
+                  href={waLink(WA_KEPLERO, 'Voglio digitalizzare la mia barberia')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"

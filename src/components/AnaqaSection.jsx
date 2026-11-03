@@ -1,4 +1,4 @@
-import { brandLinks } from '../routes';
+import { brandLinks, WA_KEPLERO, waLink } from '../routes';
 import React from 'react';
 import { Sparkles, Package, ArrowRight, ShieldCheck, Droplets, Check } from 'lucide-react';
 
@@ -74,6 +74,10 @@ export default function AnaqaSection() {
                 Come referente e Brand Ambassador ANAQA, ti aiuto a conoscere la linea e a individuare le formule dedicate alla tua clientela. Prodotti, novità, espositori e kit diventano parte di una proposta commerciale coerente ed esclusiva.
               </p>
 
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                L’acquisto dei prodotti è riservato esclusivamente ai professionisti del settore. Per informazioni o richieste commerciali scrivi a Keplero.
+              </p>
+
               <div className="flex flex-wrap items-center gap-4 text-xs text-amber-200">
                 <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Kit campionatura per barberie</span>
                 <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Margini di rivendita protetti</span>
@@ -82,7 +86,7 @@ export default function AnaqaSection() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/393245878724?text=Salve,%20vorrei%20conoscere%20la%20linea%20prodotti%20e%20i%20kit%20ANAQA%20per%20la%20mia%20barberia"
+                  href={waLink(WA_KEPLERO, 'Voglio conoscere ANAQA')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"

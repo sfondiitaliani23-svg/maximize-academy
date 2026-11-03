@@ -1,4 +1,4 @@
-import { brandLinks } from '../routes';
+import { brandLinks, WA_KEPLERO, WA_MAURIZIO, waLink } from '../routes';
 import React, { useState } from 'react';
 import { Phone, MessageSquare, Send, CheckCircle2, User, Mail, Sparkles, Clock } from 'lucide-react';
 
@@ -59,12 +59,12 @@ export default function ContactSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-            Corsi, Barber Reset, Sabey Scissors, ANAQA, Treatwell, eventi o crescita della tua barberia. Raccontami dove sei e dove vuoi arrivare.
+            Corsi e consulenza con Maurizio. Forbici Sabey, prodotti ANAQA e Treatwell con Keplero.
           </p>
         </div>
 
         {/* 2 Distinct Channels Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           
           {/* Canale 1: Maurizio Pizzuto */}
           <div className="glass-panel-gold rounded-3xl p-8 sm:p-10 border border-amber-500/40 relative shadow-2xl flex flex-col justify-between group hover:border-amber-400">
@@ -86,7 +86,7 @@ export default function ContactSection() {
                 Una visione per la tua barberia.
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                Barber Reset, crescita strategica dell’attività, digitalizzazione Treatwell e nuove collaborazioni commerciali.
+                Barber Reset, crescita strategica dell’attività e nuove collaborazioni.
               </p>
             </div>
 
@@ -96,7 +96,7 @@ export default function ContactSection() {
                 <span className="text-sm font-bold text-white">+39 324 587 8724</span>
               </div>
               <a
-                href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20fissare%20una%20consulenza%20strategica%20per%20la%20mia%20barberia"
+                href={waLink(WA_MAURIZIO, 'Salve Maurizio, vorrei fissare una consulenza strategica per la mia barberia')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-6 rounded-xl btn-gold flex items-center justify-center gap-2 text-xs uppercase font-bold tracking-wider shadow-gold-glow"
@@ -107,7 +107,7 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Canale 2: Operatore Formazione & Sabey */}
+          {/* Canale 2: formazione, ancora sul numero di Maurizio */}
           <div className="glass-panel rounded-3xl p-8 sm:p-10 border border-white/10 relative shadow-2xl flex flex-col justify-between group hover:border-amber-500/40">
             <div>
               <a href="/" className="logo-link mb-6" aria-label="Maximize Academy, torna alla home">
@@ -127,7 +127,7 @@ export default function ContactSection() {
                 Il tuo prossimo passo professionale.
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                Date e iscrizioni ai corsi di Maximize Academy e UAAMI. Per le forbici Sabey, che sono strumenti e non un corso, lo stesso operatore ti aiuta a scegliere.
+                Date e iscrizioni ai corsi di Maximize Academy e UAAMI.
               </p>
             </div>
 
@@ -137,13 +137,46 @@ export default function ContactSection() {
                 <span className="text-sm font-bold text-white">+39 324 587 8724</span>
               </div>
               <a
-                href="https://wa.me/393245878724?text=Salve,%20vorrei%20informazioni%20sui%20corsi%20di%20formazione%20e%20sulle%20forbici%20Sabey"
+                href={waLink(WA_MAURIZIO, 'Salve, vorrei informazioni sui corsi di formazione')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-6 rounded-xl btn-glass flex items-center justify-center gap-2 text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30 hover:border-amber-400"
               >
                 <Phone className="w-4 h-4 text-amber-400" />
                 <span>Parla con un operatore Maximize</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="glass-panel rounded-3xl p-8 sm:p-10 border border-white/10 relative shadow-2xl flex flex-col justify-between group hover:border-amber-500/40">
+            <div>
+              <div className="mb-6 inline-flex items-center h-16 sm:h-20 text-lg font-bold uppercase tracking-[0.16em] text-amber-300">
+                Keplero
+              </div>
+              <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400/80 mb-2">
+                RICHIESTE COMMERCIALI
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
+                Forbici, prodotti e agenda.
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+                Sabey Scissors, la linea ANAQA e Treatwell. Keplero segue queste richieste.
+              </p>
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Keplero</span>
+                <span className="text-sm font-bold text-white">+39 378 310 1417</span>
+              </div>
+              <a
+                href={waLink(WA_KEPLERO, 'Salve, vorrei informazioni su Sabey Scissors, ANAQA o Treatwell')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-6 rounded-xl btn-glass flex items-center justify-center gap-2 text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30 hover:border-amber-400"
+              >
+                <MessageSquare className="w-4 h-4 text-amber-400" />
+                <span>Scrivi a Keplero</span>
               </a>
             </div>
           </div>

@@ -25,9 +25,9 @@ const stato = [
   {
     icon: Handshake,
     tag: 'Altri ruoli',
-    title: 'Non sono formazione',
+    title: 'Nell’ecosistema',
     items: [
-      'Sabey Scissors: solo strumenti professionali e forbici',
+      'Sabey Scissors: forbici professionali',
       'ANAQA: prodotti professionali',
       'M×E Barber Lab: progettazione e sviluppo di siti web e soluzioni digitali per le barberie',
     ],

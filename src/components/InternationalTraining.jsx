@@ -22,7 +22,7 @@ export default function InternationalTraining() {
 
           <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
             Solo questi due. La collaborazione per il 2027 è ancora in fase di definizione.
-            Sabey Scissors, ANAQA e M×E Barber Lab hanno altri ruoli, e non fanno parte della formazione.
+            Sabey Scissors propone forbici professionali, ANAQA i prodotti professionali, M×E Barber Lab i siti e le soluzioni digitali.
           </p>
         </div>
 
@@ -43,9 +43,9 @@ export default function InternationalTraining() {
                 La collaborazione per il 2027 è ancora in fase di definizione.
               </p>
               <ul className="space-y-2 pt-2 text-sm text-gray-300 list-none p-0 m-0">
-                <li className="flex items-start gap-2"><Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-white">Sabey Scissors</strong> — solo strumenti professionali e forbici.</span></li>
+                <li className="flex items-start gap-2"><Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-white">Sabey Scissors</strong> — forbici professionali.</span></li>
                 <li className="flex items-start gap-2"><Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-white">ANAQA</strong> — prodotti professionali.</span></li>
-                <li className="flex items-start gap-2"><Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" /> <span><strong className="text-white">M×E Barber Lab</strong> — progettazione e sviluppo di siti web e soluzioni digitali per le barberie.</span></li>
+                <li className="flex items-start gap-2"><Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" /> <span><a href="/mxe" className="text-white font-bold hover:text-amber-300">M×E Barber Lab</a> — siti web e soluzioni digitali per le barberie.</span></li>
               </ul>
             </div>
 

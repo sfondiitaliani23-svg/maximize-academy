@@ -28,7 +28,7 @@ export default function EcosystemGrid() {
       action: 'ATTREZZATI',
       category: 'STRUMENTI & PRODOTTI',
       title: 'Scegli con criterio.',
-      desc: 'Sabey Scissors: forbici e strumenti professionali. ANAQA: prodotti professionali. Non sono formazione.',
+      desc: 'Sabey Scissors propone forbici professionali. ANAQA: prodotti professionali per la barberia.',
       link: '/sabey',
       icon: Scissors
     },
@@ -66,9 +66,8 @@ export default function EcosystemGrid() {
       action: 'DIGITALIZZA',
       category: 'M×E BARBER LAB',
       title: 'Porta la tua impresa nel digitale.',
-      desc: 'Progettazione e sviluppo di siti web e soluzioni digitali per le barberie. Non è un percorso di formazione.',
-      link: 'https://mxe-barber-lab.pages.dev',
-      external: true,
+      desc: 'Strategia, comunicazione e tecnologia per le imprese barber: siti e soluzioni digitali.',
+      link: '/mxe',
       wide: true,
       icon: Cpu,
       goldAccent: true

@@ -15,6 +15,7 @@ import BarberResetSection from './components/BarberResetSection';
 import SabeySection from './components/SabeySection';
 import AnaqaSection from './components/AnaqaSection';
 import TreatwellSection from './components/TreatwellSection';
+import MxeSection from './components/MxeSection';
 import BarberMatchSection from './components/BarberMatchSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
@@ -106,6 +107,7 @@ export default function App() {
     case '/sabey': content = <SabeySection />; break;
     case '/anaqa': content = <AnaqaSection />; break;
     case '/treatwell': content = <TreatwellSection />; break;
+    case '/mxe': content = <MxeSection />; break;
     case '/eventi': content = <BarberMatchSection onSelectCourse={openCourse} />; break;
     case '/contatti': content = <ContactSection />; break;
     default:

@@ -12,6 +12,7 @@ const tickerItems = [
   { content: <>Brand Ambassador {gold('Sabey')}</>, href: brandLinks.sabey, external: true },
   { content: <>Prodotti {gold('ANAQA')}</>, href: brandLinks.anaqa, external: true },
   { content: <>Agenda digitale {gold('Treatwell')}</>, href: brandLinks.treatwell, external: true },
+  { content: <>{gold('M×E')} Barber Lab</>, href: '/mxe' },
   { content: <>{gold('Eventi')} e networking</>, href: '/eventi' },
   { content: <>Sede a Foggia</>, href: '/contatti' },
 ];
