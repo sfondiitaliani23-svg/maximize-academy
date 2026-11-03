@@ -11,9 +11,12 @@ import './storie.css';
 import './gestione.css';
 import { startAutoUpdate } from './autoUpdate';
 import { initPwa } from './pwa';
+import './benvenuto.css';
+import { avviaBenvenuto } from './lib/benvenuto-maximize';
 
 startAutoUpdate();
 initPwa();
+avviaBenvenuto();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -123,7 +123,7 @@ const GoogleIc = () => (
 
 /* ---------- accesso ---------- */
 function Accesso({ onEntrato, avviso }) {
-  const [modo, setModo] = useState('entra');
+  const [modo, setModo] = useState(() => (window.location.hash === '#registrati' ? 'nuovo' : 'entra'));
   const [msg, setMsg] = useState(avviso || '');
   const [err, setErr] = useState(Boolean(avviso));
   const [busy, setBusy] = useState(false);
