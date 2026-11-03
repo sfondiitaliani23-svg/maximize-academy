@@ -6,6 +6,8 @@ import { Scissors, MessageSquare } from 'lucide-react';
 // misure, nome commerciale completo e garanzia si pubblicano solo con dati ufficiali.
 const modelli = [
   { id: '40-30', src: '/assets/img/sabey/sabey-3040.png' },
+  { id: 'BLACK Anthos', src: '/assets/img/sabey/sabey-black-anthos.jpg' },
+  { id: 'Curly semi offset', src: '/assets/img/sabey/sabey-curly-semi-offset.jpg' },
   { id: '40D', src: '/assets/img/sabey/sabey-40d.png' },
   { id: '40DS', src: '/assets/img/sabey/sabey-40ds.png' },
   { id: 'Francis', src: '/assets/img/sabey/sabey-francis.png' },
@@ -123,7 +125,7 @@ export default function SabeySection() {
               Modelli dal catalogo Sabey
             </h3>
             <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
-              Foto del catalogo ufficiale. Il codice è quello del modello.
+              Foto autorizzate. Sotto, il codice o il nome indicato per il modello.
               Misure, nome commerciale completo e garanzia si aggiungono qui solo quando Sabey li conferma.
             </p>
           </div>
@@ -139,7 +141,7 @@ export default function SabeySection() {
                   loading="lazy"
                   className="w-full h-44 sm:h-56 object-contain"
                 />
-                <p className="mt-3 text-center text-sm font-bold tracking-wide text-black">Sabey {m.id}</p>
+                <p className="mt-3 text-center text-xs sm:text-sm font-bold tracking-wide text-black leading-snug">Sabey {m.id}</p>
               </li>
             ))}
           </ul>

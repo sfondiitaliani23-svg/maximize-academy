@@ -43,8 +43,8 @@ export const pages = [
     path: '/anaqa',
     label: 'ANAQA',
     title: 'ANAQA Men Creation | Maximize Academy',
-    description: 'ANAQA Men Creation: prodotti professionali e kit per barberie, per completare il servizio e la rivendita.',
-    intro: 'Prodotti professionali e kit per la barberia.',
+    description: 'ANAQA Men Creation: prodotti professionali per barberie. Catalogo e rituale barba consultabili senza prezzi. Acquisto riservato ai professionisti.',
+    intro: 'Prodotti professionali. Catalogo e rituale, senza prezzi.',
   },
   {
     path: '/treatwell',

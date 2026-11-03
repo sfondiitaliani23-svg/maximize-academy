@@ -1,8 +1,16 @@
 import { brandLinks, WA_KEPLERO, waLink } from '../routes';
-import React from 'react';
-import { Sparkles, Package, ArrowRight, ShieldCheck, Droplets, Check } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
+
+const PAGINE_LINEA = 42;
+
+function srcLinea(n) {
+  return `/assets/img/anaqa/linea/${String(n).padStart(2, '0')}.webp`;
+}
 
 export default function AnaqaSection() {
+  const [lineaAperta, setLineaAperta] = useState(false);
+  const [pagina, setPagina] = useState(1);
   const categories = [
     {
       title: 'Beard Care & Shaving',
@@ -20,6 +28,30 @@ export default function AnaqaSection() {
       tag: 'Trattamento'
     }
   ];
+
+  useEffect(() => {
+    if (!lineaAperta) return undefined;
+    const vicino = pagina < PAGINE_LINEA ? pagina + 1 : null;
+    if (vicino) {
+      const img = new Image();
+      img.src = srcLinea(vicino);
+    }
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') setPagina((p) => Math.min(PAGINE_LINEA, p + 1));
+      if (e.key === 'ArrowLeft') setPagina((p) => Math.max(1, p - 1));
+      if (e.key === 'Escape') setLineaAperta(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lineaAperta, pagina]);
+
+  useEffect(() => {
+    if (!lineaAperta) return undefined;
+    const id = requestAnimationFrame(() => {
+      document.getElementById('linea-anaqa')?.scrollIntoView({ block: 'start' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [lineaAperta]);
 
   return (
     <section id="anaqa" className="py-24 relative overflow-hidden">
@@ -49,7 +81,7 @@ export default function AnaqaSection() {
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/30 mb-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-7 space-y-6">
               
               {/* Logo Anaqa Ufficiale */}
               <a href={brandLinks.anaqa} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="ANAQA Men Creation (si apre in una nuova scheda)">
@@ -84,12 +116,20 @@ export default function AnaqaSection() {
                 <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-amber-400" /> Prodotti professionali per la barberia</span>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => { setPagina(1); setLineaAperta(true); }}
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"
+                >
+                  <span>Scopri tutta la linea ANAQA</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
                 <a
                   href={waLink(WA_KEPLERO, 'Voglio conoscere ANAQA')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-gold text-xs uppercase font-bold tracking-wider shadow-gold-glow"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full btn-glass text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30"
                 >
                   <span>Voglio conoscere ANAQA</span>
                   <ArrowRight className="w-4 h-4" />
@@ -98,24 +138,69 @@ export default function AnaqaSection() {
 
             </div>
 
-            {/* Product Luxury Mockup / Visual */}
-            <div className="lg:col-span-4 flex flex-col items-center justify-center">
-              <div className="w-full p-6 rounded-2xl glass-panel border border-white/10 text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                  <Package className="w-8 h-8" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-white">ANAQA Elite Barber Kit</h4>
-                  <p className="text-xs text-gray-400 mt-1">Soluzione chiavi in mano per integrare il retail alla poltrona.</p>
-                </div>
-                <div className="text-xs font-semibold text-amber-400 uppercase tracking-widest pt-2">
-                  Esclusiva Barberie Selezionate
-                </div>
-              </div>
-            </div>
+            <figure className="lg:col-span-5">
+              <img
+                src="/assets/img/anaqa/rituale-barba.webp"
+                alt="ANAQA, The Art of Grooming: rituale per barba e baffi. Cleanse, condition, define."
+                width="1280"
+                height="1600"
+                className="w-full h-auto rounded-2xl border border-white/10"
+              />
+              <figcaption className="mt-3 text-center text-[11px] uppercase tracking-[0.2em] text-gray-400 font-semibold">
+                Rituale per barba e baffi
+              </figcaption>
+            </figure>
 
           </div>
         </div>
+
+        {lineaAperta && (
+          <div id="linea-anaqa" className="glass-panel rounded-3xl p-4 sm:p-8 border border-white/10 mb-12 scroll-mt-24">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-white">Linea ANAQA</h3>
+                <p className="text-xs sm:text-sm text-gray-400 mt-1 leading-relaxed max-w-xl">
+                  Catalogo ufficiale. Si consulta qui, senza prezzi. L’acquisto resta riservato ai professionisti del settore.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLineaAperta(false)}
+                className="px-5 py-2.5 rounded-full btn-glass text-xs uppercase font-bold tracking-wider text-gray-200"
+              >
+                Chiudi
+              </button>
+            </div>
+
+            <div className="mb-4 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => setPagina((p) => Math.max(1, p - 1))}
+                disabled={pagina === 1}
+                className="px-3 sm:px-5 py-3 rounded-full btn-glass text-[11px] sm:text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30 disabled:opacity-40"
+              >
+                Precedente
+              </button>
+              <p className="text-[11px] sm:text-xs text-gray-300 tabular-nums text-center">Pagina {pagina} di {PAGINE_LINEA}</p>
+              <button
+                type="button"
+                onClick={() => setPagina((p) => Math.min(PAGINE_LINEA, p + 1))}
+                disabled={pagina === PAGINE_LINEA}
+                className="px-3 sm:px-5 py-3 rounded-full btn-gold text-[11px] sm:text-xs uppercase font-bold tracking-wider disabled:opacity-40"
+              >
+                Successiva
+              </button>
+            </div>
+
+            <img
+              src={srcLinea(pagina)}
+              alt={`Catalogo ANAQA, pagina ${pagina} di ${PAGINE_LINEA}`}
+              width="1200"
+              height="1697"
+              className="w-full max-h-[68vh] sm:max-h-[75vh] object-contain bg-white rounded-xl"
+            />
+          </div>
+        )}
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
