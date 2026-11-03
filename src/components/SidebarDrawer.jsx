@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle } from 'lucide-react';
+import { X, ChevronRight, Phone, MessageSquare, Compass, Award, Scissors, ShoppingBag, Calendar, Users, Download, RefreshCw, Share, PlusSquare, Check, MoreVertical, UserCircle, Trophy } from 'lucide-react';
 import { subscribe, canPrompt, promptInstall, isStandalone, isIOS, checkForUpdate, currentVersion } from '../pwa';
 
 const navItems = [
   { label: 'Ecosistema Maximize', href: '/ecosistema', icon: Compass, sub: 'I 7 pilastri di crescita, con M×E Barber Lab' },
   { label: 'Formazione', href: '/formazione', icon: Award, sub: 'Cardinale, UAAMI, Sabey' },
+  { label: 'Barber National Academy', href: '/barber-national-academy', icon: Trophy, sub: 'Progetto formativo 2027 · in sviluppo' },
   { label: 'Barber Reset', href: '/barber-reset', icon: Scissors, sub: 'Intervento Strategico in Barberia', highlight: true },
   { label: 'Sabey Scissors', href: '/sabey', icon: Scissors, sub: 'Forbici Professionali Hand Made' },
   { label: 'ANAQA Prodotti', href: '/anaqa', icon: ShoppingBag, sub: 'Prodotti & Linee Barberia' },

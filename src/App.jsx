@@ -10,6 +10,7 @@ import ManifestoSection from './components/ManifestoSection';
 import ContactCta from './components/ContactCta';
 import EcosystemGrid from './components/EcosystemGrid';
 import InternationalTraining from './components/InternationalTraining';
+import NationalAcademy from './components/NationalAcademy';
 import BarberResetSection from './components/BarberResetSection';
 import SabeySection from './components/SabeySection';
 import AnaqaSection from './components/AnaqaSection';
@@ -100,6 +101,7 @@ export default function App() {
   switch (page?.path) {
     case '/ecosistema': content = <EcosystemGrid />; break;
     case '/formazione': content = <InternationalTraining onSelectCourse={openCourse} />; break;
+    case '/barber-national-academy': content = <NationalAcademy />; break;
     case '/barber-reset': content = <BarberResetSection />; break;
     case '/sabey': content = <SabeySection />; break;
     case '/anaqa': content = <AnaqaSection />; break;

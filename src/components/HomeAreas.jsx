@@ -3,7 +3,7 @@ import { pages } from '../routes';
 
 // Home: le macroaree come schede che portano alla loro pagina (come «Tutto quello che ti serve» su Maurizio Barber Shop).
 export default function HomeAreas() {
-  const areas = pages;
+  const areas = pages.filter((p) => p.menu !== false);
   return (
     <section className="bg-[#111111] px-[clamp(1.25rem,6vw,4.5rem)] py-[clamp(4rem,3rem+4vw,7rem)]" aria-labelledby="aree-title">
       <div className="max-w-[1240px] mx-auto">

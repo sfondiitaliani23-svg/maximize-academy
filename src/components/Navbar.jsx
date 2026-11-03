@@ -3,7 +3,7 @@ import React from 'react';
 // Barra in alto come Maurizio Barber Shop: fondo nero pieno, menu in testo semplice,
 // azione principale in oro con un filo verticale, pulsante "Menu" su telefono.
 import { pages } from '../routes';
-const links = pages.map((p) => ({ href: p.path, label: p.label }));
+const links = pages.filter((p) => p.menu !== false).map((p) => ({ href: p.path, label: p.label }));
 
 export default function Navbar({ currentPath = '/', onOpenMobileMenu, menuOpen = false }) {
   return (

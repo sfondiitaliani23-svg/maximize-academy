@@ -156,6 +156,16 @@ export default function InternationalTraining({ onSelectCourse }) {
 
         </div>
 
+        {/* Progetto 2027 (in sviluppo): pagina dedicata */}
+        <a href="/barber-national-academy" className="group mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl border border-dashed border-white/25 p-6 sm:p-8 hover:border-amber-400/60 transition-colors">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Progetto 2027 · in sviluppo</span>
+            <h3 className="mt-2 text-xl sm:text-2xl font-display font-bold text-white group-hover:text-amber-300 transition-colors">Barber National Academy</h3>
+            <p className="mt-1 text-sm text-gray-400">Dal settore giovanile alla Nazionale: il percorso per i collaboratori di barberia.</p>
+          </div>
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-amber-400 whitespace-nowrap">Scopri il progetto <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
+        </a>
+
       </div>
     </section>
   );

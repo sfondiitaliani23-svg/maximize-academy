@@ -18,6 +18,14 @@ export const pages = [
     intro: 'Corsi, masterclass e il percorso con UAAMI.',
   },
   {
+    path: '/barber-national-academy',
+    label: 'National Academy',
+    menu: false, // pagina di progetto: nel menu laterale e nel footer, non nella barra in alto
+    title: 'Barber National Academy 2027 | Maximize Academy',
+    description: 'Barber National Academy: il progetto formativo 2027 di Maurizio Pizzuto per i collaboratori di barberia. Dal settore giovanile alla Nazionale. In sviluppo.',
+    intro: 'Progetto formativo 2027: dal settore giovanile alla Nazionale.',
+  },
+  {
     path: '/barber-reset',
     label: 'Barber Reset',
     title: 'Barber Reset: intervento strategico in barberia | Maximize Academy',
