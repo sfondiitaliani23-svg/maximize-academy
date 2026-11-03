@@ -4,6 +4,14 @@ import { ArrowRight, Check } from 'lucide-react';
 
 const PAGINE_LINEA = 42;
 
+const rituale = [
+  { nome: 'Beard Shampoo', testo: 'Deterge delicatamente barba e pelle, eliminando impurità e residui.' },
+  { nome: 'Beard Peeling', testo: 'Esfolia la pelle sotto la barba, rimuovendo le cellule morte.' },
+  { nome: 'Beard Foam', testo: 'Ammorbidisce e condiziona la barba, rendendola più disciplinata.' },
+  { nome: 'Beard Oil', testo: 'Nutre, ammorbidisce e dona lucentezza alla barba.' },
+  { nome: 'Beard Perfume', testo: 'Completa il rituale con una piacevole fragranza.' },
+];
+
 function srcLinea(n) {
   return `/assets/img/anaqa/linea/${String(n).padStart(2, '0')}.webp`;
 }
@@ -79,9 +87,7 @@ export default function AnaqaSection() {
 
         {/* Anaqa Presentation Card with Logo */}
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/30 mb-12 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            <div className="lg:col-span-7 space-y-6">
+          <div className="max-w-3xl space-y-6">
               
               {/* Logo Anaqa Ufficiale */}
               <a href={brandLinks.anaqa} target="_blank" rel="noopener noreferrer" className="logo-link" aria-label="ANAQA Men Creation (si apre in una nuova scheda)">
@@ -136,8 +142,11 @@ export default function AnaqaSection() {
                 </a>
               </div>
 
-            </div>
+          </div>
+        </div>
 
+        <div id="rituale-barba" className="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 mb-12 scroll-mt-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <figure className="lg:col-span-5">
               <img
                 src="/assets/img/anaqa/rituale-barba.webp"
@@ -146,11 +155,42 @@ export default function AnaqaSection() {
                 height="1600"
                 className="w-full h-auto rounded-2xl border border-white/10"
               />
-              <figcaption className="mt-3 text-center text-[11px] uppercase tracking-[0.2em] text-gray-400 font-semibold">
-                Rituale per barba e baffi
-              </figcaption>
             </figure>
 
+            <div className="lg:col-span-7 space-y-6">
+              <div className="space-y-2">
+                <div className="text-xs uppercase font-bold tracking-[0.25em] text-amber-400">
+                  ANAQA
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
+                  Rituale Barba Professionale in 5 Step
+                </h3>
+              </div>
+
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                Un trattamento completo studiato per detergere, esfoliare, nutrire e valorizzare barba e pelle, trasformando la cura quotidiana in un’esperienza di benessere.
+              </p>
+
+              <ol className="space-y-4 list-none p-0 m-0">
+                {rituale.map((passo, i) => (
+                  <li key={passo.nome} className="flex gap-4">
+                    <span className="shrink-0 w-8 h-8 rounded-full border border-amber-500/40 text-amber-300 text-sm font-bold flex items-center justify-center" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      <strong className="text-white">{passo.nome}.</strong> {passo.testo}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                ANAQA: cinque prodotti, un unico rituale di cura e benessere professionale.
+              </p>
+              <p className="text-sm text-amber-200 leading-relaxed">
+                Linea dedicata ai professionisti del settore barber.
+              </p>
+            </div>
           </div>
         </div>
 
