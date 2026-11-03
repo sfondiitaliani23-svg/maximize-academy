@@ -9,7 +9,7 @@ export default function handler(req, res) {
 
   return res.status(200).json({
     status: 'UNAVAILABLE',
-    message: 'Il configuratore non è attivo. Sabey Scissors è strumenti e forbici: per la scelta scrivi a un operatore.',
+    message: 'Il configuratore non è attivo. Sabey Scissors: strumenti e forbici. Per la scelta scrivi a un operatore.',
     waDirectLink: `https://wa.me/393245878724?text=${encodeURIComponent('Salve, vorrei aiuto per scegliere una forbice Sabey.')}`
   });
 }

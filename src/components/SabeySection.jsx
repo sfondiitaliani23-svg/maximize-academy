@@ -35,7 +35,7 @@ export default function SabeySection() {
           </h2>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-            Sabey Scissors è strumenti professionali e forbici. Non è un percorso di formazione.
+            Sabey Scissors: strumenti professionali e forbici. Non è un percorso di formazione.
             La scelta dello strumento la fai con un operatore, a partire dalla tua mano e dal lavoro di ogni giorno.
           </p>
         </div>
