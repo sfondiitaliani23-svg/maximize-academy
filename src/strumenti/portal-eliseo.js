@@ -1,7 +1,8 @@
 // Eliseo · Contatti e campagne: il CRM del portale (solo admin e co-founder).
-// Funzioni come Keplero (rubrica, vista a colonne per fasi, campagne), grafica del sito. Tabelle in supabase/eliseo.sql.
-// Regole: i contatti si aggiungono a mano o dagli iscritti al sito; nessun dato da Treatwell o Keplero.
+// Stesse funzioni di prima, presentazione chiara come la console di Keplero. Tabelle in supabase/eliseo.sql.
+// Regole: i contatti si aggiungono a mano, da CSV o dagli iscritti al sito; nessun dato copiato da Treatwell o Keplero.
 // Il consenso marketing parte da «no». Le campagne vanno solo a chi ha detto sì e ha attivato le notifiche: lo controlla il server.
+// Il calendario delle prenotazioni resta Treatwell: qui non c'è un secondo sistema di appuntamenti.
 import { client } from './auth-session.js';
 import { api as pushApi } from './push-api.js';
 import { FASI, FONTI, CATEGORIE, allTags, cleanContact, cleanTags, cleanTemplate, fillTemplate, filterContacts, mapImport, parseCsv, summary } from './eliseo-rules.js';
@@ -45,25 +46,43 @@ export function mount(box, root) {
     return res.status === 204 ? null : res.json().catch(() => null);
   }
 
-  const status = h('p', { class: 'pcard__note', role: 'status', 'aria-live': 'polite' });
+  const status = h('p', { class: 'el-status', role: 'status', 'aria-live': 'polite' });
   const say = (t, bad) => { status.textContent = t; status.dataset.state = bad ? 'error' : 'ok'; };
   const body = h('div', { class: 'el-body' });
-  const statsBox = h('div', { class: 'pd-stats pd-stats--4' });
-  const tabs = h('div', { class: 'el-tabs', role: 'tablist', 'aria-label': 'Sezioni di Eliseo' });
-  [['casella', 'Casella'], ['elenco', 'Contatti'], ['colonne', 'Fasi'], ['campagne', 'Campagne'], ['modelli', 'Modelli'], ['addestramento', 'Addestramento'], ['automazioni', 'Automazioni'], ['prova', 'Prova chatbot']].forEach(([id, t]) => {
-    const b = h('button', { type: 'button', class: 'el-tab', role: 'tab', 'aria-selected': id === tab ? 'true' : 'false', 'data-tab': id, text: t });
-    b.addEventListener('click', () => { tab = id; tabs.querySelectorAll('[data-tab]').forEach((x) => x.setAttribute('aria-selected', x.dataset.tab === tab ? 'true' : 'false')); draw(); });
-    tabs.append(b);
+  const sections = [
+    ['casella', 'Conversazioni'],
+    ['elenco', 'Contatti'],
+    ['campagne', 'Campagne'],
+    ['addestramento', 'FAQ'],
+    ['modelli', 'Modelli'],
+    ['automazioni', 'Automazioni'],
+    ['prova', 'Chatbot'],
+    ['analisi', 'Analisi'],
+  ];
+  const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': 'Sezioni di Eliseo' });
+  const syncNav = () => {
+    nav.querySelectorAll('[data-tab]').forEach((b) => {
+      const on = b.dataset.tab === tab || (b.dataset.tab === 'elenco' && (tab === 'colonne' || tab === 'importa'));
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  };
+  sections.forEach(([id, nome]) => {
+    const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': id === tab ? 'true' : 'false', text: nome });
+    b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
+    nav.append(b);
   });
-  const head = h('section', { class: 'pcard el-head' },
-    h('div', { class: 'el-brand' }, h('span', { class: 'el-mark', 'aria-hidden': 'true', text: 'E' }), h('div', null, h('h3', { class: 'pcard__title', text: 'Eliseo' }), h('p', { class: 'pcard__note', text: 'Casella, contatti, campagne, addestramento e automazioni. Solo admin e co-founder.' }))),
-    tabs);
-  box.replaceChildren(head, statsBox, body, status);
+  box.replaceChildren(h('div', { class: 'el-app' },
+    h('aside', { class: 'el-side' },
+      h('div', { class: 'el-brand' },
+        h('span', { class: 'el-mark', 'aria-hidden': 'true', text: 'E' }),
+        h('div', null, h('strong', { text: 'Eliseo' }), h('small', { text: 'Contatti e campagne' }))),
+      h('p', { class: 'el-group', text: 'Sezioni' }),
+      nav),
+    h('div', { class: 'el-stage' }, body, status)));
 
-  const stat = (l, v, n) => h('section', { class: 'pcard pstat pd-stat' }, h('p', { class: 'pstat__label', text: l }), h('p', { class: 'pstat__value', text: String(v) }), h('p', { class: 'pcard__note', text: n }));
-  function drawStats() {
-    const s = summary(rows);
-    statsBox.replaceChildren(stat('Contatti', s.totale, 'in rubrica'), stat('Con consenso', s.consenso, 'possono ricevere campagne'), stat('Nuovi', s.nuovi, 'negli ultimi 7 giorni'), stat('Da richiamare', s.richiamare, 'da sentire presto'));
+  function drawStats() { if (tab === 'analisi') draw(); }
+  function pageHead(title, ...extra) {
+    return h('header', { class: 'el-pagehead' }, h('h2', { text: title }), extra.length ? h('div', { class: 'el-pagehead__act' }, ...extra) : null);
   }
 
   async function load() {
@@ -73,7 +92,6 @@ export function mount(box, root) {
       modelli = await call('/rest/v1/eliseo_modelli?select=*&order=categoria,nome').catch(() => null);
       drawStats(); draw();
     } catch (e) {
-      statsBox.replaceChildren();
       body.replaceChildren(card('Eliseo non ancora attivo', h('p', { class: 'pcard__note', text: e.message === 'sql' ? 'Manca un passaggio una tantum: va eseguito il file supabase/eliseo.sql in Supabase (SQL Editor → New query → Run). Lo fa Eliseo. Poi ricarica questa pagina.' : e.message })));
     }
   }
@@ -141,16 +159,16 @@ export function mount(box, root) {
     nome.focus();
   }
 
-  function toolbar() {
+  function toolbar(withFase) {
     const q = h('input', { type: 'search', class: 'el-search', placeholder: 'Cerca nome, email o telefono', 'aria-label': 'Cerca un contatto', value: filters.q });
-    const fs = select('fase', [['', 'Tutte le fasi'], ...FASI], filters.fase, { 'aria-label': 'Filtra per fase' });
-    const fo = select('fonte', [['', 'Tutte le fonti'], ...FONTI], filters.fonte, { 'aria-label': 'Filtra per fonte' });
-    q.addEventListener('input', () => { filters.q = q.value; drawList(); });
-    fs.addEventListener('change', () => { filters.fase = fs.value; drawList(); });
-    fo.addEventListener('change', () => { filters.fonte = fo.value; drawList(); });
-    const tagsAll = hasTags ? allTags(rows) : [];
-    const et = tagsAll.length ? select('etichetta', [['', 'Tutte le etichette'], ...tagsAll.map((t) => [t, t])], filters.etichetta, { 'aria-label': 'Filtra per etichetta' }) : null;
-    et?.addEventListener('change', () => { filters.etichetta = et.value; drawList(); });
+    q.addEventListener('input', () => {
+      filters.q = q.value;
+      if (tab !== 'colonne') { drawList(); return; }
+      const old = q.closest('.el-book__main')?.querySelector('.el-cols');
+      if (old) old.replaceWith(drawColumns());
+    });
+    const fs = withFase ? select('fase', [['', 'Tutte le fasi'], ...FASI], filters.fase, { 'aria-label': 'Filtra per fase', class: 'el-fase' }) : null;
+    fs?.addEventListener('change', () => { filters.fase = fs.value; drawList(); });
     const csv = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Importa da CSV' });
     csv.addEventListener('click', () => openImport());
     const add = h('button', { type: 'button', class: 'btn btn--primary', text: 'Nuovo contatto' });
@@ -162,7 +180,28 @@ export function mount(box, root) {
       catch (e) { say(e.message === 'sql' ? 'Manca il file supabase/eliseo.sql.' : e.message, true); }
       imp.disabled = false;
     });
-    return h('div', { class: 'el-tools' }, q, fs, fo, et, h('div', { class: 'el-tools__act' }, add, imp, csv));
+    return h('div', { class: 'el-tools' }, q, fs, h('div', { class: 'el-tools__act' }, add, imp, csv));
+  }
+
+  function folderNav() {
+    const box = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Cartelle' });
+    const add = (kind, key, nome, n) => {
+      const on = kind === 'tutti' ? !filters.fonte && !filters.etichetta : kind === 'fonte' ? filters.fonte === key && !filters.etichetta : filters.etichetta === key;
+      const b = h('button', { type: 'button', class: 'el-folder', 'aria-pressed': on ? 'true' : 'false' }, h('span', { text: nome }), h('b', { text: String(n) }));
+      b.addEventListener('click', () => {
+        filters.fonte = kind === 'fonte' ? key : '';
+        filters.etichetta = kind === 'etichetta' ? key : '';
+        draw();
+      });
+      box.append(b);
+    };
+    add('tutti', '', 'Tutti', rows.length);
+    FONTI.forEach(([k, t]) => {
+      const n = rows.filter((r) => r.fonte === k).length;
+      if (n || filters.fonte === k) add('fonte', k, t, n);
+    });
+    if (hasTags) allTags(rows).forEach((t) => add('etichetta', t, t, rows.filter((r) => (r.etichette || []).includes(t)).length));
+    return box;
   }
 
   let listBox = null;
@@ -194,8 +233,9 @@ export function mount(box, root) {
   // Vista a colonne (come il Kanban di Keplero): si trascina la scheda, oppure si usa il menu «Sposta in».
   function drawColumns() {
     const cols = h('div', { class: 'el-cols' });
+    const pool = filterContacts(rows, { q: filters.q, fonte: filters.fonte, etichetta: filters.etichetta });
     FASI.forEach(([id, t]) => {
-      const items = rows.filter((r) => r.fase === id);
+      const items = pool.filter((r) => r.fase === id);
       const zone = h('div', { class: 'el-col__list', 'data-fase': id });
       items.forEach((r) => {
         const move = select('sposta', FASI, r.fase, { 'aria-label': `Sposta ${r.nome} in`, class: 'el-move' });
@@ -258,12 +298,26 @@ export function mount(box, root) {
         say(`Campagna inviata: ${inviati} avvisi partiti${falliti ? `, ${falliti} non consegnati` : ''}.`); draw();
       } catch (ex) { err.textContent = 'Invio non riuscito. Riprova.'; send.disabled = false; send.textContent = 'Invia la campagna'; }
     });
+    const cerca = h('input', { type: 'search', class: 'el-search', placeholder: 'Cerca campagne', 'aria-label': 'Cerca campagne' });
     const hist = h('div', null, h('p', { class: 'pempty', text: 'Carico…' }));
-    call('/rest/v1/eliseo_campagne?select=creato_il,nome,titolo,fasi,destinatari,inviati,falliti&order=creato_il.desc&limit=20').then((list) => {
-      if (!list?.length) { hist.replaceChildren(h('p', { class: 'pempty', text: 'Nessuna campagna ancora.' })); return; }
-      hist.replaceChildren(h('ul', { class: 'plist' }, list.map((c) => h('li', null, h('strong', { text: c.nome }), h('span', { text: `${when(c.creato_il)} · ${c.fasi.map((x) => label(FASI, x)).join(', ')} · ${c.inviati} inviati` })))));
-    }).catch(() => hist.replaceChildren(h('p', { class: 'pempty', text: 'Storico non disponibile.' })));
-    return [card('Nuova campagna', h('p', { class: 'pcard__note', text: 'Arriva come avviso sul telefono (gratis). Solo ai contatti che hanno dato il consenso, hanno un account sul sito e hanno attivato le notifiche.' }), f), card('Campagne inviate', hist)];
+    let tutte = [];
+    const paint = () => {
+      const k = cerca.value.trim().toLowerCase();
+      const list = tutte.filter((c) => !k || `${c.nome} ${c.titolo || ''}`.toLowerCase().includes(k));
+      if (!list.length) { hist.replaceChildren(h('p', { class: 'pempty', text: tutte.length ? 'Nessuna campagna con questo nome.' : 'Nessuna campagna ancora.' })); return; }
+      const tb = h('tbody');
+      list.forEach((c) => tb.append(h('tr', null,
+        h('td', { text: c.nome }),
+        h('td', { text: when(c.creato_il) }),
+        h('td', { text: (c.fasi || []).map((x) => label(FASI, x)).join(', ') || '—' }),
+        h('td', { text: String(c.inviati ?? 0) }),
+        h('td', { text: String(c.falliti ?? 0) }))));
+      hist.replaceChildren(h('div', { class: 'table-wrap', tabindex: '0', role: 'region', 'aria-label': 'Campagne inviate' },
+        h('table', { class: 'ptable' }, h('thead', null, h('tr', null, ['Nome', 'Data', 'Fasi', 'Inviati', 'Non consegnati'].map((t) => h('th', { scope: 'col', text: t })))), tb)));
+    };
+    cerca.addEventListener('input', paint);
+    call('/rest/v1/eliseo_campagne?select=creato_il,nome,titolo,fasi,destinatari,inviati,falliti&order=creato_il.desc&limit=20').then((list) => { tutte = list || []; paint(); }).catch(() => hist.replaceChildren(h('p', { class: 'pempty', text: 'Storico non disponibile.' })));
+    return [pageHead('Campagne', cerca), card('Nuova campagna', h('p', { class: 'pcard__note', text: 'Arriva come avviso sul telefono (gratis). Solo ai contatti che hanno dato il consenso, hanno un account sul sito e hanno attivato le notifiche.' }), f), hist];
   }
 
 
@@ -358,12 +412,15 @@ export function mount(box, root) {
     return [card('Modelli di messaggio', h('p', { class: 'pcard__note', text: 'Testi pronti, come le FAQ-modello di Keplero. Nella casella scegli un modello e si apre WhatsApp o l’email con il testo già scritto.' }), list), card('Nuovo modello', form(null))];
   }
 
-  // Casella unica (come la casella di Keplero): chat del sito e richieste del modulo, con stato e assegnazione.
+  // Casella unica: chat del sito e richieste del modulo, con stato e assegnazione.
   const STATI = [['aperta', 'Aperta'], ['in_corso', 'In corso'], ['chiusa', 'Chiusa']];
   const MOTIVI = { informazioni: 'Informazioni', formazione: 'Formazione', lavoro: 'Lavoro', regalo: 'Regalo' };
   const casellaFiltro = { vista: 'tutte', chi: '', q: '' };
+  let casellaPick = '';
+  const iniziale = (nome) => (String(nome || '?').trim().charAt(0) || '?').toUpperCase();
+  const tono = (nome) => Array.from(String(nome || '?')).reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
   function drawCasella() {
-    const wrap = h('div', null, h('p', { class: 'pempty', text: 'Carico…' }));
+    const wrap = h('div', { class: 'el-conv' }, h('p', { class: 'pempty', text: 'Carico…' }));
     (async () => {
       let chats = [], reqs = [], stati = [], reqOk = true, perche = '';
       try { chats = await call('/rest/v1/chat_clienti?select=cliente_id,nome,ultimo_msg,ultimo_da_cliente,letto_admin&order=ultimo_msg.desc.nullslast&limit=200') || []; } catch { chats = []; }
@@ -373,38 +430,50 @@ export function mount(box, root) {
       const items = [
         ...chats.filter((c) => c.ultimo_msg).map((c) => ({ tipo: 'chat', rif: c.cliente_id, nome: c.nome, quando: c.ultimo_msg, nuovo: !!(c.ultimo_da_cliente && (!c.letto_admin || c.ultimo_da_cliente > c.letto_admin)) })),
         ...reqs.map((r) => ({ tipo: 'richiesta', rif: r.id, nome: r.nome, quando: r.creato_il, nuovo: !st.has(`richiesta:${r.id}`), r })),
-      ].map((x) => ({ ...x, s: st.get(`${x.tipo}:${x.rif}`) || { stato: 'aperta', assegnato: null, contatto_id: null } }))
+      ].map((x) => ({ ...x, s: st.get(`${x.tipo}:${x.rif}`) || { stato: 'aperta', assegnato: null, contatto_id: null }, key: '' }))
         .sort((a, b) => String(b.quando).localeCompare(String(a.quando)));
-      const counts = { tutte: items.length, nuove: items.filter((x) => x.nuovo).length, aperte: items.filter((x) => x.s.stato !== 'chiusa').length, chiuse: items.filter((x) => x.s.stato === 'chiusa').length };
-      const filt = h('div', { class: 'filters', role: 'group', 'aria-label': 'Filtra la casella' });
-      [['tutte', 'Tutte'], ['nuove', 'Da leggere'], ['aperte', 'Aperte'], ['chiuse', 'Chiuse']].forEach(([k, t]) => {
-        const b = h('button', { type: 'button', class: 'chip', 'aria-pressed': casellaFiltro.vista === k ? 'true' : 'false', text: `${t} (${counts[k]})` });
-        b.addEventListener('click', () => { casellaFiltro.vista = k; draw(); });
-        filt.append(b);
-      });
-      // Come «Team» in Keplero: tutte, non assegnate, oppure di una persona. Più la ricerca per nome o testo.
-      const chi = select('chi', [['', 'Tutto il team'], ['__none', `Non assegnate (${items.filter((x) => !x.s.assegnato).length})`], ...team.map((p) => [p.nome, `${p.nome} (${items.filter((x) => x.s.assegnato === p.nome).length})`])], casellaFiltro.chi, { 'aria-label': 'Assegnate a', class: 'el-fase' });
-      chi.addEventListener('change', () => { casellaFiltro.chi = chi.value; draw(); });
-      const cerca = h('input', { type: 'search', class: 'el-search', placeholder: 'Cerca nome o testo', 'aria-label': 'Cerca nella casella', value: casellaFiltro.q });
-      cerca.addEventListener('change', () => { casellaFiltro.q = cerca.value; draw(); });
-      const tools = h('div', { class: 'el-tools' }, cerca, chi);
-      const q = casellaFiltro.q.trim().toLowerCase();
-      const shown = items.filter((x) => casellaFiltro.vista === 'tutte' || (casellaFiltro.vista === 'nuove' && x.nuovo) || (casellaFiltro.vista === 'aperte' && x.s.stato !== 'chiusa') || (casellaFiltro.vista === 'chiuse' && x.s.stato === 'chiusa'))
-        .filter((x) => !casellaFiltro.chi || (casellaFiltro.chi === '__none' ? !x.s.assegnato : x.s.assegnato === casellaFiltro.chi))
-        .filter((x) => !q || String(x.nome || '').toLowerCase().includes(q) || String(x.r?.messaggio || '').toLowerCase().includes(q));
+      items.forEach((x) => { x.key = `${x.tipo}:${x.rif}`; });
+      const nelTeam = (x) => !casellaFiltro.chi || (casellaFiltro.chi === '__none' ? !x.s.assegnato : x.s.assegnato === casellaFiltro.chi);
+      const inVista = (x) => casellaFiltro.vista === 'tutte' || (casellaFiltro.vista === 'nuove' && x.nuovo) || (casellaFiltro.vista === 'aperte' && x.s.stato !== 'chiusa') || (casellaFiltro.vista === 'chiuse' && x.s.stato === 'chiusa');
+      const teamRows = items.filter(nelTeam);
+      const counts = { tutte: teamRows.length, nuove: teamRows.filter((x) => x.nuovo).length, aperte: teamRows.filter((x) => x.s.stato !== 'chiusa').length, chiuse: teamRows.filter((x) => x.s.stato === 'chiusa').length };
       const saveState = async (x, patch) => {
         try {
           const [row] = await call('/rest/v1/eliseo_casella_stato?on_conflict=tipo,rif', { method: 'POST', body: { tipo: x.tipo, rif: x.rif, stato: x.s.stato, assegnato: x.s.assegnato, contatto_id: x.s.contatto_id, ...patch }, prefer: 'resolution=merge-duplicates,return=representation' });
           Object.assign(x.s, row); say('Casella aggiornata.');
         } catch (e) { say(e.message === 'sql' ? 'Manca il file supabase/eliseo-casella.sql in Supabase.' : e.message, true); }
       };
-      const list = h('div', { class: 'el-inbox' });
-      shown.forEach((x) => {
+      const side = h('aside', { class: 'el-conv__side' });
+      const teamBox = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Team' });
+      const teamBtn = (val, nome, n) => {
+        const b = h('button', { type: 'button', class: 'el-folder', 'aria-pressed': casellaFiltro.chi === val ? 'true' : 'false' }, h('span', { text: nome }), h('b', { text: String(n) }));
+        b.addEventListener('click', () => { casellaFiltro.chi = val; draw(); });
+        teamBox.append(b);
+      };
+      teamBtn('', 'Tutto il team', items.length);
+      teamBtn('__none', 'Non assegnate', items.filter((x) => !x.s.assegnato).length);
+      team.forEach((p) => teamBtn(p.nome, p.nome, items.filter((x) => x.s.assegnato === p.nome).length));
+      const statiBox = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Stati' });
+      [['tutte', 'Tutte'], ['aperte', 'Aperte'], ['nuove', 'Da leggere'], ['chiuse', 'Chiuse']].forEach(([k, t]) => {
+        const b = h('button', { type: 'button', class: 'el-folder', 'aria-pressed': casellaFiltro.vista === k ? 'true' : 'false' }, h('span', { text: t }), h('b', { text: String(counts[k]) }));
+        b.addEventListener('click', () => { casellaFiltro.vista = k; draw(); });
+        statiBox.append(b);
+      });
+      side.append(h('p', { class: 'el-group', text: 'Team' }), teamBox, h('p', { class: 'el-group', text: 'Stati' }), statiBox);
+      const cerca = h('input', { type: 'search', class: 'el-search', placeholder: 'Cerca nome o testo', 'aria-label': 'Cerca nella casella', value: casellaFiltro.q });
+      const nVis = h('span', { class: 'el-count' });
+      const rowsBox = h('div', { class: 'el-conv__rows' });
+      const detail = h('div', { class: 'el-conv__detail' });
+      const note = reqOk ? null : h('p', { class: 'pcard__note', text: perche === 'tabella non trovata' ? 'Per stati e richieste del modulo va eseguito una volta il file supabase/eliseo-casella.sql in Supabase (lo fa Eliseo).' : `Stati e richieste non disponibili ora (${perche}). Ricarica la pagina; se resta, scrivilo a Claude con questo codice.` });
+      const off = root.closest('[data-auth-page]')?.dataset.salvaRichieste === '1' ? null : h('p', { class: 'pcard__note', text: 'Le richieste del modulo di contatto per ora arrivano solo per email. Si salveranno anche qui quando l’informativa privacy sarà aggiornata con l’avvocato.' });
+      function paintDetail(shown) {
+        const x = shown.find((it) => it.key === casellaPick);
+        if (!x) { detail.replaceChildren(h('p', { class: 'pempty', text: 'Seleziona una conversazione.' })); return; }
         const stato = select('stato', STATI, x.s.stato, { 'aria-label': `Stato di ${x.nome}`, class: 'el-fase' });
         stato.addEventListener('change', async () => { await saveState(x, { stato: stato.value }); draw(); });
         const ass = select('assegnato', [['', 'Non assegnata'], ...team.map((p) => [p.nome, p.nome])], x.s.assegnato || '', { 'aria-label': `Assegna ${x.nome}`, class: 'el-fase' });
-        ass.addEventListener('change', () => saveState(x, { assegnato: ass.value || null }));
-        const acts = h('div', { class: 'el-inbox__act' });
+        ass.addEventListener('change', async () => { await saveState(x, { assegnato: ass.value || null }); draw(); });
+        const acts = h('div', { class: 'el-detail__act' });
         if (x.tipo === 'chat') {
           const open = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Apri la chat' });
           open.addEventListener('click', () => { if (!x.s.contatto_id) saveState(x, {}); root.querySelector('[data-nav="chat"]')?.click(); });
@@ -438,37 +507,99 @@ export function mount(box, root) {
           });
           acts.append(add);
         }
-        list.append(h('article', { class: `el-msg${x.nuovo ? ' is-new' : ''}${x.s.stato === 'chiusa' ? ' is-closed' : ''}` },
-          h('header', { class: 'el-msg__head' },
-            h('span', { class: `pchip pchip--${x.tipo === 'chat' ? 'ok' : 'wait'}`, text: x.tipo === 'chat' ? 'Chat' : `Modulo · ${MOTIVI[x.r.motivo] || ''}` }),
-            h('strong', { text: x.nome }), x.nuovo ? h('span', { class: 'el-dot', text: 'Nuova' }) : null, h('small', { text: when(x.quando) })),
-          x.tipo === 'richiesta' ? h('p', { class: 'el-msg__text', text: x.r.messaggio }) : null,
-          h('div', { class: 'el-msg__ctrl' }, stato, ass, acts)));
-      });
-      const note = reqOk ? null : h('p', { class: 'pcard__note', text: perche === 'tabella non trovata' ? 'Per stati e richieste del modulo va eseguito una volta il file supabase/eliseo-casella.sql in Supabase (lo fa Eliseo).' : `Stati e richieste non disponibili ora (${perche}). Ricarica la pagina; se resta, scrivilo a Claude con questo codice.` });
-      const off = root.closest('[data-auth-page]')?.dataset.salvaRichieste === '1' ? null : h('p', { class: 'pcard__note', text: 'Le richieste del modulo di contatto per ora arrivano solo per email. Si salveranno anche qui quando l’informativa privacy sarà aggiornata con l’avvocato.' });
-      wrap.replaceChildren(...[filt, tools, note, off].filter(Boolean), shown.length ? list : h('p', { class: 'pempty', text: items.length ? 'Niente in questa vista.' : 'La casella è vuota.' }));
+        const kind = x.tipo === 'chat' ? 'Chat del sito' : `Modulo · ${MOTIVI[x.r.motivo] || ''}`.trim();
+        detail.replaceChildren(
+          h('header', { class: 'el-detail__head' },
+            h('span', { class: 'el-av', 'data-tone': String(tono(x.nome)), 'aria-hidden': 'true', text: iniziale(x.nome) }),
+            h('div', null, h('h2', { text: x.nome || 'Senza nome' }), h('p', { text: `${kind} · ${when(x.quando)}` }))),
+          x.nuovo ? h('span', { class: 'el-dot', text: 'Nuova' }) : null,
+          x.tipo === 'richiesta' ? h('p', { class: 'el-detail__text', text: x.r.messaggio }) : h('p', { class: 'pcard__note', text: 'Conversazione della chat del sito. Da qui si apre la chat e, se manca, si aggiunge la persona ai contatti.' }),
+          h('div', { class: 'el-detail__ctrl' }, h('label', { class: 'field' }, h('span', { text: 'Stato' }), stato), h('label', { class: 'field' }, h('span', { text: 'Assegnata a' }), ass)),
+          acts);
+      }
+      function paint() {
+        const q = cerca.value.trim().toLowerCase();
+        casellaFiltro.q = cerca.value;
+        const shown = items.filter(nelTeam).filter(inVista).filter((x) => !q || String(x.nome || '').toLowerCase().includes(q) || String(x.r?.messaggio || '').toLowerCase().includes(q));
+        nVis.textContent = String(shown.length);
+        rowsBox.replaceChildren();
+        if (!shown.length) rowsBox.append(h('p', { class: 'pempty', text: items.length ? 'Niente in questa vista.' : 'La casella è vuota.' }));
+        shown.forEach((x) => {
+          const anteprima = x.tipo === 'richiesta' ? String(x.r.messaggio || '').replace(/\s+/g, ' ').slice(0, 90) : 'Chat del sito';
+          const row = h('button', { type: 'button', class: `el-row${x.key === casellaPick ? ' is-on' : ''}` },
+            h('span', { class: 'el-av', 'data-tone': String(tono(x.nome)), 'aria-hidden': 'true', text: iniziale(x.nome) }),
+            h('span', { class: 'el-row__body' },
+              h('span', { class: 'el-row__top' }, h('strong', { text: x.nome || 'Senza nome' }), h('small', { text: when(x.quando) })),
+              h('span', { class: 'el-row__prev', text: anteprima })));
+          row.addEventListener('click', () => { casellaPick = x.key; paint(); });
+          rowsBox.append(row);
+        });
+        paintDetail(shown);
+      }
+      cerca.addEventListener('input', paint);
+      const listCol = h('div', { class: 'el-conv__list' },
+        h('div', { class: 'el-conv__top' }, h('strong', { text: 'Conversazioni' }), nVis),
+        h('div', { class: 'el-conv__search' }, cerca),
+        note, off, rowsBox);
+      wrap.replaceChildren(side, listCol, detail);
+      wrap.classList.add('el-conv');
+      paint();
     })();
-    return [card('Casella', h('p', { class: 'pcard__note', text: 'Chat del sito e richieste del modulo, in un solo posto. Scegli lo stato e a chi assegnarle.' }), wrap)];
+    return [wrap];
+  }
+
+  function drawAnalisi() {
+    const s = summary(rows);
+    const kpi = (lab, n, nota) => h('article', { class: 'el-kpi' }, h('span', { text: lab }), h('b', { text: String(n) }), h('small', { text: nota }));
+    body.replaceChildren(
+      pageHead('Analisi'),
+      h('p', { class: 'pcard__note', text: 'Questi sono i numeri della rubrica: contatti, consensi, nuovi e da richiamare. Non sono il conteggio delle chat in tempo reale.' }),
+      h('div', { class: 'el-kpis' },
+        kpi('Contatti', s.totale, 'in rubrica'),
+        kpi('Con consenso', s.consenso, 'possono ricevere campagne'),
+        kpi('Nuovi', s.nuovi, 'negli ultimi 7 giorni'),
+        kpi('Da richiamare', s.richiamare, 'da sentire presto')));
+  }
+
+  function drawContatti() {
+    const lista = h('button', { type: 'button', 'aria-pressed': tab !== 'colonne' ? 'true' : 'false', text: 'Lista' });
+    const kanban = h('button', { type: 'button', 'aria-pressed': tab === 'colonne' ? 'true' : 'false', text: 'Kanban' });
+    lista.addEventListener('click', () => { tab = 'elenco'; syncNav(); draw(); });
+    kanban.addEventListener('click', () => { tab = 'colonne'; syncNav(); draw(); });
+    const head = pageHead('Contatti', h('div', { class: 'el-switch', role: 'group', 'aria-label': 'Vista contatti' }, lista, kanban), h('span', { class: 'el-count', text: `${rows.length} contatti` }));
+    const book = h('div', { class: 'el-book' }, h('aside', { class: 'el-book__side' }, h('p', { class: 'el-group', text: 'Cartelle' }), folderNav()));
+    if (tab === 'colonne') {
+      book.append(h('div', { class: 'el-book__main' }, toolbar(false), h('p', { class: 'pcard__note', text: 'Trascina una scheda in un’altra colonna, oppure usa «Sposta in».' }), drawColumns()));
+      body.replaceChildren(head, book);
+      return;
+    }
+    listBox = h('div');
+    book.append(h('div', { class: 'el-book__main' }, toolbar(true), listBox));
+    body.replaceChildren(head, book);
+    drawList();
   }
 
   function draw() {
     listBox = null;
-    if (tab === 'colonne') { body.replaceChildren(card('Fasi', h('p', { class: 'pcard__note', text: 'Trascina una scheda in un’altra colonna, oppure usa «Sposta in».' }), drawColumns())); return; }
+    syncNav();
+    if (tab === 'analisi') { drawAnalisi(); return; }
+    if (tab === 'colonne' || tab === 'elenco') { drawContatti(); return; }
     if (tab === 'campagne') { body.replaceChildren(...drawCampaigns()); return; }
     if (tab === 'casella') { body.replaceChildren(...drawCasella()); return; }
     if (tab === 'modelli') { body.replaceChildren(...drawModelli()); return; }
     if (['addestramento', 'automazioni', 'prova'].includes(tab)) {
       const which = tab;
-      body.replaceChildren(card(null, h('p', { class: 'pempty', text: 'Carico…' })));
-      import('./portal-eliseo-ai.js').then((m) => { if (tab === which) body.replaceChildren(...m.mountAi(which, { h, card, call, say, select, team })); })
-        .catch(() => body.replaceChildren(card(null, h('p', { class: 'pcard__note', text: 'Non riesco a caricare questa sezione. Riprova.' }))));
+      const titolo = { automazioni: 'Automazioni', prova: 'Chatbot' }[which];
+      body.replaceChildren(...(titolo ? [pageHead(titolo)] : []), h('p', { class: 'pempty', text: 'Carico…' }));
+      import('./portal-eliseo-ai.js').then((m) => {
+        if (tab !== which) return;
+        const nodes = m.mountAi(which, { h, card, call, say, select, team });
+        body.replaceChildren(...(titolo ? [pageHead(titolo)] : []), ...nodes);
+      }).catch(() => body.replaceChildren(card(null, h('p', { class: 'pcard__note', text: 'Non riesco a caricare questa sezione. Riprova.' }))));
       return;
     }
     if (tab === 'importa') { openImport(); return; }
-    listBox = h('div');
-    body.replaceChildren(card('Contatti', toolbar(), listBox));
-    drawList();
+    drawContatti();
   }
 
   body.replaceChildren(card('Eliseo', h('p', { class: 'pempty', text: 'Carico…' })));

@@ -330,3 +330,148 @@
   .mx-strumenti .mav-sheet { padding: 20px 16px; }
   .mx-strumenti .mav-status { padding: 0 16px 16px; }
 }
+
+/* Eliseo: stessa presentazione chiara della console. Maverik resta com'è. */
+.mx-strumenti .el-app {
+  --ink: #fff;
+  --ink-2: #fff;
+  --ink-3: #f6f7f9;
+  --line: #e6e8ee;
+  --text: #1f2328;
+  --text-soft: #6d7380;
+  --gold: #1f2328;
+  --success: #1d6a44;
+  --danger: #a33b32;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-height: 640px;
+  width: 100%;
+  max-width: 100%;
+  background: #f3f4f6;
+  color: #1f2328;
+  border: 1px solid #e6e8ee;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  letter-spacing: 0;
+}
+.mx-strumenti .el-app button,
+.mx-strumenti .el-app input,
+.mx-strumenti .el-app select,
+.mx-strumenti .el-app textarea { font: inherit; color: inherit; letter-spacing: 0; text-transform: none; }
+.mx-strumenti .el-app h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0; text-transform: none; color: #1f2328; }
+.mx-strumenti .el-app h3, .mx-strumenti .el-app h4 { letter-spacing: 0; text-transform: none; color: #1f2328; }
+.mx-strumenti .el-side {
+  display: flex; flex-direction: column; gap: 4px; min-width: 0;
+  padding: 16px 12px; background: #fff; border-right: 1px solid #e7e9ee;
+}
+.mx-strumenti .el-app .el-brand { padding: 4px 8px 12px; }
+.mx-strumenti .el-app .el-brand strong { display: block; font-size: 15px; letter-spacing: 0; text-transform: none; color: #1f2328; }
+.mx-strumenti .el-app .el-brand small { display: block; color: #8b919a; font-size: 12px; }
+.mx-strumenti .el-app .el-mark { width: 34px; height: 34px; background: #1f2328; color: #fff; font-size: 15px; }
+.mx-strumenti .el-app .el-group { margin: 14px 8px 4px; color: #1f2328; font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.mx-strumenti .el-navs, .mx-strumenti .el-folders, .mx-strumenti .el-subnav { display: grid; gap: 2px; }
+.mx-strumenti .el-nav, .mx-strumenti .el-folder, .mx-strumenti .el-sub {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; min-height: 36px; padding: 0 10px; border: 0; border-radius: 10px;
+  background: transparent; color: #1f2328; text-align: left; cursor: pointer;
+}
+.mx-strumenti .el-nav[aria-selected="true"], .mx-strumenti .el-folder[aria-pressed="true"] { background: #eef0f3; font-weight: 650; }
+.mx-strumenti .el-sub[aria-pressed="true"] { background: #e7f1ff; font-weight: 650; }
+.mx-strumenti .el-folder b, .mx-strumenti .el-count { color: #8b919a; font-weight: 600; font-size: 13px; }
+.mx-strumenti .el-stage { display: flex; flex-direction: column; min-width: 0; background: #f7f8fa; }
+.mx-strumenti .el-app .el-body { flex: 1; min-width: 0; padding: 16px; overflow: auto; }
+.mx-strumenti .el-app .el-status { margin: 0; padding: 0 16px 12px; color: #1d6a44; font-size: 13px; }
+.mx-strumenti .el-app .el-status:empty { display: none; }
+.mx-strumenti .el-app .el-status[data-state="error"] { color: #a33b32; }
+.mx-strumenti .el-pagehead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.mx-strumenti .el-pagehead__act { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mx-strumenti .el-app .pcard, .mx-strumenti .el-app .table-wrap, .mx-strumenti .el-app .el-kpi, .mx-strumenti .el-app .el-auto, .mx-strumenti .el-app .el-model, .mx-strumenti .el-app .el-card {
+  background: #fff; border-color: #e6e8ee; color: #1f2328;
+}
+.mx-strumenti .el-app .btn {
+  background: #1f2328; color: #fff; border-color: #1f2328; border-radius: 10px; min-height: 40px; font-weight: 650;
+}
+.mx-strumenti .el-app .btn--secondary { background: #fff; color: #1f2328; }
+.mx-strumenti .el-app .chip { background: #fff; color: #3c424c; border-color: #e1e4ea; }
+.mx-strumenti .el-app .chip[aria-pressed="true"] { background: #1f2328; color: #fff; border-color: #1f2328; }
+.mx-strumenti .el-app .link-button { color: #1f2328; }
+.mx-strumenti .el-app .el-dot { justify-self: start; width: fit-content; background: #1f2328; color: #fff; }
+.mx-strumenti .el-app .field > label { display: grid; gap: 4px; }
+.mx-strumenti .el-app .el-auto > .btn { justify-self: start; width: fit-content; }
+.mx-strumenti .el-app input:not([type=checkbox]):not([type=radio]):not([type=file]),
+.mx-strumenti .el-app select, .mx-strumenti .el-app textarea {
+  background: #fff; color: #1f2328; border: 1px solid #e1e4ea; border-radius: 10px;
+}
+.mx-strumenti .el-app input[type=checkbox] { accent-color: #1f2328; width: 16px; height: 16px; }
+.mx-strumenti .el-switch { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: #e7e9ee; }
+.mx-strumenti .el-switch button { width: auto; min-height: 32px; padding: 0 14px; border-radius: 8px; font-weight: 500; }
+.mx-strumenti .el-switch button[aria-pressed="true"] { background: #fff; font-weight: 650; }
+.mx-strumenti .el-book { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 12px; align-items: start; }
+.mx-strumenti .el-book__side, .mx-strumenti .el-book__main { min-width: 0; }
+.mx-strumenti .el-book__side { padding: 8px; background: #fff; border: 1px solid #e6e8ee; border-radius: 12px; }
+.mx-strumenti .el-conv {
+  display: grid; grid-template-columns: 200px minmax(220px, 320px) minmax(0, 1fr);
+  min-height: 560px; background: #fff; border: 1px solid #e6e8ee; border-radius: 12px; overflow: hidden;
+}
+.mx-strumenti .el-conv__side, .mx-strumenti .el-conv__list, .mx-strumenti .el-conv__detail { min-width: 0; }
+.mx-strumenti .el-conv__side { padding: 8px; border-right: 1px solid #e7e9ee; background: #fff; }
+.mx-strumenti .el-conv__list { display: flex; flex-direction: column; border-right: 1px solid #e7e9ee; background: #f7f8fa; }
+.mx-strumenti .el-conv__top, .mx-strumenti .el-conv__search { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 12px 0; }
+.mx-strumenti .el-conv__top strong { font-size: 16px; }
+.mx-strumenti .el-conv__search { padding-top: 8px; }
+.mx-strumenti .el-conv__search .el-search { width: 100%; }
+.mx-strumenti .el-conv__list > .pcard__note { margin: 8px 12px 0; }
+.mx-strumenti .el-conv__rows { display: grid; align-content: start; gap: 4px; padding: 8px; overflow: auto; }
+.mx-strumenti .el-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center;
+  width: 100%; padding: 10px; border: 0; border-radius: 12px; background: transparent; text-align: left; cursor: pointer;
+}
+.mx-strumenti .el-row.is-on { background: #fff4cc; }
+.mx-strumenti .el-av {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: #e4d4f7; color: #5b3d82; font-weight: 700;
+}
+.mx-strumenti .el-av[data-tone="1"] { background: #d5e4fb; color: #2c4c86; }
+.mx-strumenti .el-av[data-tone="2"] { background: #f8d4ea; color: #8a3d68; }
+.mx-strumenti .el-av[data-tone="3"] { background: #d7f0e4; color: #1d6a44; }
+.mx-strumenti .el-av[data-tone="4"] { background: #ffe6c2; color: #8a5a12; }
+.mx-strumenti .el-row__body { display: grid; gap: 2px; min-width: 0; }
+.mx-strumenti .el-row__top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.mx-strumenti .el-row__top strong { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-strumenti .el-row__top small, .mx-strumenti .el-row__prev { color: #6d7380; font-size: 13px; }
+.mx-strumenti .el-row__prev { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-strumenti .el-conv__detail { display: grid; align-content: start; gap: 12px; padding: 24px; background: #fff; overflow: auto; }
+.mx-strumenti .el-detail__head { display: flex; align-items: center; gap: 12px; }
+.mx-strumenti .el-detail__head p, .mx-strumenti .el-detail__text { margin: 0; line-height: 1.5; }
+.mx-strumenti .el-detail__text { white-space: pre-line; }
+.mx-strumenti .el-detail__ctrl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mx-strumenti .el-detail__act { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.mx-strumenti .el-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mx-strumenti .el-kpi { display: grid; gap: 6px; padding: 16px; border: 1px solid #e6e8ee; border-radius: 12px; }
+.mx-strumenti .el-kpi span, .mx-strumenti .el-kpi small { color: #6d7380; font-size: 13px; }
+.mx-strumenti .el-kpi b { font-size: 32px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.mx-strumenti .el-know { display: grid; grid-template-columns: 220px minmax(0, 1fr); min-height: 480px; background: #fff; border: 1px solid #e6e8ee; border-radius: 12px; overflow: hidden; }
+.mx-strumenti .el-know__side { padding: 8px; border-right: 1px solid #e7e9ee; background: #fff; }
+.mx-strumenti .el-know__main { display: grid; align-content: start; gap: 12px; min-width: 0; padding: 16px; background: #f7f8fa; }
+.mx-strumenti .el-app .el-chat { background: #fff; }
+.mx-strumenti .el-app .el-chat__msg { background: #f6f7f9; color: #1f2328; }
+.mx-strumenti .el-app .el-chat__msg--user { background: #fff4cc; }
+.mx-strumenti .el-app .el-chat__msg small { color: #6d7380; }
+.mx-strumenti .el-app .el-col { background: #f7f8fa; }
+.mx-strumenti .el-app .el-col__list.is-over { background: #fff4cc; }
+.mx-strumenti .el-app .el-models__cat { color: #6d7380; }
+.mx-strumenti .el-app button:focus-visible,
+.mx-strumenti .el-app a:focus-visible,
+.mx-strumenti .el-app input:focus-visible,
+.mx-strumenti .el-app select:focus-visible,
+.mx-strumenti .el-app textarea:focus-visible { outline: 2px solid #1f2328; outline-offset: 1px; }
+@media (max-width: 800px) {
+  .mx-strumenti .el-app, .mx-strumenti .el-conv, .mx-strumenti .el-know, .mx-strumenti .el-book { grid-template-columns: 1fr; }
+  .mx-strumenti .el-kpis, .mx-strumenti .el-detail__ctrl { grid-template-columns: 1fr 1fr; }
+  .mx-strumenti .el-side { border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .el-navs { display: flex; flex-wrap: wrap; }
+  .mx-strumenti .el-nav { width: auto; }
+  .mx-strumenti .el-conv__side, .mx-strumenti .el-conv__list, .mx-strumenti .el-know__side { border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .el-conv__detail { padding: 16px; }
+}

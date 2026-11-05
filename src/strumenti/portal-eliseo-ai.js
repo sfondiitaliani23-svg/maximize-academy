@@ -50,14 +50,18 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
       ]);
     } catch (e) { fail(e); return; }
-    const nav = h('div', { class: 'filters', role: 'group', 'aria-label': 'Sezioni dell’addestramento' });
-    [['faq', `FAQ (${faq.length})`], ['sito', 'Sito web'], ['documenti', `Documenti (${docs.length})`], ['istruzioni', 'Istruzioni'], ['passaggio', 'Passaggio a una persona']].forEach(([k, t]) => {
-      const b = h('button', { type: 'button', class: 'chip', 'aria-pressed': sub === k ? 'true' : 'false', text: t });
+    const nav = h('div', { class: 'el-subnav', role: 'group', 'aria-label': 'Sezioni della base di conoscenza' });
+    [['faq', `FAQ (${faq.length})`], ['sito', 'Sito web'], ['documenti', `File (${docs.length})`], ['istruzioni', 'Prompt'], ['passaggio', 'Escalation']].forEach(([k, t]) => {
+      const b = h('button', { type: 'button', class: 'el-sub', 'aria-pressed': sub === k ? 'true' : 'false', text: t });
       b.addEventListener('click', () => { sub = k; drawTraining(); });
       nav.append(b);
     });
     const views = { faq: () => faqView(faq), sito: siteView, documenti: () => docsView(docs), istruzioni: () => promptView(conf, vers), passaggio: () => handoffView(conf) };
-    wrap.replaceChildren(card('Addestramento', h('p', { class: 'pcard__note', text: 'Quello che l’assistente del sito sa e come si comporta. FAQ, documenti, regole e orari li può leggere chiunque usi l’assistente: mai dati dei clienti, mai cose interne.' }), nav), ...[].concat(views[sub]()));
+    wrap.replaceChildren(h('div', { class: 'el-know' },
+      h('aside', { class: 'el-know__side' }, h('p', { class: 'el-group', text: 'Base di conoscenza' }), nav),
+      h('div', { class: 'el-know__main' },
+        h('p', { class: 'pcard__note', text: 'Quello che l’assistente del sito sa e come si comporta. FAQ, documenti, regole e orari li può leggere chiunque usi l’assistente: mai dati dei clienti, mai cose interne.' }),
+        ...[].concat(views[sub]()))));
   }
 
   function faqView(list) {
@@ -152,7 +156,7 @@ export function mountAi(kind, ui) {
     const box = h('div', { class: 'el-models' });
     if (!list.length) box.append(h('p', { class: 'pempty', text: 'Nessun documento.' }));
     list.forEach((d) => box.append(h('details', { class: 'el-model' }, h('summary', null, h('strong', { text: `${d.attivo ? '' : '(spento) '}${d.titolo}` }), h('span', { text: `${d.testo.length} caratteri` })), form(d))));
-    return [card('Documenti', h('p', { class: 'pcard__note', text: 'Listini, schede prodotto, biografie: come i «File» di Keplero. L’assistente risponde con la frase più adatta. Metti solo informazioni che possono leggere tutti (niente profili interni, funnel o strategie).' }), box), card('Nuovo documento', form(null))];
+    return [card('File', h('p', { class: 'pcard__note', text: 'Listini, schede prodotto, biografie: come i «File» di Keplero. L’assistente risponde con la frase più adatta. Metti solo informazioni che possono leggere tutti (niente profili interni, funnel o strategie).' }), box), card('Nuovo file', form(null))];
   }
 
   function promptView(conf, vers) {
@@ -174,7 +178,7 @@ export function mountAi(kind, ui) {
       back.addEventListener('click', () => { ta.value = v.istruzioni; upd(); say('Versione caricata nel riquadro: premi «Salva le istruzioni» per usarla.'); });
       hist.append(h('li', null, h('strong', { text: new Date(v.creato_il).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }) }), h('span', { text: `${v.istruzioni.slice(0, 80)}…` }), back));
     });
-    return [card('Istruzioni dell’assistente', h('p', { class: 'pcard__note', text: 'Chi è, come parla, cosa deve e non deve fare (come il «Prompt» di Keplero). Servono quando si accende l’assistente con l’IA: oggi l’assistente risponde con FAQ, documenti e dati del sito. Le istruzioni non le vede nessun cliente.' }), tips, field('Istruzioni', ta), count, h('div', { class: 'actions' }, save)), card(`Cronologia versioni (${vers.length})`, hist)];
+    return [card('Prompt', h('p', { class: 'pcard__note', text: 'Chi è, come parla, cosa deve e non deve fare (come il «Prompt» di Keplero). Servono quando si accende l’assistente con l’IA: oggi l’assistente risponde con FAQ, documenti e dati del sito. Le istruzioni non le vede nessun cliente.' }), tips, field('Istruzioni', ta), count, h('div', { class: 'actions' }, save)), card(`Cronologia versioni (${vers.length})`, hist)];
   }
 
   function handoffView(conf) {
@@ -211,7 +215,7 @@ export function mountAi(kind, ui) {
       try { await call('/rest/v1/eliseo_assistente?id=eq.1', { method: 'PATCH', body: { escalation_attiva: esc.checked, testo_libero: free.checked, regole, orari }, prefer: 'return=minimal' }); say('Impostazioni salvate. L’assistente del sito le usa da subito.'); drawTraining(); }
       catch (e) { say(e.message, true); save.disabled = false; }
     });
-    return [card('Passaggio a una persona', h('p', { class: 'pcard__note', text: 'Quando l’assistente passa il cliente a una persona del team (su WhatsApp). Come l’«Escalation» di Keplero.' }),
+    return [card('Escalation', h('p', { class: 'pcard__note', text: 'Quando l’assistente passa il cliente a una persona del team (su WhatsApp). Come l’«Escalation» di Keplero. Qui ci sono solo gli interruttori veri: passaggio al team, testo libero, regole e orari.' }),
       h('label', { class: 'el-consent' }, esc, h('span', { text: 'Attivo: l’assistente segue le regole qui sotto e passa il cliente al team' })),
       h('label', { class: 'el-consent' }, free, h('span', { text: 'I clienti possono anche scrivere le domande (oltre ai pulsanti). Accendilo dopo averlo provato in «Prova».' })),
       h('h4', { class: 'el-models__cat', text: 'Quando passare il cliente' }), rb, h('div', { class: 'el-tools' }, nq, na, add),
@@ -291,7 +295,7 @@ export function mountAi(kind, ui) {
     });
     const examples = h('div', { class: 'filters', role: 'group', 'aria-label': 'Domande di esempio' });
     ['Quanto costa un taglio?', 'Siete aperti domenica?', 'Posso spostare l’appuntamento?', 'Voglio parlare con una persona', ...tr.faq.slice(0, 2).map((x) => x.d)].forEach((t) => { const b = h('button', { type: 'button', class: 'chip', text: t }); b.addEventListener('click', () => { input.value = t; f.requestSubmit(); }); examples.append(b); });
-    const state = h('p', { class: 'pcard__note', text: `${tr.faq.length} FAQ attive · ${tr.documenti.length} documenti attivi · passaggio a una persona ${tr.escalation ? 'acceso' : 'spento'} · domande scritte sul sito ${tr.testo_libero ? 'accese' : 'spente (si accendono in Addestramento → Passaggio a una persona)'}` });
+    const state = h('p', { class: 'pcard__note', text: `${tr.faq.length} FAQ attive · ${tr.documenti.length} documenti attivi · passaggio a una persona ${tr.escalation ? 'acceso' : 'spento'} · domande scritte sul sito ${tr.testo_libero ? 'accese' : 'spente (si accendono in FAQ → Escalation)'}` });
     wrap.replaceChildren(card('Prova il chatbot', h('p', { class: 'pcard__note', text: 'Fai le domande come un cliente e guarda cosa risponde l’assistente e perché. Usa le FAQ e i documenti salvati.' }), state, examples, log, f));
   }
 
