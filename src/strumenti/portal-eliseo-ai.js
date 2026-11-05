@@ -204,11 +204,11 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_faq?select=*&order=cartella,domanda'),
         call('/rest/v1/eliseo_documenti?select=*&order=titolo'),
         call('/rest/v1/eliseo_assistente?select=*&id=eq.1'),
-        call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
+        call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=30'),
       ]);
     } catch (e) {
-      if (e.message === 'sql' && (sub === 'faq' || sub === 'sito' || sub === 'documenti')) {
-        const view = sub === 'faq' ? faqView([], true) : sub === 'sito' ? siteView() : docsView([], true);
+      if (e.message === 'sql' && (sub === 'faq' || sub === 'sito' || sub === 'documenti' || sub === 'istruzioni')) {
+        const view = sub === 'faq' ? faqView([], true) : sub === 'sito' ? siteView() : sub === 'documenti' ? docsView([], true) : promptView(null, [], true);
         wrap.replaceChildren(...view);
         return;
       }
@@ -621,26 +621,123 @@ export function mountAi(kind, ui) {
     ];
   }
 
-  function promptView(conf, vers) {
-    const ta = h('textarea', { name: 'istruzioni', maxlength: 10000, rows: 14 }); ta.value = conf.istruzioni || '';
-    const count = h('p', { class: 'field__hint', 'aria-live': 'polite' });
-    const upd = () => { count.textContent = `${ta.value.length} / 10.000`; }; ta.addEventListener('input', upd); upd();
-    const tips = h('div', { class: 'filters', role: 'group', 'aria-label': 'Aggiunte rapide' });
-    [['Risposte brevi', 'Rispondi in modo breve: al massimo 3 frasi.'], ['Tono caldo', 'Usa un tono caldo e amichevole, dai del tu.'], ['Tono formale', 'Usa un tono cortese e formale, dai del lei.'], ['Elenchi', 'Nelle risposte lunghe usa elenchi puntati.'], ['Chiudi con una domanda', 'Chiudi sempre con una domanda.']].forEach(([t, add]) => {
-      const b = h('button', { type: 'button', class: 'chip', text: `+ ${t}` });
-      b.addEventListener('click', () => { if (!ta.value.includes(add)) { ta.value = `${ta.value.trim()}\n${add}`.trim(); upd(); } });
-      tips.append(b);
+  function promptView(conf, vers, blocked) {
+    const sqlNote = 'Manca un passaggio una tantum: va eseguito il file supabase/eliseo-addestramento.sql in Supabase (lo fa Eliseo). Poi ricarica la pagina.';
+    const svg = (parts) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('viewBox', '0 0 24 24');
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', 'currentColor');
+      el.setAttribute('stroke-width', '1.8');
+      el.setAttribute('stroke-linecap', 'round');
+      el.setAttribute('stroke-linejoin', 'round');
+      el.setAttribute('aria-hidden', 'true');
+      parts.forEach(([tag, attrs]) => {
+        const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        el.append(n);
+      });
+      return el;
+    };
+    const list = Array.isArray(vers) ? vers : [];
+    const stored = (conf && conf.istruzioni) || '';
+    const note = h('p', { class: 'el-file__note' });
+    const err = h('p', { class: 'el-web__err', role: 'alert' });
+    const ta = h('textarea', { class: 'el-prompt__text', maxlength: 10000, rows: 14, 'aria-label': 'Prompt' });
+    ta.value = stored;
+    const count = h('span', { class: 'el-prompt__count' });
+    const label = h('span', { text: 'Salvato' });
+    const state = h('span', { class: 'el-prompt__state' }, h('i', { class: 'el-prompt__dot', 'aria-hidden': 'true' }), label);
+    const save = h('button', { type: 'button', class: 'btn btn--primary el-prompt__save', text: 'Salva' });
+    const mark = () => {
+      count.textContent = `${ta.value.length.toLocaleString('it-IT')} / 10.000`;
+      const dirty = ta.value !== stored;
+      label.textContent = blocked ? 'In attesa' : (dirty ? 'Modificato' : 'Salvato');
+      if (blocked) state.dataset.wait = '1'; else delete state.dataset.wait;
+      if (dirty && !blocked) state.dataset.dirty = '1'; else delete state.dataset.dirty;
+      save.disabled = blocked || !dirty;
+    };
+    ta.addEventListener('input', mark);
+    save.addEventListener('click', async () => {
+      if (blocked) { err.textContent = sqlNote; return; }
+      save.disabled = true;
+      try {
+        await call('/rest/v1/eliseo_assistente?id=eq.1', { method: 'PATCH', body: { istruzioni: ta.value.slice(0, 10000) }, prefer: 'return=minimal' });
+        say('Istruzioni salvate. La versione di prima è nella cronologia.');
+        drawTraining();
+      } catch (e) { err.textContent = e.message === 'sql' ? sqlNote : e.message; save.disabled = false; }
     });
-    const save = h('button', { type: 'button', class: 'btn btn--primary', text: 'Salva le istruzioni' });
-    save.addEventListener('click', async () => { save.disabled = true; try { await call('/rest/v1/eliseo_assistente?id=eq.1', { method: 'PATCH', body: { istruzioni: ta.value.slice(0, 10000) }, prefer: 'return=minimal' }); say('Istruzioni salvate. La versione di prima è nella cronologia.'); drawTraining(); } catch (e) { say(e.message, true); save.disabled = false; } });
-    const hist = h('ul', { class: 'plist' });
-    if (!vers.length) hist.append(h('li', null, h('span', { text: 'Nessuna versione precedente.' })));
-    vers.forEach((v) => {
-      const back = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Rimetti questa' });
-      back.addEventListener('click', () => { ta.value = v.istruzioni; upd(); say('Versione caricata nel riquadro: premi «Salva le istruzioni» per usarla.'); });
-      hist.append(h('li', null, h('strong', { text: new Date(v.creato_il).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }) }), h('span', { text: `${v.istruzioni.slice(0, 80)}…` }), back));
+    const ask = h('textarea', { class: 'el-prompt__ask', rows: 2, maxlength: 300, placeholder: 'Es. "Rispondi in modo più breve e chiudi sempre con una domanda"', 'aria-label': 'Cosa cambiare nel prompt' });
+    const apply = () => {
+      err.textContent = '';
+      if (blocked) { err.textContent = sqlNote; return; }
+      const phrase = ask.value.trim().replace(/\s+/g, ' ').slice(0, 300);
+      if (!phrase) { err.textContent = 'Scrivi cosa cambiare.'; return; }
+      if (ta.value.includes(phrase)) { note.textContent = 'Questa frase è già nel prompt.'; return; }
+      const next = `${ta.value.trim()}\n${phrase}`.trim();
+      ta.value = next.slice(0, 10000);
+      ask.value = '';
+      note.textContent = next.length > 10000
+        ? 'Ho aggiunto la frase e ho tenuto i primi 10.000 caratteri. Leggila e premi Salva.'
+        : 'La riscrittura automatica è spenta. Ho aggiunto la frase nel prompt: leggila e premi Salva.';
+      mark();
+    };
+    ask.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); apply(); } });
+    const onKey = (e) => {
+      if (!ask.isConnected) { wrap.removeEventListener('keydown', onKey); return; }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k' && !e.shiftKey && !e.altKey) { e.preventDefault(); ask.focus(); }
+    };
+    if (wrap._pk) wrap.removeEventListener('keydown', wrap._pk);
+    wrap._pk = onKey;
+    wrap.addEventListener('keydown', onKey);
+    const go = h('button', { type: 'button', class: 'el-prompt__go' }, svg([['path', { d: 'M12 3.2 13.1 8.2 18 9.2 13.1 10.3 12 15.2 10.9 10.3 6 9.2 10.9 8.2z' }]]), h('span', { text: 'Migliora' }));
+    go.addEventListener('click', apply);
+    const chips = h('div', { class: 'el-prompt__chips', role: 'group', 'aria-label': 'Frasi pronte' });
+    ['Rispondi in modo più breve', 'Usa un tono più caldo e amichevole', 'Usa un tono più formale', 'Usa elenchi puntati nelle risposte lunghe', 'Chiedi sempre nome ed email del cliente'].forEach((phrase) => {
+      const b = h('button', { type: 'button', class: 'el-prompt__chip', text: phrase });
+      b.addEventListener('click', () => { ask.value = phrase; apply(); });
+      chips.append(b);
     });
-    return [card('Prompt', h('p', { class: 'pcard__note', text: 'Chi è, come parla, cosa deve e non deve fare (come il «Prompt» di Keplero). Servono quando si accende l’assistente con l’IA: oggi l’assistente risponde con FAQ, documenti e dati del sito. Le istruzioni non le vede nessun cliente.' }), tips, field('Istruzioni', ta), count, h('div', { class: 'actions' }, save)), card(`Cronologia versioni (${vers.length})`, hist)];
+    const spark = svg([['path', { d: 'M12 3.2 13.1 8.2 18 9.2 13.1 10.3 12 15.2 10.9 10.3 6 9.2 10.9 8.2z' }], ['path', { d: 'M18 14.2 18.5 16 20.3 16.5 18.5 17 18 18.8 17.5 17 15.7 16.5 17.5 16z' }]]);
+    const clock = svg([['circle', { cx: '12', cy: '12', r: '8' }], ['path', { d: 'M12 8v4.5l2.5 1.5' }]]);
+    clock.setAttribute('class', 'el-prompt__clock');
+    const log = h('div', { class: 'el-prompt__log', hidden: true });
+    if (blocked) log.append(h('p', { text: sqlNote }));
+    else if (!list.length) log.append(h('p', { text: 'Nessuna versione precedente.' }));
+    list.forEach((v) => {
+      const when = v.creato_il ? new Date(v.creato_il).toLocaleString('it-IT', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }) : '';
+      const preview = (v.istruzioni || '').replace(/\s+/g, ' ').trim();
+      const use = h('button', { type: 'button', class: 'el-prompt__use', text: 'Usa questa versione' });
+      use.addEventListener('click', () => {
+        ta.value = v.istruzioni || '';
+        err.textContent = '';
+        note.textContent = 'Versione caricata nel riquadro. Premi Salva per usarla.';
+        mark();
+      });
+      log.append(h('div', { class: 'el-prompt__ver' }, h('div', null, h('strong', { text: when }), h('span', { text: preview.length > 90 ? `${preview.slice(0, 90)}…` : preview })), use));
+    });
+    const hist = h('button', { type: 'button', class: 'el-prompt__hist', 'aria-expanded': 'false' }, clock, h('span', { text: 'Cronologia versioni' }), h('b', { text: String(list.length) }));
+    hist.addEventListener('click', () => {
+      const open = log.hasAttribute('hidden');
+      if (open) log.removeAttribute('hidden'); else log.setAttribute('hidden', '');
+      hist.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    if (blocked) note.textContent = sqlNote;
+    mark();
+    return [
+      h('div', { class: 'el-prompt__top' }, h('header', { class: 'el-faq__head' }, h('h2', { text: 'Prompt dell’assistente' }), h('p', { text: 'Le istruzioni che l’assistente segue in ogni conversazione: chi è, come parla, cosa deve e non deve fare.' })), hist),
+      log,
+      h('section', { class: 'el-prompt__card' },
+        h('div', { class: 'el-prompt__aihead' }, h('span', { class: 'el-prompt__spark' }, spark), h('div', null, h('h3', { text: 'Migliora con l’AI' }), h('p', { text: 'Descrivi con parole tue cosa cambiare. La frase viene aggiunta al prompt, così la leggi prima di salvare.' })), h('span', { class: 'el-prompt__keys' }, h('kbd', { text: 'Ctrl' }), h('kbd', { text: 'K' }))),
+        ask,
+        h('div', { class: 'el-prompt__apply' }, h('p', { class: 'el-prompt__hint' }, h('kbd', { text: 'Ctrl' }), h('kbd', { text: '↵' }), h('span', { text: 'per applicare' })), go),
+        chips,
+        note,
+        err),
+      h('section', { class: 'el-prompt__card el-prompt__editor' },
+        h('div', { class: 'el-prompt__bar' }, h('div', { class: 'el-prompt__name' }, h('strong', { text: 'Prompt' }), state), h('div', { class: 'el-prompt__meta' }, save, count)),
+        ta),
+    ];
   }
 
   function handoffView(conf) {
