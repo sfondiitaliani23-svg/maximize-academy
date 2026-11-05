@@ -8,7 +8,7 @@ export function avviaBenvenuto() {
     classe: 'bv-maximize',
     nome: 'Maximize Academy',
     logo: '/assets/img/logo-maximize.webp',
-    sfondo: '/assets/img/maurizio-in-barberia.webp',
+    sfondo: '/assets/img/maurizio_ritratto.webp',
     tema: '#111111',
     obbligo: true,
     lingua: () => 'it',

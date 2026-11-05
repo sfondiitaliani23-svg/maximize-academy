@@ -83,9 +83,11 @@ export const home = {
   description: 'Maximize Academy è l’ecosistema per il Barber moderno: formazione, Barber Reset, Sabey Scissors, ANAQA, Treatwell, M×E Barber Lab ed eventi con Maurizio Pizzuto.',
 };
 
-// Maurizio: formazione, consulenza, collaborazioni. Keplero: richieste commerciali già coperte (Sabey, ANAQA, Treatwell).
+// Maurizio: formazione, consulenza, collaborazioni.
+// Vendita B2B (Sabey, ANAQA, Treatwell): 378 310 1416.
+// 378 310 1417 è l'assistente del Maurizio Barber Shop e non va usato qui.
 export const WA_MAURIZIO = '393245878724';
-export const WA_KEPLERO = '393783101417';
+export const WA_KEPLERO = '393783101416';
 export const waLink = (number, text) => `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 
 // Vecchi indirizzi interni (#sezione) verso le nuove pagine

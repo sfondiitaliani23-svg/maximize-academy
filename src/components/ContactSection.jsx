@@ -154,7 +154,7 @@ export default function ContactSection() {
                 Keplero
               </div>
               <div className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400/80 mb-2">
-                RICHIESTE COMMERCIALI
+                VENDITA B2B
               </div>
               <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
                 Forbici, prodotti e agenda.
@@ -167,7 +167,7 @@ export default function ContactSection() {
             <div className="space-y-4 pt-4 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Keplero</span>
-                <span className="text-sm font-bold text-white">+39 378 310 1417</span>
+                <span className="text-sm font-bold text-white">+39 378 310 1416</span>
               </div>
               <a
                 href={waLink(WA_KEPLERO, 'Salve, vorrei informazioni su Sabey Scissors, ANAQA o Treatwell')}
