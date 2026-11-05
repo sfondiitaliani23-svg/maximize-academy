@@ -1,0 +1,557 @@
+{
+  "version": 1,
+  "updated": "2026-10-26",
+  "generated": true,
+  "entries": [
+    {
+      "id": "contatti",
+      "categoria": "contatti",
+      "titolo": "Indirizzo e contatti",
+      "testo": "Maurizio Barber Shop, Via Benedetto Croce 8, 71121 Foggia. Telefono: 391 716 3833. WhatsApp: +39 391 716 3833.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "site.config.js",
+      "dati": {
+        "indirizzo": "Via Benedetto Croce 8, 71121 Foggia",
+        "telefono": "391 716 3833",
+        "whatsapp": "+39 391 716 3833"
+      }
+    },
+    {
+      "id": "prenotazione",
+      "categoria": "prenotazione",
+      "titolo": "Come prenotare",
+      "testo": "Prezzi, orari e prenotazioni sono su Treatwell: https://trea.tw/ezfw333GJ8S5j26Pz",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "site.config.js",
+      "dati": {
+        "url": "https://trea.tw/ezfw333GJ8S5j26Pz",
+        "provider": "Treatwell"
+      }
+    },
+    {
+      "id": "orari",
+      "categoria": "orari",
+      "titolo": "Orari di apertura",
+      "testo": "lunedì: chiuso. da martedì a venerdì: 08:00-13:00 e 15:00-20:00. sabato: 08:00-20:00. domenica: chiuso",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "hours.json"
+    },
+    {
+      "id": "servizio-01",
+      "categoria": "Taglio",
+      "titolo": "Taglio Classic",
+      "testo": "Taglio Classic: 17 €, durata 30 minuti.",
+      "prezzo": 17,
+      "durata": 30,
+      "fonte": "services.json",
+      "barbiere": "Team barber",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-02",
+      "categoria": "Taglio",
+      "titolo": "Acconciatura Stilistica",
+      "testo": "Acconciatura Stilistica: 10 €, durata 15 minuti.",
+      "prezzo": 10,
+      "durata": 15,
+      "fonte": "services.json",
+      "barbiere": null,
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-03",
+      "categoria": "Combo",
+      "titolo": "Taglio + Shampoo + Barba",
+      "testo": "Taglio + Shampoo + Barba: 25 €, durata 45 minuti.",
+      "prezzo": 25,
+      "durata": 45,
+      "fonte": "services.json",
+      "barbiere": "Team barber",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio",
+          "barba"
+        ],
+        "barba": true
+      }
+    },
+    {
+      "id": "servizio-04",
+      "categoria": "Combo",
+      "titolo": "Trattamento Gold Luxury",
+      "testo": "Trattamento Gold Luxury: 63 €, durata 90 minuti.",
+      "prezzo": 63,
+      "durata": 90,
+      "fonte": "services.json",
+      "barbiere": "Solo Maurizio",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio",
+          "barba"
+        ],
+        "barba": true
+      }
+    },
+    {
+      "id": "servizio-05",
+      "categoria": "Barba",
+      "titolo": "Trattamento Barba Deluxe",
+      "testo": "Trattamento Barba Deluxe: 23 €, durata 30 minuti.",
+      "prezzo": 23,
+      "durata": 30,
+      "fonte": "services.json",
+      "barbiere": "Solo Gino",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "barba"
+        ],
+        "barba": true
+      }
+    },
+    {
+      "id": "servizio-06",
+      "categoria": "Taglio",
+      "titolo": "Taglio Donna Luxury",
+      "testo": "Taglio Donna Luxury: 25 €, durata 30 minuti.",
+      "prezzo": 25,
+      "durata": 30,
+      "fonte": "services.json",
+      "barbiere": "Maurizio e Gino",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "donna"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-07",
+      "categoria": "Colore",
+      "titolo": "Taglio + Colore Uomo",
+      "testo": "Taglio + Colore Uomo: 27 €, durata 45 minuti.",
+      "prezzo": 27,
+      "durata": 45,
+      "fonte": "services.json",
+      "barbiere": "Non disponibile con Claudio",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio",
+          "colore"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-08",
+      "categoria": "Colore",
+      "titolo": "Taglio Classic + Barba + Colorazione Discreta",
+      "testo": "Taglio Classic + Barba + Colorazione Discreta: 35 €, durata 60 minuti.",
+      "prezzo": 35,
+      "durata": 60,
+      "fonte": "services.json",
+      "barbiere": "Non disponibile con Claudio",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio",
+          "barba",
+          "colore"
+        ],
+        "barba": true
+      }
+    },
+    {
+      "id": "servizio-09",
+      "categoria": "Taglio",
+      "titolo": "Taglio Uomo Top Stylist",
+      "testo": "Taglio Uomo Top Stylist: 40 €, durata 60 minuti.",
+      "prezzo": 40,
+      "durata": 60,
+      "fonte": "services.json",
+      "barbiere": "Solo Maurizio",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-10",
+      "categoria": "Taglio",
+      "titolo": "Taglio Premium",
+      "testo": "Taglio Premium: 27 €, durata 45 minuti.",
+      "prezzo": 27,
+      "durata": 45,
+      "fonte": "services.json",
+      "barbiere": "Tutti i barber",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "taglio"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "servizio-11",
+      "categoria": "Barba",
+      "titolo": "Barba Traditional Shave",
+      "testo": "Barba Traditional Shave: 10 €, durata 15 minuti.",
+      "prezzo": 10,
+      "durata": 15,
+      "fonte": "services.json",
+      "barbiere": "Tutti i barber",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "barba"
+        ],
+        "barba": true
+      }
+    },
+    {
+      "id": "servizio-12",
+      "categoria": "Bambini",
+      "titolo": "Taglio Capelli per Bambini",
+      "testo": "Taglio Capelli per Bambini: 17 €, durata 30 minuti.",
+      "prezzo": 17,
+      "durata": 30,
+      "fonte": "services.json",
+      "barbiere": "Non disponibile con Claudio",
+      "nota": null,
+      "guida": {
+        "bisogni": [
+          "bambino"
+        ],
+        "barba": false
+      }
+    },
+    {
+      "id": "massaggio-01",
+      "categoria": "Massaggi",
+      "titolo": "Madero Pilates",
+      "testo": "Madero Pilates: 120 €, durata 105 minuti.",
+      "prezzo": 120,
+      "durata": 105,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-02",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Ayurvedico con Shirodhara",
+      "testo": "Massaggio Ayurvedico con Shirodhara: 80 €, durata 90 minuti.",
+      "prezzo": 80,
+      "durata": 90,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-03",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Decontratturante – Manovre Decontratturanti",
+      "testo": "Massaggio Decontratturante – Manovre Decontratturanti: 40 €, durata 90 minuti.",
+      "prezzo": 40,
+      "durata": 90,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-04",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Decontratturante + Cupping + Massaggio con Fuoco",
+      "testo": "Massaggio Decontratturante + Cupping + Massaggio con Fuoco: 50 €, durata 105 minuti.",
+      "prezzo": 50,
+      "durata": 105,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-05",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Emolinfatico",
+      "testo": "Massaggio Emolinfatico: 60 €, durata 90 minuti.",
+      "prezzo": 60,
+      "durata": 90,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-06",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Hawaiano Lomi Lomi",
+      "testo": "Massaggio Hawaiano Lomi Lomi: 80 €, durata 105 minuti.",
+      "prezzo": 80,
+      "durata": 105,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-07",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Linfodrenante – Zone Specifiche",
+      "testo": "Massaggio Linfodrenante – Zone Specifiche: 50 €, durata 90 minuti.",
+      "prezzo": 50,
+      "durata": 90,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-08",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Linfodrenante Manuale Completo",
+      "testo": "Massaggio Linfodrenante Manuale Completo: 80 €, durata 120 minuti.",
+      "prezzo": 80,
+      "durata": 120,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-09",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Rassodante Igienico-Estetico",
+      "testo": "Massaggio Rassodante Igienico-Estetico: 50 €, durata 90 minuti.",
+      "prezzo": 50,
+      "durata": 90,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "massaggio-10",
+      "categoria": "Massaggi",
+      "titolo": "Massaggio Relax",
+      "testo": "Massaggio Relax: 80 €, durata 120 minuti.",
+      "prezzo": 80,
+      "durata": 120,
+      "fonte": "massages.json",
+      "barbiere": null,
+      "nota": "prezzo da riconfermare su Treatwell"
+    },
+    {
+      "id": "team-maurizio",
+      "categoria": "team",
+      "titolo": "Maurizio",
+      "testo": "Maurizio: Founder · Master Barber · Formatore.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json"
+    },
+    {
+      "id": "profilo-maurizio",
+      "categoria": "profili",
+      "titolo": "Maurizio: profilo",
+      "testo": "Maurizio, Founder · Master Barber · Formatore. Oltre 30 anni nel settore, titolare dal 2006. Specializzazioni: Barbering personalizzato, Consulenza d’immagine maschile, Formazione professionale. Ideale per: Uomini che cercano un servizio su misura, uno stile curato e una consulenza professionale completa.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json",
+      "link": "/team/maurizio/"
+    },
+    {
+      "id": "team-michela",
+      "categoria": "team",
+      "titolo": "Michela",
+      "testo": "Michela: Wellness Specialist · Massaggi e benessere.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json"
+    },
+    {
+      "id": "profilo-michela",
+      "categoria": "profili",
+      "titolo": "Michela: profilo",
+      "testo": "Michela, Wellness Specialist · Massaggi e benessere. 3 anni di esperienza. Specializzazioni: Massaggio relax, Altre tecniche di massaggio (da confermare). Ideale per: Uomini e donne che desiderano rilassarsi, ritrovare una piacevole sensazione di benessere e dedicare del tempo a sé stessi.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json",
+      "link": "/team/michela/"
+    },
+    {
+      "id": "team-gino",
+      "categoria": "team",
+      "titolo": "Gino",
+      "testo": "Gino: Senior Barber · Classic & Modern Style.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json"
+    },
+    {
+      "id": "profilo-gino",
+      "categoria": "profili",
+      "titolo": "Gino: profilo",
+      "testo": "Gino, Senior Barber · Classic & Modern Style. 9 anni di esperienza. Specializzazioni: Sfumature moderne, Barbe lunghe, Tagli classici a pettine e forbici, Tagli per bambini, Trattamento Barba Deluxe. Ideale per: Ragazzi che amano i look moderni, uomini che preferiscono l’eleganza del taglio classico e famiglie che cercano un professionista anche per i più piccoli.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json",
+      "link": "/team/gino/"
+    },
+    {
+      "id": "team-claudio",
+      "categoria": "team",
+      "titolo": "Claudio",
+      "testo": "Claudio: Junior Barber · Young Style.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json"
+    },
+    {
+      "id": "profilo-claudio",
+      "categoria": "profili",
+      "titolo": "Claudio: profilo",
+      "testo": "Claudio, Junior Barber · Young Style. 3 anni di esperienza. Specializzazioni: Tagli giovanili, Look contemporanei, Stili richiesti dagli adolescenti. Ideale per: Ragazzi e giovanissimi che desiderano un taglio attuale e vicino alle tendenze della propria generazione.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json",
+      "link": "/team/claudio/"
+    },
+    {
+      "id": "team-manuel",
+      "categoria": "team",
+      "titolo": "Manuel",
+      "testo": "Manuel: Barber · Razor Fade & Italian Beard Style.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json"
+    },
+    {
+      "id": "profilo-manuel",
+      "categoria": "profili",
+      "titolo": "Manuel: profilo",
+      "testo": "Manuel, Barber · Razor Fade & Italian Beard Style. 4 anni di esperienza. Specializzazioni: Razor fade, Barba all’italiana, Rifiniture di precisione. Ideale per: Adolescenti, giovani uomini e clienti che amano sfumature definite, look moderni e barbe curate nei dettagli.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "team.json",
+      "link": "/team/manuel/"
+    },
+    {
+      "id": "lavoro-lavoro-2",
+      "categoria": "lavori",
+      "titolo": "Il lavoro, nei dettagli",
+      "testo": "Ritratto in barberia, davanti all'insegna di Maurizio Barber Shop Eseguito da maurizio.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "gallery.json",
+      "barbiere": "maurizio"
+    },
+    {
+      "id": "lavoro-lavoro-3",
+      "categoria": "lavori",
+      "titolo": "Il gesto",
+      "testo": "Maurizio Pizzuto lavora a un taglio in barberia Eseguito da maurizio.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "gallery.json",
+      "barbiere": "maurizio"
+    },
+    {
+      "id": "lavoro-lavoro-4",
+      "categoria": "lavori",
+      "titolo": "La cura",
+      "testo": "Maurizio Pizzuto rifinisce lo styling di un cliente Eseguito da maurizio.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "gallery.json",
+      "barbiere": "maurizio"
+    },
+    {
+      "id": "lavoro-team-gino",
+      "categoria": "lavori",
+      "titolo": "Il team",
+      "testo": "Gino Aprile nel Maurizio Barber Shop Eseguito da gino.",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "gallery.json",
+      "barbiere": "gino"
+    },
+    {
+      "id": "journal-forma-del-viso",
+      "categoria": "journal",
+      "titolo": "Come scegliere il taglio in base alla forma del viso",
+      "testo": "Ovale, tondo, quadrato o lungo: una guida semplice per capire la forma del tuo viso e scegliere un taglio che ti stia bene, con i consigli dei barbieri. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/forma-del-viso/"
+    },
+    {
+      "id": "journal-cura-della-barba",
+      "categoria": "journal",
+      "titolo": "Cura della barba: la routine in 5 passi",
+      "testo": "Una routine semplice in 5 passi per tenere la barba in ordine a casa: pulizia, asciugatura, idratazione, pettine e rifinitura. Con consigli pratici. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/cura-della-barba/"
+    },
+    {
+      "id": "journal-ogni-quanto-tagliare",
+      "categoria": "journal",
+      "titolo": "Ogni quanto tagliare i capelli",
+      "testo": "Ogni quanto conviene tagliare i capelli? Una guida semplice che dipende dal taglio, dal tipo di capello e dallo stile che vuoi mantenere nel tempo. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/ogni-quanto-tagliare/"
+    },
+    {
+      "id": "journal-sfumatura-taper-fade",
+      "categoria": "journal",
+      "titolo": "Sfumatura, taper, fade: le differenze",
+      "testo": "Sfumatura, taper e fade non sono la stessa cosa. Una guida chiara per capire le differenze e spiegare al barbiere cosa vuoi, senza usare parole difficili. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/sfumatura-taper-fade/"
+    },
+    {
+      "id": "journal-prima-visita-in-barberia",
+      "categoria": "journal",
+      "titolo": "Cosa succede nella prima visita in barberia",
+      "testo": "Sei alla prima visita in una barberia? Ecco cosa aspettarti, dalla prenotazione alla consulenza, fino al taglio, con consigli semplici per sentirti a tuo agio. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/prima-visita-in-barberia/"
+    },
+    {
+      "id": "journal-decontratturante-o-relax",
+      "categoria": "journal",
+      "titolo": "Massaggio decontratturante o relax: come scegliere",
+      "testo": "Massaggio decontratturante o relax? Una guida semplice per capire le differenze e decidere con calma, parlandone prima con Michela, la nostra estetista. (Redazione Maurizio Barber Shop, 2026-10-13)",
+      "prezzo": null,
+      "durata": null,
+      "fonte": "content/journal",
+      "link": "/journal/decontratturante-o-relax/"
+    }
+  ]
+}

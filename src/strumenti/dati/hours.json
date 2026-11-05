@@ -1,0 +1,155 @@
+{
+  "hours": {
+    "version": 1,
+    "updated": "2026-10-07",
+    "timezone": "Europe/Rome",
+    "week": {
+      "lun": [],
+      "mar": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "15:00",
+          "20:00"
+        ]
+      ],
+      "mer": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "15:00",
+          "20:00"
+        ]
+      ],
+      "gio": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "15:00",
+          "20:00"
+        ]
+      ],
+      "ven": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "15:00",
+          "20:00"
+        ]
+      ],
+      "sab": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ],
+      "dom": []
+    }
+  },
+  "holidays": [
+    {
+      "data": "2026-11-01",
+      "descrizione": "Ognissanti",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2026-12-08",
+      "descrizione": "Immacolata Concezione",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2026-12-25",
+      "descrizione": "Natale",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2026-12-26",
+      "descrizione": "Santo Stefano",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-01-01",
+      "descrizione": "Capodanno",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-01-06",
+      "descrizione": "Epifania",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-03-22",
+      "descrizione": "Madonna dei Sette Veli (Santo Patrono di Foggia)",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-03-29",
+      "descrizione": "Lunedì dell'Angelo (Pasquetta)",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-04-25",
+      "descrizione": "Festa della Liberazione",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-05-01",
+      "descrizione": "Festa dei lavoratori",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-06-02",
+      "descrizione": "Festa della Repubblica",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-08-15",
+      "descrizione": "Ferragosto e Madonna dei Sette Veli",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-11-01",
+      "descrizione": "Ognissanti",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-12-08",
+      "descrizione": "Immacolata Concezione",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-12-25",
+      "descrizione": "Natale",
+      "chiuso": true,
+      "confermato": false
+    },
+    {
+      "data": "2027-12-26",
+      "descrizione": "Santo Stefano",
+      "chiuso": true,
+      "confermato": false
+    }
+  ]
+}

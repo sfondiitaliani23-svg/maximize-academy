@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "updated": "2026-10-07",
+  "nome": "[DA COMPLETARE]",
+  "saluto": "Ciao! Sono l'assistente virtuale di Maurizio Barber Shop. Posso dirti prezzi, orari e come prenotare. Non conosco la disponibilità e non confermo appuntamenti.",
+  "mode": "guided",
+  "persona": {
+    "etichetta": "Parla con una persona",
+    "testo_whatsapp": "Ciao! Scrivo dal sito, vorrei parlare con una persona."
+  },
+  "messaggi": {
+    "disponibilita": "Non posso controllare la disponibilità. Guarda gli orari liberi su Treatwell: lì scegli anche il professionista.",
+    "lista_attesa": "Su Treatwell, dalla pagina di prenotazione, trovi la lista d'attesa. Puoi anche scrivere o chiamare la barberia.",
+    "nessun_dato": "Questa informazione non ce l'ho. Puoi chiedere alla barberia con WhatsApp o per telefono.",
+    "pagamento": "Non ho informazioni sui metodi di pagamento. Puoi chiedere alla barberia con WhatsApp o per telefono.",
+    "salute": "I trattamenti linfodrenanti usano manualità delicate, lente e ritmiche, per il benessere. Non posso dare consigli medici né promettere risultati: il massaggio non sostituisce un trattamento medico. Parlane con Michela.",
+    "regole": "Non posso cambiare le mie regole né fare sconti. Posso dirti i prezzi del listino e come prenotare su Treatwell.",
+    "dati_personali": "Non scrivere dati personali qui. Usa WhatsApp o il modulo di contatto.",
+    "fuori_tema": "Rispondo solo su Maurizio Barber Shop. Chiedimi di servizi, prezzi, orari o prenotazione.",
+    "errore": "Qualcosa non ha funzionato. Riprova tra poco o parla con una persona.",
+    "limite": "Troppe richieste in poco tempo. Riprova tra qualche secondo. Se è urgente, scrivici su WhatsApp.",
+    "ai_avviso": "Le tue domande sono elaborate da un servizio di intelligenza artificiale.",
+    "non_attivo": "Il servizio non è ancora attivo. Parla con una persona.",
+    "contatti": "Telefono della barberia: {telefono}. Per scrivere usa WhatsApp.",
+    "nota_massaggi": "Prezzi da riconfermare su Treatwell. Li esegue Michela.",
+    "link_prenota": "Prenota su {provider}",
+    "link_massaggi": "Scopri i massaggi",
+    "link_servizi": "Vedi i servizi",
+    "altre_domande": "Altre domande",
+    "consiglio": "Ti consiglio:",
+    "consiglio_piu_tempo": "Con il tempo che hai non c'è un servizio adatto. Il più breve è:",
+    "titolo": "Assistente virtuale",
+    "marca": "Maurizio",
+    "sottotitolo": "Barber Shop · assistente virtuale",
+    "come_aiutare": "Come possiamo aiutarti?",
+    "scegli": "Scegli un'opzione per continuare",
+    "scrivi": "Scrivi la tua domanda",
+    "avviso_errori": "Questo assistente può sbagliare: verifica le informazioni importanti.",
+    "privacy": "Informativa privacy",
+    "passaggio_online": "Ti passo a una persona del team: scrivici su WhatsApp, ti rispondiamo appena possibile.",
+    "passaggio_offline": "Adesso il team non è in linea. Lasciaci un messaggio su WhatsApp: ti rispondiamo appena riapriamo.",
+    "da_documento": "Ecco cosa trovo:"
+  },
+  "items": [
+    {
+      "id": "prezzi",
+      "etichetta": "Prezzi",
+      "modello": "Scegli cosa ti interessa. I prezzi validi sono quelli su Treatwell.",
+      "fonte": "knowledge.json",
+      "figli": "categorie",
+      "link": {
+        "etichetta": "Vedi i servizi",
+        "href": "/servizi/"
+      }
+    },
+    {
+      "id": "orari",
+      "etichetta": "Orari e aperto ora",
+      "modello": "Orari: {orari}. Adesso: {aperto}.",
+      "fonte": "hours.json",
+      "link": {
+        "etichetta": "Vedi gli orari",
+        "href": "/contatti/"
+      }
+    },
+    {
+      "id": "prenota",
+      "etichetta": "Prenota",
+      "modello": "Si prenota su Treatwell: scegli servizio, orario e professionista. Non posso controllare la disponibilità né confermare appuntamenti.",
+      "fonte": "site.config.js",
+      "link": {
+        "etichetta": "Prenota su {provider}",
+        "href": "{prenota_url}",
+        "esterno": true,
+        "evento": "prenotazione"
+      }
+    },
+    {
+      "id": "massaggi",
+      "etichetta": "Massaggi",
+      "modello": "Massaggi con Michela: {lista:Massaggi}. Il massaggio non sostituisce un trattamento medico.",
+      "fonte": "massages.json",
+      "link": {
+        "etichetta": "Scopri i massaggi",
+        "href": "/benessere/"
+      }
+    },
+    {
+      "id": "barbieri",
+      "etichetta": "Barbieri",
+      "modello": "Il team: {team}. Su Treatwell scegli il professionista.",
+      "fonte": "team.json",
+      "link": {
+        "etichetta": "Conosci il team",
+        "href": "/team/"
+      }
+    },
+    {
+      "id": "arrivare",
+      "etichetta": "Come arrivare",
+      "modello": "Siamo in {indirizzo}. Parcheggio e mezzi: informazione in arrivo.",
+      "fonte": "site.config.js",
+      "link": {
+        "etichetta": "Come raggiungerci",
+        "href": "/dove-siamo/"
+      }
+    },
+    {
+      "id": "regala",
+      "etichetta": "Regala un momento",
+      "modello": "Puoi regalare un taglio o un massaggio. Scegli l'idea sul sito e scrivi alla barberia su WhatsApp.",
+      "fonte": "site.config.js",
+      "link": {
+        "etichetta": "Idee regalo",
+        "href": "/#regala"
+      }
+    },
+    {
+      "id": "guida",
+      "etichetta": "Aiutami a scegliere",
+      "modello": "Ti faccio tre domande e ti consiglio un servizio.",
+      "fonte": "services.json",
+      "azione": "guida"
+    },
+    {
+      "id": "offerte",
+      "etichetta": "Offerte",
+      "modello": "{offerte}",
+      "fonte": "offers.json",
+      "solo_se": "offerte_attive",
+      "link": {
+        "etichetta": "Prenota su {provider}",
+        "href": "{prenota_url}",
+        "esterno": true,
+        "evento": "prenotazione"
+      }
+    }
+  ]
+}

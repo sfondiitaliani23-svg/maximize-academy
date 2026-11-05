@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
+import StrumentiRiservati from './StrumentiRiservati';
 import '../area.css';
 
 // Pagina /area (02/11/2026): area privata di Maximize Academy, come un'app.
@@ -22,6 +23,8 @@ const P = {
   link: 'M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1',
   plus: 'M12 5v14M5 12h14',
   chat: 'M4 5h16v11H8l-4 4z',
+  eliseo: 'M4 4h16v16H4zM4 9h16M8 13h5M8 16h8',
+  maverik: 'M12 3l2.2 4.6 5 .7-3.6 3.5.9 5.1L12 14.8 7.5 16.9l.9-5.1L4.8 8.3l5-.7z',
 };
 const Ic = ({ d, size = 22 }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth={d === P.more ? 3.4 : 1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
@@ -336,7 +339,7 @@ function AllievoAttestati({ iscr, errore, profilo }) {
   );
 }
 
-function Profilo({ profilo, ricarica, esci, admin }) {
+function Profilo({ profilo, ricarica, esci, admin, vai }) {
   const [msg, setMsg] = useState('');
   const salva = async (e) => {
     e.preventDefault();
@@ -358,6 +361,8 @@ function Profilo({ profilo, ricarica, esci, admin }) {
         </form>
       )}
       <ul className="ap-list" style={{ marginTop: 12 }}>
+        {admin && <Riga soft icon={P.eliseo} title="Eliseo" sub="Contatti, campagne e prova del chatbot" onClick={() => vai('eliseo')} />}
+        {admin && <Riga soft icon={P.maverik} title="Maverik" sub="Radar, crescita, simulatore e copilota" onClick={() => vai('maverik')} />}
         {admin && <Riga soft icon={P.play} title="Storie del sito" sub="Pubblica e riordina le storie" onClick={() => { window.location.href = '/gestione'; }} />}
         <Riga soft icon={P.chat} title="Scrivici su WhatsApp" sub="324 587 8724" onClick={() => window.open('https://wa.me/393245878724', '_blank', 'noopener')} />
         <Riga soft icon={P.home} title="Vai al sito" onClick={() => { window.location.href = '/'; }} />
@@ -617,6 +622,13 @@ function AdminBacheca({ vai, nome }) {
   return (
     <div className="ap-dash">
       <div className="ap-dash-col">
+        <Box titolo="Eliseo e Maverik">
+          <ul className="ap-list">
+            <Riga icon={P.eliseo} title="Eliseo" sub="Contatti, campagne, addestramento e prova del chatbot" onClick={() => vai('eliseo')} />
+            <Riga icon={P.maverik} title="Maverik" sub="Radar clienti, crescita, simulatore e copilota" onClick={() => vai('maverik')} />
+          </ul>
+          <p className="ap-box-note">Gli stessi strumenti dell'area riservata di Maurizio Barber Shop. I contatti sono quelli già salvati lì.</p>
+        </Box>
         <Box titolo="In sintesi">
           <ul className="ap-glance">
             <li><button type="button" onClick={() => vai('richieste')}><Ic d={P.inbox} size={18} /><span><b>{nuove.length}</b> richieste nuove</span></button></li>
@@ -661,6 +673,8 @@ const TAB_ADMIN = [['richieste', 'Richieste', P.inbox], ['allievi', 'Allievi', P
 const TITOLI = {
   corsi: ['I miei', 'corsi', 'Date, luogo e programma.'], materiali: ['I tuoi', 'materiali'], attestati: ['I tuoi', 'attestati'], profilo: ['Il tuo', 'profilo'],
   richieste: ['Nuove', 'richieste', 'Dal modulo contatti del sito.'], allievi: ['Gli', 'allievi', 'Chi è entrato nell\'area privata.'], admin_corsi: ['I', 'corsi', 'Date, materiali e attestati.'], avvisi: ['Avvisi', 'agli allievi'], admin_profilo: ['Altro', ''], bacheca: ['Bacheca', ''],
+  eliseo: ['Eliseo', '', 'Contatti, fasi, campagne e prova del chatbot.'],
+  maverik: ['Maverik', '', 'Strategia, analisi clienti e copilota.'],
 };
 
 export default function AreaPrivata() {
@@ -696,6 +710,7 @@ export default function AreaPrivata() {
   const profilo = profili?.[0] || null;
 
   const vai = (t) => { setTab(t); window.scrollTo({ top: 0, behavior: 'smooth' }); try { navigator.vibrate?.(8); } catch { /* niente vibrazione */ } };
+  const apriEliseo = useCallback(() => { setTab('eliseo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
   const esci = () => logout().then(() => { setIo(null); setTab(''); setStato('login'); });
 
   if (stato === 'recovery') return <div className="ap"><NuovaPassword fatto={() => setStato('check')} /></div>;
@@ -704,7 +719,12 @@ export default function AreaPrivata() {
 
   const admin = io.admin;
   if (!largo && tab === 'bacheca') setTimeout(() => setTab('richieste'), 0);
-  const tabs = admin ? (largo ? [['bacheca', 'Bacheca', P.home], ...TAB_ADMIN.slice(0, 4), ['profilo', 'Profilo', P.user]] : TAB_ADMIN) : TAB_ALLIEVO;
+  const strumenti = [['eliseo', 'Eliseo', P.eliseo], ['maverik', 'Maverik', P.maverik]];
+  const tabs = admin
+    ? (largo
+      ? [['bacheca', 'Bacheca', P.home], ...TAB_ADMIN.slice(0, 4), ...strumenti, ['profilo', 'Profilo', P.user]]
+      : [...TAB_ADMIN.slice(0, 4), ...strumenti, TAB_ADMIN[4]])
+    : TAB_ALLIEVO;
   const nome = (profilo?.nome || io.nome || '').split(' ')[0];
   const t = tab === 'home' ? ['Ciao', nome || 'allievo', 'Ecco cosa c\'è di nuovo.'] : TITOLI[admin && (tab === 'corsi' || tab === 'profilo') ? (largo && tab === 'profilo' ? 'profilo' : `admin_${tab}`) : tab];
   const sezione = admin ? 'Gestione' : 'Allievo';
@@ -727,6 +747,8 @@ export default function AreaPrivata() {
               {tab === 'allievi' && <AdminAllievi />}
               {tab === 'corsi' && <AdminCorsi />}
               {tab === 'avvisi' && <AdminAvvisi />}
+              {tab === 'eliseo' && <StrumentiRiservati quale="eliseo" onApriEliseo={apriEliseo} />}
+              {tab === 'maverik' && <StrumentiRiservati quale="maverik" onApriEliseo={apriEliseo} />}
             </>
           ) : (
             <>
@@ -736,10 +758,10 @@ export default function AreaPrivata() {
               {tab === 'attestati' && <AllievoAttestati iscr={iscr} errore={errIscr} profilo={profilo} />}
             </>
           )}
-          {tab === 'profilo' && <Profilo profilo={profilo} ricarica={ricaricaProfilo} esci={esci} admin={admin} />}
+          {tab === 'profilo' && <Profilo profilo={profilo} ricarica={ricaricaProfilo} esci={esci} admin={admin} vai={vai} />}
         </div>
       </div>
-      <nav className="ap-tabbar" aria-label="Sezioni">
+      <nav className={`ap-tabbar${tabs.length > 5 ? ' ap-tabbar--scroll' : ''}`} aria-label="Sezioni">
         <a className="ap-side-brand" href="/"><img src="/assets/img/logo-maximize.webp" alt="" width="36" height="36" /><span><strong>Maximize</strong><small>{admin ? 'Gestione' : 'Area allievo'}</small></span></a>
         {tabs.map(([k, l, d]) => (
           <button key={k} type="button" className="ap-tab" aria-current={tab === k ? 'page' : undefined} onClick={() => vai(k)}><Ic d={d} />{l}</button>
