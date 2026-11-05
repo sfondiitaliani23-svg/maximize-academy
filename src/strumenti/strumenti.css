@@ -174,3 +174,159 @@
   .mx-strumenti .el-search, .mx-strumenti .el-tools select, .mx-strumenti .el-tools .btn { width: 100%; }
   .mx-strumenti .mav-control__head { flex-wrap: wrap; }
 }
+
+/* Maverik: stessa presentazione della console Keplero. Eliseo resta scuro. */
+.mx-strumenti .mav-app {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 640px;
+  width: 100%;
+  max-width: 100%;
+  background: #f3f4f6;
+  color: #1f2328;
+  border: 1px solid #e6e8ee;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+}
+.mx-strumenti .mav-app button,
+.mx-strumenti .mav-app input { font: inherit; color: inherit; }
+.mx-strumenti .mav-side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 16px 12px;
+  background: #fff;
+  border-right: 1px solid #e7e9ee;
+}
+.mx-strumenti .mav-brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 12px; }
+.mx-strumenti .mav-brand strong { display: block; font-size: 15px; }
+.mx-strumenti .mav-brand small { display: block; color: #8b919a; font-size: 12px; }
+.mx-strumenti .mav-logo {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: #1f2328; color: #fff; font-weight: 700;
+}
+.mx-strumenti .mav-group {
+  margin: 12px 8px 4px;
+  color: #1f2328;
+  font-size: 13px;
+  font-weight: 700;
+}
+.mx-strumenti .mav-navs { display: grid; gap: 2px; }
+.mx-strumenti .mav-nav {
+  display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px;
+  padding: 0 10px; border: 0; border-radius: 10px; background: transparent; text-align: left; cursor: pointer;
+}
+.mx-strumenti .mav-nav[aria-selected="true"] { background: #eef0f3; font-weight: 650; }
+.mx-strumenti .mav-nav__dot { width: 8px; height: 8px; border-radius: 50%; background: #c5c9d1; }
+.mx-strumenti .mav-nav__dot[data-tone="0"] { background: #c9b3ea; }
+.mx-strumenti .mav-nav__dot[data-tone="1"] { background: #b9cef8; }
+.mx-strumenti .mav-nav__dot[data-tone="2"] { background: #f3c3df; }
+.mx-strumenti .mav-nav__dot[data-tone="3"] { background: #bfe8d2; }
+.mx-strumenti .mav-nav__dot[data-tone="4"] { background: #f6ddb0; }
+.mx-strumenti .mav-nums { display: grid; gap: 2px; }
+.mx-strumenti .mav-num {
+  display: flex; justify-content: space-between; gap: 8px; align-items: center;
+  min-height: 34px; padding: 0 10px; border-radius: 10px; color: #3c424c; font-size: 13px;
+}
+.mx-strumenti .mav-num b { color: #8b919a; font-weight: 600; }
+.mx-strumenti .mav-stage {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+  min-width: 0;
+  background: #f7f8fa;
+}
+.mx-strumenti .mav-listcol, .mx-strumenti .mav-detail { min-width: 0; min-height: 0; }
+.mx-strumenti .mav-listcol { display: flex; flex-direction: column; border-right: 1px solid #e7e9ee; background: #f7f8fa; }
+.mx-strumenti .mav-listhead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 10px;
+  align-items: center;
+  padding: 14px 14px 10px;
+}
+.mx-strumenti .mav-listhead strong { font-size: 16px; }
+.mx-strumenti .mav-listhead__count { color: #8b919a; font-size: 13px; }
+.mx-strumenti .mav-search {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e1e4ea;
+  border-radius: 10px;
+  background: #fff;
+}
+.mx-strumenti .mav-list { display: grid; align-content: start; gap: 4px; padding: 0 8px 16px; overflow: auto; }
+.mx-strumenti .mav-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.mx-strumenti .mav-row:has(input) { grid-template-columns: auto auto minmax(0, 1fr); }
+.mx-strumenti .mav-row.is-on { background: #fff4cc; }
+.mx-strumenti .mav-row.is-done { opacity: .55; }
+.mx-strumenti .mav-av {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: #e4d4f7; color: #5b3d82; font-weight: 700;
+}
+.mx-strumenti .mav-av[data-tone="1"] { background: #d5e4fb; color: #2c4c86; }
+.mx-strumenti .mav-av[data-tone="2"] { background: #f8d4ea; color: #8a3d68; }
+.mx-strumenti .mav-av[data-tone="3"] { background: #d7f0e4; color: #1d6a44; }
+.mx-strumenti .mav-av[data-tone="4"] { background: #ffe6c2; color: #8a5a12; }
+.mx-strumenti .mav-row__body { display: grid; gap: 2px; min-width: 0; }
+.mx-strumenti .mav-row__top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.mx-strumenti .mav-row__top strong { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-strumenti .mav-row__top small, .mx-strumenti .mav-row__prev, .mx-strumenti .mav-note, .mx-strumenti .mav-meta { color: #6d7380; font-size: 13px; }
+.mx-strumenti .mav-row__prev { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-strumenti .mav-detail { display: flex; flex-direction: column; background: #fff; }
+.mx-strumenti .mav-detail__body { flex: 1; overflow: auto; }
+.mx-strumenti .mav-sheet { display: grid; gap: 10px; align-content: start; padding: 28px 32px 24px; }
+.mx-strumenti .mav-sheet h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0; }
+.mx-strumenti .mav-sheet h3 { margin: 12px 0 0; font-size: 15px; }
+.mx-strumenti .mav-sheet p { margin: 0; line-height: 1.5; }
+.mx-strumenti .mav-kicker, .mx-strumenti .mav-app .mav-label, .mx-strumenti .mav-app .mav-kpi-label {
+  color: #8b919a; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+.mx-strumenti .mav-lead, .mx-strumenti .mav-figure, .mx-strumenti .mav-app .mav-sim-val {
+  color: #1f2328; font-size: 32px; font-weight: 700; line-height: 1.1;
+}
+.mx-strumenti .mav-points { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.mx-strumenti .mav-points li { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; background: #f6f7f9; }
+.mx-strumenti .mav-points span { color: #6d7380; }
+.mx-strumenti .mav-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.mx-strumenti .mav-app .btn {
+  background: #1f2328; color: #fff; border-color: #1f2328; border-radius: 10px; min-height: 40px; font-weight: 650;
+}
+.mx-strumenti .mav-app .btn--secondary { background: #fff; color: #1f2328; }
+.mx-strumenti .mav-app .mav-control { background: #fff; border: 1px solid #e6e8ee; color: #1f2328; margin: 0 6px; }
+.mx-strumenti .mav-app .mav-slider-num { color: #1f2328; }
+.mx-strumenti .mav-app .mav-range { accent-color: #1f2328; }
+.mx-strumenti .mav-delta {
+  display: inline-flex; width: fit-content; padding: 4px 10px; border-radius: 99px;
+  background: #e5f6ec; color: #1d6a44; font-size: 13px; font-weight: 650;
+}
+.mx-strumenti .mav-app .mav-quote {
+  margin: 8px 0 0; padding: 14px 16px; background: #f6f7f9; border-left: 3px solid #1f2328; color: #1f2328;
+}
+.mx-strumenti .mav-app .mav-quote p { font-style: italic; }
+.mx-strumenti .mav-app .mav-quote footer { color: #6d7380; font-size: 12px; font-weight: 650; }
+.mx-strumenti .mav-status { margin: 0; padding: 0 32px 16px; color: #1d6a44; font-size: 13px; }
+.mx-strumenti .mav-status[data-state="error"] { color: #a33b32; }
+@media (max-width: 800px) {
+  .mx-strumenti .mav-app, .mx-strumenti .mav-stage { grid-template-columns: 1fr; }
+  .mx-strumenti .mav-side { border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .mav-navs { display: flex; flex-wrap: wrap; }
+  .mx-strumenti .mav-nav { flex: 0 1 auto; width: auto; }
+  .mx-strumenti .mav-listcol { border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .mav-sheet { padding: 20px 16px; }
+  .mx-strumenti .mav-status { padding: 0 16px 16px; }
+}
