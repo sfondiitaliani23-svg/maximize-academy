@@ -1,8 +1,9 @@
 import React from 'react';
+import { WA_KEPLERO, WA_MAURIZIO, waLink } from '../routes';
 
 // Barra in basso dell'app installata (02/11/2026), come su Maurizio Barber Shop e Barberia Garofalo:
 // Home · Formazione · Contatti · Area privata · WhatsApp. Nel browser normale non compare (decide App.jsx con isAppMode()).
-const WA = 'https://wa.me/393245878724?text=Salve,%20vorrei%20informazioni%20su%20Maximize%20Academy';
+// Sulla pagina Sabey il WhatsApp in basso a destra apre Keplero, la vendita. Sul resto dell'app resta Maurizio.
 
 const ICONS = {
   home: (<><path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h14V9.5" /><path d="M10 21v-6h4v6" /></>),
@@ -13,12 +14,15 @@ const ICONS = {
 };
 
 export default function AppDock({ currentPath }) {
+  const wa = currentPath === '/sabey'
+    ? waLink(WA_KEPLERO, 'Salve, vorrei informazioni su una forbice Sabey.')
+    : waLink(WA_MAURIZIO, 'Salve, vorrei informazioni su Maximize Academy');
   const items = [
     { key: 'home', label: 'Home', href: '/', active: currentPath === '/' },
     { key: 'learn', label: 'Formazione', href: '/formazione', active: currentPath === '/formazione' },
     { key: 'contact', label: 'Contatti', href: '/contatti', active: currentPath === '/contatti' },
     { key: 'area', label: 'Area privata', href: '/area' },
-    { key: 'wa', label: 'WhatsApp', href: WA, external: true },
+    { key: 'wa', label: 'WhatsApp', href: wa, external: true },
   ];
   return (
     <nav className="mx-dock" aria-label="Navigazione dell’app">

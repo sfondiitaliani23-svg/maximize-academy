@@ -2,17 +2,81 @@ import { brandLinks, WA_KEPLERO, waLink } from '../routes';
 import React from 'react';
 import { Scissors, MessageSquare } from 'lucide-react';
 
-// Modelli del catalogo Sabey (foto autorizzate da Maurizio). Nessuna scheda inventata:
-// misure, nome commerciale completo e garanzia si pubblicano solo con dati ufficiali.
+// Schede ricostruite da Maurizio (05/11/2026). Niente garanzia, niente 30D:
+// la foto non è arrivata. Per la Carly acciaio e numero denti restano fuori, sono da confermare.
 const modelli = [
-  { id: '40-30', src: '/assets/img/sabey/sabey-3040.png' },
-  { id: 'BLACK Anthos', src: '/assets/img/sabey/sabey-black-anthos.jpg' },
-  { id: 'Curly semi offset', src: '/assets/img/sabey/sabey-curly-semi-offset.jpg' },
-  { id: '40D', src: '/assets/img/sabey/sabey-40d.png' },
-  { id: '40DS', src: '/assets/img/sabey/sabey-40ds.png' },
-  { id: 'Francis', src: '/assets/img/sabey/sabey-francis.png' },
-  { id: 'GT', src: '/assets/img/sabey/sabey-gt.png' },
-  { id: 'VR', src: '/assets/img/sabey/sabey-vr.png' },
+  {
+    id: '40/30',
+    titolo: 'Sfoltitura controllata',
+    src: '/assets/img/sabey/sabey-3040.png',
+    specs: ['Acciaio 440', '40 denti', 'Misura 6.0"', 'Sfoltitura circa 30%'],
+    testo: 'Sfoltitrice professionale per alleggerire la massa in modo progressivo. Lavora sulle connessioni, ammorbidisce le transizioni e riduce il volume senza un intervento aggressivo.',
+    tecniche: 'Blending, alleggerimento graduale, connessioni tra lunghezze e rifiniture.',
+    beneficio: 'Toglie circa il 30% della massa e lascia le transizioni morbide.',
+  },
+  {
+    id: 'Carly Semi-Offset',
+    titolo: 'Ergonomia e texture',
+    src: '/assets/img/sabey/sabey-curly-semi-offset.jpg',
+    specs: ['Forbice sfoltitrice', 'Impugnatura semi-offset', 'Sfoltitura indicativa 35–40%'],
+    testo: 'Sfoltitrice per chi cerca equilibrio tra ergonomia, controllo e alleggerimento. L’impugnatura semi-offset tiene la mano e il pollice in una posizione più naturale durante la sessione.',
+    tecniche: 'Riduzione del volume, texture, alleggerimento delle lunghezze e connessioni.',
+    beneficio: 'Più comfort in mano e una sfoltitura indicativa del 35–40%, utile per dare movimento.',
+  },
+  {
+    id: '40D',
+    titolo: 'Sfoltitura intensa',
+    src: '/assets/img/sabey/sabey-40d.png',
+    specs: ['Acciaio 440', '40 denti a profilo curvo', 'Sfoltitura circa 50%', 'Struttura più robusta della 40DS'],
+    testo: 'Sfoltitrice per una riduzione importante della massa. Il profilo curvo dei denti e la struttura robusta la distinguono dalla versione Slim.',
+    tecniche: 'Alleggerimenti importanti, riduzione della densità, volume e texturizzazione.',
+    beneficio: 'Alleggerisce le zone più dense con una sfoltitura di circa il 50%.',
+  },
+  {
+    id: '40DS Slim',
+    titolo: 'Profilo sottile, controllo e maneggevolezza',
+    src: '/assets/img/sabey/sabey-40ds.png',
+    specs: ['Acciaio 440', '40 denti', 'Misura 6.0"', 'Sfoltitura circa 50%', 'Versione Slim, pancia più piatta della 40D'],
+    testo: 'Variante più sottile della 40D. Stessa sfoltitura nominale, circa il 50%, con un profilo più piatto e snello. Cambia la geometria, non la percentuale.',
+    tecniche: 'Alleggerimenti decisi e lavori di precisione.',
+    beneficio: 'La stessa capacità della 40D, con una struttura più sottile per chi vuole più controllo in mano.',
+  },
+  {
+    id: 'Black Anthos 6.5',
+    titolo: 'Precisione ed ergonomia',
+    src: '/assets/img/sabey/sabey-black-anthos.jpg',
+    specs: ['Misura 6.5"', 'Impugnatura semi-offset', 'Struttura in titanio', 'Punta particolarmente affilata'],
+    testo: 'Geometria appuntita e impugnatura semi-offset. La punta entra nella ciocca con controllo, il manico tiene la mano in una postura più naturale.',
+    tecniche: 'Point cutting, freehand, dettagli, precisione e definizione delle forme.',
+    beneficio: 'Dettaglio e comfort insieme: controlli l’ingresso della lama e affatichi meno la mano.',
+  },
+  {
+    id: 'Francis 6.0',
+    titolo: 'Versatilità e controllo',
+    src: '/assets/img/sabey/sabey-francis.png',
+    specs: ['Acciaio VG10', 'Misura 6.0"', 'Impugnatura ad anelli pari', 'Struttura simmetrica'],
+    testo: 'Geometria tradizionale per chi vuole un controllo diretto. Gli anelli pari restituiscono l’impostazione classica, utile nelle tecniche di precisione.',
+    tecniche: 'Forbice su pettine, connessioni, costruzione delle forme, rifiniture e taglio di precisione.',
+    beneficio: 'Una 6 pollici in VG10 che resta versatile su più tecniche, con l’impugnatura classica.',
+  },
+  {
+    id: 'Linea GT',
+    titolo: 'Precisione, controllo, potenza',
+    src: '/assets/img/sabey/sabey-gt.png',
+    specs: ['Acciaio 440', 'Impugnatura dritta ad anelli pari', 'Punta ultra-appuntita', 'Finitura lucida', 'Misure 5.0", 6.0", 6.5" e 7.0"'],
+    testo: 'Linea per il lavoro tecnico. La punta ultra-appuntita entra nel dettaglio e nella costruzione delle forme. Gli anelli pari danno il controllo tradizionale.',
+    tecniche: 'Freehand cutting, forbice su pettine, precision cutting, rifiniture e dettagli nelle sfumature.',
+    beneficio: 'Uno strumento diretto quando il taglio chiede precisione estrema.',
+  },
+  {
+    id: 'Linea VR',
+    titolo: 'Precisione, ergonomia e fluidità',
+    src: '/assets/img/sabey/sabey-vr.png',
+    specs: ['Acciaio VG10', 'Impugnatura offset', 'Lavorazione a doppia anima', 'Misure 5.0", 5.5", 6.0", 6.5" e 7.0"'],
+    testo: 'VG10 e impugnatura offset, per una posizione più naturale di mano e pollice. Le misure corte aiutano il dettaglio, quelle lunghe il movimento ampio e il taglio su pettine.',
+    tecniche: 'Point cutting, tagli geometrici, costruzione delle forme, taglio su pettine e rifiniture.',
+    beneficio: 'Scegli la misura sulla tua tecnica: dal dettaglio al gesto largo, con la stessa ergonomia.',
+  },
 ];
 
 const WA = waLink(WA_KEPLERO, 'Salve, vorrei informazioni su una forbice Sabey.');
@@ -125,30 +189,57 @@ export default function SabeySection() {
               Modelli dal catalogo Sabey
             </h3>
             <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
-              Foto autorizzate. Sotto, il codice o il nome indicato per il modello.
-              Misure, nome commerciale completo e garanzia si aggiungono qui solo quando Sabey li conferma.
+              Non esiste una forbice perfetta per tutto. Esiste lo strumento più adatto alla tecnica, alla mano e al risultato che vuoi ottenere.
             </p>
           </div>
 
-          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 list-none p-0 m-0">
+          <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4 list-none p-0 m-0">
             {modelli.map((m) => (
-              <li key={m.id} className="rounded-2xl border border-white/10 bg-white p-4 flex flex-col">
-                <img
-                  src={m.src}
-                  alt={`Forbice Sabey ${m.id}`}
-                  width="400"
-                  height="400"
-                  loading="lazy"
-                  className="w-full h-44 sm:h-56 object-contain"
-                />
-                <p className="mt-3 text-center text-xs sm:text-sm font-bold tracking-wide text-black leading-snug">Sabey {m.id}</p>
+              <li key={m.id} className="rounded-2xl border border-white/10 bg-black/40 overflow-hidden flex flex-col">
+                <div className="bg-white p-4">
+                  <img
+                    src={m.src}
+                    alt={`Forbice Sabey ${m.id}`}
+                    width="400"
+                    height="400"
+                    loading="lazy"
+                    className="w-full h-44 sm:h-52 object-contain"
+                  />
+                </div>
+                <div className="p-5 sm:p-6 flex flex-col gap-3 flex-1">
+                  <div>
+                    <h4 className="text-lg sm:text-xl font-display font-bold text-white leading-tight">Sabey {m.id}</h4>
+                    <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-amber-400 font-bold">{m.titolo}</p>
+                  </div>
+                  <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
+                    {m.specs.map((spec) => (
+                      <li key={spec} className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] text-gray-200">{spec}</li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-gray-300 leading-relaxed">{m.testo}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed">
+                    <span className="text-amber-200 font-semibold">Tecniche consigliate. </span>{m.tecniche}
+                  </p>
+                  <p className="text-sm text-gray-300 leading-relaxed">
+                    <span className="text-amber-200 font-semibold">Per il barber. </span>{m.beneficio}
+                  </p>
+                  <a
+                    href={waLink(WA_KEPLERO, `Salve, vorrei informazioni sulla forbice Sabey ${m.id}.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full btn-glass text-xs uppercase font-bold tracking-wider text-amber-300 border-amber-500/30"
+                  >
+                    <MessageSquare className="w-4 h-4 text-amber-400" />
+                    Chiedi su WhatsApp
+                  </a>
+                </div>
               </li>
             ))}
           </ul>
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <p className="text-xs text-gray-400 max-w-xl">
-              Per informazioni su un modello scrivi a Keplero su WhatsApp e indica la forbice che ti interessa.
+              Sabey è un marchio di strumenti professionali. Per un modello scrivi a Keplero e indica la forbice.
             </p>
             <a
               href={WA}
@@ -156,7 +247,7 @@ export default function SabeySection() {
               rel="noopener noreferrer"
               className="px-6 py-3 rounded-full btn-gold text-xs uppercase font-bold tracking-wider whitespace-nowrap shadow-gold-glow text-center"
             >
-              Richiedi prova con operatore
+              Chiedi informazioni a Keplero
             </a>
           </div>
         </div>
