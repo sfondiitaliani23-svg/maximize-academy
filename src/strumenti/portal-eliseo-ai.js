@@ -31,6 +31,163 @@ export function describe(a) {
   return `${q}${c} → ${az}${v ? ` ${v}` : ''}`;
 }
 
+const FILE_TEXT = 20000;
+const FILE_BYTES = 30 * 1024 * 1024;
+
+function asU8(buf) {
+  return buf instanceof Uint8Array ? buf : new Uint8Array(buf);
+}
+
+function findBytes(hay, needle, from) {
+  outer: for (let i = from; i <= hay.length - needle.length; i++) {
+    for (let j = 0; j < needle.length; j++) if (hay[i + j] !== needle[j]) continue outer;
+    return i;
+  }
+  return -1;
+}
+
+async function inflateZip(data, format) {
+  const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream(format));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+async function zipEntry(buf, want) {
+  try {
+    const u8 = asU8(buf);
+    const view = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+    let eocd = -1;
+    for (let i = u8.length - 22; i >= Math.max(0, u8.length - 22 - 65535); i--) {
+      if (view.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    }
+    if (eocd < 0) return null;
+    const count = view.getUint16(eocd + 10, true);
+    let p = view.getUint32(eocd + 16, true);
+    for (let n = 0; n < count && n < 4000; n++) {
+      if (p + 46 > u8.length || view.getUint32(p, true) !== 0x02014b50) return null;
+      const method = view.getUint16(p + 10, true);
+      const comp = view.getUint32(p + 20, true);
+      const nameLen = view.getUint16(p + 28, true);
+      const extra = view.getUint16(p + 30, true);
+      const comment = view.getUint16(p + 32, true);
+      const local = view.getUint32(p + 42, true);
+      const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nameLen));
+      p += 46 + nameLen + extra + comment;
+      if (name !== want) continue;
+      if (local + 30 > u8.length) return null;
+      const dataOff = local + 30 + view.getUint16(local + 26, true) + view.getUint16(local + 28, true);
+      if (dataOff + comp > u8.length) return null;
+      const data = u8.subarray(dataOff, dataOff + comp);
+      if (method === 0) return data;
+      if (method === 8) return await inflateZip(data, 'deflate-raw');
+      return null;
+    }
+  } catch { /* un file rotto non deve bloccare la schermata */ }
+  return null;
+}
+
+function xmlDecode(s) {
+  return s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+}
+
+function pdfUnescape(s) {
+  return s.replace(/\\([nrtbf()\\]|[0-7]{1,3})/g, (_, e) => {
+    if (e === 'n') return '\n';
+    if (e === 'r') return '\r';
+    if (e === 't') return '\t';
+    if (e === 'b') return '\b';
+    if (e === 'f') return '\f';
+    if (e === '(' || e === ')' || e === '\\') return e;
+    return String.fromCharCode(parseInt(e, 8));
+  });
+}
+
+function pdfPieces(content) {
+  if (!content.includes('Tj') && !content.includes('TJ')) return '';
+  const out = [];
+  const re = /\((?:\\.|[^\\)])*\)|<([0-9A-Fa-f\s]{4,})>/g;
+  let m;
+  while ((m = re.exec(content))) {
+    if (m[0].startsWith('(')) out.push(pdfUnescape(m[0].slice(1, -1)));
+    else {
+      const hex = m[1].replace(/\s/g, '');
+      if (!hex || hex.length % 2) continue;
+      const bytes = new Uint8Array(hex.length / 2);
+      for (let i = 0; i < bytes.length; i++) bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+      out.push(bytes[0] === 0xfe && bytes[1] === 0xff ? new TextDecoder('utf-16be').decode(bytes.subarray(2)) : new TextDecoder('latin1').decode(bytes));
+    }
+  }
+  return out.join(' ').replace(/[ \t]{2,}/g, ' ').trim();
+}
+
+async function pdfText(buf) {
+  const u8 = asU8(buf);
+  const stream = [115, 116, 114, 101, 97, 109];
+  const end = [101, 110, 100, 115, 116, 114, 101, 97, 109];
+  const parts = [];
+  let i = 0;
+  for (let guard = 0; guard < 80 && i < u8.length && parts.join('\n').length < FILE_TEXT; guard++) {
+    const at = findBytes(u8, stream, i);
+    if (at < 0) break;
+    if (at >= 3 && u8[at - 3] === 101 && u8[at - 2] === 110 && u8[at - 1] === 100) { i = at + 6; continue; }
+    const head = new TextDecoder('latin1').decode(u8.subarray(Math.max(0, at - 500), at));
+    let dataStart = at + 6;
+    if (u8[dataStart] === 13) dataStart++;
+    if (u8[dataStart] === 10) dataStart++;
+    const lens = [...head.matchAll(/\/Length\s+(\d+)/g)];
+    const len = lens.length ? Number(lens[lens.length - 1][1]) : 0;
+    let dataEnd = dataStart;
+    if (len > 0 && dataStart + len <= u8.length) dataEnd = dataStart + len;
+    else {
+      const stop = findBytes(u8, end, dataStart);
+      dataEnd = stop < 0 ? Math.min(u8.length, dataStart + 200000) : stop;
+    }
+    let content = '';
+    try {
+      const data = u8.subarray(dataStart, dataEnd);
+      const near = head.slice(-180);
+      if (/FlateDecode/.test(near)) {
+        let inflated;
+        try { inflated = await inflateZip(data, 'deflate'); } catch { inflated = await inflateZip(data, 'deflate-raw'); }
+        content = new TextDecoder('latin1').decode(inflated.subarray(0, 200000));
+      } else if (!/\/(?:Image|DCTDecode|JPXDecode|CCITTFaxDecode)\b/.test(near)) {
+        content = new TextDecoder('latin1').decode(data.subarray(0, 200000));
+      }
+    } catch { content = ''; }
+    const piece = pdfPieces(content);
+    if (piece) parts.push(piece);
+    i = Math.max(dataEnd, at + 6);
+  }
+  return parts.join('\n').trim();
+}
+
+async function docxText(buf) {
+  const xml = await zipEntry(buf, 'word/document.xml');
+  if (!xml) return '';
+  const s = new TextDecoder('utf-8').decode(xml);
+  return s.split(/<w:p\b/).slice(1).map((p) => [...p.matchAll(/<w:t\b[^>]*>([^<]*)<\/w:t>/g)].map((m) => xmlDecode(m[1])).join('')).filter((p) => p.trim()).join('\n').trim();
+}
+
+// Testo che l'assistente può tenere: al massimo 20.000 caratteri. Il file intero non si salva.
+export async function readEliseoFile(name, buf) {
+  const kind = (/\.([a-z0-9]+)$/i.exec(name || '') || [])[1]?.toLowerCase() || '';
+  if (!['pdf', 'docx', 'csv', 'tsv', 'txt', 'md'].includes(kind)) return { error: 'Accettiamo PDF, DOCX, CSV e TSV.' };
+  const u8 = asU8(buf);
+  if (u8.byteLength > FILE_BYTES) return { error: 'Il file supera i 30 MB.' };
+  if (!u8.byteLength) return { error: 'Questo file è vuoto.' };
+  let text = '';
+  try {
+    if (kind === 'pdf') text = await pdfText(u8);
+    else if (kind === 'docx') text = await docxText(u8);
+    else text = new TextDecoder('utf-8').decode(u8);
+  } catch { text = ''; }
+  text = text.replace(/^\uFEFF/, '').replace(/\u0000/g, '').replace(/\r\n/g, '\n').trim();
+  const marks = (text.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length;
+  if (!text || ((kind === 'pdf' || kind === 'docx') && marks < 8)) {
+    return { paste: true, error: 'Da questo file non esce il testo. Aprilo, copia il contenuto e incollalo qui.' };
+  }
+  return { text: text.slice(0, FILE_TEXT), cut: text.length > FILE_TEXT };
+}
+
 export function mountAi(kind, ui) {
   const { h, card, call, say, select, team } = ui;
   const field = (lab, input, hint) => h('div', { class: 'field' }, h('label', null, h('span', { text: lab }), input), hint ? h('p', { class: 'field__hint', text: hint }) : null);
@@ -50,8 +207,9 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
       ]);
     } catch (e) {
-      if (e.message === 'sql' && (sub === 'faq' || sub === 'sito')) {
-        wrap.replaceChildren(...(sub === 'faq' ? faqView([], true) : siteView()));
+      if (e.message === 'sql' && (sub === 'faq' || sub === 'sito' || sub === 'documenti')) {
+        const view = sub === 'faq' ? faqView([], true) : sub === 'sito' ? siteView() : docsView([], true);
+        wrap.replaceChildren(...view);
         return;
       }
       fail(e); return;
@@ -300,39 +458,167 @@ export function mountAi(kind, ui) {
     return siteScreen(async () => ({ map: sitemapXml, when: 'a ogni pubblicazione' }));
   }
 
-  function docsView(list) {
-    const form = (d) => {
-      const el = h('form', { class: 'el-form', novalidate: true });
-      const titolo = h('input', { name: 'titolo', maxlength: 120, value: d?.titolo || '', required: true, placeholder: 'es. Listino prodotti ANAQA' });
-      const testo = h('textarea', { name: 'testo', maxlength: 20000, rows: 8, required: true }); testo.value = d?.testo || '';
-      const count = h('p', { class: 'field__hint', 'aria-live': 'polite' });
-      const upd = () => { count.textContent = `${testo.value.length} / 20.000 caratteri`; }; testo.addEventListener('input', upd); upd();
-      const file = h('input', { type: 'file', accept: '.txt,.md,.csv,.tsv,text/plain,text/csv', 'aria-label': 'Carica un file di testo' });
-      file.addEventListener('change', async () => { const f = file.files?.[0]; if (!f) return; if (f.size > 200_000) { say('File troppo grande (massimo 200 KB di testo).', true); return; } testo.value = (await f.text()).slice(0, 20000); if (!titolo.value) titolo.value = f.name.replace(/\.[^.]+$/, '').slice(0, 120); upd(); });
-      const attivo = h('input', { type: 'checkbox', name: 'attivo' }); attivo.checked = d ? d.attivo : true;
-      const err = h('p', { class: 'field__error', role: 'alert' });
-      const save = h('button', { type: 'submit', class: 'btn btn--primary', text: d ? 'Salva' : 'Aggiungi documento' });
-      const acts = h('div', { class: 'actions' }, save);
-      if (d) {
-        let armed = false; const del = h('button', { type: 'button', class: 'btn btn--secondary el-del', text: 'Elimina' });
-        del.addEventListener('click', async () => { if (!armed) { armed = true; del.textContent = 'Conferma: elimina'; del.classList.add('is-armed'); return; } try { await call(`/rest/v1/eliseo_documenti?id=eq.${d.id}`, { method: 'DELETE' }); say('Documento eliminato.'); drawTraining(); } catch (e) { err.textContent = e.message; } });
-        acts.append(del);
-      }
-      el.append(field('Titolo', titolo), field('Carica un file di testo (facoltativo)', file, 'Per i PDF: aprili, seleziona tutto, copia e incolla qui sotto.'), field('Testo', testo), count, h('label', { class: 'el-consent' }, attivo, h('span', { text: 'Attivo (lo legge l’assistente del sito: solo informazioni pubbliche)' })), err, acts);
-      el.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const row = { titolo: titolo.value.trim().slice(0, 120), testo: testo.value.trim().slice(0, 20000), attivo: attivo.checked };
-        if (!row.titolo || !row.testo) { err.textContent = 'Scrivi titolo e testo.'; return; }
-        save.disabled = true;
-        try { await call(d ? `/rest/v1/eliseo_documenti?id=eq.${d.id}` : '/rest/v1/eliseo_documenti', { method: d ? 'PATCH' : 'POST', body: row, prefer: 'return=minimal' }); say('Documento salvato.'); drawTraining(); }
-        catch (ex) { err.textContent = ex.message; save.disabled = false; }
+  function docsView(list, blocked) {
+    const sqlNote = 'Manca un passaggio una tantum: va eseguito il file supabase/eliseo-addestramento.sql in Supabase (lo fa Eliseo). Poi ricarica la pagina.';
+    const svg = (parts) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('viewBox', '0 0 24 24');
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', 'currentColor');
+      el.setAttribute('stroke-width', '1.8');
+      el.setAttribute('stroke-linecap', 'round');
+      el.setAttribute('stroke-linejoin', 'round');
+      el.setAttribute('aria-hidden', 'true');
+      parts.forEach(([tag, attrs]) => {
+        const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        el.append(n);
       });
       return el;
     };
-    const box = h('div', { class: 'el-models' });
-    if (!list.length) box.append(h('p', { class: 'pempty', text: 'Nessun documento.' }));
-    list.forEach((d) => box.append(h('details', { class: 'el-model' }, h('summary', null, h('strong', { text: `${d.attivo ? '' : '(spento) '}${d.titolo}` }), h('span', { text: `${d.testo.length} caratteri` })), form(d))));
-    return [card('File', h('p', { class: 'pcard__note', text: 'Listini, schede prodotto, biografie: come i «File» di Keplero. L’assistente risponde con la frase più adatta. Metti solo informazioni che possono leggere tutti (niente profili interni, funnel o strategie).' }), box), card('Nuovo file', form(null))];
+    const google = () => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('viewBox', '0 0 48 48');
+      el.setAttribute('aria-hidden', 'true');
+      [['#FFC107', 'M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z'],
+        ['#FF3D00', 'M6.3 14.7l6.6 4.8C14.7 16 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 16.3 4 9.6 8.3 6.3 14.7z'],
+        ['#4CAF50', 'M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z'],
+        ['#1976D2', 'M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-3.5 5.7-6.5 7.1l6.2 5.2C37.4 38.4 44 34 44 24c0-1.3-.1-2.7-.4-3.5z'],
+      ].forEach(([fill, d]) => {
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('fill', fill);
+        p.setAttribute('d', d);
+        el.append(p);
+      });
+      return el;
+    };
+    const sizeLabel = (text) => {
+      const n = new TextEncoder().encode(text || '').length;
+      if (n >= 100000) return `${(n / 1000000).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MB`;
+      if (n >= 1000) return `${Math.round(n / 1000).toLocaleString('it-IT')} KB`;
+      return `${n.toLocaleString('it-IT')} B`;
+    };
+    const whenFile = (iso) => (iso ? new Date(iso).toLocaleString('it-IT', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }) : '');
+    const err = h('p', { class: 'field__error el-web__err', role: 'alert' });
+    const note = h('p', { class: 'el-file__note' });
+    const editor = h('div', { class: 'el-faq__editor' });
+    const box = h('div', { class: 'el-file__list' });
+    let busy = false;
+    let armed = null;
+    const openEditor = (d, preset) => {
+      const el = h('form', { class: 'el-form', novalidate: true });
+      const titolo = h('input', { name: 'titolo', maxlength: 120, value: d?.titolo || preset?.titolo || '', required: true });
+      const testo = h('textarea', { name: 'testo', maxlength: 20000, rows: 8, required: true });
+      testo.value = d?.testo || '';
+      const count = h('p', { class: 'field__hint', 'aria-live': 'polite' });
+      const upd = () => { count.textContent = `${testo.value.length} / 20.000 caratteri`; };
+      testo.addEventListener('input', upd); upd();
+      const attiva = h('input', { type: 'checkbox', name: 'attivo' });
+      attiva.checked = d ? d.attivo : true;
+      const formErr = h('p', { class: 'field__error', role: 'alert' });
+      if (preset?.error) formErr.textContent = preset.error;
+      const save = h('button', { type: 'submit', class: 'btn btn--primary', text: d ? 'Salva' : 'Aggiungi file' });
+      const close = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Chiudi' });
+      close.addEventListener('click', () => editor.replaceChildren());
+      el.append(field('Nome', titolo), field('Testo', testo, 'Solo informazioni che possono leggere tutti. L’assistente usa questo testo per rispondere.'), count, h('label', { class: 'el-consent' }, attiva, h('span', { text: 'Attivo: l’assistente lo legge' })), formErr, h('div', { class: 'actions' }, save, close));
+      el.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (blocked) { formErr.textContent = sqlNote; return; }
+        const row = { titolo: titolo.value.trim().slice(0, 120), testo: testo.value.trim().slice(0, 20000), attivo: attiva.checked };
+        if (!row.titolo || !row.testo) { formErr.textContent = 'Scrivi il nome e il testo.'; return; }
+        save.disabled = true;
+        try {
+          await call(d ? `/rest/v1/eliseo_documenti?id=eq.${d.id}` : '/rest/v1/eliseo_documenti', { method: d ? 'PATCH' : 'POST', body: row, prefer: 'return=minimal' });
+          say(testo.value.trim().length > 20000 ? 'File salvato: ho tenuto i primi 20.000 caratteri, il massimo che l’assistente legge.' : 'File salvato. L’assistente lo legge.');
+          drawTraining();
+        } catch (ex) { formErr.textContent = ex.message === 'sql' ? sqlNote : ex.message; save.disabled = false; }
+      });
+      editor.replaceChildren(h('section', { class: 'pcard' }, h('h3', { class: 'pcard__title', text: d ? 'Testo del file' : 'Incolla il testo' }), el));
+      testo.focus();
+    };
+    const paint = () => {
+      const rows = list.slice().sort((a, b) => String(b.aggiornato_il || b.creato_il || '').localeCompare(String(a.aggiornato_il || a.creato_il || '')));
+      box.replaceChildren();
+      if (!rows.length) box.append(h('p', { class: 'pempty', text: blocked ? sqlNote : 'Nessun file caricato.' }));
+      rows.forEach((d) => {
+        const open = h('button', { type: 'button', class: 'el-file__open' }, h('strong', { text: d.titolo }), h('time', { text: whenFile(d.aggiornato_il || d.creato_il) }));
+        open.addEventListener('click', () => openEditor(d));
+        const glyph = svg([['path', { d: 'M7 3.5h7l4 4V20.5H7z' }], ['path', { d: 'M14 3.5V8h4M9 12h6M9 16h4' }]]);
+        glyph.setAttribute('class', 'el-file__glyph');
+        const del = h('button', { type: 'button', class: 'el-web__icon el-file__del', 'aria-label': `Elimina ${d.titolo}` }, svg([['path', { d: 'M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13M10 11v6M14 11v6' }]]));
+        del.dataset.label = `Elimina ${d.titolo}`;
+        del.addEventListener('click', async () => {
+          if (blocked) { err.textContent = sqlNote; return; }
+          if (armed !== d.id) {
+            armed = d.id;
+            box.querySelectorAll('.el-file__del').forEach((n) => { n.classList.remove('is-armed'); n.setAttribute('aria-label', n.dataset.label); });
+            del.classList.add('is-armed');
+            del.setAttribute('aria-label', `Conferma: elimina ${d.titolo}`);
+            return;
+          }
+          del.disabled = true;
+          try { await call(`/rest/v1/eliseo_documenti?id=eq.${d.id}`, { method: 'DELETE' }); say('File eliminato.'); drawTraining(); }
+          catch (ex) { err.textContent = ex.message === 'sql' ? sqlNote : ex.message; del.disabled = false; }
+        });
+        box.append(h('article', { class: 'el-file__row' }, h('span', { class: 'el-faq__mark', 'aria-hidden': 'true', text: '✓', 'data-off': d.attivo ? false : '' }), glyph, open, h('span', { class: 'el-file__size', text: sizeLabel(d.testo) }), del));
+      });
+    };
+    const input = h('input', { type: 'file', class: 'el-file__pick', multiple: true, accept: '.pdf,.docx,.csv,.tsv,.txt,.md,application/pdf,text/csv,text/plain', 'aria-label': 'Scegli un file' });
+    const takeFiles = async (files) => {
+      const arr = [...(files || [])];
+      if (!arr.length || busy) return;
+      note.textContent = '';
+      err.textContent = '';
+      if (blocked) { err.textContent = sqlNote; input.value = ''; return; }
+      busy = true;
+      let saved = 0;
+      let cut = false;
+      let paste = false;
+      try {
+        for (const file of arr) {
+          const read = await readEliseoFile(file.name, await file.arrayBuffer());
+          if (read.error) {
+            err.textContent = read.error;
+            if (read.paste) { paste = true; openEditor(null, { titolo: (file.name || 'File').slice(0, 120), error: read.error }); }
+            break;
+          }
+          await call('/rest/v1/eliseo_documenti', { method: 'POST', body: { titolo: (file.name || 'File').slice(0, 120), testo: read.text, attivo: true }, prefer: 'return=minimal' });
+          saved += 1;
+          cut = cut || read.cut;
+        }
+      } catch (ex) {
+        err.textContent = ex.message === 'sql' ? sqlNote : ex.message;
+      }
+      busy = false;
+      input.value = '';
+      if (saved && !paste) {
+        say(cut ? 'File salvato: ho tenuto i primi 20.000 caratteri, il massimo che l’assistente legge.' : (saved > 1 ? 'File salvati. L’assistente li legge.' : 'File salvato. L’assistente lo legge.'));
+        drawTraining();
+      } else if (saved) say('Ho salvato i file letti. Per l’ultimo, incolla il testo nel riquadro.');
+    };
+    input.addEventListener('change', () => takeFiles(input.files));
+    const dropIcon = svg([['path', { d: 'M7 3.5h7l4 4V20.5H7z' }], ['path', { d: 'M14 3.5V8h4M9 13h6M9 16.5h4' }]]);
+    dropIcon.setAttribute('class', 'el-file__ico');
+    const zone = h('div', { class: 'el-file__drop', role: 'button', tabindex: '0', 'aria-label': 'Carica o trascina il tuo file qui' }, dropIcon, h('strong', { text: 'Carica o trascina il tuo file qui' }), h('span', { text: 'Accettiamo .pdf .docx .csv .tsv fino a 30MB' }), input);
+    zone.addEventListener('click', (e) => { if (e.target !== input) input.click(); });
+    zone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('is-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('is-over'));
+    zone.addEventListener('drop', (e) => { e.preventDefault(); zone.classList.remove('is-over'); takeFiles(e.dataTransfer?.files); });
+    const sheet = h('button', { type: 'button', class: 'el-file__sheet' }, google(), h('span', { text: 'Collega Google Sheet' }));
+    sheet.addEventListener('click', () => { err.textContent = ''; note.textContent = 'Google Sheet non è collegato. Esporta il foglio in CSV o TSV e trascinalo qui.'; });
+    paint();
+    return [
+      h('header', { class: 'el-faq__head' }, h('h2', { text: 'File' }), h('p', { text: 'Documenti e fogli di calcolo che l’assistente legge per rispondere.' })),
+      zone,
+      h('p', { class: 'el-file__or' }, h('span', { text: 'o' })),
+      h('div', { class: 'el-file__sheetwrap' }, sheet),
+      note,
+      err,
+      editor,
+      h('p', { class: 'el-faq__all', text: 'File di testo' }),
+      box,
+    ];
   }
 
   function promptView(conf, vers) {
