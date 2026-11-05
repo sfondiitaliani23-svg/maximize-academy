@@ -49,12 +49,20 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_assistente?select=*&id=eq.1'),
         call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
       ]);
-    } catch (e) { fail(e); return; }
+    } catch (e) {
+      if (e.message === 'sql' && sub === 'faq') { wrap.replaceChildren(...faqView([], true)); return; }
+      fail(e); return;
+    }
     const views = { faq: () => faqView(faq), sito: siteView, documenti: () => docsView(docs), istruzioni: () => promptView(conf, vers), passaggio: () => handoffView(conf) };
     wrap.replaceChildren(...[].concat(views[sub]()));
   }
 
-  function faqView(list) {
+  function faqView(list, blocked) {
+    const sqlNote = 'Manca un passaggio una tantum: va eseguito il file supabase/eliseo-addestramento.sql in Supabase (lo fa Eliseo). Poi ricarica la pagina.';
+    const whenFaq = (iso) => (iso ? new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Rome' }) : '');
+    const picked = new Set();
+    let armed = false;
+    const editor = h('div', { class: 'el-faq__editor' });
     const form = (f) => {
       const el = h('form', { class: 'el-form', novalidate: true });
       const cartella = h('input', { name: 'cartella', maxlength: 40, value: f?.cartella || 'Generale', list: 'el-cartelle' });
@@ -65,37 +73,91 @@ export function mountAi(kind, ui) {
       const attiva = h('input', { type: 'checkbox', name: 'attiva' }); attiva.checked = f ? f.attiva : true;
       const err = h('p', { class: 'field__error', role: 'alert' });
       const save = h('button', { type: 'submit', class: 'btn btn--primary', text: f ? 'Salva' : 'Aggiungi FAQ' });
-      const acts = h('div', { class: 'actions' }, save);
+      const close = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Chiudi' });
+      const acts = h('div', { class: 'actions' }, save, close);
       if (f) {
-        let armed = false; const del = h('button', { type: 'button', class: 'btn btn--secondary el-del', text: 'Elimina' });
-        del.addEventListener('click', async () => { if (!armed) { armed = true; del.textContent = 'Conferma: elimina'; del.classList.add('is-armed'); return; } try { await call(`/rest/v1/eliseo_faq?id=eq.${f.id}`, { method: 'DELETE' }); say('FAQ eliminata.'); drawTraining(); } catch (e) { err.textContent = e.message; } });
+        let delArmed = false; const del = h('button', { type: 'button', class: 'btn btn--secondary el-del', text: 'Elimina' });
+        del.addEventListener('click', async () => { if (!delArmed) { delArmed = true; del.textContent = 'Conferma: elimina'; del.classList.add('is-armed'); return; } try { await call(`/rest/v1/eliseo_faq?id=eq.${f.id}`, { method: 'DELETE' }); say('FAQ eliminata.'); drawTraining(); } catch (e) { err.textContent = e.message; } });
         acts.append(del);
       }
+      close.addEventListener('click', () => editor.replaceChildren());
       el.append(h('div', { class: 'el-grid' }, field('Cartella', h('span', null, cartella, dl)), field('Domanda', domanda)), field('Parole chiave', parole, 'Separate da virgola: altri modi in cui i clienti lo chiedono. Aiutano l’assistente a riconoscere la domanda.'), field('Risposta', risposta, 'Breve e chiara. Massimo 1000 caratteri. Niente promesse sulla salute.'), h('label', { class: 'el-consent' }, attiva, h('span', { text: 'Attiva (la usa l’assistente del sito)' })), err, acts);
       el.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (blocked) { err.textContent = sqlNote; return; }
         const row = { cartella: cartella.value.trim().slice(0, 40) || 'Generale', domanda: domanda.value.trim().slice(0, 200), parole: parole.value.trim().slice(0, 300), risposta: risposta.value.trim().slice(0, 1000), attiva: attiva.checked };
         if (row.domanda.length < 3 || !row.risposta) { err.textContent = 'Scrivi domanda e risposta.'; return; }
         save.disabled = true;
         try { await call(f ? `/rest/v1/eliseo_faq?id=eq.${f.id}` : '/rest/v1/eliseo_faq', { method: f ? 'PATCH' : 'POST', body: row, prefer: 'return=minimal' }); say('FAQ salvata.'); drawTraining(); }
         catch (ex) { err.textContent = ex.message; save.disabled = false; }
       });
+      domanda.focus();
       return el;
     };
+    const showEditor = (f) => {
+      editor.replaceChildren(h('section', { class: 'pcard' }, h('h3', { class: 'pcard__title', text: f ? 'Modifica FAQ' : 'Nuova FAQ' }), form(f)));
+    };
     const q = h('input', { type: 'search', class: 'el-search', placeholder: 'Trova FAQ', 'aria-label': 'Trova FAQ' });
-    const box = h('div', { class: 'el-models' });
+    const lens = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    lens.setAttribute('viewBox', '0 0 24 24');
+    lens.setAttribute('class', 'el-faq__lens');
+    lens.setAttribute('aria-hidden', 'true');
+    lens.setAttribute('fill', 'none');
+    lens.setAttribute('stroke', 'currentColor');
+    lens.setAttribute('stroke-width', '1.8');
+    lens.setAttribute('stroke-linecap', 'round');
+    const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    ring.setAttribute('cx', '11'); ring.setAttribute('cy', '11'); ring.setAttribute('r', '6');
+    const stick = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    stick.setAttribute('d', 'M16 16.5 20 20.5');
+    lens.append(ring, stick);
+    const find = h('label', { class: 'el-faq__find' }, lens, q);
+    const nuovo = h('button', { type: 'button', class: 'btn', text: '+ Nuovo' });
+    nuovo.addEventListener('click', () => showEditor(null));
+    const wipe = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Elimina', hidden: true });
+    const syncWipe = () => {
+      wipe.hidden = picked.size === 0;
+      if (!picked.size) { armed = false; wipe.textContent = 'Elimina'; return; }
+      if (!armed) wipe.textContent = `Elimina ${picked.size}`;
+    };
+    wipe.addEventListener('click', async () => {
+      if (!picked.size || blocked) return;
+      if (!armed) { armed = true; wipe.textContent = `Conferma: elimina ${picked.size}`; return; }
+      wipe.disabled = true;
+      try {
+        for (const id of picked) await call(`/rest/v1/eliseo_faq?id=eq.${id}`, { method: 'DELETE' });
+        say(picked.size === 1 ? 'FAQ eliminata.' : 'FAQ eliminate.');
+        drawTraining();
+      } catch (e) { say(e.message, true); wipe.disabled = false; }
+    });
+    const box = h('div', { class: 'el-faq__list' });
     const paint = () => {
       const k = q.value.trim().toLowerCase();
-      const shown = list.filter((f) => !k || `${f.domanda} ${f.risposta} ${f.parole}`.toLowerCase().includes(k));
+      const shown = list.filter((f) => !k || `${f.domanda} ${f.risposta} ${f.parole} ${f.cartella}`.toLowerCase().includes(k))
+        .slice().sort((a, b) => String(b.aggiornato_il || b.creato_il || '').localeCompare(String(a.aggiornato_il || a.creato_il || '')));
       box.replaceChildren();
-      if (!shown.length) box.append(h('p', { class: 'pempty', text: list.length ? 'Nessuna FAQ trovata.' : 'Nessuna FAQ. Aggiungine una qui sotto.' }));
-      [...new Set(shown.map((f) => f.cartella))].forEach((c) => {
-        box.append(h('h4', { class: 'el-models__cat', text: c }));
-        shown.filter((f) => f.cartella === c).forEach((f) => box.append(h('details', { class: 'el-model' }, h('summary', null, h('strong', { text: `${f.attiva ? '' : '(spenta) '}${f.domanda}` }), h('span', { text: f.risposta.slice(0, 90) + (f.risposta.length > 90 ? '…' : '') })), form(f))));
+      if (!shown.length) box.append(h('p', { class: 'pempty', text: blocked ? sqlNote : (list.length ? 'Nessuna FAQ trovata.' : 'Nessuna FAQ. Premi Nuovo per scriverne una.') }));
+      shown.forEach((f) => {
+        const tick = h('input', { type: 'checkbox', 'aria-label': `Seleziona «${f.domanda}»` });
+        tick.checked = picked.has(f.id);
+        tick.addEventListener('change', () => { if (tick.checked) picked.add(f.id); else picked.delete(f.id); syncWipe(); });
+        const preview = f.risposta.length > 140 ? `${f.risposta.slice(0, 140)}…` : f.risposta;
+        const open = h('button', { type: 'button', class: 'el-faq__open' },
+          h('span', { class: 'el-faq__top' }, h('strong', { text: f.domanda }), h('time', { text: whenFaq(f.aggiornato_il || f.creato_il) })),
+          h('span', { class: 'el-faq__prev', text: preview }));
+        open.addEventListener('click', () => showEditor(f));
+        box.append(h('article', { class: 'el-faq__row' }, tick, h('span', { class: 'el-faq__mark', 'aria-hidden': 'true', text: '✓', 'data-off': f.attiva ? false : '' }), open));
       });
+      syncWipe();
     };
     q.addEventListener('input', paint); paint();
-    return [card('FAQ', h('p', { class: 'pcard__note', text: 'Domande e risposte su cui si basa l’assistente, in cartelle.' }), h('div', { class: 'el-tools' }, q), box), card('Nuova FAQ', form(null))];
+    return [
+      h('header', { class: 'el-faq__head' }, h('h2', { text: 'FAQ' }), h('p', { text: 'Domande e risposte su cui si basa l’assistente, organizzate in cartelle.' })),
+      h('div', { class: 'el-faq__tools' }, find, wipe, nuovo),
+      editor,
+      h('p', { class: 'el-faq__all', text: 'Tutte le FAQ' }),
+      box,
+    ];
   }
 
   function siteView() {

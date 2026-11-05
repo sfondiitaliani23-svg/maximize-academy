@@ -29,6 +29,13 @@ const ICONS = {
   bot: [['rect', { x: '5', y: '8', width: '14', height: '11', rx: '3' }], ['path', { d: 'M12 8V5.2M9 13h.01M15 13h.01M9.5 16.5h5' }], ['circle', { cx: '12', cy: '4.2', r: '.9' }]],
   chart: [['path', { d: 'M5 19V10M12 19V5M19 19v-6' }]],
   gear: [['circle', { cx: '12', cy: '12', r: '3' }], ['path', { d: 'M12.2 2h-.4a2 2 0 0 0-2 2v.2a2 2 0 0 1-1 1.7l-.4.3a2 2 0 0 1-2 0l-.2-.1a2 2 0 0 0-2.7.7l-.2.4a2 2 0 0 0 .7 2.7l.2.1a2 2 0 0 1 1 1.7v.5a2 2 0 0 1-1 1.7l-.2.1a2 2 0 0 0-.7 2.7l.2.4a2 2 0 0 0 2.7.7l.2-.1a2 2 0 0 1 2 0l.4.3a2 2 0 0 1 1 1.7V20a2 2 0 0 0 2 2h.4a2 2 0 0 0 2-2v-.2a2 2 0 0 1 1-1.7l.4-.3a2 2 0 0 1 2 0l.2.1a2 2 0 0 0 2.7-.7l.2-.4a2 2 0 0 0-.7-2.7l-.2-.1a2 2 0 0 1-1-1.7v-.5a2 2 0 0 1 1-1.7l.2-.1a2 2 0 0 0 .7-2.7l-.2-.4a2 2 0 0 0-2.7-.7l-.2.1a2 2 0 0 1-2 0l-.4-.3a2 2 0 0 1-1-1.7V4a2 2 0 0 0-2-2z' }]],
+  ask: [['circle', { cx: '12', cy: '12', r: '8' }], ['path', { d: 'M9.6 9.4a2.4 2.4 0 1 1 3.3 2.2c-.7.4-1.1.9-1.1 1.6M12 16.6h.01' }]],
+  globe: [['circle', { cx: '12', cy: '12', r: '8' }], ['path', { d: 'M4 12h16M12 4c2.2 2.4 3.3 5.1 3.3 8s-1.1 5.6-3.3 8c-2.2-2.4-3.3-5.1-3.3-8s1.1-5.6 3.3-8z' }]],
+  doc: [['path', { d: 'M7 3.5h7l4 4V20.5H7z' }], ['path', { d: 'M14 3.5V8h4' }]],
+  prompt: [['path', { d: 'M6 4.5h12v15H6z' }], ['path', { d: 'M9 9h6M9 12.5h6M9 16h4' }]],
+  branch: [['circle', { cx: '7', cy: '6', r: '2' }], ['circle', { cx: '17', cy: '8', r: '2' }], ['circle', { cx: '7', cy: '18', r: '2' }], ['path', { d: 'M7 8v8M9 7h5.2A2.8 2.8 0 0 1 17 9.8' }]],
+  puzzle: [['path', { d: 'M8 3v4M16 3v4M6 7h12v5a6 6 0 0 1-12 0zM12 18v3' }]],
+  megaphone: [['path', { d: 'M5 10v4h3l8 4V6L8 10z' }], ['path', { d: 'M16 9.5a3 3 0 0 1 0 5' }]],
 };
 const icon = (name) => {
   const svg = document.createElementNS(NS, 'svg');
@@ -85,6 +92,7 @@ export function mount(box, root) {
     ['faq', 'Addestramento', 'book', [
       ['Base di conoscenza', [['faq', 'FAQ'], ['sito', 'Sito web'], ['documenti', 'File']]],
       ['Agente Chat', [['istruzioni', 'Prompt'], ['passaggio', 'Escalation']]],
+      ['', [['integrazioni', 'Integrazioni']]],
     ]],
     ['automazioni', 'Automazioni', 'flow', null],
     ['elenco', 'Contatti', 'person', [
@@ -121,13 +129,15 @@ export function mount(box, root) {
     }
     side.hidden = false;
     app.classList.add('has-sub');
-    sideNav.append(h('p', { class: 'el-side__title', text: current[1] }));
+    if (!current[3].some(([title]) => title)) sideNav.append(h('p', { class: 'el-side__title', text: current[1] }));
+    const groupIcon = { 'Base di conoscenza': 'book', 'Agente Chat': 'person' };
+    const navIcon = { faq: 'ask', sito: 'globe', documenti: 'doc', istruzioni: 'prompt', passaggio: 'branch', integrazioni: 'puzzle', elenco: 'person', campagne: 'megaphone', modelli: 'doc' };
     current[3].forEach(([title, items]) => {
-      if (title) sideNav.append(h('p', { class: 'el-group', text: title }));
+      if (title) sideNav.append(h('p', { class: 'el-group' }, groupIcon[title] ? icon(groupIcon[title]) : null, h('span', { text: title })));
       const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': title || current[1] });
       items.forEach(([id, nome]) => {
         const on = id === tab || (id === 'elenco' && (tab === 'colonne' || tab === 'importa'));
-        const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': on ? 'true' : 'false', text: nome });
+        const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': on ? 'true' : 'false' }, navIcon[id] ? icon(navIcon[id]) : null, h('span', { text: nome }));
         b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
         nav.append(b);
       });
