@@ -50,7 +50,10 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
       ]);
     } catch (e) {
-      if (e.message === 'sql' && sub === 'faq') { wrap.replaceChildren(...faqView([], true)); return; }
+      if (e.message === 'sql' && (sub === 'faq' || sub === 'sito')) {
+        wrap.replaceChildren(...(sub === 'faq' ? faqView([], true) : siteView()));
+        return;
+      }
       fail(e); return;
     }
     const views = { faq: () => faqView(faq), sito: siteView, documenti: () => docsView(docs), istruzioni: () => promptView(conf, vers), passaggio: () => handoffView(conf) };
@@ -160,20 +163,141 @@ export function mountAi(kind, ui) {
     ];
   }
 
-  function siteView() {
-    const box = h('div');
-    const k = knowledgeData;
-    const map = sitemapXml;
-    {
-      const pages = [...map.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-      const cats = {}; (k.entries || []).forEach((e) => { cats[e.categoria] = (cats[e.categoria] || 0) + 1; });
-      box.replaceChildren(
-        h('ul', { class: 'plist' },
-          h('li', null, h('strong', { text: `maurizio-barbershop.it` }), h('span', { text: `${pages.length} pagine nella mappa del sito · aggiornato a ogni pubblicazione` })),
-          h('li', null, h('strong', { text: 'Dati che l’assistente usa' }), h('span', { text: Object.entries(cats).map(([c, n]) => `${c} (${n})`).join(' · ') }))),
-        h('p', { class: 'pcard__note', text: 'A differenza di Keplero non serve «rileggere» il sito: listino, orari, team e offerte arrivano dagli stessi file con cui è fatto il sito, quindi sono sempre giusti.' }));
+  function siteScreen(readMap) {
+    const svg = (parts) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('viewBox', '0 0 24 24');
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', 'currentColor');
+      el.setAttribute('stroke-width', '1.8');
+      el.setAttribute('stroke-linecap', 'round');
+      el.setAttribute('stroke-linejoin', 'round');
+      el.setAttribute('aria-hidden', 'true');
+      parts.forEach(([tag, attrs]) => {
+        const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        el.append(n);
+      });
+      return el;
+    };
+    const lens = svg([['circle', { cx: '11', cy: '11', r: '6' }], ['path', { d: 'M16 16.5 20 20.5' }]]);
+    lens.setAttribute('class', 'el-faq__lens');
+    const q = h('input', { type: 'search', class: 'el-search', placeholder: 'Trova un dominio', 'aria-label': 'Trova un dominio' });
+    const find = h('label', { class: 'el-faq__find el-web__find' }, lens, q);
+    const browse = h('button', { type: 'button', class: 'el-web__text', text: 'sfoglia le pagine' });
+    const intro = h('p', { class: 'el-web__intro' }, 'Il sito pubblicato è già letto dall’assistente. Incolla un link per trovare una pagina, o ', browse, '.');
+    const link = svg([['path', { d: 'M10 13a5 5 0 0 0 7.54.54l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15' }], ['path', { d: 'M14 11a5 5 0 0 0-7.54-.54l-2 2a5 5 0 0 0 7.07 7.07l1.15-1.15' }]]);
+    link.setAttribute('class', 'el-faq__lens');
+    const url = h('input', { type: 'url', class: 'el-search', placeholder: 'Inserisci un link (es. https://maurizio-barbershop.it/servizi/)', 'aria-label': 'Link del sito' });
+    const add = h('button', { type: 'button', class: 'btn btn--secondary', text: '+ Aggiungi sito web' });
+    const err = h('p', { class: 'field__error el-web__err', role: 'alert' });
+    const all = h('input', { type: 'checkbox', 'aria-label': 'Seleziona i domini visibili' });
+    const countLabel = h('span');
+    const list = h('div', { class: 'el-faq__list' });
+    let pages = [];
+    let host = '';
+    let whenText = 'a ogni pubblicazione';
+    let ready = false;
+    let openPages = false;
+    let hit = '';
+    let picked = false;
+    const pathOf = (p) => { try { return new URL(p).pathname.replace(/\/$/, '') || '/'; } catch { return p; } };
+    const paint = () => {
+      const k = q.value.trim().toLowerCase();
+      const show = Boolean(host) && (!k || host.toLowerCase().includes(k));
+      countLabel.textContent = show ? '1 dominio' : (ready ? 'Nessun dominio' : 'Carico…');
+      all.checked = show && picked;
+      all.disabled = !show;
+      list.replaceChildren();
+      if (!ready) { list.append(h('p', { class: 'pempty', text: 'Carico…' })); return; }
+      if (!host) { list.append(h('p', { class: 'pempty', text: 'Non riesco a leggere la mappa del sito.' })); return; }
+      if (!show) { list.append(h('p', { class: 'pempty', text: 'Nessun dominio trovato.' })); return; }
+      const tick = h('input', { type: 'checkbox', 'aria-label': `Seleziona ${host}` });
+      tick.checked = picked;
+      const refresh = h('button', { type: 'button', class: 'el-web__icon', 'aria-label': 'Rileggi la mappa del sito', title: 'Rileggi la mappa' }, svg([['path', { d: 'M21 12a9 9 0 0 1-15.5 6.3' }], ['path', { d: 'M3 12a9 9 0 0 1 15.5-6.3' }], ['path', { d: 'M21 4v5h-5' }], ['path', { d: 'M3 20v-5h5' }]]));
+      const pencil = h('button', { type: 'button', class: 'el-web__icon', 'aria-label': 'Vedi le pagine', title: 'Vedi le pagine', 'aria-pressed': openPages ? 'true' : 'false' }, svg([['path', { d: 'M12 20h9' }], ['path', { d: 'M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z' }]]));
+      refresh.addEventListener('click', () => reload(true));
+      pencil.addEventListener('click', () => { openPages = !openPages; hit = ''; paint(); });
+      const row = h('article', { class: picked ? 'el-web__row is-on' : 'el-web__row' },
+        tick,
+        h('strong', { class: 'el-web__host', text: host }),
+        h('span', { class: 'el-web__meta' }, h('span', { text: `${pages.length} pagine` }), h('span', { text: whenText })),
+        h('span', { class: 'el-web__icons' }, refresh, pencil));
+      tick.addEventListener('change', () => { picked = tick.checked; all.checked = picked; row.classList.toggle('is-on', picked); });
+      list.append(row);
+      if (!openPages) return;
+      const pagesBox = h('div', { class: 'el-web__pages' });
+      pages.forEach((p) => {
+        const a = h('a', { href: p, target: '_blank', rel: 'noopener noreferrer', text: pathOf(p) });
+        if (hit && p === hit) a.classList.add('is-hit');
+        pagesBox.append(a);
+      });
+      list.append(pagesBox);
+      const marked = pagesBox.querySelector('.is-hit');
+      if (marked) {
+        const top = marked.getBoundingClientRect().top - pagesBox.getBoundingClientRect().top;
+        pagesBox.scrollTop += top - 8;
+      }
+    };
+    async function reload(announce) {
+      err.textContent = '';
+      try {
+        const got = await readMap();
+        pages = [...String(got.map || '').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+        try { host = new URL(pages[0]).hostname.replace(/^www\./, ''); } catch { host = ''; }
+        whenText = got.when || 'a ogni pubblicazione';
+        if (!pages.length || !host) throw new Error('mappa');
+        url.placeholder = `Inserisci un link (es. https://${host}/servizi/)`;
+        if (announce) say('Mappa riletta.');
+      } catch {
+        pages = [];
+        host = '';
+        if (announce) say('Non riesco a leggere la mappa del sito.', true);
+      }
+      ready = true;
+      paint();
     }
-    return [card('Sito web', box)];
+    const findPage = () => {
+      err.textContent = '';
+      const raw = url.value.trim();
+      if (!raw) { err.textContent = 'Inserisci un link.'; return; }
+      let parsed;
+      try { parsed = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`); }
+      catch { err.textContent = 'Questo link non è valido.'; return; }
+      const name = parsed.hostname.replace(/^www\./, '');
+      if (!host || name.toLowerCase() !== host.toLowerCase()) {
+        err.textContent = host ? `L’assistente legge solo il sito pubblicato, ${host}.` : 'Non riesco a leggere la mappa del sito.';
+        return;
+      }
+      const path = parsed.pathname.replace(/\/$/, '') || '/';
+      q.value = '';
+      if (path === '/') { openPages = false; hit = ''; say(`${host} è già il sito che l’assistente legge.`); paint(); return; }
+      const found = pages.find((p) => pathOf(p) === path);
+      if (!found) { openPages = true; hit = ''; err.textContent = 'Questa pagina non è nella mappa pubblicata.'; paint(); return; }
+      openPages = true;
+      hit = found;
+      say('Pagina trovata.');
+      paint();
+    };
+    add.addEventListener('click', findPage);
+    url.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); findPage(); } });
+    browse.addEventListener('click', () => { openPages = true; paint(); });
+    q.addEventListener('input', paint);
+    all.addEventListener('change', () => { picked = all.checked; paint(); });
+    reload(false);
+    return [
+      h('header', { class: 'el-faq__head' }, h('h2', { text: 'Sito web' }), h('p', { text: 'Le pagine del sito che l’assistente legge per rispondere, allineate ai contenuti online.' })),
+      find,
+      intro,
+      h('div', { class: 'el-web__add' }, h('label', { class: 'el-faq__find' }, link, url), add),
+      err,
+      h('p', { class: 'el-web__count' }, all, countLabel),
+      list,
+    ];
+  }
+
+  function siteView() {
+    return siteScreen(async () => ({ map: sitemapXml, when: 'a ogni pubblicazione' }));
   }
 
   function docsView(list) {
