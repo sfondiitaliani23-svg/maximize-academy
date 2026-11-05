@@ -19,6 +19,35 @@ const PAGES = [['/', 'Home'], ['/#prenota', 'Prenota (dalla Home)'], ['/servizi/
 const label = (list, v) => (list.find(([k]) => k === v) || [v, v])[1];
 const when = (iso) => (iso ? new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Rome' }) : '—');
 
+const NS = 'http://www.w3.org/2000/svg';
+const ICONS = {
+  chat: [['path', { d: 'M5 6.5h14a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H9l-4 3v-3H5a1 1 0 0 1-1-1V7.5a1 1 0 0 1 1-1z' }]],
+  book: [['path', { d: 'M5 5.2A2.2 2.2 0 0 1 7.2 3H19v15.2H7.2A2.2 2.2 0 0 0 5 20.4z' }], ['path', { d: 'M5 5.2A2.2 2.2 0 0 1 7.2 7.4H19' }]],
+  flow: [['circle', { cx: '6', cy: '6', r: '2' }], ['circle', { cx: '18', cy: '12', r: '2' }], ['circle', { cx: '6', cy: '18', r: '2' }], ['path', { d: 'M8 6h6a2 2 0 0 1 2 2v2M8 18h6a2 2 0 0 0 2-2v-2M6 8v8' }]],
+  person: [['circle', { cx: '12', cy: '8', r: '3' }], ['path', { d: 'M5.5 19.2a6.5 6.5 0 0 1 13 0' }]],
+  cal: [['rect', { x: '4', y: '5', width: '16', height: '15', rx: '2' }], ['path', { d: 'M4 10h16M8 3.5V6M16 3.5V6' }]],
+  bot: [['rect', { x: '5', y: '8', width: '14', height: '11', rx: '3' }], ['path', { d: 'M12 8V5.2M9 13h.01M15 13h.01M9.5 16.5h5' }], ['circle', { cx: '12', cy: '4.2', r: '.9' }]],
+  chart: [['path', { d: 'M5 19V10M12 19V5M19 19v-6' }]],
+  gear: [['circle', { cx: '12', cy: '12', r: '3' }], ['path', { d: 'M12.2 2h-.4a2 2 0 0 0-2 2v.2a2 2 0 0 1-1 1.7l-.4.3a2 2 0 0 1-2 0l-.2-.1a2 2 0 0 0-2.7.7l-.2.4a2 2 0 0 0 .7 2.7l.2.1a2 2 0 0 1 1 1.7v.5a2 2 0 0 1-1 1.7l-.2.1a2 2 0 0 0-.7 2.7l.2.4a2 2 0 0 0 2.7.7l.2-.1a2 2 0 0 1 2 0l.4.3a2 2 0 0 1 1 1.7V20a2 2 0 0 0 2 2h.4a2 2 0 0 0 2-2v-.2a2 2 0 0 1 1-1.7l.4-.3a2 2 0 0 1 2 0l.2.1a2 2 0 0 0 2.7-.7l.2-.4a2 2 0 0 0-.7-2.7l-.2-.1a2 2 0 0 1-1-1.7v-.5a2 2 0 0 1 1-1.7l.2-.1a2 2 0 0 0 .7-2.7l-.2-.4a2 2 0 0 0-2.7-.7l-.2.1a2 2 0 0 1-2 0l-.4-.3a2 2 0 0 1-1-1.7V4a2 2 0 0 0-2-2z' }]],
+};
+const icon = (name) => {
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.8');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('focusable', 'false');
+  (ICONS[name] || []).forEach(([tag, attrs]) => {
+    const node = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    svg.append(node);
+  });
+  return svg;
+};
+
 export function mount(box, root) {
   const auth = root.closest('[data-auth-page]');
   const url = auth.dataset.authUrl;
@@ -28,6 +57,7 @@ export function mount(box, root) {
   let team = []; try { team = JSON.parse(root.dataset.team || '[]'); } catch { team = []; }
   let rows = [];
   let tab = 'casella';
+  try { if (sessionStorage.getItem('mx-eliseo-tab') === 'campagne') tab = 'campagne'; } catch { /* la sessione del browser non è disponibile */ }
   const filters = { q: '', fase: '', fonte: '', etichetta: '' };
   // Etichette e modelli arrivano con supabase/eliseo-liste-modelli.sql: finché manca, quelle parti restano nascoste.
   let hasTags = false, modelli = null;
@@ -49,53 +79,78 @@ export function mount(box, root) {
   const status = h('p', { class: 'el-status', role: 'status', 'aria-live': 'polite' });
   const say = (t, bad) => { status.textContent = t; status.dataset.state = bad ? 'error' : 'ok'; };
   const body = h('div', { class: 'el-body' });
-  const groups = [
-    ['Sezioni', [
-      ['casella', 'Conversazioni'],
-      ['elenco', 'Contatti'],
-      ['campagne', 'Campagne'],
-      ['modelli', 'Modelli'],
-      ['automazioni', 'Automazioni'],
-      ['prova', 'Chatbot'],
-      ['analisi', 'Analisi'],
+  // Barra di icone dentro Eliseo. Il menu scuro dell'area riservata resta al suo posto.
+  const rails = [
+    ['casella', 'Conversazioni', 'chat', null],
+    ['faq', 'Addestramento', 'book', [
+      ['Base di conoscenza', [['faq', 'FAQ'], ['sito', 'Sito web'], ['documenti', 'File']]],
+      ['Agente Chat', [['istruzioni', 'Prompt'], ['passaggio', 'Escalation']]],
     ]],
-    ['Base di conoscenza', [
-      ['faq', 'FAQ'],
-      ['sito', 'Sito web'],
-      ['documenti', 'File'],
+    ['automazioni', 'Automazioni', 'flow', null],
+    ['elenco', 'Contatti', 'person', [
+      ['', [['elenco', 'Contatti'], ['campagne', 'Campagne'], ['modelli', 'Modelli']]],
     ]],
-    ['Agente Chat', [
-      ['istruzioni', 'Prompt'],
-      ['passaggio', 'Escalation'],
-    ]],
-    ['', [
-      ['integrazioni', 'Integrazioni'],
+    ['prenota', 'Prenotazioni', 'cal', null],
+    ['prova', 'Chatbot', 'bot', null],
+    ['analisi', 'Analisi', 'chart', null],
+    ['integrazioni', 'Impostazioni', 'gear', [
+      ['', [['integrazioni', 'Integrazioni']]],
     ]],
   ];
+  const owns = (item, id) => item[0] === id
+    || (item[3] || []).some((g) => g[1].some(([k]) => k === id))
+    || (item[0] === 'elenco' && (id === 'colonne' || id === 'importa'));
+  const app = h('div', { class: 'el-app' });
+  const railNav = h('div', { class: 'el-rail__nav' });
+  const side = h('aside', { class: 'el-side' });
   const sideNav = h('div', { class: 'el-side__nav' });
+  side.append(sideNav);
+  const rail = h('nav', { class: 'el-rail', 'aria-label': 'Eliseo' },
+    h('span', { class: 'el-mark', 'aria-hidden': 'true', text: 'E' }),
+    railNav);
   const syncNav = () => {
-    sideNav.querySelectorAll('[data-tab]').forEach((b) => {
-      const on = b.dataset.tab === tab || (b.dataset.tab === 'elenco' && (tab === 'colonne' || tab === 'importa'));
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    const current = rails.find((item) => owns(item, tab)) || rails[0];
+    rail.querySelectorAll('.el-rail__btn').forEach((b) => {
+      b.setAttribute('aria-pressed', b.dataset.tab === current[0] ? 'true' : 'false');
+    });
+    sideNav.replaceChildren();
+    if (!current[3]) {
+      side.hidden = true;
+      app.classList.remove('has-sub');
+      return;
+    }
+    side.hidden = false;
+    app.classList.add('has-sub');
+    sideNav.append(h('p', { class: 'el-side__title', text: current[1] }));
+    current[3].forEach(([title, items]) => {
+      if (title) sideNav.append(h('p', { class: 'el-group', text: title }));
+      const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': title || current[1] });
+      items.forEach(([id, nome]) => {
+        const on = id === tab || (id === 'elenco' && (tab === 'colonne' || tab === 'importa'));
+        const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': on ? 'true' : 'false', text: nome });
+        b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
+        nav.append(b);
+      });
+      sideNav.append(nav);
     });
   };
-  groups.forEach(([title, items]) => {
-    if (title) sideNav.append(h('p', { class: 'el-group', text: title }));
-    const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': title || 'Integrazioni' });
-    items.forEach(([id, nome]) => {
-      const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': id === tab ? 'true' : 'false', text: nome });
-      b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
-      nav.append(b);
+  rails.forEach((item) => {
+    const b = h('button', {
+      type: 'button', class: 'el-rail__btn', 'data-tab': item[0],
+      'aria-label': item[1], title: item[1], 'aria-pressed': 'false',
     });
-    sideNav.append(nav);
+    b.append(icon(item[2]));
+    b.addEventListener('click', () => {
+      if (owns(item, tab)) return;
+      tab = item[3]?.[0]?.[1]?.[0]?.[0] || item[0];
+      syncNav();
+      draw();
+    });
+    (item[2] === 'gear' ? rail : railNav).append(b);
   });
-  box.replaceChildren(h('div', { class: 'el-app' },
-    h('aside', { class: 'el-side' },
-      h('div', { class: 'el-brand' },
-        h('span', { class: 'el-mark', 'aria-hidden': 'true', text: 'E' }),
-        h('div', null, h('strong', { text: 'Eliseo' }), h('small', { text: 'Contatti e campagne' }))),
-      sideNav),
-    h('div', { class: 'el-stage' }, body, status)));
+  app.append(rail, side, h('div', { class: 'el-stage' }, body, status));
+  syncNav();
+  box.replaceChildren(app);
 
   function drawStats() { if (tab === 'analisi') draw(); }
   function pageHead(title, ...extra) {
@@ -596,10 +651,20 @@ export function mount(box, root) {
     drawList();
   }
 
+  function drawPrenota() {
+    const href = root.dataset.twUrl || 'https://www.treatwell.it/';
+    body.replaceChildren(
+      pageHead('Prenotazioni'),
+      card(null,
+        h('p', { class: 'pcard__note', text: 'Gli appuntamenti restano su Treatwell.' }),
+        h('a', { class: 'btn', href, target: '_blank', rel: 'noopener noreferrer', text: 'Apri Treatwell' })));
+  }
+
   function draw() {
     listBox = null;
     syncNav();
     if (tab === 'analisi') { drawAnalisi(); return; }
+    if (tab === 'prenota') { drawPrenota(); return; }
     if (tab === 'colonne' || tab === 'elenco') { drawContatti(); return; }
     if (tab === 'campagne') { body.replaceChildren(...drawCampaigns()); return; }
     if (tab === 'casella') { body.replaceChildren(...drawCasella()); return; }

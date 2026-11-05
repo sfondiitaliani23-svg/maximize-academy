@@ -343,7 +343,7 @@
   --success: #1d6a44;
   --danger: #a33b32;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 64px minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   height: calc(100dvh - 120px);
   min-height: 0;
@@ -363,12 +363,37 @@
 .mx-strumenti .el-app textarea { font: inherit; color: inherit; letter-spacing: 0; text-transform: none; }
 .mx-strumenti .el-app h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-app h3, .mx-strumenti .el-app h4 { letter-spacing: 0; text-transform: none; color: #1f2328; }
+.mx-strumenti .el-app.has-sub { grid-template-columns: 64px 200px minmax(0, 1fr); }
+.mx-strumenti .el-rail {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  min-width: 0; min-height: 0; height: 100%; padding: 10px 0;
+  background: #1f2328; color: #fff;
+}
+.mx-strumenti .el-rail__nav {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex: 1 1 0; min-height: 0; width: 100%; overflow: auto; scrollbar-width: thin;
+  scrollbar-color: #fff #1f2328;
+}
+.mx-strumenti .el-rail__btn {
+  display: grid; place-items: center; flex: 0 0 auto;
+  width: 40px; height: 40px; min-width: 40px; min-height: 40px; margin: 0; padding: 0;
+  border: 0; border-radius: 12px; background: transparent; color: #fff;
+  box-shadow: none; text-shadow: none; text-transform: none; letter-spacing: 0; cursor: pointer;
+}
+.mx-strumenti .el-rail__btn[aria-pressed="true"] { background: #fff; color: #1f2328; }
+.mx-strumenti .el-rail__btn svg { display: block; width: 22px; height: 22px; }
+.mx-strumenti .el-app .el-rail .el-mark {
+  width: 32px; height: 32px; flex: 0 0 auto;
+  background: #fff; color: #1f2328; font-family: "Segoe UI", Inter, Roboto, sans-serif; font-size: 14px; font-weight: 700;
+}
 .mx-strumenti .el-side {
   display: flex; flex-direction: column; gap: 2px; min-width: 0; min-height: 0;
   height: 100%; overflow: hidden;
   padding: 8px 10px; background: #fff; border-right: 1px solid #e7e9ee;
 }
+.mx-strumenti .el-side[hidden] { display: none; }
 .mx-strumenti .el-side__nav { flex: 1 1 0; min-height: 0; overflow: auto; scrollbar-width: thin; }
+.mx-strumenti .el-side__title { margin: 4px 8px 8px; color: #1f2328; font-size: 15px; font-weight: 700; }
 .mx-strumenti .el-app .el-brand { padding: 2px 6px 6px; }
 .mx-strumenti .el-app .el-brand strong { display: block; font-size: 15px; letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-app .el-brand small { display: block; color: #8b919a; font-size: 12px; }
@@ -471,9 +496,11 @@
 .mx-strumenti .el-app select:focus-visible,
 .mx-strumenti .el-app textarea:focus-visible { outline: 2px solid #1f2328; outline-offset: 1px; }
 @media (max-width: 800px) {
-  .mx-strumenti .el-app, .mx-strumenti .el-conv, .mx-strumenti .el-know, .mx-strumenti .el-book { grid-template-columns: 1fr; }
+  .mx-strumenti .el-app, .mx-strumenti .el-app.has-sub, .mx-strumenti .el-conv, .mx-strumenti .el-know, .mx-strumenti .el-book { grid-template-columns: 1fr; }
   .mx-strumenti .el-kpis, .mx-strumenti .el-detail__ctrl { grid-template-columns: 1fr 1fr; }
   .mx-strumenti .el-app { height: auto; grid-template-rows: none; }
+  .mx-strumenti .el-rail { flex-direction: row; height: auto; width: 100%; padding: 8px; overflow: auto; }
+  .mx-strumenti .el-rail__nav { flex-direction: row; flex: 1 1 auto; width: auto; overflow: auto; }
   .mx-strumenti .el-side { height: auto; overflow: visible; border-right: 0; border-bottom: 1px solid #e7e9ee; }
   .mx-strumenti .el-side__nav { overflow: visible; }
   .mx-strumenti .el-stage { height: auto; overflow: visible; }
