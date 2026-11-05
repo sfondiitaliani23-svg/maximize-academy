@@ -344,7 +344,9 @@
   --danger: #a33b32;
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
-  min-height: 640px;
+  grid-template-rows: minmax(0, 1fr);
+  height: calc(100dvh - 120px);
+  min-height: 0;
   width: 100%;
   max-width: 100%;
   background: #f3f4f6;
@@ -362,25 +364,26 @@
 .mx-strumenti .el-app h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-app h3, .mx-strumenti .el-app h4 { letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-side {
-  display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0;
-  max-height: calc(100vh - 96px); overflow: auto;
-  padding: 16px 12px; background: #fff; border-right: 1px solid #e7e9ee;
+  display: flex; flex-direction: column; gap: 2px; min-width: 0; min-height: 0;
+  height: 100%; overflow: hidden;
+  padding: 8px 10px; background: #fff; border-right: 1px solid #e7e9ee;
 }
-.mx-strumenti .el-app .el-brand { padding: 4px 8px 12px; }
+.mx-strumenti .el-side__nav { flex: 1 1 0; min-height: 0; overflow: auto; scrollbar-width: thin; }
+.mx-strumenti .el-app .el-brand { padding: 2px 6px 6px; }
 .mx-strumenti .el-app .el-brand strong { display: block; font-size: 15px; letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-app .el-brand small { display: block; color: #8b919a; font-size: 12px; }
-.mx-strumenti .el-app .el-mark { width: 34px; height: 34px; background: #1f2328; color: #fff; font-size: 15px; }
-.mx-strumenti .el-app .el-group { margin: 14px 8px 4px; color: #1f2328; font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.mx-strumenti .el-app .el-mark { width: 28px; height: 28px; background: #1f2328; color: #fff; font-size: 13px; }
+.mx-strumenti .el-app .el-group { margin: 4px 8px 0; color: #1f2328; font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; }
 .mx-strumenti .el-navs, .mx-strumenti .el-folders, .mx-strumenti .el-subnav { display: grid; gap: 2px; }
 .mx-strumenti .el-nav, .mx-strumenti .el-folder, .mx-strumenti .el-sub {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  width: 100%; min-height: 36px; padding: 0 10px; border: 0; border-radius: 10px;
+  width: 100%; min-height: 26px; padding: 0 8px; border: 0; border-radius: 10px;
   background: transparent; color: #1f2328; text-align: left; cursor: pointer;
 }
 .mx-strumenti .el-nav[aria-selected="true"], .mx-strumenti .el-folder[aria-pressed="true"] { background: #eef0f3; font-weight: 650; }
 .mx-strumenti .el-sub[aria-pressed="true"] { background: #e7f1ff; font-weight: 650; }
 .mx-strumenti .el-folder b, .mx-strumenti .el-count { color: #8b919a; font-weight: 600; font-size: 13px; }
-.mx-strumenti .el-stage { display: flex; flex-direction: column; min-width: 0; background: #f7f8fa; }
+.mx-strumenti .el-stage { display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: #f7f8fa; }
 .mx-strumenti .el-app .el-body { flex: 1; min-width: 0; padding: 16px; overflow: auto; }
 .mx-strumenti .el-app .el-status { margin: 0; padding: 0 16px 12px; color: #1d6a44; font-size: 13px; }
 .mx-strumenti .el-app .el-status:empty { display: none; }
@@ -470,7 +473,10 @@
 @media (max-width: 800px) {
   .mx-strumenti .el-app, .mx-strumenti .el-conv, .mx-strumenti .el-know, .mx-strumenti .el-book { grid-template-columns: 1fr; }
   .mx-strumenti .el-kpis, .mx-strumenti .el-detail__ctrl { grid-template-columns: 1fr 1fr; }
-  .mx-strumenti .el-side { max-height: none; border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .el-app { height: auto; grid-template-rows: none; }
+  .mx-strumenti .el-side { height: auto; overflow: visible; border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .el-side__nav { overflow: visible; }
+  .mx-strumenti .el-stage { height: auto; overflow: visible; }
   .mx-strumenti .el-navs { display: flex; flex-wrap: wrap; }
   .mx-strumenti .el-nav { width: auto; }
   .mx-strumenti .el-conv__side, .mx-strumenti .el-conv__list, .mx-strumenti .el-know__side { border-right: 0; border-bottom: 1px solid #e7e9ee; }
