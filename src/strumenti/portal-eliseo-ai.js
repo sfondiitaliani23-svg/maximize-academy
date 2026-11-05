@@ -38,8 +38,8 @@ export function mountAi(kind, ui) {
   const wrap = h('div', { class: 'el-ai' }, h('p', { class: 'pempty', text: 'Carico…' }));
   const fail = (e) => wrap.replaceChildren(...(e.message === 'sql' ? missing() : [card(null, h('p', { class: 'pcard__note', text: e.message }))]));
 
-  // ——— Addestramento ———
-  let sub = 'faq';
+  // ——— Addestramento: una voce alla volta, scelta dal menu a sinistra ———
+  const sub = ui.sub || 'faq';
   async function drawTraining() {
     let faq, docs, conf, vers;
     try {
@@ -50,18 +50,8 @@ export function mountAi(kind, ui) {
         call('/rest/v1/eliseo_assistente_versioni?select=*&order=creato_il.desc&limit=15'),
       ]);
     } catch (e) { fail(e); return; }
-    const nav = h('div', { class: 'el-subnav', role: 'group', 'aria-label': 'Sezioni della base di conoscenza' });
-    [['faq', `FAQ (${faq.length})`], ['sito', 'Sito web'], ['documenti', `File (${docs.length})`], ['istruzioni', 'Prompt'], ['passaggio', 'Escalation']].forEach(([k, t]) => {
-      const b = h('button', { type: 'button', class: 'el-sub', 'aria-pressed': sub === k ? 'true' : 'false', text: t });
-      b.addEventListener('click', () => { sub = k; drawTraining(); });
-      nav.append(b);
-    });
     const views = { faq: () => faqView(faq), sito: siteView, documenti: () => docsView(docs), istruzioni: () => promptView(conf, vers), passaggio: () => handoffView(conf) };
-    wrap.replaceChildren(h('div', { class: 'el-know' },
-      h('aside', { class: 'el-know__side' }, h('p', { class: 'el-group', text: 'Base di conoscenza' }), nav),
-      h('div', { class: 'el-know__main' },
-        h('p', { class: 'pcard__note', text: 'Quello che l’assistente del sito sa e come si comporta. FAQ, documenti, regole e orari li può leggere chiunque usi l’assistente: mai dati dei clienti, mai cose interne.' }),
-        ...[].concat(views[sub]()))));
+    wrap.replaceChildren(...[].concat(views[sub]()));
   }
 
   function faqView(list) {
@@ -295,10 +285,28 @@ export function mountAi(kind, ui) {
     });
     const examples = h('div', { class: 'filters', role: 'group', 'aria-label': 'Domande di esempio' });
     ['Quanto costa un taglio?', 'Siete aperti domenica?', 'Posso spostare l’appuntamento?', 'Voglio parlare con una persona', ...tr.faq.slice(0, 2).map((x) => x.d)].forEach((t) => { const b = h('button', { type: 'button', class: 'chip', text: t }); b.addEventListener('click', () => { input.value = t; f.requestSubmit(); }); examples.append(b); });
-    const state = h('p', { class: 'pcard__note', text: `${tr.faq.length} FAQ attive · ${tr.documenti.length} documenti attivi · passaggio a una persona ${tr.escalation ? 'acceso' : 'spento'} · domande scritte sul sito ${tr.testo_libero ? 'accese' : 'spente (si accendono in FAQ → Escalation)'}` });
+    const state = h('p', { class: 'pcard__note', text: `${tr.faq.length} FAQ attive · ${tr.documenti.length} documenti attivi · passaggio a una persona ${tr.escalation ? 'acceso' : 'spento'} · domande scritte sul sito ${tr.testo_libero ? 'accese' : 'spente (si accendono in Escalation)'}` });
     wrap.replaceChildren(card('Prova il chatbot', h('p', { class: 'pcard__note', text: 'Fai le domande come un cliente e guarda cosa risponde l’assistente e perché. Usa le FAQ e i documenti salvati.' }), state, examples, log, f));
   }
 
-  ({ addestramento: drawTraining, automazioni: drawAuto, prova: drawTest })[kind]();
+  function drawLinks() {
+    const row = (name, state, note) => h('li', null,
+      h('strong', { text: name }),
+      h('span', { text: state }),
+      note ? h('span', { text: note }) : null);
+    wrap.replaceChildren(card(null,
+      h('p', { class: 'pcard__note', text: 'Qui si vede solo quello che Eliseo usa davvero. Uno stato è «in uso» solo se il collegamento c’è già.' }),
+      h('ul', { class: 'plist' },
+        row('Sito del negozio', 'In uso', 'L’assistente legge le pagine, il listino e gli orari pubblicati sul sito.'),
+        row('FAQ e file', 'In uso', 'Sono quelli scritti in Base di conoscenza.'),
+        row('WhatsApp', 'Sul sito del negozio', 'Il passaggio al team usa il numero del negozio. Su Maximize i pulsanti commerciali non usano quel numero.'),
+        row('Prenotazioni', 'Treatwell', 'Gli appuntamenti restano su Treatwell. Qui non c’è un calendario.'),
+        row('Email', 'Non collegata', 'Nessuna casella email collegata.'),
+        row('Messenger', 'Non collegato', 'Nessun collegamento.'),
+        row('Instagram', 'Non collegato', 'Nessun collegamento.'),
+        row('Voce', 'Non collegata', 'Nessun collegamento.'))));
+  }
+
+  ({ addestramento: drawTraining, automazioni: drawAuto, prova: drawTest, integrazioni: drawLinks })[kind]();
   return [wrap];
 }

@@ -362,7 +362,8 @@
 .mx-strumenti .el-app h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-app h3, .mx-strumenti .el-app h4 { letter-spacing: 0; text-transform: none; color: #1f2328; }
 .mx-strumenti .el-side {
-  display: flex; flex-direction: column; gap: 4px; min-width: 0;
+  display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0;
+  max-height: calc(100vh - 96px); overflow: auto;
   padding: 16px 12px; background: #fff; border-right: 1px solid #e7e9ee;
 }
 .mx-strumenti .el-app .el-brand { padding: 4px 8px 12px; }
@@ -469,7 +470,7 @@
 @media (max-width: 800px) {
   .mx-strumenti .el-app, .mx-strumenti .el-conv, .mx-strumenti .el-know, .mx-strumenti .el-book { grid-template-columns: 1fr; }
   .mx-strumenti .el-kpis, .mx-strumenti .el-detail__ctrl { grid-template-columns: 1fr 1fr; }
-  .mx-strumenti .el-side { border-right: 0; border-bottom: 1px solid #e7e9ee; }
+  .mx-strumenti .el-side { max-height: none; border-right: 0; border-bottom: 1px solid #e7e9ee; }
   .mx-strumenti .el-navs { display: flex; flex-wrap: wrap; }
   .mx-strumenti .el-nav { width: auto; }
   .mx-strumenti .el-conv__side, .mx-strumenti .el-conv__list, .mx-strumenti .el-know__side { border-right: 0; border-bottom: 1px solid #e7e9ee; }

@@ -49,35 +49,52 @@ export function mount(box, root) {
   const status = h('p', { class: 'el-status', role: 'status', 'aria-live': 'polite' });
   const say = (t, bad) => { status.textContent = t; status.dataset.state = bad ? 'error' : 'ok'; };
   const body = h('div', { class: 'el-body' });
-  const sections = [
-    ['casella', 'Conversazioni'],
-    ['elenco', 'Contatti'],
-    ['campagne', 'Campagne'],
-    ['addestramento', 'FAQ'],
-    ['modelli', 'Modelli'],
-    ['automazioni', 'Automazioni'],
-    ['prova', 'Chatbot'],
-    ['analisi', 'Analisi'],
+  const groups = [
+    ['Sezioni', [
+      ['casella', 'Conversazioni'],
+      ['elenco', 'Contatti'],
+      ['campagne', 'Campagne'],
+      ['modelli', 'Modelli'],
+      ['automazioni', 'Automazioni'],
+      ['prova', 'Chatbot'],
+      ['analisi', 'Analisi'],
+    ]],
+    ['Base di conoscenza', [
+      ['faq', 'FAQ'],
+      ['sito', 'Sito web'],
+      ['documenti', 'File'],
+    ]],
+    ['Agente Chat', [
+      ['istruzioni', 'Prompt'],
+      ['passaggio', 'Escalation'],
+    ]],
+    ['', [
+      ['integrazioni', 'Integrazioni'],
+    ]],
   ];
-  const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': 'Sezioni di Eliseo' });
+  const sideNav = h('div', { class: 'el-side__nav' });
   const syncNav = () => {
-    nav.querySelectorAll('[data-tab]').forEach((b) => {
+    sideNav.querySelectorAll('[data-tab]').forEach((b) => {
       const on = b.dataset.tab === tab || (b.dataset.tab === 'elenco' && (tab === 'colonne' || tab === 'importa'));
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
   };
-  sections.forEach(([id, nome]) => {
-    const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': id === tab ? 'true' : 'false', text: nome });
-    b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
-    nav.append(b);
+  groups.forEach(([title, items]) => {
+    if (title) sideNav.append(h('p', { class: 'el-group', text: title }));
+    const nav = h('div', { class: 'el-navs', role: 'tablist', 'aria-label': title || 'Integrazioni' });
+    items.forEach(([id, nome]) => {
+      const b = h('button', { type: 'button', class: 'el-nav', role: 'tab', 'data-tab': id, 'aria-selected': id === tab ? 'true' : 'false', text: nome });
+      b.addEventListener('click', () => { tab = id; syncNav(); draw(); });
+      nav.append(b);
+    });
+    sideNav.append(nav);
   });
   box.replaceChildren(h('div', { class: 'el-app' },
     h('aside', { class: 'el-side' },
       h('div', { class: 'el-brand' },
         h('span', { class: 'el-mark', 'aria-hidden': 'true', text: 'E' }),
         h('div', null, h('strong', { text: 'Eliseo' }), h('small', { text: 'Contatti e campagne' }))),
-      h('p', { class: 'el-group', text: 'Sezioni' }),
-      nav),
+      sideNav),
     h('div', { class: 'el-stage' }, body, status)));
 
   function drawStats() { if (tab === 'analisi') draw(); }
@@ -587,13 +604,15 @@ export function mount(box, root) {
     if (tab === 'campagne') { body.replaceChildren(...drawCampaigns()); return; }
     if (tab === 'casella') { body.replaceChildren(...drawCasella()); return; }
     if (tab === 'modelli') { body.replaceChildren(...drawModelli()); return; }
-    if (['addestramento', 'automazioni', 'prova'].includes(tab)) {
-      const which = tab;
-      const titolo = { automazioni: 'Automazioni', prova: 'Chatbot' }[which];
+    const know = ['faq', 'sito', 'documenti', 'istruzioni', 'passaggio'];
+    if (know.includes(tab) || ['automazioni', 'prova', 'integrazioni'].includes(tab)) {
+      const here = tab;
+      const which = know.includes(here) ? 'addestramento' : here;
+      const titolo = { automazioni: 'Automazioni', prova: 'Chatbot', integrazioni: 'Integrazioni' }[which];
       body.replaceChildren(...(titolo ? [pageHead(titolo)] : []), h('p', { class: 'pempty', text: 'Carico…' }));
       import('./portal-eliseo-ai.js').then((m) => {
-        if (tab !== which) return;
-        const nodes = m.mountAi(which, { h, card, call, say, select, team });
+        if (tab !== here) return;
+        const nodes = m.mountAi(which, { h, card, call, say, select, team, sub: know.includes(here) ? here : undefined });
         body.replaceChildren(...(titolo ? [pageHead(titolo)] : []), ...nodes);
       }).catch(() => body.replaceChildren(card(null, h('p', { class: 'pcard__note', text: 'Non riesco a caricare questa sezione. Riprova.' }))));
       return;
