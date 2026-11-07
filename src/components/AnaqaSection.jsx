@@ -1,15 +1,16 @@
 import { brandLinks, WA_KEPLERO, waLink } from '../routes';
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, ShoppingBag, MapPin } from 'lucide-react';
+import ProductBookingModal from './ProductBookingModal';
 
 const PAGINE_LINEA = 42;
 
 const rituale = [
-  { nome: 'Beard Shampoo', testo: 'Deterge delicatamente barba e pelle, eliminando impurità e residui.' },
-  { nome: 'Beard Peeling', testo: 'Esfolia la pelle sotto la barba, rimuovendo le cellule morte.' },
-  { nome: 'Beard Foam', testo: 'Ammorbidisce e condiziona la barba, rendendola più disciplinata.' },
-  { nome: 'Beard Oil', testo: 'Nutre, ammorbidisce e dona lucentezza alla barba.' },
-  { nome: 'Beard Perfume', testo: 'Completa il rituale con una piacevole fragranza.' },
+  { nome: 'Beard Shampoo', testo: 'Deterge delicatamente barba e pelle, eliminando impurità e residui.', prezzo: '24' },
+  { nome: 'Beard Peeling', testo: 'Esfolia la pelle sotto la barba, rimuovendo le cellule morte.', prezzo: '22' },
+  { nome: 'Beard Foam', testo: 'Ammorbidisce e condiziona la barba, rendendola più disciplinata.', prezzo: '20' },
+  { nome: 'Beard Oil', testo: 'Nutre, ammorbidisce e dona lucentezza alla barba.', prezzo: '25' },
+  { nome: 'Beard Perfume', testo: 'Completa il rituale con una piacevole fragranza.', prezzo: '28' },
 ];
 
 function srcLinea(n) {
@@ -19,6 +20,7 @@ function srcLinea(n) {
 export default function AnaqaSection() {
   const [lineaAperta, setLineaAperta] = useState(false);
   const [pagina, setPagina] = useState(1);
+  const [prodottoSelezionato, setProdottoSelezionato] = useState(null);
   const categories = [
     {
       title: 'Beard Care & Shaving',
@@ -184,7 +186,50 @@ export default function AnaqaSection() {
                 ))}
               </ol>
 
-              <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+              {/* Prenota e Ritira in Salone */}
+              <div className="pt-6 border-t border-white/10 mt-6">
+                <div className="flex items-center gap-2 text-xs uppercase font-bold tracking-[0.2em] text-amber-400 mb-2">
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>PRENOTA E RITIRA IN BARBERIA</span>
+                </div>
+                <p className="text-xs text-gray-400 mb-4">
+                  Vuoi i prodotti del rituale per la cura a casa? Bloccali online e ritirali comodamente al <strong className="text-white">Maurizio Barber Shop</strong> a Foggia, senza spese di spedizione.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {rituale.map((p) => (
+                    <button
+                      key={p.nome}
+                      type="button"
+                      onClick={() => setProdottoSelezionato({ name: `ANAQA ${p.nome}`, price: p.prezzo })}
+                      className="p-3 rounded-xl bg-black/40 border border-amber-500/20 hover:border-amber-500/60 transition-all flex items-center justify-between text-left group"
+                    >
+                      <div>
+                        <span className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors block">
+                          {p.nome}
+                        </span>
+                        <span className="text-[11px] text-amber-300 font-semibold">€ {p.prezzo}</span>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30">
+                        Prenota
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => setProdottoSelezionato({ name: 'Kit Completo Rituale Barba ANAQA (5 Prodotti)', price: '99' })}
+                    className="w-full p-3.5 rounded-xl btn-gold text-xs uppercase font-bold tracking-wider flex items-center justify-center gap-2 shadow-gold-glow"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Prenota Kit Completo (5 Prodotti) · € 99</span>
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed pt-2">
                 ANAQA: cinque prodotti, un unico rituale di cura e benessere professionale.
               </p>
               <p className="text-sm text-amber-200 leading-relaxed">
@@ -258,6 +303,14 @@ export default function AnaqaSection() {
         </div>
 
       </div>
+
+      {/* Modale Prenotazione e Ritiro Prodotti al Maurizio Barber Shop */}
+      {prodottoSelezionato && (
+        <ProductBookingModal
+          product={prodottoSelezionato}
+          onClose={() => setProdottoSelezionato(null)}
+        />
+      )}
     </section>
   );
 }

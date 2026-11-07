@@ -11,17 +11,17 @@ export default function FounderStory() {
           {/* Left Column: Photo in Barberia */}
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="relative rounded-3xl overflow-hidden glass-panel-gold border border-amber-500/30 p-2 shadow-2xl">
-              <div className="relative w-full aspect-[796/498] rounded-2xl overflow-hidden bg-black">
+              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-black">
                 <img loading="lazy" 
-                  src="/assets/img/maurizio-in-barberia.webp" width="796" height="498" 
-                  alt="Maurizio Pizzuto al lavoro in barberia" 
-                  className="w-full h-full object-cover object-center filter contrast-105"
+                  src="/assets/img/maurizio_ritratto.webp" width="1000" height="1250" 
+                  alt="Maurizio Pizzuto · Fondatore Maximize Academy" 
+                  className="w-full h-full object-cover object-top filter contrast-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 
                 <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl glass-panel border border-white/10 text-center">
                   <span className="text-xs uppercase tracking-[0.2em] text-amber-300 font-semibold">
-                    L'esperienza comincia qui. In barberia.
+                    Maurizio Pizzuto · Fondatore Maximize Academy
                   </span>
                 </div>
               </div>
@@ -69,6 +69,30 @@ export default function FounderStory() {
               <div className="px-4 py-2.5 rounded-xl glass-panel border border-amber-500/20 text-xs font-semibold text-amber-200 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
                 <span>Confronto diretto</span>
+              </div>
+            </div>
+
+            {/* Sinergia con Eliseo Miraglia & M×E Barber Lab */}
+            <div className="pt-4 border-t border-white/10 mt-6">
+              <div className="p-4 rounded-2xl glass-panel border border-amber-500/20 bg-black/40 flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border border-amber-500/40 shrink-0 bg-gradient-to-br from-amber-500/20 to-black flex items-center justify-center text-amber-300 font-bold text-sm">
+                  <img
+                    src="/assets/img/eliseo_ritratto.webp"
+                    alt="Eliseo Miraglia"
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <span className="select-none">EM</span>
+                </div>
+                <div className="space-y-0.5">
+                  <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-amber-400">
+                    Sinergia Digitale & Innovazione
+                  </div>
+                  <h4 className="text-sm font-bold text-white">Con Eliseo Miraglia · M×E Barber Lab</h4>
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    Dalla tecnica in poltrona alla presenza tecnologica: sviluppo software, intelligenza artificiale e strumenti digitali per il Barber moderno.
+                  </p>
+                </div>
               </div>
             </div>
 
