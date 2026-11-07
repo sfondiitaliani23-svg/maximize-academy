@@ -18,6 +18,7 @@ import TreatwellSection from './components/TreatwellSection';
 import MxeSection from './components/MxeSection';
 import BarberMatchSection from './components/BarberMatchSection';
 import ContactSection from './components/ContactSection';
+import ProB2BSection from './components/ProB2BSection';
 import Footer from './components/Footer';
 import WhatsAppConcierge from './components/WhatsAppConcierge';
 import CourseModal from './components/CourseModal';
@@ -110,6 +111,7 @@ export default function App() {
     case '/mxe': content = <MxeSection />; break;
     case '/eventi': content = <BarberMatchSection onSelectCourse={openCourse} />; break;
     case '/contatti': content = <ContactSection />; break;
+    case '/pro': content = <ProB2BSection />; break;
     default:
       content = (
         <>

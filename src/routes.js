@@ -75,6 +75,14 @@ export const pages = [
     description: 'Consulenza e corsi con Maurizio Pizzuto. Forbici Sabey, prodotti ANAQA e Treatwell con Keplero.',
     intro: 'Maurizio per formazione e consulenza. Keplero per Sabey, ANAQA e Treatwell.',
   },
+  {
+    path: '/pro',
+    label: 'Professionisti',
+    menu: false,
+    title: 'Maurizio Pizzuto | Formazione, Prodotti & Business B2B · Maximize Academy',
+    description: 'La piattaforma B2B di Maurizio Pizzuto per barbieri e titolari: percorsi formativi, Barber Reset, Sabey Scissors, rituale ANAQA e assistenza commerciale Keplero.',
+    intro: 'Dedicato ai professionisti del settore barber.',
+  },
 ];
 
 export const home = {
