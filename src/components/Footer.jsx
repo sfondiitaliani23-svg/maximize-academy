@@ -64,6 +64,7 @@ export default function Footer() {
             {pages.map((p) => (
               <li key={p.path}><a href={p.path} className={link}>{p.label}</a></li>
             ))}
+            <li><a href="/area" className={link}>Area privata</a></li>
             {/* Collegamento al negozio: ok di Maurizio del 26/10/2026. */}
             <li><a href={brandLinks.maurizioBarberShop} target="_blank" rel="noopener noreferrer" className={link}>Maurizio Barber Shop</a></li>
           </ul>

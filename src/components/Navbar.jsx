@@ -3,9 +3,11 @@ import React from 'react';
 // Barra in alto come Maurizio Barber Shop: fondo nero pieno, menu in testo semplice,
 // azione principale in oro con un filo verticale, pulsante "Menu" su telefono.
 import { pages } from '../routes';
+import { hasSession } from '../lib/account';
 const links = pages.filter((p) => p.menu !== false).map((p) => ({ href: p.path, label: p.nav || p.label }));
 
 export default function Navbar({ currentPath = '/', onOpenMobileMenu, menuOpen = false }) {
+  const loggato = hasSession();
   return (
     <header className="site-header sticky top-0 z-50 flex items-center justify-between gap-4 px-[clamp(1.25rem,6vw,4.5rem)] bg-[#111111]">
       <a href="/" className="shrink-0" aria-label="Maximize Academy, torna all'inizio">
@@ -28,6 +30,19 @@ export default function Navbar({ currentPath = '/', onOpenMobileMenu, menuOpen =
       </nav>
 
       <div className="flex items-center gap-2">
+        {/* Area privata (08/11/2026): stesso account di Maurizio Barber Shop e M×E Barber Lab. */}
+        <a
+          href="/area"
+          aria-current={currentPath === '/area' ? 'page' : undefined}
+          className="relative inline-flex items-center gap-2 min-h-[44px] pr-4 mr-2 text-[#bdbdbd] whitespace-nowrap hover:text-amber-400 transition-colors after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-px after:h-6 after:bg-amber-400/45"
+          aria-label={loggato ? 'La mia area privata' : 'Accedi all\'area privata'}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21a8 8 0 0 1 16 0" />
+          </svg>
+          <span className="hidden sm:inline">{loggato ? 'La mia area' : 'Accedi'}</span>
+        </a>
         <a
           href="https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy"
           target="_blank"
