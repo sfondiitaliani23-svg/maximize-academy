@@ -260,3 +260,30 @@ html[data-app] .wa-fab { display: none; } /* WhatsApp è già nella barra */
 @keyframes mx-dock-pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .mx-dock, .mx-dock-item { animation: none; } }
 html[data-app] .cookie-bar { bottom: calc(118px + env(safe-area-inset-bottom)) !important; } /* nell'app sta sopra la barra */
+
+/* Scritta MAXIMIZE nel piede: filo d'oro, riempimento metallico e luce che segue il mouse. */
+.wordmark { position: relative; display: grid; --mx: 50%; --my: 40%; --on: 0; }
+.wordmark > span { grid-area: 1 / 1; color: transparent; -webkit-background-clip: text; background-clip: text; }
+.wordmark__base {
+  -webkit-text-stroke: 1px rgba(191,161,106,.6);
+  background-image: linear-gradient(180deg, rgba(240,210,138,.22) 0%, rgba(191,161,106,.10) 38%, rgba(17,17,17,0) 78%);
+}
+.wordmark__luce {
+  -webkit-text-stroke: 1px rgba(255,236,190,.9);
+  background-image:
+    radial-gradient(circle at var(--mx) var(--my), rgba(255,246,220,.95) 0, rgba(240,210,138,.85) 7%, rgba(191,161,106,.55) 16%, rgba(120,92,48,.18) 30%, transparent 44%),
+    linear-gradient(115deg, transparent 30%, rgba(240,210,138,.12) 50%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0, #000 18%, transparent 46%);
+          mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0, #000 18%, transparent 46%);
+  opacity: var(--on);
+  transition: opacity .35s ease;
+}
+/* Telefono: niente mouse, la luce passa da sola piano sulle lettere. */
+@media (hover: none) {
+  .wordmark { --my: 45%; }
+  .wordmark__luce { opacity: .8; animation: wordmark-luce 7s ease-in-out infinite; }
+}
+@keyframes wordmark-luce { 0%, 100% { --mx: -10%; } 50% { --mx: 110%; } }
+@property --mx { syntax: '<percentage>'; inherits: true; initial-value: 50%; }
+@property --my { syntax: '<percentage>'; inherits: true; initial-value: 40%; }
+@media (prefers-reduced-motion: reduce) { .wordmark__luce { animation: none; transition: none; } }

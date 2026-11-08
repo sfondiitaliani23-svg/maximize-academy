@@ -3,6 +3,15 @@ import { pages, brandLinks } from '../routes';
 
 // Footer con slogan, colonne Esplora / Seguici / Sede e la scritta MAXIMIZE gigante in filo d'oro.
 const WA = 'https://wa.me/393245878724?text=Salve%20Maurizio,%20vorrei%20informazioni%20su%20Maximize%20Academy';
+// Riflesso stile metallo: la luce segue il puntatore sulle lettere.
+function muoviRiflesso(e) {
+  if (e.pointerType !== 'mouse') return;
+  const r = e.currentTarget.getBoundingClientRect();
+  const st = e.currentTarget.style;
+  st.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+  st.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+  st.setProperty('--on', '1');
+}
 const ico = 'w-[18px] h-[18px] shrink-0';
 const social = [
   {
@@ -89,9 +98,12 @@ export default function Footer() {
 
       <div
         aria-hidden="true"
-        className="select-none whitespace-nowrap text-center font-bold leading-none text-transparent text-[clamp(4.5rem,15vw,15rem)] tracking-[0.02em] pt-4 pb-[clamp(1rem,2vw,2rem)] [-webkit-text-stroke:1px_rgba(191,161,106,0.55)]"
+        className="wordmark select-none whitespace-nowrap text-center font-bold leading-none text-[clamp(4.5rem,15vw,15rem)] tracking-[0.02em] pt-4 pb-[clamp(1rem,2vw,2rem)]"
+        onPointerMove={muoviRiflesso}
+        onPointerLeave={(e) => e.currentTarget.style.removeProperty('--on')}
       >
-        MAXIMIZE
+        <span className="wordmark__base">MAXIMIZE</span>
+        <span className="wordmark__luce">MAXIMIZE</span>
       </div>
 
       <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 sm:pr-[calc(clamp(1.25rem,6vw,4.5rem)+5rem)] text-[0.8rem]">
