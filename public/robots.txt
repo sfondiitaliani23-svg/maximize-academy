@@ -18,7 +18,7 @@ Disallow: /_vercel/
 Disallow: /.vercel/
 
 # Sitemap
-Sitemap: https://maximize-academy.vercel.app/sitemap.xml
+Sitemap: https://maximize-academy.pages.dev/sitemap.xml
 
 # -----------------------------------------------
 # Blocco bot AI che raccolgono dati per training

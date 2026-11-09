@@ -1,6 +1,6 @@
 // Pagine del sito: ogni macroarea ha il suo indirizzo, come su Maurizio Barber Shop.
 // Titoli e descrizioni servono al browser, a Google e alle pagine HTML generate in build (vite.config.js).
-export const SITE = 'https://maximize-academy.vercel.app';
+export const SITE = 'https://maximize-academy.pages.dev';
 
 export const pages = [
   {

@@ -11,7 +11,7 @@ Sede: Foggia, Italia
 
 /* PROGETTO */
 Nome: Maximize Academy
-Sito: https://maximize-academy.vercel.app
+Sito: https://maximize-academy.pages.dev
 Categoria: Formazione Professionale / Barberia
 
 /* TECNOLOGIA */
