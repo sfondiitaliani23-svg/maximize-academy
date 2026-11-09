@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { AC_URL, AC_KEY } from '../lib/account';
 import '../strumenti/strumenti.css';
+import '../strumenti/eliseo-console.css';
 
 const TEAM = JSON.stringify([
   { id: 'maurizio', nome: 'Maurizio' },

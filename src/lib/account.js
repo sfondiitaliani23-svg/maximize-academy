@@ -159,3 +159,29 @@ export function chiSono(t) {
     return { id: p.sub || '', email: p.email || '', nome: um.name || um.full_name || um.nome || '', ruolo: p.app_metadata?.role || '' };
   } catch { return { id: '', email: '', nome: '', ruolo: '' }; }
 }
+
+// --- Verifica in due passaggi (codice di Google Authenticator), 10/11/2026. Stessi account di Maurizio Barber Shop:
+// chi attiva il codice da una parte lo deve scrivere anche qui, altrimenti il database non mostra i dati riservati.
+async function req(method, path, body) {
+  const t = await token();
+  const r = await fetch(`${AC_URL}${path}`, { method, headers: { apikey: AC_KEY, Authorization: `Bearer ${t}`, 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d?.msg || d?.message || 'Operazione non riuscita. Riprova.');
+  return d;
+}
+export const utente = async () => ((await token()) ? req('GET', '/auth/v1/user').catch(() => null) : null);
+export function livello(t) {
+  try { return JSON.parse(atob(String(t).split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).aal || 'aal1'; } catch { return 'aal1'; }
+}
+export async function serveCodice(u) {
+  const user = u || await utente();
+  const attivo = (user?.factors || []).some((f) => f.status === 'verified' && f.factor_type === 'totp');
+  return attivo && livello(await token()) !== 'aal2';
+}
+export const attivaCodice = () => req('POST', '/auth/v1/factors', { factor_type: 'totp', friendly_name: `App ${new Date().toISOString().slice(0, 16)}` });
+export const togliCodice = (id) => req('DELETE', `/auth/v1/factors/${id}`);
+export async function confermaCodice(factorId, code) {
+  const ch = await req('POST', `/auth/v1/factors/${factorId}/challenge`, {});
+  const d = await req('POST', `/auth/v1/factors/${factorId}/verify`, { challenge_id: ch.id, code: String(code).replace(/\s/g, '') });
+  return salva(d, read());
+}

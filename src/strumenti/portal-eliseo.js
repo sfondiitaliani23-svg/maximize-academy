@@ -15,12 +15,24 @@ const h = (tag, attrs, ...kids) => {
 };
 const card = (title, ...body) => h('section', { class: 'pcard' }, title ? h('h3', { class: 'pcard__title', text: title }) : null, ...body);
 
+// Voci di Profilo e Impostazioni (stesso elenco di js/portal-eliseo-settings.js, qui per non caricarlo prima del clic).
+const SETTINGS_IDS = ['generali', 'lingua', 'team', 'collegati', 'analisi-imp', 'c-widget', 'c-whatsapp', 'c-messenger', 'c-instagram', 'c-email', 'c-telefono', 'account', 'fatturazione', 'sicurezza', 'legale', 'assistenti'];
 const PAGES = [['/', 'Home'], ['/#prenota', 'Prenota (dalla Home)'], ['/servizi/', 'Servizi'], ['/offerte/', 'Offerte'], ['/journal/', 'Journal'], ['/contatti/', 'Orari e contatti'], ['/formazione/', 'Formazione'], ['/galleria/', 'Galleria']];
 const label = (list, v) => (list.find(([k]) => k === v) || [v, v])[1];
 const when = (iso) => (iso ? new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Rome' }) : '—');
 
 const NS = 'http://www.w3.org/2000/svg';
 const ICONS = {
+  folder: [['path', { d: 'M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z' }]],
+  checkCircle: [['circle', { cx: '12', cy: '12', r: '9' }], ['path', { d: 'M8.5 12.5l2.5 2.5 5-5' }]],
+  alertCircle: [['circle', { cx: '12', cy: '12', r: '9' }], ['path', { d: 'M12 8v4M12 16h.01' }]],
+  headset: [['path', { d: 'M3 18v-6a9 9 0 0 1 18 0v6' }], ['path', { d: 'M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z' }]],
+  whatsapp: [['path', { d: 'M17.6 6.4A8 8 0 0 0 4.2 16.9L3 21l4.2-1.1a8 8 0 0 0 10.4-13.5z' }], ['path', { d: 'M15.5 14.2c-.3-.1-1.6-.8-1.8-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7.1-.2.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4c.2.3 2.4 3.7 5.8 5.1.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.6-.5z' }]],
+  plus: [['path', { d: 'M12 5v14M5 12h14' }]],
+  mail: [['rect', { x: '3', y: '5', width: '18', height: '14', rx: '2' }], ['path', { d: 'M3 7l9 6 9-6' }]],
+  refresh: [['path', { d: 'M23 4v6h-6' }], ['path', { d: 'M1 20v-6h6' }], ['path', { d: 'M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15' }]],
+  search: [['circle', { cx: '11', cy: '11', r: '7' }], ['path', { d: 'M21 21l-4.35-4.35' }]],
+  funnel: [['polygon', { points: '22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3' }]],
   chat: [['path', { d: 'M5 6.5h14a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H9l-4 3v-3H5a1 1 0 0 1-1-1V7.5a1 1 0 0 1 1-1z' }]],
   book: [['path', { d: 'M5 5.2A2.2 2.2 0 0 1 7.2 3H19v15.2H7.2A2.2 2.2 0 0 0 5 20.4z' }], ['path', { d: 'M5 5.2A2.2 2.2 0 0 1 7.2 7.4H19' }]],
   flow: [['circle', { cx: '6', cy: '6', r: '2' }], ['circle', { cx: '18', cy: '12', r: '2' }], ['circle', { cx: '6', cy: '18', r: '2' }], ['path', { d: 'M8 6h6a2 2 0 0 1 2 2v2M8 18h6a2 2 0 0 0 2-2v-2M6 8v8' }]],
@@ -36,6 +48,7 @@ const ICONS = {
   branch: [['circle', { cx: '7', cy: '6', r: '2' }], ['circle', { cx: '17', cy: '8', r: '2' }], ['circle', { cx: '7', cy: '18', r: '2' }], ['path', { d: 'M7 8v8M9 7h5.2A2.8 2.8 0 0 1 17 9.8' }]],
   puzzle: [['path', { d: 'M8 3v4M16 3v4M6 7h12v5a6 6 0 0 1-12 0zM12 18v3' }]],
   megaphone: [['path', { d: 'M5 10v4h3l8 4V6L8 10z' }], ['path', { d: 'M16 9.5a3 3 0 0 1 0 5' }]],
+  user: [['circle', { cx: '12', cy: '12', r: '9' }], ['circle', { cx: '12', cy: '10', r: '3' }], ['path', { d: 'M6.8 18.2a6 6 0 0 1 10.4 0' }]],
 };
 const icon = (name) => {
   const svg = document.createElementNS(NS, 'svg');
@@ -101,8 +114,13 @@ export function mount(box, root) {
     ['prenota', 'Prenotazioni', 'cal', null],
     ['prova', 'Chatbot', 'bot', null],
     ['analisi', 'Analisi', 'chart', null],
-    ['integrazioni', 'Impostazioni', 'gear', [
-      ['', [['integrazioni', 'Integrazioni']]],
+    // Profilo e Impostazioni come in Keplero (09/11/2026): js/portal-eliseo-settings.js
+    ['account', 'Profilo', 'user', [
+      ['', [['account', 'Account'], ['fatturazione', 'Fatturazione'], ['sicurezza', 'Sicurezza'], ['legale', 'Note legali'], ['assistenti', 'Assistenti AI']]],
+    ]],
+    ['generali', 'Impostazioni', 'gear', [
+      ['', [['generali', 'Generali'], ['lingua', 'Lingua e Privacy'], ['team', 'Team'], ['collegati', 'Account collegati'], ['analisi-imp', 'Analisi'], ['integrazioni', 'Integrazioni']]],
+      ['Canali', [['c-widget', 'Widget chat web'], ['c-whatsapp', 'WhatsApp'], ['c-messenger', 'Messenger'], ['c-instagram', 'Instagram'], ['c-email', 'Email'], ['c-telefono', 'Telefono']]],
     ]],
   ];
   const owns = (item, id) => item[0] === id
@@ -156,7 +174,7 @@ export function mount(box, root) {
       syncNav();
       draw();
     });
-    (item[2] === 'gear' ? rail : railNav).append(b);
+    (item[2] === 'gear' || item[2] === 'user' ? rail : railNav).append(b);
   });
   app.append(rail, side, h('div', { class: 'el-stage' }, body, status));
   syncNav();
@@ -494,13 +512,14 @@ export function mount(box, root) {
     return [card('Modelli di messaggio', h('p', { class: 'pcard__note', text: 'Testi pronti, come le FAQ-modello di Keplero. Nella casella scegli un modello e si apre WhatsApp o l’email con il testo già scritto.' }), list), card('Nuovo modello', form(null))];
   }
 
-  // Casella unica: chat del sito e richieste del modulo, con stato e assegnazione.
+  // Casella unica: chat del sito e richieste del modulo, stile console Keplero completa
   const STATI = [['aperta', 'Aperta'], ['in_corso', 'In corso'], ['chiusa', 'Chiusa']];
   const MOTIVI = { informazioni: 'Informazioni', formazione: 'Formazione', lavoro: 'Lavoro', regalo: 'Regalo' };
-  const casellaFiltro = { vista: 'tutte', chi: '', q: '' };
+  const casellaFiltro = { vista: 'tutte', chi: '', q: '', cartella: '', ord: 'recenti' };
   let casellaPick = '';
   const iniziale = (nome) => (String(nome || '?').trim().charAt(0) || '?').toUpperCase();
   const tono = (nome) => Array.from(String(nome || '?')).reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
+
   function drawCasella() {
     const wrap = h('div', { class: 'el-conv' }, h('p', { class: 'pempty', text: 'Carico…' }));
     (async () => {
@@ -509,124 +528,676 @@ export function mount(box, root) {
       try { reqs = await call('/rest/v1/eliseo_richieste?select=*&order=creato_il.desc&limit=200') || []; } catch (e) { reqOk = false; perche = e.message === 'sql' ? 'tabella non trovata' : `errore ${call.last || ''}`.trim(); }
       try { stati = await call('/rest/v1/eliseo_casella_stato?select=*') || []; } catch (e) { reqOk = false; perche = perche || (e.message === 'sql' ? 'tabella non trovata' : `errore ${call.last || ''}`.trim()); }
       const st = new Map(stati.map((x) => [`${x.tipo}:${x.rif}`, x]));
+
       const items = [
         ...chats.filter((c) => c.ultimo_msg).map((c) => ({ tipo: 'chat', rif: c.cliente_id, nome: c.nome, quando: c.ultimo_msg, nuovo: !!(c.ultimo_da_cliente && (!c.letto_admin || c.ultimo_da_cliente > c.letto_admin)) })),
         ...reqs.map((r) => ({ tipo: 'richiesta', rif: r.id, nome: r.nome, quando: r.creato_il, nuovo: !st.has(`richiesta:${r.id}`), r })),
-      ].map((x) => ({ ...x, s: st.get(`${x.tipo}:${x.rif}`) || { stato: 'aperta', assegnato: null, contatto_id: null }, key: '' }))
-        .sort((a, b) => String(b.quando).localeCompare(String(a.quando)));
+      ].map((x) => ({ ...x, s: st.get(`${x.tipo}:${x.rif}`) || { stato: 'aperta', assegnato: null, contatto_id: null, cartella: null }, key: '' }));
+
       items.forEach((x) => { x.key = `${x.tipo}:${x.rif}`; });
+
+      // Cartelle disponibili
+      const cartelleDisp = [...new Set(stati.map((x) => x.cartella).filter(Boolean))].sort();
+
       const nelTeam = (x) => !casellaFiltro.chi || (casellaFiltro.chi === '__none' ? !x.s.assegnato : x.s.assegnato === casellaFiltro.chi);
-      const inVista = (x) => casellaFiltro.vista === 'tutte' || (casellaFiltro.vista === 'nuove' && x.nuovo) || (casellaFiltro.vista === 'aperte' && x.s.stato !== 'chiusa') || (casellaFiltro.vista === 'chiuse' && x.s.stato === 'chiusa');
+      const inVista = (x) => casellaFiltro.vista === 'tutte'
+        || (casellaFiltro.vista === 'nuove' && x.nuovo)
+        || (casellaFiltro.vista === 'aperte' && x.s.stato !== 'chiusa')
+        || (casellaFiltro.vista === 'richieste' && x.tipo === 'richiesta')
+        || (casellaFiltro.vista === 'chiuse' && x.s.stato === 'chiusa');
+      const inCartella = (x) => !casellaFiltro.cartella || (x.s.cartella || '') === casellaFiltro.cartella;
+
       const teamRows = items.filter(nelTeam);
-      const counts = { tutte: teamRows.length, nuove: teamRows.filter((x) => x.nuovo).length, aperte: teamRows.filter((x) => x.s.stato !== 'chiusa').length, chiuse: teamRows.filter((x) => x.s.stato === 'chiusa').length };
+      const counts = {
+        tutte: teamRows.length,
+        nuove: teamRows.filter((x) => x.nuovo).length,
+        aperte: teamRows.filter((x) => x.s.stato !== 'chiusa').length,
+        richieste: teamRows.filter((x) => x.tipo === 'richiesta').length,
+        chiuse: teamRows.filter((x) => x.s.stato === 'chiusa').length
+      };
+
       const saveState = async (x, patch) => {
         try {
-          const [row] = await call('/rest/v1/eliseo_casella_stato?on_conflict=tipo,rif', { method: 'POST', body: { tipo: x.tipo, rif: x.rif, stato: x.s.stato, assegnato: x.s.assegnato, contatto_id: x.s.contatto_id, ...patch }, prefer: 'resolution=merge-duplicates,return=representation' });
-          Object.assign(x.s, row); say('Casella aggiornata.');
-        } catch (e) { say(e.message === 'sql' ? 'Manca il file supabase/eliseo-casella.sql in Supabase.' : e.message, true); }
+          const [row] = await call('/rest/v1/eliseo_casella_stato?on_conflict=tipo,rif', {
+            method: 'POST',
+            body: { tipo: x.tipo, rif: x.rif, stato: x.s.stato, assegnato: x.s.assegnato, contatto_id: x.s.contatto_id, cartella: x.s.cartella || null, ...patch },
+            prefer: 'resolution=merge-duplicates,return=representation'
+          });
+          Object.assign(x.s, row);
+          say('Casella aggiornata.');
+        } catch (e) {
+          say(e.message === 'sql' ? 'Manca il file supabase/eliseo-casella.sql in Supabase.' : e.message, true);
+        }
       };
+
+      let waConnected = false;
+      try { waConnected = localStorage.getItem('eliseo_wa_connected') === '1'; } catch (_) {}
+      let waPairToken = Date.now().toString(36);
+
+      function openChannelModal() {
+        const overlay = h('div', { class: 'el-chan-modal-overlay' });
+        const modal = h('div', { class: 'el-chan-modal', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'el-chan-title' });
+
+        const renderPick = () => {
+          const head = h('div', { class: 'el-chan-modal__head' },
+            h('strong', { id: 'el-chan-title', text: 'Scegli un canale per iniziare una nuova conversazione' }),
+            h('button', { type: 'button', class: 'el-chan-modal__close', title: 'Chiudi', 'aria-label': 'Chiudi', text: '✕' })
+          );
+          head.querySelector('.el-chan-modal__close').addEventListener('click', () => overlay.remove());
+
+          const btnWa = h('button', { type: 'button', class: 'el-chan-btn el-chan-btn--wa' }, icon('whatsapp'), h('span', { text: 'WhatsApp' }));
+          btnWa.addEventListener('click', () => renderWaForm());
+
+          const btnMail = h('button', { type: 'button', class: 'el-chan-btn el-chan-btn--email' }, icon('mail'), h('span', { text: 'Email' }));
+          btnMail.addEventListener('click', () => renderMailForm());
+
+          const grid = h('div', { class: 'el-chan-grid' }, btnWa, btnMail);
+          const body = h('div', { class: 'el-chan-modal__body' }, grid);
+
+          modal.replaceChildren(head, body);
+        };
+
+        const renderWaForm = () => {
+          const head = h('div', { class: 'el-chan-modal__head' },
+            h('strong', { id: 'el-chan-title', text: 'Nuova conversazione WhatsApp' }),
+            h('button', { type: 'button', class: 'el-chan-modal__close', title: 'Chiudi', 'aria-label': 'Chiudi', text: '✕' })
+          );
+          head.querySelector('.el-chan-modal__close').addEventListener('click', () => overlay.remove());
+
+          const selContatto = select('destinatario', [
+            ['', '— Inserisci nuovo numero —'],
+            ...rows.filter((r) => r.telefono).map((r) => [r.telefono, `${r.nome} (${r.telefono})`])
+          ], '', { class: 'field__input', 'aria-label': 'Seleziona contatto' });
+
+          const telInp = h('input', { type: 'tel', class: 'field__input', placeholder: '+39 3...', value: '+39 ' });
+          const nomeInp = h('input', { type: 'text', class: 'field__input', placeholder: 'Nome cliente (es. Mario)' });
+          const msgInp = h('textarea', { class: 'field__input', rows: '3', placeholder: 'Scrivi un messaggio iniziale (opzionale)...' });
+
+          selContatto.addEventListener('change', () => {
+            if (selContatto.value) {
+              const f = rows.find((r) => r.telefono === selContatto.value);
+              if (f) {
+                telInp.value = f.telefono;
+                nomeInp.value = f.nome;
+              }
+            }
+          });
+
+          const sendBtn = h('button', { type: 'button', class: 'btn btn--primary', text: 'Avvia conversazione WhatsApp' });
+          sendBtn.addEventListener('click', () => {
+            const cleanTel = telInp.value.replace(/[^\d+]/g, '');
+            if (!cleanTel || cleanTel.length < 8) {
+              say('Inserisci un numero di telefono valido.', true);
+              return;
+            }
+            const nomeFinal = nomeInp.value.trim() || 'Cliente WhatsApp';
+            const msgFinal = msgInp.value.trim() || 'Conversazione WhatsApp avviata';
+            const rif = 'wa_' + cleanTel.replace(/\+/g, '');
+            const key = 'chat:' + rif;
+
+            let existing = items.find((it) => it.key === key || it.rif === rif);
+            if (!existing) {
+              existing = {
+                key,
+                tipo: 'chat',
+                rif,
+                nome: nomeFinal,
+                contatto: cleanTel,
+                preview: msgFinal,
+                quando: new Date().toISOString(),
+                nuovo: false,
+                s: { stato: 'aperta', assegnato: null, cartella: null, contatto_id: null }
+              };
+              items.unshift(existing);
+            } else {
+              existing.preview = msgFinal;
+              existing.quando = new Date().toISOString();
+            }
+
+            casellaPick = existing.key;
+            overlay.remove();
+            say(`Conversazione con ${nomeFinal} pronta su Eliseo.`);
+            paint();
+          });
+
+          const formBox = h('div', { class: 'el-chan-modal__body el-chan-form' },
+            h('label', { class: 'field' }, h('span', { text: 'Contatto salvato' }), selContatto),
+            h('label', { class: 'field' }, h('span', { text: 'Numero WhatsApp' }), telInp),
+            h('label', { class: 'field' }, h('span', { text: 'Nome' }), nomeInp),
+            h('label', { class: 'field' }, h('span', { text: 'Messaggio iniziale' }), msgInp),
+            h('div', { class: 'el-chan-form__acts' },
+              h('button', { type: 'button', class: 'btn btn--secondary', text: 'Indietro', click: () => renderPick() }),
+              sendBtn
+            )
+          );
+          formBox.querySelector('button.btn--secondary').addEventListener('click', () => renderPick());
+          modal.replaceChildren(head, formBox);
+        };
+
+        const renderMailForm = () => {
+          const head = h('div', { class: 'el-chan-modal__head' },
+            h('strong', { id: 'el-chan-title', text: 'Nuova email dal CRM' }),
+            h('button', { type: 'button', class: 'el-chan-modal__close', title: 'Chiudi', 'aria-label': 'Chiudi', text: '✕' })
+          );
+          head.querySelector('.el-chan-modal__close').addEventListener('click', () => overlay.remove());
+
+          const selContatto = select('destinatario', [
+            ['', '— Inserisci nuova email —'],
+            ...rows.filter((r) => r.email).map((r) => [r.email, `${r.nome} (${r.email})`])
+          ], '', { class: 'field__input', 'aria-label': 'Seleziona contatto' });
+
+          const emailInp = h('input', { type: 'email', class: 'field__input', placeholder: 'cliente@email.it' });
+          const nomeInp = h('input', { type: 'text', class: 'field__input', placeholder: 'Nome cliente' });
+          const oggInp = h('input', { type: 'text', class: 'field__input', placeholder: 'Oggetto' });
+          const testoInp = h('textarea', { class: 'field__input', rows: '4', placeholder: 'Messaggio...' });
+
+          selContatto.addEventListener('change', () => {
+            if (selContatto.value) {
+              const f = rows.find((r) => r.email === selContatto.value);
+              if (f) {
+                emailInp.value = f.email;
+                nomeInp.value = f.nome;
+              }
+            }
+          });
+
+          const sendBtn = h('button', { type: 'button', class: 'btn btn--primary', text: 'Prepara email' });
+          sendBtn.addEventListener('click', () => {
+            if (!emailInp.value || !emailInp.value.includes('@')) {
+              say('Inserisci un indirizzo email valido.', true);
+              return;
+            }
+            const nomeFinal = nomeInp.value.trim() || 'Cliente';
+            const oggFinal = oggInp.value.trim() || 'Comunicazione da Maurizio Barber Shop';
+            const testoFinal = testoInp.value.trim();
+            const mailto = `mailto:${encodeURIComponent(emailInp.value)}?subject=${encodeURIComponent(oggFinal)}&body=${encodeURIComponent(testoFinal)}`;
+            window.open(mailto, '_blank');
+            overlay.remove();
+            say(`Email preparata per ${nomeFinal}.`);
+          });
+
+          const formBox = h('div', { class: 'el-chan-modal__body el-chan-form' },
+            h('label', { class: 'field' }, h('span', { text: 'Contatto' }), selContatto),
+            h('label', { class: 'field' }, h('span', { text: 'Email' }), emailInp),
+            h('label', { class: 'field' }, h('span', { text: 'Nome' }), nomeInp),
+            h('label', { class: 'field' }, h('span', { text: 'Oggetto' }), oggInp),
+            h('label', { class: 'field' }, h('span', { text: 'Messaggio' }), testoInp),
+            h('div', { class: 'el-chan-form__acts' },
+              h('button', { type: 'button', class: 'btn btn--secondary', text: 'Indietro' }),
+              sendBtn
+            )
+          );
+          formBox.querySelector('button.btn--secondary').addEventListener('click', () => renderPick());
+          modal.replaceChildren(head, formBox);
+        };
+
+        renderPick();
+        overlay.append(modal);
+        overlay.addEventListener('click', (ev) => {
+          if (ev.target === overlay) overlay.remove();
+        });
+        root.append(overlay);
+      }
+
+      // --- ASIDE: MENU LATERALE DELLA CASELLA (STILE KEPLERO) ---
       const side = h('aside', { class: 'el-conv__side' });
+
+      // Header laterale con "+" per nuovo messaggio/contatto
+      const sideHead = h('div', { class: 'el-conv__sidehead' },
+        h('strong', { text: 'Conversazioni' }),
+        h('button', {
+          type: 'button',
+          class: 'el-side-iconbtn',
+          title: 'Nuovo contatto o messaggio',
+          'aria-label': 'Nuovo contatto o messaggio'
+        }, icon('plus'))
+      );
+      sideHead.querySelector('button').addEventListener('click', () => openChannelModal());
+
+      // Sezione TEAM con avatar colorati
+      const teamHead = h('p', { class: 'el-group el-group--collapsible' }, h('span', { text: 'Team' }), h('span', { class: 'el-group__chev', text: '▾' }));
       const teamBox = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Team' });
-      const teamBtn = (val, nome, n) => {
-        const b = h('button', { type: 'button', class: 'el-folder', 'aria-pressed': casellaFiltro.chi === val ? 'true' : 'false' }, h('span', { text: nome }), h('b', { text: String(n) }));
+
+      const teamBtn = (val, nome, n, initial = '', tone = 0, isSpecial = false) => {
+        const av = isSpecial
+          ? h('span', { class: 'el-side-av el-side-av--muted' }, initial ? h('span', { text: initial }) : null)
+          : h('span', { class: 'el-side-av', 'data-tone': String(tone) }, h('span', { text: initial || iniziale(nome) }));
+        const b = h('button', {
+          type: 'button',
+          class: 'el-folder el-folder--av',
+          'aria-pressed': casellaFiltro.chi === val ? 'true' : 'false'
+        }, av, h('span', { class: 'el-folder__txt', text: nome }), h('b', { text: String(n) }));
         b.addEventListener('click', () => { casellaFiltro.chi = val; draw(); });
         teamBox.append(b);
       };
-      teamBtn('', 'Tutto il team', items.length);
-      teamBtn('__none', 'Non assegnate', items.filter((x) => !x.s.assegnato).length);
-      team.forEach((p) => teamBtn(p.nome, p.nome, items.filter((x) => x.s.assegnato === p.nome).length));
+
+      teamBtn('', 'Tutti', items.length, '', 0, true);
+      teamBtn('__none', 'Non assegnato', items.filter((x) => !x.s.assegnato).length, '', 0, true);
+      team.forEach((p, idx) => {
+        teamBtn(p.nome, p.nome, items.filter((x) => x.s.assegnato === p.nome).length, iniziale(p.nome), idx % 5);
+      });
+
+      // Sezione STATI con icone colorate autentiche stile Keplero
+      const statiHead = h('p', { class: 'el-group el-group--collapsible' }, h('span', { text: 'Stati' }), h('span', { class: 'el-group__chev', text: '▾' }));
       const statiBox = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Stati' });
-      [['tutte', 'Tutte'], ['aperte', 'Aperte'], ['nuove', 'Da leggere'], ['chiuse', 'Chiuse']].forEach(([k, t]) => {
-        const b = h('button', { type: 'button', class: 'el-folder', 'aria-pressed': casellaFiltro.vista === k ? 'true' : 'false' }, h('span', { text: t }), h('b', { text: String(counts[k]) }));
+
+      const STATI_CFG = [
+        ['aperte', 'Aperti', 'checkCircle', 'st-aperti'],
+        ['nuove', 'Da Leggere', 'alertCircle', 'st-nuove'],
+        ['richieste', 'Richieste di supporto', 'headset', 'st-richieste'],
+        ['chiuse', 'Chiuso', 'checkCircle', 'st-chiuse']
+      ];
+
+      STATI_CFG.forEach(([k, t, icName, cssClass]) => {
+        const ic = h('span', { class: `el-status-ic ${cssClass}` }, icon(icName));
+        const b = h('button', {
+          type: 'button',
+          class: 'el-folder el-folder--st',
+          'aria-pressed': casellaFiltro.vista === k ? 'true' : 'false'
+        }, ic, h('span', { class: 'el-folder__txt', text: t }), h('b', { text: String(counts[k] ?? 0) }));
         b.addEventListener('click', () => { casellaFiltro.vista = k; draw(); });
         statiBox.append(b);
       });
-      side.append(h('p', { class: 'el-group', text: 'Team' }), teamBox, h('p', { class: 'el-group', text: 'Stati' }), statiBox);
-      const cerca = h('input', { type: 'search', class: 'el-search', placeholder: 'Cerca nome o testo', 'aria-label': 'Cerca nella casella', value: casellaFiltro.q });
-      const nVis = h('span', { class: 'el-count' });
+
+      // Sezione CARTELLE con ricerca e creazione rapida
+      let cartellaSearchOpen = false;
+      const cartellaSearchInput = h('input', {
+        type: 'search',
+        class: 'el-search el-cartella-search',
+        placeholder: 'Cerca cartella…',
+        'aria-label': 'Cerca cartella'
+      });
+      cartellaSearchInput.style.display = 'none';
+
+      const searchCartellaBtn = h('button', {
+        type: 'button',
+        class: 'el-side-iconbtn',
+        title: 'Cerca cartella',
+        'aria-label': 'Cerca cartella'
+      }, icon('search'));
+
+      const addCartellaBtn = h('button', {
+        type: 'button',
+        class: 'el-side-iconbtn',
+        title: 'Nuova cartella',
+        'aria-label': 'Nuova cartella'
+      }, icon('plus'));
+
+      searchCartellaBtn.addEventListener('click', () => {
+        cartellaSearchOpen = !cartellaSearchOpen;
+        cartellaSearchInput.style.display = cartellaSearchOpen ? 'block' : 'none';
+        if (cartellaSearchOpen) cartellaSearchInput.focus();
+        else { cartellaSearchInput.value = ''; redrawCartelle(); }
+      });
+
+      addCartellaBtn.addEventListener('click', () => {
+        const nome = prompt('Nome della nuova cartella:');
+        if (!nome?.trim()) return;
+        const val = nome.trim().slice(0, 60);
+        if (!cartelleDisp.includes(val)) {
+          cartelleDisp.push(val);
+          cartelleDisp.sort();
+        }
+        redrawCartelle(cartellaSearchInput.value);
+      });
+
+      const cartelleHead = h('div', { class: 'el-group el-group--tools' },
+        h('span', { text: 'Cartelle' }),
+        h('div', { class: 'el-group__acts' }, searchCartellaBtn, addCartellaBtn)
+      );
+
+      const cartelleBox = h('div', { class: 'el-folders', role: 'group', 'aria-label': 'Cartelle' });
+
+      const redrawCartelle = (q = '') => {
+        cartelleBox.replaceChildren();
+        const foldIc = h('span', { class: 'el-status-ic st-folder' }, icon('folder'));
+        const tutteB = h('button', {
+          type: 'button',
+          class: 'el-folder el-folder--cart',
+          'aria-pressed': !casellaFiltro.cartella ? 'true' : 'false'
+        }, foldIc, h('span', { class: 'el-folder__txt', text: 'Tutte le cartelle' }), h('b', { text: String(items.length) }));
+        tutteB.addEventListener('click', () => { casellaFiltro.cartella = ''; draw(); });
+        cartelleBox.append(tutteB);
+
+        const qLow = q.toLowerCase();
+        (qLow ? cartelleDisp.filter((c) => c.toLowerCase().includes(qLow)) : cartelleDisp).forEach((c) => {
+          const num = items.filter((x) => (x.s.cartella || '') === c).length;
+          const subIc = h('span', { class: 'el-status-ic st-folder' }, icon('folder'));
+          const b = h('button', {
+            type: 'button',
+            class: 'el-folder el-folder--cart',
+            'aria-pressed': casellaFiltro.cartella === c ? 'true' : 'false'
+          }, subIc, h('span', { class: 'el-folder__txt', text: c }), h('b', { text: String(num) }));
+          b.addEventListener('click', () => { casellaFiltro.cartella = c; draw(); });
+          cartelleBox.append(b);
+        });
+      };
+
+      redrawCartelle();
+      cartellaSearchInput.addEventListener('input', () => redrawCartelle(cartellaSearchInput.value));
+
+      side.append(
+        sideHead,
+        teamHead, teamBox,
+        statiHead, statiBox,
+        cartelleHead, cartellaSearchInput, cartelleBox
+      );
+
+      // --- COLONNA CENTRALE: LISTA CONVERSAZIONI ---
+      const listCol = h('div', { class: 'el-conv__list' });
+      const topRow = h('div', { class: 'el-conv__top' },
+        h('div', { class: 'el-conv__titlebox' },
+          icon('chat'),
+          h('strong', { text: 'Conversazioni' })),
+        h('div', { class: 'el-conv__topacts' },
+          h('button', { type: 'button', class: 'el-top-iconbtn', title: 'Cerca', 'aria-label': 'Cerca' }, icon('search')),
+          h('button', { type: 'button', class: 'el-top-iconbtn', title: 'Filtra', 'aria-label': 'Filtra' }, icon('funnel')))
+      );
+
+      // Selettore ordinamento (es. "Dai più recenti ▾")
+      const sortSel = select('ordine', [['recenti', 'Dai più recenti ▾'], ['meno_recenti', 'Dai meno recenti ▾']], casellaFiltro.ord, { class: 'el-conv__sort', 'aria-label': 'Ordinamento' });
+      sortSel.addEventListener('change', () => {
+        casellaFiltro.ord = sortSel.value;
+        paint();
+      });
+
+      const sortBar = h('div', { class: 'el-conv__sortbar' }, sortSel);
+
+      const cerca = h('input', {
+        type: 'search',
+        class: 'el-search el-conv__searchfield',
+        placeholder: 'Cerca nome, numero o messaggio',
+        'aria-label': 'Cerca nella casella',
+        value: casellaFiltro.q
+      });
+
       const rowsBox = h('div', { class: 'el-conv__rows' });
       const detail = h('div', { class: 'el-conv__detail' });
-      const note = reqOk ? null : h('p', { class: 'pcard__note', text: perche === 'tabella non trovata' ? 'Per stati e richieste del modulo va eseguito una volta il file supabase/eliseo-casella.sql in Supabase (lo fa Eliseo).' : `Stati e richieste non disponibili ora (${perche}). Ricarica la pagina; se resta, scrivilo a Claude con questo codice.` });
-      const off = root.closest('[data-auth-page]')?.dataset.salvaRichieste === '1' ? null : h('p', { class: 'pcard__note', text: 'Le richieste del modulo di contatto per ora arrivano solo per email. Si salveranno anche qui quando l’informativa privacy sarà aggiornata con l’avvocato.' });
+
+      const note = reqOk ? null : h('p', { class: 'pcard__note', text: perche === 'tabella non trovata' ? 'Per stati e richieste del modulo va eseguito il file supabase/eliseo-casella.sql in Supabase.' : `Stati e richieste non disponibili ora (${perche}).` });
+      const off = root.closest('[data-auth-page]')?.dataset.salvaRichieste === '1' ? null : h('p', { class: 'pcard__note', text: 'Le richieste del modulo di contatto per ora arrivano per email. Si salveranno anche qui quando l’informativa privacy sarà aggiornata con l’avvocato.' });
+
       function paintDetail(shown) {
         const x = shown.find((it) => it.key === casellaPick);
-        if (!x) { detail.replaceChildren(h('p', { class: 'pempty', text: 'Seleziona una conversazione.' })); return; }
+        if (!x) {
+          const pairCard = h('div', { class: 'el-wa-pair' },
+            h('div', { class: 'el-wa-pair__header' },
+              h('div', { class: 'el-wa-badge' }, icon('whatsapp'), h('span', { text: 'WhatsApp del Salone' })),
+              h('div', { class: `el-wa-status ${waConnected ? 'el-wa-status--connected' : 'el-wa-status--waiting'}` },
+                h('span', { class: waConnected ? 'el-wa-status__dot' : 'el-wa-status__pulse' }),
+                h('span', { text: waConnected ? 'Connesso: +39 347 186 1673' : 'In attesa di scansione...' })
+              )
+            ),
+            h('div', { class: 'el-wa-pair__titles' },
+              h('h3', { text: 'Collega il WhatsApp di Maurizio a Eliseo' }),
+              h('p', { text: 'Inquadra il codice QR con lo smartphone del salone da WhatsApp → Dispositivi collegati per ricevere e rispondere a tutti i messaggi direttamente dentro Eliseo.' })
+            ),
+            h('div', { class: 'el-wa-pair__content' },
+              h('div', { class: 'el-wa-qr__col' },
+                h('div', { class: 'el-wa-qr__box' },
+                  h('p', { class: 'pcard__note', text: 'Caricamento codice QR live...' })
+                ),
+                h('div', { class: 'el-wa-qr__acts' },
+                  h('button', { type: 'button', class: 'btn btn--secondary btn--sm', title: 'Aggiorna QR' }, icon('refresh'), h('span', { text: 'Aggiorna QR' })),
+                  h('button', { type: 'button', class: 'btn btn--secondary btn--sm', text: waConnected ? 'Scollega' : 'Verifica stato' })
+                )
+              ),
+              h('div', { class: 'el-wa-steps' },
+                h('div', { class: 'el-wa-step' },
+                  h('span', { class: 'el-wa-step__num', text: '1' }),
+                  h('div', null, h('strong', { text: 'Apri WhatsApp' }), h('p', { text: 'Sul telefono del salone (+39 347 186 1673)' }))
+                ),
+                h('div', { class: 'el-wa-step' },
+                  h('span', { class: 'el-wa-step__num', text: '2' }),
+                  h('div', null, h('strong', { text: 'Menu o Impostazioni' }), h('p', { text: 'Tocca i tre puntini ⋮ (Android) o Impostazioni ⚙️ (iPhone)' }))
+                ),
+                h('div', { class: 'el-wa-step' },
+                  h('span', { class: 'el-wa-step__num', text: '3' }),
+                  h('div', null, h('strong', { text: 'Dispositivi collegati' }), h('p', { text: 'Tocca "Collega un dispositivo"' }))
+                ),
+                h('div', { class: 'el-wa-step' },
+                  h('span', { class: 'el-wa-step__num', text: '4' }),
+                  h('div', null, h('strong', { text: 'Inquadra il codice QR qui sopra' }), h('p', { text: 'La connessione WhatsApp si sincronizzerà direttamente dentro Eliseo' }))
+                )
+              )
+            ),
+            h('div', { class: 'el-wa-pair__footer' },
+              h('span', { text: '💬 In alternativa, seleziona una conversazione dall’elenco a sinistra per visualizzarla.' })
+            )
+          );
+
+          const qrBox = pairCard.querySelector('.el-wa-qr__box');
+          const refreshBtn = pairCard.querySelectorAll('.el-wa-qr__acts button')[0];
+          const verifyBtn = pairCard.querySelectorAll('.el-wa-qr__acts button')[1];
+
+          async function loadLiveQr() {
+            qrBox.replaceChildren(h('p', { class: 'pcard__note', text: 'Caricamento QR da Green API...' }));
+            try {
+              const res = await fetch('/api/wa-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'qr', phone: '3471861673' }), cache: 'no-store' });
+              const data = await res.json();
+              if (data.ok && data.state === 'authorized') {
+                waConnected = true;
+                try { localStorage.setItem('eliseo_wa_connected', '1'); } catch (_) {}
+                const statusDiv = pairCard.querySelector('.el-wa-status');
+                statusDiv.className = 'el-wa-status el-wa-status--connected';
+                statusDiv.replaceChildren(
+                  h('span', { class: 'el-wa-status__dot' }),
+                  h('span', { text: 'Connesso: +39 347 186 1673' })
+                );
+                qrBox.replaceChildren(
+                  h('div', { class: 'el-wa-connected-box', style: 'text-align: center; padding: 16px;' },
+                    icon('checkCircle'),
+                    h('p', { style: 'margin: 8px 0 0; font-weight: 700; color: var(--console-ok);', text: 'WhatsApp collegato con successo!' }),
+                    h('p', { style: 'margin: 4px 0 0; font-size: 12px; color: var(--console-quiet);', text: 'Tutti i messaggi arrivano direttamente in questa console.' })
+                  )
+                );
+                verifyBtn.textContent = 'Scollega';
+                return;
+              }
+
+              if (data.ok && data.qrBase64) {
+                const img = h('img', {
+                  src: 'data:image/png;base64,' + data.qrBase64,
+                  alt: 'Codice QR per collegare WhatsApp',
+                  style: 'width: 170px; height: 170px; object-fit: contain; display: block;'
+                });
+                qrBox.replaceChildren(img);
+                return;
+              }
+
+              // Fallback se Green API non è ancora configurata con token
+              const warnBox = h('div', { style: 'text-align: center; padding: 12px;' },
+                icon('whatsapp'),
+                h('p', { style: 'margin: 8px 0 0; font-size: 12.5px; font-weight: 600;', text: 'In attesa di credenziali Green API' }),
+                h('p', { style: 'margin: 4px 0 0; font-size: 11px; color: var(--console-quiet);', text: data.error || 'Configura GREEN_API_URL e GREEN_API_TOKEN su Vercel.' })
+              );
+              qrBox.replaceChildren(warnBox);
+            } catch (err) {
+              qrBox.replaceChildren(h('p', { class: 'pcard__note', text: 'Non è stato possibile caricare il QR code al momento.' }));
+            }
+          }
+
+          refreshBtn.addEventListener('click', () => {
+            loadLiveQr();
+            say('Aggiornamento QR code in corso...');
+          });
+
+          verifyBtn.addEventListener('click', () => {
+            if (waConnected) {
+              waConnected = false;
+              try { localStorage.setItem('eliseo_wa_connected', '0'); } catch (_) {}
+              say('WhatsApp scollegato.');
+              paintDetail(shown);
+            } else {
+              loadLiveQr();
+              say('Controllo connessione in corso...');
+            }
+          });
+
+          loadLiveQr();
+
+          detail.replaceChildren(pairCard);
+          return;
+        }
+
         const stato = select('stato', STATI, x.s.stato, { 'aria-label': `Stato di ${x.nome}`, class: 'el-fase' });
         stato.addEventListener('change', async () => { await saveState(x, { stato: stato.value }); draw(); });
+
         const ass = select('assegnato', [['', 'Non assegnata'], ...team.map((p) => [p.nome, p.nome])], x.s.assegnato || '', { 'aria-label': `Assegna ${x.nome}`, class: 'el-fase' });
         ass.addEventListener('change', async () => { await saveState(x, { assegnato: ass.value || null }); draw(); });
+
+        const cartOpts = [['', '— Nessuna cartella —'], ...cartelleDisp.map((c) => [c, c])];
+        const cart = select('cartella', cartOpts, x.s.cartella || '', { 'aria-label': `Cartella di ${x.nome}`, class: 'el-fase' });
+        cart.addEventListener('change', async () => {
+          const val = cart.value || null;
+          if (val && !cartelleDisp.includes(val)) { cartelleDisp.push(val); cartelleDisp.sort(); }
+          await saveState(x, { cartella: val });
+          redrawCartelle(cartellaSearchInput.value);
+          draw();
+        });
+
         const acts = h('div', { class: 'el-detail__act' });
+
         if (x.tipo === 'chat') {
           const open = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Apri la chat' });
-          open.addEventListener('click', () => { if (!x.s.contatto_id) saveState(x, {}); root.querySelector('[data-nav="chat"]')?.click(); });
+          open.addEventListener('click', () => {
+            if (!x.s.contatto_id) saveState(x, {});
+            root.querySelector('[data-nav="chat"]')?.click();
+          });
           acts.append(open);
         } else {
-          const c = x.r.contatto;
-          const base = c.includes('@') ? `mailto:${c}` : `https://wa.me/${((d) => (d.startsWith('39') ? d : `39${d}`))(c.replace(/\D/g, ''))}`;
-          const link = h('a', { class: 'btn btn--secondary', href: base, target: '_blank', rel: 'noopener noreferrer', text: c.includes('@') ? 'Rispondi per email' : 'Rispondi su WhatsApp' });
+          const contVal = x.r.contatto;
+          const isEmail = contVal.includes('@');
+          const base = isEmail
+            ? `mailto:${contVal}`
+            : `https://wa.me/${((d) => (d.startsWith('39') ? d : `39${d}`))(contVal.replace(/\D/g, ''))}`;
+          const link = h('a', {
+            class: 'btn btn--secondary',
+            href: base,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            text: isEmail ? 'Rispondi per email' : 'Rispondi su WhatsApp'
+          });
+
           if (modelli?.length) {
             const pick = select('modello', [['', 'Senza modello'], ...modelli.map((m) => [m.id, m.nome])], '', { 'aria-label': `Modello per ${x.nome}`, class: 'el-fase' });
             pick.addEventListener('change', () => {
               const m = modelli.find((y) => y.id === pick.value);
               const t = m ? encodeURIComponent(fillTemplate(m.testo, { nome: x.r.nome })) : '';
-              link.setAttribute('href', !t ? base : c.includes('@') ? `${base}?body=${t}` : `${base}?text=${t}`);
+              link.setAttribute('href', !t ? base : isEmail ? `${base}?body=${t}` : `${base}?text=${t}`);
             });
             acts.append(pick);
           }
           acts.append(link);
         }
+
         const linked = x.s.contatto_id || rows.some((r) => (x.tipo === 'chat' && r.user_id === x.rif));
         if (!linked) {
           const add = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Aggiungi ai contatti' });
           add.addEventListener('click', async () => {
-            const raw = x.tipo === 'chat' ? { nome: x.nome, fonte: 'sito', fase: 'contattato' } : { nome: x.r.nome, ...(x.r.contatto.includes('@') ? { email: x.r.contatto } : { telefono: x.r.contatto }), fonte: 'sito', fase: 'nuovo', note: `Richiesta dal sito: ${MOTIVI[x.r.motivo] || x.r.motivo}` };
+            const raw = x.tipo === 'chat'
+              ? { nome: x.nome, fonte: 'sito', fase: 'contattato' }
+              : { nome: x.r.nome, ...(x.r.contatto.includes('@') ? { email: x.r.contatto } : { telefono: x.r.contatto }), fonte: 'sito', fase: 'nuovo', note: `Richiesta dal sito: ${MOTIVI[x.r.motivo] || x.r.motivo}` };
             const { row, ok, errors } = cleanContact(raw);
             if (!ok) { say(Object.values(errors).join(' '), true); return; }
             try {
               const [ins] = await call('/rest/v1/eliseo_contatti', { method: 'POST', body: { ...row, ...(x.tipo === 'chat' ? { user_id: x.rif } : {}) }, prefer: 'return=representation' });
-              rows.unshift(ins); drawStats(); await saveState(x, { contatto_id: ins.id }); say(`${ins.nome} aggiunto ai contatti.`); draw();
+              rows.unshift(ins);
+              drawStats();
+              await saveState(x, { contatto_id: ins.id });
+              say(`${ins.nome} aggiunto ai contatti.`);
+              draw();
             } catch (e) { say(e.message, true); }
           });
           acts.append(add);
         }
+
         const kind = x.tipo === 'chat' ? 'Chat del sito' : `Modulo · ${MOTIVI[x.r.motivo] || ''}`.trim();
+
         detail.replaceChildren(
           h('header', { class: 'el-detail__head' },
             h('span', { class: 'el-av', 'data-tone': String(tono(x.nome)), 'aria-hidden': 'true', text: iniziale(x.nome) }),
-            h('div', null, h('h2', { text: x.nome || 'Senza nome' }), h('p', { text: `${kind} · ${when(x.quando)}` }))),
+            h('div', null,
+              h('h2', { text: x.nome || 'Senza nome' }),
+              h('p', { text: `${kind} · ${when(x.quando)}` }))),
           x.nuovo ? h('span', { class: 'el-dot', text: 'Nuova' }) : null,
-          x.tipo === 'richiesta' ? h('p', { class: 'el-detail__text', text: x.r.messaggio }) : h('p', { class: 'pcard__note', text: 'Conversazione della chat del sito. Da qui si apre la chat e, se manca, si aggiunge la persona ai contatti.' }),
-          h('div', { class: 'el-detail__ctrl' }, h('label', { class: 'field' }, h('span', { text: 'Stato' }), stato), h('label', { class: 'field' }, h('span', { text: 'Assegnata a' }), ass)),
-          acts);
+          x.tipo === 'richiesta'
+            ? h('p', { class: 'el-detail__text', text: x.r.messaggio })
+            : h('p', { class: 'pcard__note', text: 'Conversazione della chat del sito. Da qui si apre la chat e, se manca, si aggiunge la persona ai contatti.' }),
+          h('div', { class: 'el-detail__ctrl' },
+            h('label', { class: 'field' }, h('span', { text: 'Stato' }), stato),
+            h('label', { class: 'field' }, h('span', { text: 'Assegnata a' }), ass)),
+          h('div', { class: 'el-detail__ctrl el-detail__ctrl--full' },
+            h('label', { class: 'field' }, h('span', { text: 'Cartella' }), cart)),
+          acts
+        );
       }
+
       function paint() {
         const q = cerca.value.trim().toLowerCase();
         casellaFiltro.q = cerca.value;
-        const shown = items.filter(nelTeam).filter(inVista).filter((x) => !q || String(x.nome || '').toLowerCase().includes(q) || String(x.r?.messaggio || '').toLowerCase().includes(q));
-        nVis.textContent = String(shown.length);
+
+        let shown = items
+          .filter(nelTeam)
+          .filter(inVista)
+          .filter(inCartella)
+          .filter((x) => !q || String(x.nome || '').toLowerCase().includes(q) || String(x.r?.messaggio || '').toLowerCase().includes(q));
+
+        if (casellaFiltro.ord === 'meno_recenti') {
+          shown.sort((a, b) => String(a.quando).localeCompare(String(b.quando)));
+        } else {
+          shown.sort((a, b) => String(b.quando).localeCompare(String(a.quando)));
+        }
+
         rowsBox.replaceChildren();
-        if (!shown.length) rowsBox.append(h('p', { class: 'pempty', text: items.length ? 'Niente in questa vista.' : 'La casella è vuota.' }));
+
+        if (!shown.length) {
+          rowsBox.append(h('p', { class: 'pempty', text: items.length ? 'Nessuna conversazione con questi filtri.' : 'La casella è vuota.' }));
+        }
+
         shown.forEach((x) => {
-          const anteprima = x.tipo === 'richiesta' ? String(x.r.messaggio || '').replace(/\s+/g, ' ').slice(0, 90) : 'Chat del sito';
+          const anteprima = x.tipo === 'richiesta' ? String(x.r.messaggio || '').replace(/\s+/g, ' ').slice(0, 80) : 'Chat del sito';
+          const isWa = x.tipo === 'richiesta' && !x.r.contatto?.includes('@');
+          const chanIc = isWa
+            ? h('span', { class: 'el-row__chan el-row__chan--wa', title: 'WhatsApp' }, icon('whatsapp'))
+            : h('span', { class: 'el-row__chan el-row__chan--chat', title: 'Chat' }, icon('chat'));
+
+          const dot = x.nuovo
+            ? h('span', { class: 'el-row__dot', title: 'Non letto' })
+            : (x.tipo === 'richiesta' ? h('span', { class: 'el-row__headset-ic', title: 'Richiesta di supporto' }, icon('headset')) : null);
+
           const row = h('button', { type: 'button', class: `el-row${x.key === casellaPick ? ' is-on' : ''}` },
             h('span', { class: 'el-av', 'data-tone': String(tono(x.nome)), 'aria-hidden': 'true', text: iniziale(x.nome) }),
             h('span', { class: 'el-row__body' },
-              h('span', { class: 'el-row__top' }, h('strong', { text: x.nome || 'Senza nome' }), h('small', { text: when(x.quando) })),
-              h('span', { class: 'el-row__prev', text: anteprima })));
+              h('span', { class: 'el-row__top' },
+                h('strong', { text: x.nome || 'Senza nome' }),
+                h('span', { class: 'el-row__meta' }, dot, h('small', { text: when(x.quando) }))),
+              h('span', { class: 'el-row__prev' },
+                chanIc,
+                h('span', { class: 'el-row__snippet', text: anteprima }))));
+
           row.addEventListener('click', () => { casellaPick = x.key; paint(); });
           rowsBox.append(row);
         });
+
         paintDetail(shown);
       }
+
       cerca.addEventListener('input', paint);
-      const listCol = h('div', { class: 'el-conv__list' },
-        h('div', { class: 'el-conv__top' }, h('strong', { text: 'Conversazioni' }), nVis),
+
+      listCol.append(
+        topRow,
+        sortBar,
         h('div', { class: 'el-conv__search' }, cerca),
-        note, off, rowsBox);
+        ...[note, off].filter(Boolean),
+        rowsBox
+      );
+
       wrap.replaceChildren(side, listCol, detail);
       wrap.classList.add('el-conv');
       paint();
     })();
+
     return [wrap];
   }
 
@@ -689,6 +1260,15 @@ export function mount(box, root) {
         if (tab !== here) return;
         const nodes = m.mountAi(which, { h, card, call, say, select, team, sub: know.includes(here) ? here : undefined });
         body.replaceChildren(...(titolo ? [pageHead(titolo)] : []), ...nodes);
+      }).catch(() => body.replaceChildren(card(null, h('p', { class: 'pcard__note', text: 'Non riesco a caricare questa sezione. Riprova.' }))));
+      return;
+    }
+    if (SETTINGS_IDS.includes(tab)) {
+      const here = tab;
+      body.replaceChildren(h('p', { class: 'pempty', text: 'Carico…' }));
+      Promise.all([import('./portal-eliseo-settings.js'), sbc.user().catch(() => null)]).then(([m, user]) => {
+        if (tab !== here) return;
+        body.replaceChildren(...m.mountSettings(here, { h, card, call, say, team, user, sbc }));
       }).catch(() => body.replaceChildren(card(null, h('p', { class: 'pcard__note', text: 'Non riesco a caricare questa sezione. Riprova.' }))));
       return;
     }

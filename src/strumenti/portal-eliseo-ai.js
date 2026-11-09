@@ -2,6 +2,7 @@
 // Quello che si scrive in FAQ, documenti, regole e orari lo legge l'assistente del sito: mai dati dei clienti.
 import { respond } from './assistant/engine.js';
 import { operatorsOnline } from './assistant/training.js';
+import { promptsCard, sheetsCard } from './portal-eliseo-settings.js';
 import assistantData from './dati/assistant.json';
 import knowledgeData from './dati/knowledge.json';
 import offersData from './dati/offers.json';
@@ -214,7 +215,7 @@ export function mountAi(kind, ui) {
       }
       fail(e); return;
     }
-    const views = { faq: () => faqView(faq), sito: siteView, documenti: () => docsView(docs), istruzioni: () => promptView(conf, vers), passaggio: () => handoffView(conf) };
+    const views = { faq: () => faqView(faq), sito: siteView, documenti: () => [...[].concat(docsView(docs)), sheetsCard(conf, ui, drawTraining)], istruzioni: () => [...promptView(conf, vers), promptsCard(conf, ui)], passaggio: () => handoffView(conf) };
     wrap.replaceChildren(...[].concat(views[sub]()));
   }
 
@@ -273,8 +274,128 @@ export function mountAi(kind, ui) {
     stick.setAttribute('d', 'M16 16.5 20 20.5');
     lens.append(ring, stick);
     const find = h('label', { class: 'el-faq__find' }, lens, q);
-    const nuovo = h('button', { type: 'button', class: 'btn', text: '+ Nuovo' });
-    nuovo.addEventListener('click', () => showEditor(null));
+
+    // Dropdown "+ Nuovo" in stile Keplero con opzioni: Nuova FAQ, Nuova cartella, Importa CSV
+    const dropWrap = h('div', { class: 'el-faq__dropdown-wrap' });
+    const nuovoBtn = h('button', {
+      type: 'button',
+      class: 'btn el-faq__btn-nuovo',
+      'aria-haspopup': 'true',
+      'aria-expanded': 'false',
+      text: '+ Nuovo'
+    });
+
+    const dropMenu = h('div', { class: 'el-faq__dropdown', role: 'menu', hidden: true });
+
+    const closeMenu = () => {
+      dropMenu.hidden = true;
+      nuovoBtn.setAttribute('aria-expanded', 'false');
+    };
+    const toggleMenu = (e) => {
+      e.stopPropagation();
+      const open = dropMenu.hidden;
+      dropMenu.hidden = !open;
+      nuovoBtn.setAttribute('aria-expanded', String(open));
+    };
+    nuovoBtn.addEventListener('click', toggleMenu);
+    document.addEventListener('click', (e) => {
+      if (!dropWrap.contains(e.target)) closeMenu();
+    });
+
+    const svgIcon = (paths) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('viewBox', '0 0 24 24');
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', 'currentColor');
+      el.setAttribute('stroke-width', '1.8');
+      el.setAttribute('stroke-linecap', 'round');
+      el.setAttribute('stroke-linejoin', 'round');
+      el.setAttribute('aria-hidden', 'true');
+      paths.forEach(([tag, attrs]) => {
+        const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        el.append(n);
+      });
+      return el;
+    };
+
+    const makeMenuItem = (label, iconPaths, onClick) => {
+      const btn = h('button', { type: 'button', class: 'el-faq__dropdown-item', role: 'menuitem' },
+        h('span', { class: 'el-faq__dropdown-ic' }, svgIcon(iconPaths)),
+        h('span', { class: 'el-faq__dropdown-text', text: label })
+      );
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+        onClick();
+      });
+      return btn;
+    };
+
+    // 1. Nuova FAQ
+    const itemNuovaFaq = makeMenuItem('Nuova FAQ', [
+      ['circle', { cx: '12', cy: '12', r: '9' }],
+      ['path', { d: 'M9.6 9.4a2.4 2.4 0 1 1 3.3 2.2c-.7.4-1.1.9-1.1 1.6M12 16.6h.01' }]
+    ], () => showEditor(null));
+
+    // 2. Nuova cartella
+    const itemNuovaCartella = makeMenuItem('Nuova cartella', [
+      ['path', { d: 'M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z' }]
+    ], () => {
+      const nome = window.prompt('Inserisci il nome della nuova cartella per le FAQ:');
+      if (nome && nome.trim()) {
+        showEditor({ cartella: nome.trim() });
+      }
+    });
+
+    // 3. Importa CSV
+    const fileCsvInput = h('input', { type: 'file', accept: '.csv,text/csv', hidden: true });
+    fileCsvInput.addEventListener('change', async () => {
+      const file = fileCsvInput.files?.[0];
+      if (!file) return;
+      if (blocked) { say(sqlNote, true); return; }
+      try {
+        const text = await file.text();
+        const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+        if (!lines.length) { say('Il file CSV è vuoto.', true); return; }
+
+        let imported = 0;
+        const startIndex = lines[0].toLowerCase().includes('domanda') || lines[0].toLowerCase().includes('question') ? 1 : 0;
+        for (let i = startIndex; i < lines.length; i++) {
+          const parts = lines[i].split(',').map((p) => p.replace(/^"|"$/g, '').trim());
+          if (parts.length >= 2 && parts[0] && parts[1]) {
+            const row = {
+              domanda: parts[0].slice(0, 200),
+              risposta: parts[1].slice(0, 1000),
+              cartella: (parts[2] || 'Generale').slice(0, 40),
+              parole: (parts[3] || '').slice(0, 300),
+              attiva: true
+            };
+            await call('/rest/v1/eliseo_faq', { method: 'POST', body: row, prefer: 'return=minimal' });
+            imported++;
+          }
+        }
+        if (imported > 0) {
+          say(`${imported} FAQ importate con successo!`);
+          drawTraining();
+        } else {
+          say('Nessuna riga valida trovata nel file CSV. Formato atteso: Domanda,Risposta[,Cartella,Parole]', true);
+        }
+      } catch (err) {
+        say('Errore durante l\'importazione: ' + (err.message || 'file non valido'), true);
+      } finally {
+        fileCsvInput.value = '';
+      }
+    });
+
+    const itemImportaCsv = makeMenuItem('Importa CSV', [
+      ['path', { d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' }],
+      ['polyline', { points: '17 8 12 3 7 8' }],
+      ['line', { x1: '12', y1: '3', x2: '12', y2: '15' }]
+    ], () => fileCsvInput.click());
+
+    dropMenu.append(itemNuovaFaq, itemNuovaCartella, itemImportaCsv);
+    dropWrap.append(nuovoBtn, dropMenu, fileCsvInput);
     const wipe = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Elimina', hidden: true });
     const syncWipe = () => {
       wipe.hidden = picked.size === 0;
@@ -314,7 +435,7 @@ export function mountAi(kind, ui) {
     q.addEventListener('input', paint); paint();
     return [
       h('header', { class: 'el-faq__head' }, h('h2', { text: 'FAQ' }), h('p', { text: 'Domande e risposte su cui si basa l’assistente, organizzate in cartelle.' })),
-      h('div', { class: 'el-faq__tools' }, find, wipe, nuovo),
+      h('div', { class: 'el-faq__tools' }, find, wipe, dropWrap),
       editor,
       h('p', { class: 'el-faq__all', text: 'Tutte le FAQ' }),
       box,
@@ -868,7 +989,7 @@ export function mountAi(kind, ui) {
       h('ul', { class: 'plist' },
         row('Sito del negozio', 'In uso', 'L’assistente legge le pagine, il listino e gli orari pubblicati sul sito.'),
         row('FAQ e file', 'In uso', 'Sono quelli scritti in Base di conoscenza.'),
-        row('WhatsApp', 'Sul sito del negozio', 'Il passaggio al team usa il numero del negozio. Su Maximize i pulsanti commerciali non usano quel numero.'),
+        row('WhatsApp', 'Numero del negozio', 'Il passaggio al team apre il numero del negozio. I messaggi non arrivano da soli in questa casella.'),
         row('Prenotazioni', 'Treatwell', 'Gli appuntamenti restano su Treatwell. Qui non c’è un calendario.'),
         row('Email', 'Non collegata', 'Nessuna casella email collegata.'),
         row('Messenger', 'Non collegato', 'Nessun collegamento.'),

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword } from '../lib/account';
+import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
 import StrumentiRiservati from './StrumentiRiservati';
@@ -125,6 +125,36 @@ const GoogleIc = () => (
 );
 
 /* ---------- accesso ---------- */
+// Secondo passaggio (10/11/2026): chi ha attivato il codice di Google Authenticator lo scrive dopo la password.
+function Codice({ fatto, esci }) {
+  const [msg, setMsg] = useState('');
+  const [busy, setBusy] = useState(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    const code = String(new FormData(e.currentTarget).get('codice') || '').replace(/\s/g, '');
+    if (!/^\d{6}$/.test(code)) { setMsg('Scrivi le 6 cifre dell\'app.'); return; }
+    setBusy(true); setMsg('');
+    try {
+      const u = await utente();
+      const f = (u?.factors || []).find((x) => x.status === 'verified' && x.factor_type === 'totp');
+      if (!f) { fatto(); return; }
+      await confermaCodice(f.id, code);
+      fatto();
+    } catch { setMsg('Codice non valido. Usa quello nuovo dell\'app.'); } finally { setBusy(false); }
+  };
+  return (
+    <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
+      <Titolo oro="Verifica" bianco="in due passaggi" sotto="Scrivi il codice di 6 cifre dell'app di autenticazione." />
+      <form className="ap-card ap-form" onSubmit={submit}>
+        <Campo label="Codice" id="codice" inputMode="numeric" autoComplete="one-time-code" maxLength={7} required />
+        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? 'Attendi…' : 'Conferma'}</button>
+        {msg && <p className="ap-msg ap-msg--err" role="status">{msg}</p>}
+        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={esci}>Esci</button>
+      </form>
+    </div>
+  );
+}
+
 function Accesso({ onEntrato, avviso }) {
   const [modo, setModo] = useState(() => (window.location.hash === '#registrati' ? 'nuovo' : 'entra'));
   const [msg, setMsg] = useState(avviso || '');
@@ -696,6 +726,7 @@ export default function AreaPrivata() {
     if (stato !== 'check') return;
     token().then(async (t) => {
       if (!t) { setStato('login'); return; }
+      if (await serveCodice().catch(() => false)) { setStato('codice'); return; }
       const me = chiSono(t);
       const admin = ['admin', 'cofounder'].includes(me.ruolo);
       // Primo ingresso: la riga del profilo Maximize la crea l'utente stesso (se c'è già, non cambia nulla)
@@ -715,6 +746,7 @@ export default function AreaPrivata() {
 
   if (stato === 'recovery') return <div className="ap"><NuovaPassword fatto={() => setStato('check')} /></div>;
   if (stato === 'login') return <div className="ap"><Accesso avviso={ritorno?.errore || ''} onEntrato={() => setStato('check')} /></div>;
+  if (stato === 'codice') return <div className="ap"><Codice fatto={() => setStato('check')} esci={() => logout().then(() => setStato('login'))} /></div>;
   if (!ok || !tab) return <div className="ap"><div className="ap-wrap"><p className="ap-soft">Caricamento…</p></div></div>;
 
   const admin = io.admin;
