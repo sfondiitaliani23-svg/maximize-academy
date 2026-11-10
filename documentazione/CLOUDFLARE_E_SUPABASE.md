@@ -17,3 +17,10 @@ Il codice è già pronto: `functions/api/*` (ponte `functions/_adapter.js` verso
 4. Custom domains → `maximizeacademy.it` e `www`; `.com` reindirizzato al `.it`.
 5. Poi: aggiornare `SITE` in `src/routes.js`, sitemap, e il link in `site.config.js` di Maurizio Barber Shop. Vercel si spegne solo dopo.
 Le statistiche di Vercel (Analytics) si caricano solo su `*.vercel.app`.
+
+
+## Un solo progetto Supabase per Maximize (decisione del 10/11/2026)
+- **Si tiene `pxzdsgcdwqnipxggveuu`** («maximize-academy», organizzazione «Maximize Academy» del secondo account Supabase di Eliseo). È quello attivo e usato dal sito: storie e `/gestione` (`src/lib/sb.js`), modulo contatti (`api/contact.js`), `server/index.js`. Controllato il 10/11/2026: risponde (auth 200, tabella `storie` 200).
+- **Si elimina `hozyimhhrodazpssxmtt`** (account principale, organizzazione «Maximize Academy», in pausa). Nessun file del codice lo usa.
+- Perché non si sposta tutto sull'account principale: il piano gratuito permette 2 progetti attivi per account, e lì ci sono già Barberia Garofalo e Maurizio Barber Shop. Un terzo resterebbe in pausa.
+- Gli account dell'area privata (`/area`) restano sul progetto di Maurizio Barber Shop (`jxtkgxdxvouwlowvqohm`), come deciso il 02/11/2026.
