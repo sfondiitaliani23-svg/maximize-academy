@@ -187,6 +187,9 @@ export function mount(box, root) {
 
   async function load() {
     try {
+      // Iscritti al sito in rubrica da soli (10/11/2026): una volta per sessione, senza doppioni (lo fa il database).
+      let auto = false; try { auto = sessionStorage.getItem('mx-eliseo-auto') !== '1'; sessionStorage.setItem('mx-eliseo-auto', '1'); } catch { auto = true; }
+      if (auto) await call('/rest/v1/rpc/eliseo_importa_iscritti', { method: 'POST', body: {} }).catch(() => null);
       rows = await call('/rest/v1/eliseo_contatti?select=*&order=aggiornato_il.desc&limit=2000') || [];
       hasTags = rows.length ? 'etichette' in rows[0] : await call('/rest/v1/eliseo_contatti?select=etichette&limit=1').then(() => true, () => false);
       modelli = await call('/rest/v1/eliseo_modelli?select=*&order=categoria,nome').catch(() => null);
