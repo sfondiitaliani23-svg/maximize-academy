@@ -90,6 +90,8 @@
 .ap-msg { margin: 0; font-size: 14px; color: var(--a-gold3); }
 .ap-msg--err { color: var(--a-err); }
 .ap-msg--ok { color: var(--a-ok); }
+.ap-timer { margin: 0; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ap-timer.is-low { color: var(--a-gold2); }
 .ap-link { background: none; border: 0; padding: 0; color: var(--a-gold2); font: inherit; font-size: 14px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
 /* Selettore a pillole (come il menu in alto del modello) */

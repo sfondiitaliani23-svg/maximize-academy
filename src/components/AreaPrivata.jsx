@@ -131,6 +131,18 @@ function Codice({ fatto, esci }) {
   const [msg, setMsg] = useState(null);
   const [busy, setBusy] = useState(false);
   const [modo, setModo] = useState('app');
+  // Tempo (10/11/2026): il codice dell'app cambia ogni 30 secondi. La schermata resta aperta 60 secondi,
+  // poi l'accesso si chiude e bisogna ricaricare la pagina. Si ferma se parte il link via email o se si entra.
+  const [resto, setResto] = useState(60);
+  const [fermo, setFermo] = useState(false);
+  const [fine] = useState(() => Date.now() + 60000);
+  const scaduto = resto <= 0;
+  useEffect(() => {
+    if (fermo || scaduto) return undefined;
+    const t = setInterval(() => setResto(Math.max(0, Math.ceil((fine - Date.now()) / 1000))), 1000);
+    return () => clearInterval(t);
+  }, [fermo, scaduto, fine]);
+  useEffect(() => { if (scaduto && !fermo) logout().catch(() => {}); }, [scaduto, fermo]);
   const errore = (testo) => setMsg({ testo, ok: false });
   const submit = async (e) => {
     e.preventDefault();
@@ -141,6 +153,7 @@ function Codice({ fatto, esci }) {
       setBusy(true); setMsg(null);
       try {
         const r = await riserva('usa', rc);
+        setFermo(true);
         setMsg({ ok: true, testo: `Entrato. La verifica è stata tolta: riattivala dal Profilo. Codici rimasti: ${r.rimasti}.` });
         setTimeout(fatto, 2500);
       } catch (err) { errore(err.message || 'Codice non valido o già usato.'); setBusy(false); }
@@ -154,6 +167,7 @@ function Codice({ fatto, esci }) {
       const f = (u?.factors || []).find((x) => x.status === 'verified' && x.factor_type === 'totp');
       if (!f) { fatto(); return; }
       await confermaCodice(f.id, code);
+      setFermo(true);
       fatto();
     } catch { errore('Codice non valido. Usa quello nuovo dell\'app.'); } finally { setBusy(false); }
   };
@@ -161,14 +175,27 @@ function Codice({ fatto, esci }) {
     setBusy(true); setMsg(null);
     try {
       const dove = await linkViaEmail();
+      setFermo(true);
       setMsg({ ok: true, testo: `Ti abbiamo scritto a ${dove}. Apri il link entro un'ora: entri, scegli una password nuova e la verifica si toglie.` });
     } catch (err) { errore(err.message || 'Invio non riuscito. Riprova.'); } finally { setBusy(false); }
   };
   const riservaOn = modo === 'riserva';
+  if (scaduto && !fermo) {
+    return (
+      <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
+        <Titolo oro="Verifica" bianco="in due passaggi" sotto="Il codice dell'app cambia ogni 30 secondi." />
+        <div className="ap-card ap-form">
+          <p className="ap-msg ap-msg--err" role="alert">Tempo scaduto: per sicurezza l'accesso è stato chiuso. Ricarica la pagina e riprova.</p>
+          <button className="ap-btn ap-btn--block" type="button" onClick={() => window.location.reload()}>Ricarica la pagina</button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
       <Titolo oro="Verifica" bianco="in due passaggi" sotto={riservaOn ? 'Scrivi uno dei codici di riserva salvati (es. ABCDE‑23456). Vale una volta sola.' : 'Scrivi il codice di 6 cifre dell\'app di autenticazione.'} />
       <form className="ap-card ap-form" onSubmit={submit} key={modo}>
+        {!fermo && <p className={`ap-soft ap-timer${resto <= 15 ? ' is-low' : ''}`} aria-live="off">Tempo rimasto: {resto} s · il codice cambia ogni 30 s</p>}
         <Campo label={riservaOn ? 'Codice di riserva' : 'Codice'} id="codice" inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required />
         <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? 'Attendi…' : 'Conferma'}</button>
         {msg && <p className={`ap-msg ${msg.ok ? 'ap-msg--ok' : 'ap-msg--err'}`} role="status">{msg.testo}</p>}
