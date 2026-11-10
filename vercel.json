@@ -27,6 +27,10 @@
       "destination": "/api/health.js"
     },
     {
+      "source": "/api/mfa-riserva",
+      "destination": "/api/mfa-riserva.js"
+    },
+    {
       "source": "/privacy",
       "destination": "/privacy.html"
     },
