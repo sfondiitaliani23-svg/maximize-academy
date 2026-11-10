@@ -185,3 +185,25 @@ export async function confermaCodice(factorId, code) {
   const d = await req('POST', `/auth/v1/factors/${factorId}/verify`, { challenge_id: ch.id, code: String(code).replace(/\s/g, '') });
   return salva(d, read());
 }
+
+// Altre strade per entrare senza telefono (10/11/2026): codice di riserva o link via email.
+// La funzione è quella di Maurizio Barber Shop (stessi account), raggiunta dal ponte /api/mfa-riserva.
+export async function riserva(azione, codice) {
+  const t = await token();
+  let r;
+  try {
+    r = await fetch('/api/mfa-riserva', { method: 'POST', headers: { Authorization: `Bearer ${t}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ azione, codice }) });
+  } catch { throw new Error('Non riusciamo a collegarci. Riprova.'); }
+  const d = await r.json().catch(() => null);
+  if (!r.ok) throw new Error(d?.error?.message || 'Operazione non riuscita. Riprova.');
+  return d;
+}
+/** Manda il link via email (quello di «Password dimenticata»): aprendolo si entra e la verifica si toglie. */
+export async function linkViaEmail() {
+  const u = await utente();
+  if (!u?.email) throw new Error('Il profilo non ha un\'email.');
+  await riserva('email');
+  await recuperaPassword(u.email);
+  const [n, d] = u.email.split('@');
+  return `${n.slice(0, 2)}${'•'.repeat(Math.max(1, n.length - 2))}@${d}`;
+}

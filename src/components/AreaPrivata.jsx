@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice } from '../lib/account';
+import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
 import StrumentiRiservati from './StrumentiRiservati';
@@ -126,30 +126,58 @@ const GoogleIc = () => (
 
 /* ---------- accesso ---------- */
 // Secondo passaggio (10/11/2026): chi ha attivato il codice di Google Authenticator lo scrive dopo la password.
+// Senza telefono: un codice di riserva, oppure il link via email (si entra, la verifica si toglie, nuova password).
 function Codice({ fatto, esci }) {
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [modo, setModo] = useState('app');
+  const errore = (testo) => setMsg({ testo, ok: false });
   const submit = async (e) => {
     e.preventDefault();
-    const code = String(new FormData(e.currentTarget).get('codice') || '').replace(/\s/g, '');
-    if (!/^\d{6}$/.test(code)) { setMsg('Scrivi le 6 cifre dell\'app.'); return; }
-    setBusy(true); setMsg('');
+    const raw = String(new FormData(e.currentTarget).get('codice') || '');
+    if (modo === 'riserva') {
+      const rc = raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (rc.length !== 10) { errore('Il codice di riserva ha 10 caratteri.'); return; }
+      setBusy(true); setMsg(null);
+      try {
+        const r = await riserva('usa', rc);
+        setMsg({ ok: true, testo: `Entrato. La verifica è stata tolta: riattivala dal Profilo. Codici rimasti: ${r.rimasti}.` });
+        setTimeout(fatto, 2500);
+      } catch (err) { errore(err.message || 'Codice non valido o già usato.'); setBusy(false); }
+      return;
+    }
+    const code = raw.replace(/\s/g, '');
+    if (!/^\d{6}$/.test(code)) { errore('Scrivi le 6 cifre dell\'app.'); return; }
+    setBusy(true); setMsg(null);
     try {
       const u = await utente();
       const f = (u?.factors || []).find((x) => x.status === 'verified' && x.factor_type === 'totp');
       if (!f) { fatto(); return; }
       await confermaCodice(f.id, code);
       fatto();
-    } catch { setMsg('Codice non valido. Usa quello nuovo dell\'app.'); } finally { setBusy(false); }
+    } catch { errore('Codice non valido. Usa quello nuovo dell\'app.'); } finally { setBusy(false); }
   };
+  const email = async () => {
+    setBusy(true); setMsg(null);
+    try {
+      const dove = await linkViaEmail();
+      setMsg({ ok: true, testo: `Ti abbiamo scritto a ${dove}. Apri il link entro un'ora: entri, scegli una password nuova e la verifica si toglie.` });
+    } catch (err) { errore(err.message || 'Invio non riuscito. Riprova.'); } finally { setBusy(false); }
+  };
+  const riservaOn = modo === 'riserva';
   return (
     <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
-      <Titolo oro="Verifica" bianco="in due passaggi" sotto="Scrivi il codice di 6 cifre dell'app di autenticazione." />
-      <form className="ap-card ap-form" onSubmit={submit}>
-        <Campo label="Codice" id="codice" inputMode="numeric" autoComplete="one-time-code" maxLength={7} required />
+      <Titolo oro="Verifica" bianco="in due passaggi" sotto={riservaOn ? 'Scrivi uno dei codici di riserva salvati (es. ABCDE‑23456). Vale una volta sola.' : 'Scrivi il codice di 6 cifre dell\'app di autenticazione.'} />
+      <form className="ap-card ap-form" onSubmit={submit} key={modo}>
+        <Campo label={riservaOn ? 'Codice di riserva' : 'Codice'} id="codice" inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required />
         <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? 'Attendi…' : 'Conferma'}</button>
-        {msg && <p className="ap-msg ap-msg--err" role="status">{msg}</p>}
+        {msg && <p className={`ap-msg ${msg.ok ? 'ap-msg--ok' : 'ap-msg--err'}`} role="status">{msg.testo}</p>}
+        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => { setModo(riservaOn ? 'app' : 'riserva'); setMsg(null); }}>
+          {riservaOn ? 'Ho il telefono: usa il codice dell\'app' : 'Non hai il telefono? Usa un codice di riserva'}
+        </button>
+        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={email} disabled={busy}>Ricevi un link via email per entrare</button>
         <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={esci}>Esci</button>
+        {riservaOn && <p className="ap-soft" style={{ fontSize: 13 }}>Niente codici? Usa il link via email, oppure scrivi a Maurizio: toglie lui la verifica dal profilo.</p>}
       </form>
     </div>
   );
@@ -743,6 +771,12 @@ export default function AreaPrivata() {
   const vai = (t) => { setTab(t); window.scrollTo({ top: 0, behavior: 'smooth' }); try { navigator.vibrate?.(8); } catch { /* niente vibrazione */ } };
   const apriEliseo = useCallback(() => { setTab('eliseo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
   const esci = () => logout().then(() => { setIo(null); setTab(''); setStato('login'); });
+
+  // Arrivato dal link via email con la verifica attiva: la si toglie, così si può scegliere la password nuova.
+  useEffect(() => {
+    if (stato !== 'recovery') return;
+    serveCodice().then((serve) => (serve ? riserva('sblocca') : null)).catch(() => {});
+  }, [stato]);
 
   if (stato === 'recovery') return <div className="ap"><NuovaPassword fatto={() => setStato('check')} /></div>;
   if (stato === 'login') return <div className="ap"><Accesso avviso={ritorno?.errore || ''} onEntrato={() => setStato('check')} /></div>;

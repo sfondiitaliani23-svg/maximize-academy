@@ -255,7 +255,7 @@ function dueFattori(ui) {
         try { await sbc.mfaUnenroll(attivo.id); say('Verifica in due passaggi disattivata.'); draw(); }
         catch (e) { say(e?.message || 'Non riesco a disattivarla.', true); off.disabled = false; }
       });
-      box.replaceChildren(...head, h('div', { class: 'es-row' }, h('div', { class: 'es-row__txt' }, h('strong', { text: 'App di autenticazione' }), h('span', { text: 'Attiva' })), off));
+      box.replaceChildren(...head, h('div', { class: 'es-row' }, h('div', { class: 'es-row__txt' }, h('strong', { text: 'App di autenticazione' }), h('span', { text: 'Attiva' })), off), riserva(user));
       return;
     }
     const on = h('button', { type: 'button', class: 'btn btn--primary', text: 'Attiva 2FA' });
@@ -274,7 +274,7 @@ function dueFattori(ui) {
           const v = code.value.replace(/\s/g, '');
           if (!/^\d{6}$/.test(v)) { say('Scrivi le 6 cifre dell’app.', true); return; }
           ok.disabled = true;
-          try { await sbc.mfaVerify(d.id, v); say('Verifica in due passaggi attiva. Al prossimo accesso ti chiederà il codice.'); draw(); }
+          try { await sbc.mfaVerify(d.id, v); say('Verifica attiva. Ora crea i codici di riserva: servono se perdi il telefono.'); draw(); }
           catch { say('Codice non valido. Usa quello nuovo dell’app.', true); ok.disabled = false; }
         });
         box.replaceChildren(...head,
@@ -288,6 +288,39 @@ function dueFattori(ui) {
       } catch (e) { say(e?.message ? `Non riesco ad attivarla: ${e.message}` : 'Non riesco ad attivarla.', true); on.disabled = false; }
     });
     box.replaceChildren(...head, h('div', { class: 'es-row' }, h('div', { class: 'es-row__txt' }, h('strong', { text: 'App di autenticazione' }), h('span', { text: 'Non configurata' })), on));
+  }
+  // Codici di riserva (10/11/2026): se il telefono si perde, uno di questi fa entrare e toglie la verifica.
+  // Si vedono una volta sola; il server tiene solo le impronte.
+  function riserva(user) {
+    const wrap = h('div', { class: 'es-riserva' });
+    if (typeof sbc?.mfaRiserva !== 'function') return wrap;
+    const n = Array.isArray(user?.app_metadata?.mfa_riserva) ? user.app_metadata.mfa_riserva.length : 0;
+    const btn = h('button', { type: 'button', class: n ? 'btn btn--secondary' : 'btn btn--primary', text: n ? 'Crea codici nuovi' : 'Crea codici di riserva' });
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try {
+        const { codici } = await sbc.mfaRiserva('crea');
+        const testo = `Codici di riserva — ${location.hostname}\nOgni codice vale una volta. Tienili in un posto sicuro.\n\n${codici.join('\n')}\n`;
+        const copia = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Copia' });
+        copia.addEventListener('click', async () => { try { await navigator.clipboard.writeText(testo); say('Codici copiati.'); } catch { say('Non riesco a copiare: selezionali a mano.', true); } });
+        const scarica = h('button', { type: 'button', class: 'btn btn--secondary', text: 'Scarica .txt' });
+        scarica.addEventListener('click', () => {
+          const a = h('a', { href: URL.createObjectURL(new Blob([testo], { type: 'text/plain' })), download: 'codici-di-riserva.txt' });
+          document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        });
+        const fatto = h('button', { type: 'button', class: 'btn btn--primary', text: 'Li ho salvati' });
+        fatto.addEventListener('click', () => draw());
+        wrap.replaceChildren(
+          h('strong', { text: 'I tuoi codici di riserva' }),
+          h('p', { class: 'es-note', text: 'Salvali adesso: non li vedrai più. Ogni codice vale una volta. I codici vecchi non valgono più.' }),
+          h('ol', { class: 'es-codes' }, ...codici.map((c) => h('li', { text: c }))),
+          h('div', { class: 'es-inline' }, copia, scarica, fatto));
+      } catch (e) { say(e?.message || 'Non riesco a crearli.', true); btn.disabled = false; }
+    });
+    wrap.append(h('div', { class: 'es-row' },
+      h('div', { class: 'es-row__txt' }, h('strong', { text: 'Codici di riserva' }), h('span', { text: n ? `${n} codici ancora validi` : 'Non creati: senza telefono resteresti fuori' })),
+      btn));
+    return wrap;
   }
   box.append(h('p', { class: 'es-note', text: 'Carico…' }));
   draw();
