@@ -7,7 +7,7 @@ Ultima modifica: 2026-10-26
 - Tabelle: `storie` + spazio file `storie` (`supabase/storie.sql`), `leads` (`supabase/richieste.sql`): il sito può solo aggiungere richieste, si leggono dal pannello.
 - Iscrizioni libere spente. Gli utenti per `/gestione` si creano dal pannello (Authentication → Users → Add user) e ricevono il ruolo con:
   `update auth.users set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}' where email = 'EMAIL';`
-- Il vecchio progetto (hozyimhh…, account principale) è in pausa: le richieste vecchie si scaricano fino al 26/11/2027.
+- Il vecchio progetto (hozyimhh…, account principale) è in pausa e va eliminato (decisione del 10/11/2026, vedi in fondo). Contiene le richieste vecchie: prima di eliminarlo, scaricare la copia con «Download backups». Resta solo `pxzdsgcd…`, quello che il sito usa.
 
 ## Cloudflare Pages (quando c'è il dominio)
 Il codice è già pronto: `functions/api/*` (ponte `functions/_adapter.js` verso `api/*.js`), `public/_headers`, `public/_redirects`.
