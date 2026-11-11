@@ -1,6 +1,6 @@
 import { brandLinks } from '../routes';
 import React from 'react';
-import { ArrowUpRight, Sparkles, ShieldCheck, BookOpen, TrendingUp, Briefcase, GraduationCap, Cpu } from 'lucide-react';
+import { ArrowUpRight, Sparkles, ShieldCheck, BookOpen, TrendingUp, Briefcase, GraduationCap, Cpu, Handshake, Camera, Quote } from 'lucide-react';
 
 const pilastriM = [
   {
