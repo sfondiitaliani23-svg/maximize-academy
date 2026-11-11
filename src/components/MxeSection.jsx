@@ -103,19 +103,20 @@ export default function MxeSection() {
 
               <div className="pt-2">
                 <div className="text-xs uppercase font-bold tracking-[0.2em] text-amber-400 mb-4">
-                  I FONDATORI DI M×E BARBER LAB
+                  I FONDATORI & LA SQUADRA DI M×E BARBER LAB
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {/* Card Maurizio */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center">
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
+                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
                       <img
                         src="/assets/img/maurizio_ritratto.webp"
                         alt="Maurizio Pizzuto"
                         className="w-full h-full object-cover"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
+                      <span className="select-none">MP</span>
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-white">Maurizio Pizzuto</h4>
@@ -125,8 +126,8 @@ export default function MxeSection() {
                   </div>
 
                   {/* Card Eliseo */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
+                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
                       <img
                         src="/assets/img/eliseo_ritratto.webp"
                         alt="Eliseo Miraglia"
@@ -139,6 +140,42 @@ export default function MxeSection() {
                       <h4 className="text-sm font-bold text-white">Eliseo Miraglia</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Co-Founder & Sviluppo Digitale</p>
                       <p className="text-[11px] text-gray-400 mt-0.5">Digitale, tecnologia, automazioni e IA.</p>
+                    </div>
+                  </div>
+
+                  {/* Card Enea */}
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
+                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
+                      <img
+                        src="/assets/img/enea_ritratto.webp"
+                        alt="Enea Miraglia"
+                        className="w-full h-full object-cover"
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      />
+                      <span className="select-none">EN</span>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white">Enea Miraglia</h4>
+                      <p className="text-[11px] text-amber-300 font-medium">Esperienza | Relazioni | Valore Umano</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">Maturità commerciale e relazioni autentiche.</p>
+                    </div>
+                  </div>
+
+                  {/* Card Francesco */}
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
+                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
+                      <img
+                        src="/assets/img/francesco_ritratto.webp"
+                        alt="Francesco"
+                        className="w-full h-full object-cover"
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      />
+                      <span className="select-none">F</span>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white">Francesco</h4>
+                      <p className="text-[11px] text-amber-300 font-medium">Videomaker | Creatività | Visivo</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">Storytelling, contenuti digitali e video.</p>
                     </div>
                   </div>
                 </div>
@@ -168,6 +205,115 @@ export default function MxeSection() {
               />
             </div>
 
+          </div>
+        </div>
+
+        {/* SEZIONE APPROFONDIMENTO SQUADRA & RUOLI */}
+        <div className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400">
+              LA NOSTRA SQUADRA
+            </span>
+            <h3 className="text-2xl sm:text-4xl font-display font-bold text-white">
+              Persone, Relazioni e Creatività al Centro
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto">
+              Perché crediamo che la tecnologia possa creare opportunità, ma siano sempre le persone a fare la differenza.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Scheda Approfondita Enea Miraglia */}
+            <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-base shadow-lg">
+                    <img
+                      src="/assets/img/enea_ritratto.webp"
+                      alt="Enea Miraglia"
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                    <span className="select-none">EN</span>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">Enea Miraglia</h4>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
+                      <Handshake className="w-3.5 h-3.5 text-amber-400" />
+                      Esperienza · Relazioni · Valore Umano
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+                  <p>
+                    Una vita professionale costruita attraverso il commercio, il dialogo e la capacità di creare relazioni autentiche e durature.
+                  </p>
+                  <p>
+                    Enea porta in M×E Barber Lab un patrimonio prezioso: l’esperienza di chi ha sempre lavorato a contatto con le persone, imparando ad ascoltare, comprendere le esigenze e costruire rapporti basati sulla fiducia e sul rispetto.
+                  </p>
+                  <p>
+                    La sua forza è la capacità di mettere in connessione persone, opportunità e idee, valorizzando il lato umano di ogni collaborazione.
+                  </p>
+                  <p>
+                    All’interno della nostra squadra rappresenta l’esperienza, la maturità professionale e quella visione commerciale che nasce da anni di relazioni costruite sul campo.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-start gap-3">
+                <Quote className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-200/90 font-medium italic leading-relaxed">
+                  “Crediamo che la tecnologia possa creare opportunità, ma siano sempre le persone a fare la differenza.”
+                </p>
+              </div>
+            </div>
+
+            {/* Scheda Approfondita Francesco */}
+            <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-base shadow-lg">
+                    <img
+                      src="/assets/img/francesco_ritratto.webp"
+                      alt="Francesco"
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                    <span className="select-none">F</span>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">Francesco</h4>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
+                      <Camera className="w-3.5 h-3.5 text-amber-400" />
+                      Videomaker · Creatività · Comunicazione Visiva
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+                  <p>
+                    Ogni attività ha una storia da raccontare. Francesco contribuisce a trasformarla in immagini capaci di comunicare identità, emozioni e professionalità.
+                  </p>
+                  <p>
+                    Videomaker e professionista della comunicazione visiva, porta in M×E Barber Lab creatività, sensibilità e attenzione ai dettagli.
+                  </p>
+                  <p>
+                    Attraverso fotografie, video e contenuti digitali, il suo contributo è valorizzare le persone, gli ambienti, i prodotti e il lavoro quotidiano delle attività che scelgono di affidarsi alla nostra squadra.
+                  </p>
+                  <p>
+                    Il suo approccio unisce professionalità, disponibilità e spirito di collaborazione, qualità fondamentali per costruire contenuti autentici e coerenti con l’identità di ogni cliente.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-start gap-3">
+                <Quote className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-200/90 font-medium italic leading-relaxed">
+                  “Un’immagine efficace non deve soltanto attirare l’attenzione. Deve raccontare chi sei e trasmettere il tuo valore.”
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
