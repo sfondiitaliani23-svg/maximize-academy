@@ -220,11 +220,11 @@ export default function AnaqaSection() {
                 <div className="mt-3">
                   <button
                     type="button"
-                    onClick={() => setProdottoSelezionato({ name: 'Kit Completo Rituale Barba ANAQA (5 Prodotti)', price: '99' })}
+                    onClick={() => setProdottoSelezionato({ name: 'Kit Completo Rituale Barba ANAQA (5 Prodotti)', price: '90' })}
                     className="w-full p-3.5 rounded-xl btn-gold text-xs uppercase font-bold tracking-wider flex items-center justify-center gap-2 shadow-gold-glow"
                   >
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Prenota Kit Completo (5 Prodotti) · € 99</span>
+                    <span>Prenota Kit Completo (5 Prodotti) · € 90</span>
                   </button>
                 </div>
               </div>
