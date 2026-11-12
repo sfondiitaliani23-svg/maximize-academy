@@ -12,6 +12,7 @@ const rituale = [
   { nome: 'Beard Oil', testo: 'Nutre, ammorbidisce e dona lucentezza alla barba.', prezzo: '25' },
   { nome: 'Beard Perfume', testo: 'Completa il rituale con una piacevole fragranza.', prezzo: '28' },
 ];
+const balsamo = { nome: 'Beard Balm', testo: 'Balsamo per barba e baffi della linea ANAQA.', prezzo: '18' };
 
 function srcLinea(n) {
   return `/assets/img/anaqa/linea/${String(n).padStart(2, '0')}.webp`;
@@ -197,7 +198,7 @@ export default function AnaqaSection() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {rituale.map((p) => (
+                  {[...rituale, balsamo].map((p) => (
                     <button
                       key={p.nome}
                       type="button"
@@ -230,7 +231,7 @@ export default function AnaqaSection() {
               </div>
 
               <p className="text-sm sm:text-base text-gray-300 leading-relaxed pt-2">
-                ANAQA: cinque prodotti, un unico rituale di cura e benessere professionale.
+                ANAQA: cinque prodotti, un unico rituale di cura e benessere professionale. In più c’è il Beard Balm, a 18 €.
               </p>
               <p className="text-sm text-amber-200 leading-relaxed">
                 Linea dedicata ai professionisti del settore barber.
