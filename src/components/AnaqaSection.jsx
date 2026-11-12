@@ -6,8 +6,8 @@ import ProductBookingModal from './ProductBookingModal';
 const PAGINE_LINEA = 42;
 
 const rituale = [
-  { nome: 'Beard Shampoo', testo: 'Deterge delicatamente barba e pelle, eliminando impurità e residui.', prezzo: '24' },
-  { nome: 'Beard Peeling', testo: 'Esfolia la pelle sotto la barba, rimuovendo le cellule morte.', prezzo: '22' },
+  { nome: 'Beard Shampoo', testo: 'Deterge delicatamente barba e pelle, eliminando impurità e residui.', prezzo: '18' },
+  { nome: 'Beard Peeling', testo: 'Esfolia la pelle sotto la barba, rimuovendo le cellule morte.', prezzo: '18' },
   { nome: 'Beard Foam', testo: 'Ammorbidisce e condiziona la barba, rendendola più disciplinata.', prezzo: '20' },
   { nome: 'Beard Oil', testo: 'Nutre, ammorbidisce e dona lucentezza alla barba.', prezzo: '25' },
   { nome: 'Beard Perfume', testo: 'Completa il rituale con una piacevole fragranza.', prezzo: '28' },
