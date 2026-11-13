@@ -51,12 +51,12 @@ export default function ContactSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-6xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-6xl font-display font-bold text-white tracking-tight">
             Hai un progetto?{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               Parliamone.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
             Corsi e consulenza con Maurizio. Forbici Sabey, prodotti ANAQA e Treatwell con Keplero.

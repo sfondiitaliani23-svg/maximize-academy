@@ -87,12 +87,12 @@ export default function EcosystemGrid() {
             </span>
           </div>
           
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Un professionista.{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               Infinite direzioni.
             </span>
-          </h2>
+          </h1>
           
           <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
             Il tuo prossimo passo può essere una nuova competenza, uno strumento migliore o una connessione che apre possibilità. Partiamo da ciò che serve a te.

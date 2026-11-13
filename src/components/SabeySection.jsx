@@ -93,12 +93,12 @@ export default function SabeySection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Lo strumento è parte{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               del professionista.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
             Sabey Scissors propone forbici professionali.

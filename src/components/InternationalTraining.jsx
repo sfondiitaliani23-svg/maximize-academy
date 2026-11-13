@@ -13,12 +13,12 @@ export default function InternationalTraining() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Il percorso formativo è{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               Maximize Academy e UAAMI.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
             Solo questi due. La collaborazione per il 2027 è ancora in fase di definizione.

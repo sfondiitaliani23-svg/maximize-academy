@@ -58,12 +58,12 @@ export default function MxeSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Due persone. Sei pilastri.{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               Un’unica visione.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed italic">
             “L’esperienza incontra l’innovazione. I valori danno direzione alla crescita.”

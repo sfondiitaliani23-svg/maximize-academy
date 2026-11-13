@@ -33,12 +33,12 @@ export default function TreatwellSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             La barberia è cambiata.{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               Anche l’agenda.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
             Come Brand Ambassador Treatwell, sono un punto di riferimento per i Barber che vogliono capire come la prenotazione digitale trasforma il flusso di cassa e il tempo libero.

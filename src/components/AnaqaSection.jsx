@@ -75,12 +75,12 @@ export default function AnaqaSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Prodotti professionali.{' '}
             <span className="font-serif italic font-normal gold-text-gradient sm:whitespace-nowrap">
               Risultati professionali.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
             La scelta del prodotto completa il servizio, fidelizza il cliente ed eleva la marginalità della tua barberia.

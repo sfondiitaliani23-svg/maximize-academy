@@ -67,9 +67,9 @@ export default function BarberResetSection() {
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight">
+          <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight">
             BARBER <span className="text-amber-400">RESET</span>
-          </h2>
+          </h1>
           <div className="text-sm uppercase tracking-[0.25em] text-amber-400 font-bold">
             INTERVENTO STRATEGICO IN BARBERIA
           </div>

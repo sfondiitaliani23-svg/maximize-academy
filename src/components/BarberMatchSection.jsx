@@ -14,12 +14,12 @@ export default function BarberMatchSection({ onSelectCourse }) {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight">
             Dove il mondo Barber{' '}
             <span className="font-serif italic font-normal gold-text-gradient">
               si incontra.
             </span>
-          </h2>
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
             Competizione, palco, formazione e networking. Collaboro con Barber Match per creare le più grandi occasioni di confronto e visibilità del settore in Italia.
