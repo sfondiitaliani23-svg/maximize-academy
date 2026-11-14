@@ -40,7 +40,7 @@ export default function GoogleButton({ onEntrato, onErrore }) {
         },
       });
       const w = Math.min(400, Math.max(200, Math.round(box.current.getBoundingClientRect().width)));
-      window.google.accounts.id.renderButton(box.current, { type: 'standard', theme: 'filled_black', size: 'large', text: 'continue_with', shape: 'rectangular', width: w, locale: 'it' });
+      window.google.accounts.id.renderButton(box.current, { type: 'standard', theme: 'filled_black', size: 'large', text: 'continue_with', shape: 'pill', width: w, locale: 'it' });
       // Se Google rifiuta il dominio il pulsante resta vuoto: si torna al link normale
       setTimeout(() => { if (!vivo) return; const f = box.current?.querySelector('iframe'); setPronto(Boolean(f && f.offsetWidth >= 20)); }, 1500);
     })().catch(() => setPronto(false));
