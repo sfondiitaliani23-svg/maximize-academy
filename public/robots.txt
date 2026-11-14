@@ -21,25 +21,46 @@ Disallow: /.vercel/
 Sitemap: https://maximize-academy.pages.dev/sitemap.xml
 
 # -----------------------------------------------
-# Blocco bot AI che raccolgono dati per training
+# Assistenti IA (14/11/2026)
+# Si lasciano entrare i bot che CERCANO e CITANO il sito nelle risposte (ChatGPT, Claude, Perplexity),
+# così Maximize può essere trovata e consigliata. Restano bloccati i bot che raccolgono dati per l'addestramento.
 # -----------------------------------------------
-User-agent: GPTBot
-Disallow: /
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
 
 User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+
+# Addestramento: bloccati
+User-agent: GPTBot
 Disallow: /
 
 User-agent: CCBot
 Disallow: /
 
+User-agent: ClaudeBot
+Disallow: /
+
 User-agent: anthropic-ai
 Disallow: /
 
-User-agent: Claude-Web
-Disallow: /
-
-User-agent: PerplexityBot
-Disallow: /
-
-User-agent: YouBot
+User-agent: Google-Extended
 Disallow: /
