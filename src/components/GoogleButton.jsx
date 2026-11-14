@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GOOGLE_CLIENT_ID, conGoogleToken, googleUrl } from '../lib/account';
+import { GOOGLE_CLIENT_ID, conGoogleToken, googleUrl, googleRedirect } from '../lib/account';
 
 // Pulsante «Continua con Google» (03/11/2026), come su Maurizio Barber Shop:
 // si apre sul dominio di Maximize (Google Identity Services), così Google non mostra l'indirizzo di Supabase.
-// Se il Client ID manca o Google rifiuta il dominio, resta il link normale.
+// Se Google non apre il pulsante, il link va su Google con ritorno su /area del sito (mai sull'indirizzo di Supabase).
 const SRC = 'https://accounts.google.com/gsi/client';
 const hex = (bytes) => [...new Uint8Array(bytes)].map((b) => b.toString(16).padStart(2, '0')).join('');
 function carica() {
@@ -50,7 +50,7 @@ export default function GoogleButton({ onEntrato, onErrore }) {
   return (
     <>
       {GOOGLE_CLIENT_ID && <div ref={box} className="ap-gsi" style={pronto ? undefined : { position: 'absolute', opacity: 0, pointerEvents: 'none' }} />}
-      {!pronto && <a className="ap-google" href={googleUrl()}><GoogleIc /> Continua con Google</a>}
+      {!pronto && <a className="ap-google" href={GOOGLE_CLIENT_ID ? '#google' : googleUrl()} onClick={(e) => { if (!GOOGLE_CLIENT_ID) return; e.preventDefault(); googleRedirect(); }}><GoogleIc /> Continua con Google</a>}
     </>
   );
 }

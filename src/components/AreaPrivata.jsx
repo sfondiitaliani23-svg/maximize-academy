@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail } from '../lib/account';
+import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail, googleRitorno } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
 import StrumentiRiservati from './StrumentiRiservati';
@@ -777,6 +777,12 @@ export default function AreaPrivata() {
     return () => robots.remove();
   }, []);
 
+  // Ritorno da Google con id_token (piano B del pulsante, 14/11/2026)
+  const [erroreGoogle, setErroreGoogle] = useState('');
+  useEffect(() => {
+    googleRitorno().then((r) => { if (r === true) setStato('check'); else if (r) setErroreGoogle(r); });
+  }, []);
+
   useEffect(() => {
     if (stato !== 'check') return;
     token().then(async (t) => {
@@ -806,7 +812,7 @@ export default function AreaPrivata() {
   }, [stato]);
 
   if (stato === 'recovery') return <div className="ap"><NuovaPassword fatto={() => setStato('check')} /></div>;
-  if (stato === 'login') return <div className="ap"><Accesso avviso={ritorno?.errore || ''} onEntrato={() => setStato('check')} /></div>;
+  if (stato === 'login') return <div className="ap"><Accesso key={erroreGoogle || 'a'} avviso={erroreGoogle || ritorno?.errore || ''} onEntrato={() => setStato('check')} /></div>;
   if (stato === 'codice') return <div className="ap"><Codice fatto={() => setStato('check')} esci={() => logout().then(() => setStato('login'))} /></div>;
   if (!ok || !tab) return <div className="ap"><div className="ap-wrap"><p className="ap-soft">Caricamento…</p></div></div>;
 

@@ -67,14 +67,36 @@ const salva = (d, prev) => {
 
 export const login = async (email, password) => salva(await call('/auth/v1/token?grant_type=password', { email, password }));
 export const hasSession = () => Boolean(read());
-// Client ID di Google del progetto «Maximize Academy» (Google Cloud). Non è segreto.
-// Con questo il pulsante di Google si apre sul dominio di Maximize e mostra il nome dell'app al posto di supabase.co.
-// Vuoto = si usa il vecchio percorso (pagina di Google con l'indirizzo di Supabase).
-export const GOOGLE_CLIENT_ID = '';
+// Client ID di Google (client «Maurizio Barber Shop Web»: stesso progetto Supabase, stessi account). Non è segreto.
+// Con questo Google mostra il dominio di Maximize, non l'indirizzo di Supabase (14/11/2026).
+// Nel client sono autorizzati l'origine https://maximize-academy.pages.dev e il ritorno /area.
+export const GOOGLE_CLIENT_ID = '843669200454-5r7la81p8ku6k4967cap4rfpn5b5fs66.apps.googleusercontent.com';
 
 /** Accesso con il token di Google ottenuto sul dominio del sito. */
 export const conGoogleToken = async (idToken, nonce) => salva(await call('/auth/v1/token?grant_type=id_token', { provider: 'google', id_token: idToken, nonce }));
 
+// Piano B se il pulsante di Google non si apre: si va su Google e si torna su /area del sito con un id_token.
+// Niente più pagina di Supabase con «Continua su jxtkgxdxvouwlowvqohm.supabase.co».
+const G_KEY = 'mx-google-redirect';
+const hexRand = () => [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
+export async function googleRedirect() {
+  const raw = hexRand(); const state = hexRand();
+  try { sessionStorage.setItem(G_KEY, JSON.stringify({ raw, state })); } catch { /* senza archivio il ritorno non si verifica */ }
+  const nonce = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw)))].map((b) => b.toString(16).padStart(2, '0')).join('');
+  const q = new URLSearchParams({ client_id: GOOGLE_CLIENT_ID, redirect_uri: `${window.location.origin}/area`, response_type: 'id_token', scope: 'openid email profile', nonce, state, prompt: 'select_account', hl: 'it' });
+  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${q}`;
+}
+/** Ritorno da Google (piano B): true = entrato, false = niente da fare, stringa = errore da mostrare. */
+export async function googleRitorno() {
+  const h = new URLSearchParams(window.location.hash.slice(1));
+  const idToken = h.get('id_token');
+  if (!idToken && !h.get('error')) return false;
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(G_KEY) || 'null'); sessionStorage.removeItem(G_KEY); } catch { saved = null; }
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  if (!idToken || !saved || saved.state !== h.get('state')) return 'Accesso con Google non riuscito. Riprova.';
+  try { await conGoogleToken(idToken, saved.raw); return true; } catch (e) { return e.message || 'Accesso con Google non riuscito. Riprova.'; }
+}
 export const googleUrl = () => `${AC_URL}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(back())}`;
 
 /** Iscrizione (vale anche per Maurizio Barber Shop: è lo stesso account). */
