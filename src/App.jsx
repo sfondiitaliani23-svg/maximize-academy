@@ -11,6 +11,7 @@ import ContactCta from './components/ContactCta';
 import EcosystemGrid from './components/EcosystemGrid';
 import InternationalTraining from './components/InternationalTraining';
 import NationalAcademy from './components/NationalAcademy';
+import VisionLabSection from './components/VisionLabSection';
 import BarberResetSection from './components/BarberResetSection';
 import SabeySection from './components/SabeySection';
 import AnaqaSection from './components/AnaqaSection';
@@ -38,6 +39,10 @@ function setMeta(page) {
   set('meta[property="og:url"]', 'content', SITE + (p.path === '/' ? '/' : p.path));
   set('meta[property="og:title"]', 'content', p.title);
   set('meta[property="og:description"]', 'content', p.description);
+  // Pagine in bozza: non indicizzate.
+  let robots = document.querySelector('meta[name="robots"]');
+  if (p.draft) { if (!robots) { robots = document.createElement('meta'); robots.name = 'robots'; document.head.appendChild(robots); } robots.content = 'noindex, nofollow'; }
+  else if (robots && robots.dataset.draft !== 'keep') robots.remove();
 }
 
 function scrollToTarget(hash) {
@@ -111,6 +116,7 @@ export default function App() {
     case '/mxe': content = <MxeSection />; break;
     case '/eventi': content = <BarberMatchSection onSelectCourse={openCourse} />; break;
     case '/contatti': content = <ContactSection />; break;
+    case '/vision-lab': content = <VisionLabSection />; break;
     case '/pro': content = <ProB2BSection />; break;
     default:
       content = (

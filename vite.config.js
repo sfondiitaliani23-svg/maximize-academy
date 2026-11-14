@@ -36,7 +36,8 @@ function pageFiles() {
           .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
           .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
           .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${esc(p.title)}$2`)
-          .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(p.description)}$2`);
+          .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(p.description)}$2`)
+          .replace('</head>', p.draft ? '<meta name="robots" content="noindex, nofollow">\n</head>' : '</head>');
         const dir = path.join(dist, p.path.slice(1));
         fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(path.join(dir, 'index.html'), html);

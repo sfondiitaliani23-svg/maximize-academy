@@ -70,7 +70,7 @@ export default function Footer() {
         <nav aria-label="Pagine del sito">
           <h3 className={h3}>Esplora</h3>
           <ul className="m-0 p-0 list-none">
-            {pages.map((p) => (
+            {pages.filter((p) => !p.draft).map((p) => (
               <li key={p.path}><a href={p.path} className={link}>{p.label}</a></li>
             ))}
             <li><a href="/area" className={link}>Area privata</a></li>

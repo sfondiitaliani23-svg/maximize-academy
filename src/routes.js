@@ -76,6 +76,16 @@ export const pages = [
     intro: 'Maurizio per formazione e consulenza. Keplero per Sabey, ANAQA e Treatwell.',
   },
   {
+    // Bozza (14/11/2026): fuori da menu, footer e sitemap, con noindex, finché Luigi Di Domenico non approva.
+    path: '/vision-lab',
+    label: 'Vision Lab Academy',
+    menu: false,
+    draft: true,
+    title: 'Vision Lab Academy × Maximize Academy | Formazione 2027',
+    description: 'Vision Lab Academy, sede del Centro UAAMI Napoli, e Maximize Academy: la partnership per la formazione dei barber pugliesi. Offerte 2027.',
+    intro: 'La partnership per la formazione dei barber pugliesi.',
+  },
+  {
     path: '/pro',
     label: 'Professionisti',
     menu: false,
