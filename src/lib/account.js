@@ -5,6 +5,26 @@ export const AC_URL = 'https://jxtkgxdxvouwlowvqohm.supabase.co';
 export const AC_KEY = 'sb_publishable_SfTFCS_YxVYUOQzxI_tLpA_Kj10eSVj';
 
 const STORE = 'mx-area';
+
+// «Ricorda questo dispositivo per 30 giorni» (14/11/2026): dopo il codice il browser tiene un segreto casuale.
+// Va solo a Supabase degli account (AC_URL) e alle funzioni /api del sito, nell'intestazione «x-dispositivo».
+// Il database (is_admin) e la funzione di Maurizio Barber Shop lo riconoscono. Serve sempre anche la password.
+const DISP = 'mx-dispositivo';
+const disp = () => { try { const v = localStorage.getItem(DISP) || ''; return /^[a-f0-9]{64}$/.test(v) ? v : ''; } catch { return ''; } };
+if (typeof window !== 'undefined' && typeof window.fetch === 'function' && !window.__mxDispositivo) {
+  window.__mxDispositivo = true;
+  const originale = window.fetch.bind(window);
+  window.fetch = (input, init = {}) => {
+    const d = disp();
+    const u = typeof input === 'string' ? input : input instanceof URL ? input.href : '';
+    if (d && (u.startsWith(`${AC_URL}/`) || u.startsWith('/api/'))) {
+      const h = new Headers(init.headers || {});
+      if (!h.has('x-dispositivo')) h.set('x-dispositivo', d);
+      init = { ...init, headers: h };
+    }
+    return originale(input, init);
+  };
+}
 const read = () => { try { return JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { return null; } };
 const write = (s) => { try { if (s) localStorage.setItem(STORE, JSON.stringify(s)); else localStorage.removeItem(STORE); } catch { /* memoria non disponibile */ } };
 const back = () => `${window.location.origin}/area`;
@@ -195,10 +215,28 @@ export const utente = async () => ((await token()) ? req('GET', '/auth/v1/user')
 export function livello(t) {
   try { return JSON.parse(atob(String(t).split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).aal || 'aal1'; } catch { return 'aal1'; }
 }
+async function dispositivo(azione) {
+  const r = await fetch('/api/dispositivo', { method: 'POST', headers: { Authorization: `Bearer ${await token()}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ azione }) });
+  if (!r.ok) throw new Error('dispositivo');
+  return r.json();
+}
+export async function ricordaDispositivo() {
+  try { const d = await dispositivo('ricorda'); if (d?.token) localStorage.setItem(DISP, d.token); } catch { /* si entra comunque */ }
+}
+let fidatoCache = null;
+async function fidato() {
+  if (!disp()) return false;
+  if (fidatoCache === null) {
+    try { fidatoCache = Boolean((await dispositivo('controlla'))?.fidato); } catch { fidatoCache = false; }
+    if (!fidatoCache) { try { localStorage.removeItem(DISP); } catch { /* niente */ } }
+  }
+  return fidatoCache;
+}
 export async function serveCodice(u) {
   const user = u || await utente();
   const attivo = (user?.factors || []).some((f) => f.status === 'verified' && f.factor_type === 'totp');
-  return attivo && livello(await token()) !== 'aal2';
+  if (!attivo || livello(await token()) === 'aal2') return false;
+  return !(await fidato());
 }
 export const attivaCodice = () => req('POST', '/auth/v1/factors', { factor_type: 'totp', friendly_name: `App ${new Date().toISOString().slice(0, 16)}` });
 export const togliCodice = (id) => req('DELETE', `/auth/v1/factors/${id}`);

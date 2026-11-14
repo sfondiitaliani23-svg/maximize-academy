@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Attesa, { Anello } from './Attesa';
-import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail, googleRitorno } from '../lib/account';
+import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail, googleRitorno, ricordaDispositivo } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
 import StrumentiRiservati from './StrumentiRiservati';
@@ -147,7 +147,9 @@ function Codice({ fatto, esci }) {
   const errore = (testo) => setMsg({ testo, ok: false });
   const submit = async (e) => {
     e.preventDefault();
-    const raw = String(new FormData(e.currentTarget).get('codice') || '');
+    const dati = new FormData(e.currentTarget);
+    const raw = String(dati.get('codice') || '');
+    const ricorda = dati.get('ricorda') === 'si';
     if (modo === 'riserva') {
       const rc = raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
       if (rc.length !== 10) { errore('Il codice di riserva ha 10 caratteri.'); return; }
@@ -169,6 +171,7 @@ function Codice({ fatto, esci }) {
       if (!f) { fatto(); return; }
       await confermaCodice(f.id, code);
       setFermo(true);
+      if (ricorda) await ricordaDispositivo();
       fatto();
     } catch { errore('Codice non valido. Usa quello nuovo dell\'app.'); } finally { setBusy(false); }
   };
@@ -198,6 +201,7 @@ function Codice({ fatto, esci }) {
       <form className="ap-card ap-form" onSubmit={submit} key={modo}>
         {!fermo && <p className={`ap-soft ap-timer${resto <= 15 ? ' is-low' : ''}`} aria-live="off">Tempo rimasto: {resto} s · il codice cambia ogni 30 s</p>}
         <Campo label={riservaOn ? 'Codice di riserva' : 'Codice'} id="codice" inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required />
+        {!riservaOn && <label className="ap-soft" style={{ display: 'flex', gap: 10, alignItems: 'center' }}><input type="checkbox" name="ricorda" value="si" defaultChecked /> Ricorda questo dispositivo per 30 giorni</label>}
         <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : 'Conferma'}</button>
         {msg && <p className={`ap-msg ${msg.ok ? 'ap-msg--ok' : 'ap-msg--err'}`} role="status">{msg.testo}</p>}
         <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => { setModo(riservaOn ? 'app' : 'riserva'); setMsg(null); }}>
