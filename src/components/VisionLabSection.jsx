@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Anello } from './Attesa';
 import { ArrowRight, ArrowDown, Theater, Users, Handshake, MapPin, Send, Moon, Sun, CalendarDays, Clock, Scissors, Wallet, UsersRound, CheckCircle2, MessageCircle } from 'lucide-react';
 import { WA_MAURIZIO, waLink } from '../routes.js';
 
@@ -176,7 +177,7 @@ function LeadForm({ percorso, setPercorso }) {
       {err && <p className="text-sm text-red-400" role="alert">{err}</p>}
       <div className="flex flex-col sm:flex-row gap-3">
         <button type="submit" disabled={state === 'sending'} className={`${btnGold} disabled:opacity-60`}>
-          {state === 'sending' ? 'Invio in corso…' : <>Richiedi informazioni / Iscriviti <Send className="w-4 h-4" aria-hidden="true" /></>}
+          {state === 'sending' ? <><Anello /> Invio in corso…</> : <>Richiedi informazioni / Iscriviti <Send className="w-4 h-4" aria-hidden="true" /></>}
         </button>
         <a href={wa} target="_blank" rel="noopener noreferrer" className={btnGlass}><MessageCircle className="w-4 h-4" aria-hidden="true" /> Preferisco WhatsApp</a>
       </div>

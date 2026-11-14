@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Anello } from './Attesa';
 import { brandLinks, WA_KEPLERO, WA_MAURIZIO, waLink } from '../routes';
 import {
   Scissors,
@@ -384,7 +385,7 @@ export default function ProB2BSection() {
                     className="w-full btn-gold py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider shadow-gold-glow flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
-                    <span>{loading ? 'Invio in corso...' : 'Invia Richiesta Riservata'}</span>
+                    <span className="inline-flex items-center gap-2">{loading ? <><Anello /> Invio in corso…</> : 'Invia Richiesta Riservata'}</span>
                   </button>
                 </form>
               )}

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Attesa, { Anello } from './Attesa';
 import { hasSession, login, logout, token, chiSono, iscriviti, recuperaPassword, googleUrl, sessioneDaIndirizzo, nuovaPassword, utente, serveCodice, confermaCodice, riserva, linkViaEmail, googleRitorno } from '../lib/account';
 import { rest, caricaFile, apriFile, cancellaFile, fmtData, fmtQuando } from '../lib/area';
 import GoogleButton from './GoogleButton';
@@ -84,7 +85,7 @@ function Sheet({ title, onClose, children }) {
 
 const Stato = ({ errore, dati, vuoto }) => {
   if (errore) return <p className="ap-msg ap-msg--err" role="alert">{errore}</p>;
-  if (!dati) return <p className="ap-soft">Caricamento…</p>;
+  if (!dati) return <Attesa />;
   if (!dati.length) return <div className="ap-card"><p className="ap-soft" style={{ margin: 0 }}>{vuoto}</p></div>;
   return null;
 };
@@ -197,7 +198,7 @@ function Codice({ fatto, esci }) {
       <form className="ap-card ap-form" onSubmit={submit} key={modo}>
         {!fermo && <p className={`ap-soft ap-timer${resto <= 15 ? ' is-low' : ''}`} aria-live="off">Tempo rimasto: {resto} s · il codice cambia ogni 30 s</p>}
         <Campo label={riservaOn ? 'Codice di riserva' : 'Codice'} id="codice" inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required />
-        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? 'Attendi…' : 'Conferma'}</button>
+        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : 'Conferma'}</button>
         {msg && <p className={`ap-msg ${msg.ok ? 'ap-msg--ok' : 'ap-msg--err'}`} role="status">{msg.testo}</p>}
         <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => { setModo(riservaOn ? 'app' : 'riserva'); setMsg(null); }}>
           {riservaOn ? 'Ho il telefono: usa il codice dell\'app' : 'Non hai il telefono? Usa un codice di riserva'}
@@ -266,7 +267,7 @@ function Accesso({ onEntrato, avviso }) {
             <input type="checkbox" name="privacy" /> <span>Ho letto la <a className="ap-link" href="/privacy.html" target="_blank" rel="noopener">privacy</a> e acconsento al trattamento dei dati per i corsi. L'account vale anche su Maurizio Barber Shop.</span>
           </label>
         )}
-        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? 'Attendi…' : modo === 'entra' ? 'Entra' : modo === 'nuovo' ? 'Crea account' : 'Mandami il link'}</button>
+        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : modo === 'entra' ? 'Entra' : modo === 'nuovo' ? 'Crea account' : 'Mandami il link'}</button>
         {msg && <p className={`ap-msg${err ? ' ap-msg--err' : ''}`} role="status">{msg}</p>}
         {modo === 'entra' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('recupera')}>Password dimenticata?</button>}
         {modo === 'recupera' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('entra')}>Torna all'accesso</button>}
@@ -616,7 +617,7 @@ function SchedaCorso({ corso, onClose, onSaved }) {
             <Campo label="Titolo del materiale" id="titolo_m" maxLength={160} placeholder="Es. Dispensa sfumature" />
             <Campo label="File (PDF, video, immagini, ZIP · max 50 MB)" id="file" type="file" accept="application/pdf,video/mp4,video/webm,video/quicktime,image/jpeg,image/png,image/webp,application/zip" />
             <Campo label="Oppure un link (YouTube, Drive…)" id="url" type="url" placeholder="https://" />
-            <button className="ap-btn" type="submit" disabled={busy}>{busy ? 'Caricamento…' : 'Aggiungi'}</button>
+            <button className="ap-btn" type="submit" disabled={busy}>{busy ? <><Anello /> Caricamento…</> : 'Aggiungi'}</button>
           </form>
           <button type="button" className="ap-btn ap-btn--danger" style={{ marginTop: 16 }} onClick={async () => { if (!window.confirm('Eliminare il corso? Si cancellano anche iscrizioni e materiali.')) return; try { (mat || []).forEach((m) => m.path && cancellaFile(m.path)); await rest(`mx_corsi?id=eq.${corso.id}`, { method: 'DELETE' }); onSaved(); onClose(); } catch (x) { setMsg(x.message); } }}>Elimina corso</button>
         </>
@@ -724,7 +725,7 @@ function AdminBacheca({ vai, nome }) {
           <p className="ap-box-note">Bentornato{nome ? `, ${nome}` : ''}. Gli allievi entrano con lo stesso account di Maurizio Barber Shop.</p>
         </Box>
         <Box titolo="Ultime richieste" azione={<button type="button" className="ap-box-link" onClick={() => vai('richieste')}>Vedi tutte</button>}>
-          {!rich ? <p className="ap-soft">Caricamento…</p> : !rich.length ? <p className="ap-soft">Nessuna richiesta per ora.</p> : (
+          {!rich ? <Attesa /> : !rich.length ? <p className="ap-soft">Nessuna richiesta per ora.</p> : (
             <table className="ap-table"><tbody>
               {rich.slice(0, 6).map((r) => <tr key={r.id}><td><button type="button" className="ap-box-link" onClick={() => vai('richieste')}>{r.name}</button><div className="ap-sub">{r.type || 'Richiesta'}</div></td><td className="ap-right">{r.status === 'Nuovo' ? <span className="ap-chip ap-chip--new">Nuovo</span> : <span className="ap-sub">{r.status}</span>}<div className="ap-sub">{fmtQuando(r.created_at)}</div></td></tr>)}
             </tbody></table>
@@ -741,7 +742,7 @@ function AdminBacheca({ vai, nome }) {
           </form>
         </Box>
         <Box titolo="Prossimi corsi" azione={<button type="button" className="ap-box-link" onClick={() => vai('corsi')}>Gestisci</button>}>
-          {!corsi ? <p className="ap-soft">Caricamento…</p> : !prossimi.length ? <p className="ap-soft">Nessun corso in programma. <button type="button" className="ap-box-link" onClick={() => vai('corsi')}>Crea un corso</button></p> : (
+          {!corsi ? <Attesa /> : !prossimi.length ? <p className="ap-soft">Nessun corso in programma. <button type="button" className="ap-box-link" onClick={() => vai('corsi')}>Crea un corso</button></p> : (
             <table className="ap-table"><tbody>
               {prossimi.map((c) => <tr key={c.id}><td><b>{c.titolo}</b><div className="ap-sub">{c.luogo || ''}</div></td><td className="ap-right ap-sub">{periodo(c)}</td></tr>)}
             </tbody></table>
@@ -814,7 +815,7 @@ export default function AreaPrivata() {
   if (stato === 'recovery') return <div className="ap"><NuovaPassword fatto={() => setStato('check')} /></div>;
   if (stato === 'login') return <div className="ap"><Accesso key={erroreGoogle || 'a'} avviso={erroreGoogle || ritorno?.errore || ''} onEntrato={() => setStato('check')} /></div>;
   if (stato === 'codice') return <div className="ap"><Codice fatto={() => setStato('check')} esci={() => logout().then(() => setStato('login'))} /></div>;
-  if (!ok || !tab) return <div className="ap"><div className="ap-wrap"><p className="ap-soft">Caricamento…</p></div></div>;
+  if (!ok || !tab) return <div className="ap"><div className="ap-wrap"><Attesa /></div></div>;
 
   const admin = io.admin;
   if (!largo && tab === 'bacheca') setTimeout(() => setTab('richieste'), 0);
