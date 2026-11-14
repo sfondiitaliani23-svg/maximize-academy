@@ -381,3 +381,7 @@
    nel saluto solo il titolo un po' più a destra, il resto del blocco resta dov'è. */
 .gl-titolo, .gl-sotto { text-align: center; }
 @media (min-width: 761px) { .gl-saluto h2 { margin-left: 14px; } }
+/* Sfondo «acqua» (14/11/2026): src/lib/acqua.js. Senza WebGL resta lo sfondo di schegge. */
+.gl-acqua { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.8s ease; }
+.gl-acqua.is-on { opacity: 1; }
+.gl-pag > :not(.gl-acqua) { position: relative; z-index: 1; }

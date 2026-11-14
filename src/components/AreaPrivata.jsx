@@ -238,6 +238,17 @@ function Linea({ id, ico, label, type = 'text', ...p }) {
   );
 }
 
+function SfondoAcqua() {
+  const ref = React.useRef(null);
+  useEffect(() => {
+    let stop = () => {};
+    let vivo = true;
+    import('../lib/acqua').then(({ avviaAcqua }) => { if (vivo && ref.current) stop = avviaAcqua(ref.current); }).catch(() => {});
+    return () => { vivo = false; stop(); };
+  }, []);
+  return <canvas ref={ref} className="gl-acqua" aria-hidden="true" />;
+}
+
 function Accesso({ onEntrato, avviso }) {
   const [modo, setModo] = useState(() => (window.location.hash === '#registrati' ? 'nuovo' : 'entra'));
   const [msg, setMsg] = useState(avviso || '');
@@ -268,6 +279,7 @@ function Accesso({ onEntrato, avviso }) {
   const titolo = nuovo ? 'Crea account' : modo === 'recupera' ? 'Password dimenticata' : 'Accedi';
   return (
     <div className="gl-pag">
+      <SfondoAcqua />
       <a className="gl-logo" href="/" aria-label="Maximize Academy, torna al sito"><img src="/assets/img/logo-maximize.webp" alt="" width="56" height="56" /></a>
       <div className={`gl-carta${nuovo ? ' is-nuovo' : ''}${mosso ? ' is-mosso' : ''}`}>
         <form className="gl-form" onSubmit={submit} key={modo}>
