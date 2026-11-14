@@ -385,3 +385,7 @@
 .gl-acqua { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.8s ease; }
 .gl-acqua.is-on { opacity: 1; }
 .gl-pag > :not(.gl-acqua) { position: relative; z-index: 1; }
+/* 14/11/2026: un clic o doppio clic sullo sfondo non seleziona le scritte della scheda (si rischiava di sbagliare pulsante).
+   Nei campi si scrive e si seleziona come sempre. */
+.gl-pag { -webkit-user-select: none; user-select: none; }
+.gl-pag input, .gl-pag textarea { -webkit-user-select: text; user-select: text; }

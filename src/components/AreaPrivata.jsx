@@ -278,7 +278,7 @@ function Accesso({ onEntrato, avviso }) {
   const nuovo = modo === 'nuovo';
   const titolo = nuovo ? 'Crea account' : modo === 'recupera' ? 'Password dimenticata' : 'Accedi';
   return (
-    <div className="gl-pag">
+    <div className="gl-pag" onMouseDown={(e) => { if (!e.target.closest('input, textarea, select') && (e.detail > 1 || !e.target.closest('.gl-carta'))) e.preventDefault(); }}>
       <SfondoAcqua />
       <a className="gl-logo" href="/" aria-label="Maximize Academy, torna al sito"><img src="/assets/img/logo-maximize.webp" alt="" width="56" height="56" /></a>
       <div className={`gl-carta${nuovo ? ' is-nuovo' : ''}${mosso ? ' is-mosso' : ''}`}>
