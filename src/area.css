@@ -377,3 +377,7 @@
   .gl-form, .gl-saluto { transition: none; }
   .gl-carta.is-mosso .gl-form > * { animation: none; }
 }
+/* 14/11/2026 sera (richiesta di Eliseo): titolo del modulo al centro come «oppure» e Google;
+   nel saluto solo il titolo un po' più a destra, il resto del blocco resta dov'è. */
+.gl-titolo, .gl-sotto { text-align: center; }
+@media (min-width: 761px) { .gl-saluto h2 { margin-left: 14px; } }
