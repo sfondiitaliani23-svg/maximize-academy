@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, ArrowDown, Theater, Users, Handshake, MapPin, Send, Moon, Sun, CalendarDays, Clock, Scissors, Wallet, UsersRound, CheckCircle2, Film, MessageCircle } from 'lucide-react';
+import { ArrowRight, ArrowDown, Theater, Users, Handshake, MapPin, Send, Moon, Sun, CalendarDays, Clock, Scissors, Wallet, UsersRound, CheckCircle2, MessageCircle } from 'lucide-react';
 import { WA_MAURIZIO, waLink } from '../routes.js';
 
 // Vision Lab Academy 2027 × Maximize Academy (14/11/2026).
@@ -348,11 +348,10 @@ export default function VisionLabSection() {
         </ul>
       </div>
 
-      {/* 5. Formatori e video */}
+      {/* 5. Formatori (foto e Reel non previsti: decisione di Maurizio, 14/11/2026) */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20" aria-labelledby="vl-formatori">
         <p className={eyebrow}>I formatori</p>
         <h2 id="vl-formatori" className={h2}>Chi sale sul <em className="not-italic font-normal text-amber-400">Vision Theater.</em></h2>
-        {/* Foto dei formatori: da aggiungere in /assets/img/vision-lab/formatori/ quando arrivano. */}
         <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-[#3d3d3d] border border-[#3d3d3d] list-none p-0 m-0">
           {formatori.map((x) => (
             <li key={x.n} className="bg-[#111111] p-5">
@@ -361,15 +360,6 @@ export default function VisionLabSection() {
             </li>
           ))}
         </ul>
-        <div className="mt-10">
-          <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-amber-400"><Film className="w-4 h-4" aria-hidden="true" /> Video</p>
-          {/* Reel promozionali: 3 riquadri 9:16 pronti per i file .mp4 di Vision Lab. */}
-          <div className="mt-4 grid grid-cols-3 gap-3 max-w-xl">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="aspect-[9/16] rounded-2xl border border-dashed border-white/20 grid place-items-center text-center text-[11px] uppercase tracking-[0.14em] text-gray-500 p-2">Reel in arrivo</div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* 4. Modulo */}
