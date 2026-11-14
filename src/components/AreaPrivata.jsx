@@ -215,12 +215,37 @@ function Codice({ fatto, esci }) {
   );
 }
 
+/* Accesso (14/11/2026): scheda di vetro sopra uno sfondo di schegge scure, con il saluto che scivola sull'altro lato.
+   Spunto: «Glassy Login Form V2» (Code Map, Instagram), rifatto nei colori Maximize. Metodi di accesso uguali a prima:
+   Google, email e password, registrazione con consenso privacy, password dimenticata; poi l'eventuale codice. */
+const IcoUtente = () => <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6" /><path d="M5 20a7 7 0 0 1 14 0" /></svg>;
+const IcoMail = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z" /><path d="M3 7l9 6 9-6" /></svg>;
+const IcoLucchetto = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v10H5z" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>;
+const IcoOcchio = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>;
+
+function Linea({ id, ico, label, type = 'text', ...p }) {
+  const [vedi, setVedi] = useState(false);
+  const pw = type === 'password';
+  return (
+    <div className="gl-campo">
+      <label htmlFor={id} className="gl-vis">{label}</label>
+      <span className="gl-ico">{ico}</span>
+      <input id={id} name={id} type={pw && vedi ? 'text' : type} placeholder={label} {...p} />
+      {pw && (
+        <button type="button" className="gl-occhio" aria-pressed={vedi} aria-label={vedi ? 'Nascondi la password' : 'Mostra la password'} onClick={() => setVedi((v) => !v)}><IcoOcchio /></button>
+      )}
+    </div>
+  );
+}
+
 function Accesso({ onEntrato, avviso }) {
   const [modo, setModo] = useState(() => (window.location.hash === '#registrati' ? 'nuovo' : 'entra'));
   const [msg, setMsg] = useState(avviso || '');
   const [err, setErr] = useState(Boolean(avviso));
   const [busy, setBusy] = useState(false);
+  const [mosso, setMosso] = useState(false);
   const cambia = (m) => { setModo(m); setMsg(''); setErr(false); };
+  const scambia = () => { setMosso(true); cambia(modo === 'nuovo' ? 'entra' : 'nuovo'); };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -239,53 +264,42 @@ function Accesso({ onEntrato, avviso }) {
     } catch (x) { setErr(true); setMsg(x.message); } finally { setBusy(false); }
   };
 
+  const nuovo = modo === 'nuovo';
+  const titolo = nuovo ? 'Crea account' : modo === 'recupera' ? 'Password dimenticata' : 'Accedi';
   return (
-    <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
-      <header className="ap-top">
-        <a href="/" aria-label="Torna al sito"><img className="ap-logo" src="/assets/img/logo-maximize.webp" alt="" width="40" height="40" /></a>
-        <span className="ap-pill">Area privata</span>
-        <a className="ap-link" href="/">Sito</a>
-      </header>
-      <div className="ap-login-intro">
-      <Titolo oro="Maximize" bianco="Academy" sotto="I tuoi corsi, i materiali e gli attestati in un posto solo." />
-      <div className="ap-hero" style={{ marginBottom: 16 }}>
-        <span className="ap-eyebrow">Un solo account</span>
-        <span className="ap-lead">Sei già registrato su Maurizio Barber Shop? Entra con la stessa email e la stessa password, o con Google.</span>
+    <div className="gl-pag">
+      <a className="gl-logo" href="/" aria-label="Maximize Academy, torna al sito"><img src="/assets/img/logo-maximize.webp" alt="" width="56" height="56" /></a>
+      <div className={`gl-carta${nuovo ? ' is-nuovo' : ''}${mosso ? ' is-mosso' : ''}`}>
+        <form className="gl-form" onSubmit={submit} key={modo}>
+          <h1 className="gl-titolo">{titolo}</h1>
+          {modo === 'recupera' && <p className="gl-sotto">Scrivi la tua email: ti mandiamo il link per una password nuova.</p>}
+          {modo !== 'recupera' && <GoogleButton onEntrato={onEntrato} onErrore={(m) => { setErr(true); setMsg(m); }} />}
+          {modo !== 'recupera' && <div className="gl-or">oppure</div>}
+          {nuovo && <Linea id="nome" ico={<IcoUtente />} label="Nome e cognome" required maxLength={120} autoComplete="name" />}
+          <Linea id="email" ico={<IcoMail />} label="Email" type="email" required autoComplete={nuovo ? 'email' : 'username'} />
+          {modo !== 'recupera' && <Linea id="password" ico={<IcoLucchetto />} label={nuovo ? 'Crea una password' : 'Password'} type="password" required minLength={nuovo ? 10 : undefined} autoComplete={nuovo ? 'new-password' : 'current-password'} />}
+          {nuovo && (
+            <label className="gl-check">
+              <input type="checkbox" name="privacy" /> <span>Ho letto la <a href="/privacy.html" target="_blank" rel="noopener">privacy</a> e acconsento al trattamento dei dati per i corsi. L'account vale anche su Maurizio Barber Shop.</span>
+            </label>
+          )}
+          <button className="gl-btn gl-btn--oro" type="submit" disabled={busy}>{busy ? <><Anello /> Entro…</> : modo === 'entra' ? 'Entra' : nuovo ? 'Crea account' : 'Mandami il link'}</button>
+          {msg && <p className={`gl-msg${err ? ' is-err' : ''}`} role="status">{msg}</p>}
+          <p className="gl-piede">
+            {modo === 'entra' && <>Non hai un account? <button type="button" onClick={scambia}>Registrati</button><br /><button type="button" className="gl-tenue" onClick={() => cambia('recupera')}>Password dimenticata?</button></>}
+            {nuovo && <>Hai già un account? <button type="button" onClick={scambia}>Accedi</button></>}
+            {modo === 'recupera' && <button type="button" onClick={() => cambia('entra')}>Torna all'accesso</button>}
+          </p>
+        </form>
+        <aside className="gl-saluto" aria-label="Cambia tra accesso e nuovo account">
+          <div className="gl-saluto__testo">
+            <h2>{nuovo ? <>Bentornato!</> : <>Ciao,{' '}<br />benvenuto!</>}</h2>
+            <p>{nuovo ? 'Hai già un account? Entra con le tue credenziali.' : 'Corsi, materiali e attestati in un posto solo. Crea il tuo account.'}</p>
+            <button type="button" className="gl-btn gl-btn--vetro" onClick={scambia}>{nuovo ? 'Accedi' : 'Crea account'} <span aria-hidden="true">→</span></button>
+          </div>
+        </aside>
       </div>
-      </div>
-      <div className="ap-login-form">
-      {modo !== 'recupera' && (
-        <div className="ap-seg" style={{ marginBottom: 14 }}>
-          <button type="button" aria-pressed={modo === 'entra'} onClick={() => cambia('entra')}>Accedi</button>
-          <button type="button" aria-pressed={modo === 'nuovo'} onClick={() => cambia('nuovo')}>Registrati</button>
-        </div>
-      )}
-      <form className="ap-card ap-form" onSubmit={submit}>
-        {modo !== 'recupera' && <GoogleButton onEntrato={onEntrato} onErrore={(m) => { setErr(true); setMsg(m); }} />}
-        {modo !== 'recupera' && <div className="ap-or">oppure</div>}
-        {modo === 'nuovo' && <Campo label="Nome e cognome" id="nome" required maxLength={120} autoComplete="name" />}
-        <Campo label="Email" id="email" type="email" required autoComplete={modo === 'nuovo' ? 'email' : 'username'} />
-        {modo !== 'recupera' && <Campo label="Password" id="password" type="password" required minLength={modo === 'nuovo' ? 10 : undefined} autoComplete={modo === 'nuovo' ? 'new-password' : 'current-password'} />}
-        {modo === 'nuovo' && (
-          <label className="ap-check">
-            <input type="checkbox" name="privacy" /> <span>Ho letto la <a className="ap-link" href="/privacy.html" target="_blank" rel="noopener">privacy</a> e acconsento al trattamento dei dati per i corsi. L'account vale anche su Maurizio Barber Shop.</span>
-          </label>
-        )}
-        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : modo === 'entra' ? 'Entra' : modo === 'nuovo' ? 'Crea account' : 'Mandami il link'}</button>
-        {msg && <p className={`ap-msg${err ? ' ap-msg--err' : ''}`} role="status">{msg}</p>}
-        {modo === 'entra' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('recupera')}>Password dimenticata?</button>}
-        {modo === 'recupera' && <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => cambia('entra')}>Torna all'accesso</button>}
-      </form>
-      </div>
-      <div className="ap-login-steps">
-      <h2 className="ap-h2">Come funziona</h2>
-      <ol className="ap-steps">
-        <li>Entra o crea il tuo account</li>
-        <li>Maximize ti aggiunge al tuo corso</li>
-        <li>Trovi date, materiali e avvisi</li>
-        <li>A fine corso scarichi l'attestato</li>
-      </ol>
-      </div>
+      <p className="gl-nota">Un solo account per Maximize Academy e Maurizio Barber Shop.</p>
     </div>
   );
 }
