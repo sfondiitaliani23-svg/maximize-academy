@@ -81,8 +81,8 @@ export const pages = [
     label: 'Vision Lab Academy',
     menu: false,
     draft: true,
-    title: 'Vision Lab Academy × Maximize Academy | Formazione 2027',
-    description: 'Vision Lab Academy, sede del Centro UAAMI Napoli, e Maximize Academy: la partnership per la formazione dei barber pugliesi. Offerte 2027.',
+    title: 'Formazione Vision Lab 2027 | Vision Lab Academy × Maximize Academy',
+    description: 'Vision Lab Academy 2027 con Maximize Academy: percorso completo (16 incontri) 1.000 €, Team Vision Specialist (8 giornate) 800 €, giornata singola 150 €. Sant’Antimo (NA). Richiedi informazioni.',
     intro: 'La partnership per la formazione dei barber pugliesi.',
   },
   {
