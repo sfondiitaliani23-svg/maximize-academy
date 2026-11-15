@@ -434,3 +434,8 @@
 }
 .ap--vetro :is(.ap-card, .ap-stat, .ap-list, .ap-box)[data-luce]::after { opacity: 1; }
 @media (max-width: 959px) { .ap.ap--vetro { --v-blur: blur(12px) saturate(140%); --v-bg: rgba(16, 13, 9, .6); } }
+
+/* Verifica in due passaggi (15/11/2026): stessa pagina dell'accesso, scheda di vetro a una colonna */
+.gl-carta.gl-carta--sola { width: min(100%, 440px); grid-template-columns: 1fr; }
+.gl-carta--sola .gl-form { translate: none; padding: 30px 34px; }
+@media (max-width: 760px) { .gl-carta--sola .gl-form { padding: 24px 20px; } }

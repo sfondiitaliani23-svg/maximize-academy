@@ -128,6 +128,19 @@ const GoogleIc = () => (
 /* ---------- accesso ---------- */
 // Secondo passaggio (10/11/2026): chi ha attivato il codice di Google Authenticator lo scrive dopo la password.
 // Senza telefono: un codice di riserva, oppure il link via email (si entra, la verifica si toglie, nuova password).
+// 15/11/2026 (Eliseo): la verifica in due passaggi ha lo stesso aspetto dell'accesso (acqua dietro, scheda di vetro).
+// Fuori da Codice: il conto alla rovescia ridisegna Codice ogni secondo e non deve ricreare la pagina (né il campo).
+function PaginaVerifica({ children }) {
+  return (
+    <div className="gl-pag" onMouseDown={(e) => { if (!e.target.closest('input, textarea, select') && (e.detail > 1 || !e.target.closest('.gl-carta'))) e.preventDefault(); }}>
+      <SfondoAcqua />
+      <a className="gl-logo" href="/" aria-label="Maximize Academy, torna al sito"><img src="/assets/img/logo-maximize.webp" alt="" width="56" height="56" /></a>
+      <div className="gl-carta gl-carta--sola">{children}</div>
+      <p className="gl-nota">Un solo account per Maximize Academy e Maurizio Barber Shop.</p>
+    </div>
+  );
+}
+
 function Codice({ fatto, esci }) {
   const [msg, setMsg] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -186,32 +199,36 @@ function Codice({ fatto, esci }) {
   const riservaOn = modo === 'riserva';
   if (scaduto && !fermo) {
     return (
-      <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
-        <Titolo oro="Verifica" bianco="in due passaggi" sotto="Il codice dell'app cambia ogni 30 secondi." />
-        <div className="ap-card ap-form">
+      <PaginaVerifica>
+        <div className="gl-form">
+          <h1 className="gl-titolo">Verifica</h1>
+          <p className="gl-sotto">Il codice dell'app cambia ogni 30 secondi.</p>
           <p className="ap-msg ap-msg--err" role="alert">Tempo scaduto: per sicurezza l'accesso è stato chiuso. Ricarica la pagina e riprova.</p>
-          <button className="ap-btn ap-btn--block" type="button" onClick={() => window.location.reload()}>Ricarica la pagina</button>
+          <button className="gl-btn gl-btn--oro" type="button" onClick={() => window.location.reload()}>Ricarica la pagina</button>
         </div>
-      </div>
+      </PaginaVerifica>
     );
   }
   return (
-    <div className="ap-wrap ap-login ap-fade" style={{ paddingBottom: 40 }}>
-      <Titolo oro="Verifica" bianco="in due passaggi" sotto={riservaOn ? 'Scrivi uno dei codici di riserva salvati (es. ABCDE‑23456). Vale una volta sola.' : 'Scrivi il codice di 6 cifre dell\'app di autenticazione.'} />
-      <form className="ap-card ap-form" onSubmit={submit} key={modo}>
-        {!fermo && <p className={`ap-soft ap-timer${resto <= 15 ? ' is-low' : ''}`} aria-live="off">Tempo rimasto: {resto} s · il codice cambia ogni 30 s</p>}
-        <Campo label={riservaOn ? 'Codice di riserva' : 'Codice'} id="codice" inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required />
-        {!riservaOn && <label className="ap-soft" style={{ display: 'flex', gap: 10, alignItems: 'center' }}><input type="checkbox" name="ricorda" value="si" defaultChecked /> Ricorda questo dispositivo per 30 giorni</label>}
-        <button className="ap-btn ap-btn--block" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : 'Conferma'}</button>
+    <PaginaVerifica>
+      <form className="gl-form" onSubmit={submit} key={modo}>
+        <h1 className="gl-titolo">Verifica</h1>
+        <p className="gl-sotto">{riservaOn ? 'Scrivi uno dei codici di riserva salvati (es. ABCDE‑23456). Vale una volta sola.' : 'Scrivi il codice di 6 cifre dell\'app di autenticazione.'}</p>
+        {!fermo && <p className={`gl-sotto ap-timer${resto <= 15 ? ' is-low' : ''}`} aria-live="off">Tempo rimasto: {resto} s · il codice cambia ogni 30 s</p>}
+        <Linea id="codice" ico={<IcoLucchetto />} label={riservaOn ? 'Codice di riserva' : 'Codice a 6 cifre'} inputMode={riservaOn ? 'text' : 'numeric'} autoComplete={riservaOn ? 'off' : 'one-time-code'} maxLength={riservaOn ? 12 : 7} required autoFocus />
+        {!riservaOn && <label className="gl-check"><input type="checkbox" name="ricorda" value="si" defaultChecked /><span>Ricorda questo dispositivo per 30 giorni</span></label>}
+        <button className="gl-btn gl-btn--oro" type="submit" disabled={busy}>{busy ? <><Anello /> Attendi…</> : 'Conferma'}</button>
         {msg && <p className={`ap-msg ${msg.ok ? 'ap-msg--ok' : 'ap-msg--err'}`} role="status">{msg.testo}</p>}
-        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={() => { setModo(riservaOn ? 'app' : 'riserva'); setMsg(null); }}>
-          {riservaOn ? 'Ho il telefono: usa il codice dell\'app' : 'Non hai il telefono? Usa un codice di riserva'}
-        </button>
-        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={email} disabled={busy}>Ricevi un link via email per entrare</button>
-        <button type="button" className="ap-link" style={{ justifySelf: 'start' }} onClick={esci}>Esci</button>
-        {riservaOn && <p className="ap-soft" style={{ fontSize: 13 }}>Niente codici? Usa il link via email, oppure scrivi a Maurizio: toglie lui la verifica dal profilo.</p>}
+        <p className="gl-piede">
+          <button type="button" onClick={() => { setModo(riservaOn ? 'app' : 'riserva'); setMsg(null); }}>
+            {riservaOn ? 'Ho il telefono: usa il codice dell\'app' : 'Non hai il telefono? Usa un codice di riserva'}
+          </button><br />
+          <button type="button" className="gl-tenue" onClick={email} disabled={busy}>Ricevi un link via email per entrare</button><br />
+          <button type="button" className="gl-tenue" onClick={esci}>Esci</button>
+        </p>
+        {riservaOn && <p className="gl-sotto" style={{ fontSize: 13 }}>Niente codici? Usa il link via email, oppure scrivi a Maurizio: toglie lui la verifica dal profilo.</p>}
       </form>
-    </div>
+    </PaginaVerifica>
   );
 }
 
