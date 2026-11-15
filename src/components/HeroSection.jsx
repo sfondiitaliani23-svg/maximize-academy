@@ -7,6 +7,7 @@ import StoriesBar from './StoriesBar';
 const gold = (t) => <strong className="text-amber-400 text-base font-bold">{t}</strong>;
 // Ogni voce porta al sito del prodotto (marchi) o alla pagina di Maximize.
 const tickerItems = [
+  { content: <>{gold('Vision Lab')} Academy 2027</>, href: '/vision-lab' },
   { content: <>{gold('Formazione')} con UAAMI</>, href: '/formazione' },
   { content: <>{gold('Barber Reset')} in barberia</>, href: '/barber-reset' },
   { content: <>Brand Ambassador {gold('Sabey')}</>, href: brandLinks.sabey, external: true },
@@ -64,6 +65,22 @@ export default function HeroSection() {
             Parla con Maurizio
           </a>
         </div>
+
+        {/* Vision Lab Academy 2027 (15/11/2026, richiesta di Maurizio): logo ben visibile, porta alla pagina del percorso */}
+        <a
+          href="/vision-lab"
+          className="group flex items-center gap-4 w-full max-w-[30rem] p-3 pr-5 border border-amber-400/45 bg-[#181818]/80 hover:border-amber-400 hover:bg-amber-400/10 transition-colors"
+        >
+          <img src="/assets/img/vision-lab/logo-vision-lab.webp" alt="Vision Lab Academy" width="464" height="514" className="w-16 h-auto flex-none" decoding="async" />
+          <span className="flex-1 min-w-0">
+            <span className="block text-xs font-bold uppercase tracking-[0.16em] text-amber-400">Nuovo · Formazione 2027</span>
+            <span className="block text-lg leading-tight text-[#f4f4f4]">Vision Lab Academy × Maximize</span>
+            <span className="block text-sm text-[#bdbdbd]">16 incontri, Team Vision e giornate singole</span>
+          </span>
+          <svg className="flex-none text-amber-400 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 12h15M13 6l6 6-6 6" />
+          </svg>
+        </a>
 
         {/* Storie (cerchio «Novità»), come su Maurizio Barber Shop */}
         <StoriesBar />

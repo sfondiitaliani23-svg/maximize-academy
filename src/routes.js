@@ -79,8 +79,8 @@ export const pages = [
     // Bozza (14/11/2026): fuori da menu, footer e sitemap, con noindex, finché Luigi Di Domenico non approva.
     path: '/vision-lab',
     label: 'Vision Lab Academy',
-    menu: false,
-    draft: true,
+    nav: 'Vision Lab',
+    // 15/11/2026: pubblicata su richiesta di Maurizio (prima era in bozza, fuori dal menu e non indicizzata).
     title: 'Formazione Vision Lab 2027 | Vision Lab Academy × Maximize Academy',
     description: 'Vision Lab Academy 2027 con Maximize Academy: percorso completo (16 incontri) 1.000 €, Team Vision Specialist (8 giornate) 800 €, giornata singola 150 €. Sant’Antimo (NA). Richiedi informazioni.',
     intro: 'La partnership per la formazione dei barber pugliesi.',
