@@ -42,7 +42,8 @@ void main(){
  gl_FragColor=vec4(c*max(v,alone),1.);
 }`;
 
-export function avviaAcqua(canvas) {
+// opzioni (15/11/2026, sfondo dell'area privata): scala = risoluzione, fps = fotogrammi al secondo massimi.
+export function avviaAcqua(canvas, opzioni = {}) {
   const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
   if (!gl) return () => {};
   const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); return s; };
@@ -88,7 +89,9 @@ export function avviaAcqua(canvas) {
   addEventListener('pointerdown', muovi, { passive: true });
   document.documentElement.addEventListener('pointerleave', esce);
   const fermo = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SCALA = 0.6; // risoluzione ridotta: il liquido è morbido, non serve di più
+  const SCALA = opzioni.scala ?? 0.6; // risoluzione ridotta: il liquido è morbido, non serve di più
+  const passo = opzioni.fps ? 1000 / opzioni.fps : 0;
+  let ultimoF = -1e9;
   let id = 0;
   const misura = () => {
     const w = Math.max(1, Math.round(canvas.clientWidth * SCALA));
@@ -109,7 +112,7 @@ export function avviaAcqua(canvas) {
     gl.uniform3fv(uG, scia);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
-  const giro = (ms) => { disegna(ms); id = requestAnimationFrame(giro); };
+  const giro = (ms) => { if (ms - ultimoF >= passo - 2) { ultimoF = ms; disegna(ms); } id = requestAnimationFrame(giro); };
   const avvia = () => { cancelAnimationFrame(id); if (fermo || document.hidden) { disegna(performance.now()); return; } id = requestAnimationFrame(giro); };
   canvas.classList.add('is-on');
   avvia();

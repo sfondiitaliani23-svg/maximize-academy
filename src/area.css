@@ -389,3 +389,48 @@
    Nei campi si scrive e si seleziona come sempre. */
 .gl-pag { -webkit-user-select: none; user-select: none; }
 .gl-pag input, .gl-pag textarea { -webkit-user-select: text; user-select: text; }
+
+/* ── Area privata: acqua e vetro (15/11/2026, richiesta di Eliseo) ──────────────────────────
+   Come l'accesso: l'acqua con i riflessi d'oro si muove dietro (FondoArea in AreaPrivata.jsx), sotto un velo scuro.
+   Schede di vetro scuro sfocato; la scheda sotto il mouse si accende con un filo d'oro sul bordo. Solo grafica. */
+.ap.ap--vetro {
+  --v-bg: rgba(16, 13, 9, .5); --v-bordo: rgba(255, 240, 210, .1); --v-filo: rgba(255, 240, 210, .16); --v-blur: blur(18px) saturate(150%);
+  position: relative; isolation: isolate; background-color: #050404;
+}
+.ap-fondo { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.ap-fondo__acqua { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; }
+.ap-fondo__acqua.is-on { opacity: 1; }
+.ap-fondo__velo {
+  position: absolute; inset: 0;
+  background: radial-gradient(85% 70% at 55% 45%, rgba(5, 4, 3, .66), rgba(5, 4, 3, .38) 72%, rgba(5, 4, 3, .2));
+}
+.ap--vetro :is(.ap-card, .ap-stat, .ap-hero, .ap-list, .ap-box, .ap-seg, .ap-steps li) {
+  background-color: var(--v-bg) !important; border-color: var(--v-bordo) !important;
+  box-shadow: inset 0 1px 0 var(--v-filo), 0 16px 36px rgba(0, 0, 0, .36) !important;
+  -webkit-backdrop-filter: var(--v-blur); backdrop-filter: var(--v-blur);
+}
+.ap--vetro :is(.ap-card, .ap-stat, .ap-hero, .ap-list, .ap-box) { border-radius: 16px; }
+.ap--vetro :is(.ap-card, .ap-box) :is(.ap-card, .ap-list) { background-color: rgba(255, 240, 210, .035) !important; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none !important; }
+.ap--vetro .ap-hero { border-left-color: var(--a-gold) !important; }
+.ap--vetro :is(.ap-tabbar, .ap-adminbar, .ap-sheet) {
+  background: rgba(8, 6, 4, .62) !important; border-color: var(--v-bordo) !important;
+  -webkit-backdrop-filter: var(--v-blur); backdrop-filter: var(--v-blur);
+}
+.ap--vetro :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) { background-color: rgba(0, 0, 0, .32) !important; border-color: rgba(255, 240, 210, .14) !important; }
+.ap--vetro :is(input, select, textarea):focus-visible { border-color: var(--a-gold) !important; box-shadow: 0 0 0 3px rgba(191, 161, 106, .2); outline: none; }
+.ap--vetro .ap-table thead tr { background: rgba(191, 161, 106, .12); }
+/* Luce del cursore */
+.ap--vetro :is(.ap-card, .ap-stat, .ap-list, .ap-box) { position: relative; }
+.ap--vetro :is(.ap-card, .ap-stat, .ap-hero, .ap-list, .ap-box)[data-luce] {
+  background-image: radial-gradient(420px circle at var(--lx, 50%) var(--ly, 50%), rgba(191, 161, 106, .13), transparent 60%) !important;
+  box-shadow: inset 0 1px 0 var(--v-filo), 0 0 32px rgba(191, 161, 106, .14), 0 16px 36px rgba(0, 0, 0, .36) !important;
+}
+.ap--vetro :is(.ap-card, .ap-stat, .ap-list, .ap-box)::after {
+  content: ""; position: absolute; inset: -1px; z-index: 2; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: radial-gradient(260px circle at var(--lx, 50%) var(--ly, 50%), rgba(236, 214, 165, .95), rgba(191, 161, 106, .35) 45%, transparent 75%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0; transition: opacity .35s ease;
+}
+.ap--vetro :is(.ap-card, .ap-stat, .ap-list, .ap-box)[data-luce]::after { opacity: 1; }
+@media (max-width: 959px) { .ap.ap--vetro { --v-blur: blur(12px) saturate(140%); --v-bg: rgba(16, 13, 9, .6); } }

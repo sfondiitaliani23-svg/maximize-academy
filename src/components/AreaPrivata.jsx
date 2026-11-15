@@ -249,6 +249,24 @@ function SfondoAcqua() {
   return <canvas ref={ref} className="gl-acqua" aria-hidden="true" />;
 }
 
+// Sfondo dell'area privata (15/11/2026, richiesta di Eliseo): la stessa acqua dell'accesso, più leggera,
+// sotto un velo scuro; le schede sono di vetro (area.css, «Area privata: acqua e vetro») e si accendono col cursore.
+const SCHEDE_LUCE = '.ap-card, .ap-stat, .ap-hero, .ap-list, .ap-box, .ap-steps li';
+function FondoArea() {
+  const ref = React.useRef(null);
+  useEffect(() => {
+    let stop = () => {};
+    let spegni = () => {};
+    let vivo = true;
+    const area = ref.current?.closest('.ap');
+    const tel = matchMedia('(max-width: 959px)').matches;
+    import('../lib/acqua').then(({ avviaAcqua }) => { if (vivo && ref.current) stop = avviaAcqua(ref.current, { scala: tel ? 0.32 : 0.42, fps: tel ? 24 : 30 }); }).catch(() => {});
+    import('../lib/luce').then(({ avviaLuce }) => { if (vivo && area) spegni = avviaLuce(area, SCHEDE_LUCE); }).catch(() => {});
+    return () => { vivo = false; stop(); spegni(); };
+  }, []);
+  return <div className="ap-fondo" aria-hidden="true"><canvas ref={ref} className="ap-fondo__acqua" /><div className="ap-fondo__velo" /></div>;
+}
+
 function Accesso({ onEntrato, avviso }) {
   const [modo, setModo] = useState(() => (window.location.hash === '#registrati' ? 'nuovo' : 'entra'));
   const [msg, setMsg] = useState(avviso || '');
@@ -860,7 +878,8 @@ export default function AreaPrivata() {
   const sezione = admin ? 'Gestione' : 'Allievo';
 
   return (
-    <div className="ap">
+    <div className="ap ap--vetro">
+      <FondoArea />
       <div className="ap-adminbar" aria-hidden={!largo}>
         <a href="/" className="ap-adminbar-site"><img src="/assets/img/logo-maximize.webp" alt="" width="20" height="20" />Maximize Academy</a>
         {admin && <button type="button" onClick={() => vai('corsi')}><Ic d={P.plus} size={16} />Nuovo corso</button>}
