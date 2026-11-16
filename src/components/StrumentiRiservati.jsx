@@ -3,12 +3,12 @@ import { AC_URL, AC_KEY } from '../lib/account';
 import '../strumenti/strumenti.css';
 import '../strumenti/eliseo-console.css';
 
+// Squadra di Maximize / M×E (16/11/2026, Eliseo): prima c'era la squadra del salone di Maurizio Barber Shop.
 const TEAM = JSON.stringify([
   { id: 'maurizio', nome: 'Maurizio' },
-  { id: 'michela', nome: 'Michela' },
-  { id: 'gino', nome: 'Gino' },
-  { id: 'claudio', nome: 'Claudio' },
-  { id: 'manuel', nome: 'Manuel' },
+  { id: 'eliseo', nome: 'Eliseo' },
+  { id: 'enea', nome: 'Enea' },
+  { id: 'francesco', nome: 'Francesco' },
 ]);
 
 function StrumentiRiservati({ quale, onApriEliseo }) {

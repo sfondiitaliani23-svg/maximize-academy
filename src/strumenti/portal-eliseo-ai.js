@@ -917,7 +917,7 @@ export function mountAi(kind, ui) {
     });
     // Nuova automazione: i menu cambiano in base a «Quando».
     const f = h('form', { class: 'el-form', novalidate: true });
-    const nome = h('input', { name: 'nome', maxlength: 80, required: true, placeholder: 'es. Richieste corsi a Gino' });
+    const nome = h('input', { name: 'nome', maxlength: 80, required: true, placeholder: 'es. Richieste corsi a Enea' });
     const quando = select('quando', QUANDO, 'nuova_richiesta');
     const condBox = h('div'); const azBox = h('div'); const valBox = h('div');
     let cond = null, az = null, val = null;
