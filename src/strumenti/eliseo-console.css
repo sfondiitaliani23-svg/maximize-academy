@@ -618,3 +618,7 @@
 }
 .mx-strumenti .es-enroll {display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;}
 .mx-strumenti .es-enroll img {background: var(--paper); padding: 8px; border: 1px solid var(--console-line); border-radius: 10px;}
+
+/* 16/11/2026: «Nuova automazione»: i menu non si sovrappongono più (ogni colonna resta nella sua larghezza). */
+.mx-strumenti .el-grid > * { min-width: 0; }
+.mx-strumenti .el-grid select, .mx-strumenti .el-grid input:not([type=checkbox]):not([type=radio]) { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; text-overflow: ellipsis; }
