@@ -439,3 +439,16 @@
 .gl-carta.gl-carta--sola { width: min(100%, 440px); grid-template-columns: 1fr; }
 .gl-carta--sola .gl-form { translate: none; padding: 30px 34px; }
 @media (max-width: 760px) { .gl-carta--sola .gl-form { padding: 24px 20px; } }
+
+/* 16/11/2026: dentro Eliseo e Maverik (pannelli chiari) i campi non prendono il velo scuro del vetro:
+   prima erano grigi con il testo d'esempio illeggibile. */
+.ap--vetro :is(.el-app, .mav-app) :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]):not([type="file"]) { background-color: var(--paper) !important; border-color: var(--console-chip-line) !important; color: var(--console-ink); }
+.ap--vetro :is(.el-app, .mav-app) :is(input, textarea)::placeholder { color: var(--console-quiet); opacity: 1; }
+
+/* 16/11/2026: area riservata come un'app: un doppio clic su un punto vuoto non evidenzia scritte.
+   Restano copiabili i campi, i messaggi e ciò che ha data-copiabile. */
+.ap, .mx-strumenti, .mx-admin { -webkit-user-select: none; user-select: none; }
+.ap :is(input, textarea, select, [contenteditable], [data-copiabile], .el-detail__text, .el-chat__msg, pre, code),
+.mx-strumenti :is(input, textarea, select, [contenteditable], [data-copiabile], .el-detail__text, .el-chat__msg, pre, code),
+.mx-admin :is(input, textarea, select, [contenteditable], [data-copiabile]) { -webkit-user-select: text; user-select: text; }
+.mx-strumenti .el-wa-pair--altrove { display: grid; gap: 12px; }

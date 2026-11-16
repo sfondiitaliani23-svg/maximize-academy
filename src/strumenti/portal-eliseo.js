@@ -68,6 +68,9 @@ const icon = (name) => {
   return svg;
 };
 
+// Il collegamento WhatsApp con QR vive nel sito di Maurizio Barber Shop, non qui (16/11/2026).
+const WA_QUI = false;
+
 export function mount(box, root) {
   const auth = root.closest('[data-auth-page]');
   const url = auth.dataset.authUrl;
@@ -923,6 +926,19 @@ export function mount(box, root) {
       function paintDetail(shown) {
         const x = shown.find((it) => it.key === casellaPick);
         if (!x) {
+          // 16/11/2026: il WhatsApp del salone (Green API, /api/wa-qr) esiste solo nel sito di Maurizio Barber Shop.
+          // Qui il QR non può caricarsi: al suo posto un riquadro semplice che dice dove si collega.
+          if (!WA_QUI) {
+            detail.replaceChildren(h('div', { class: 'el-wa-pair el-wa-pair--altrove' },
+              h('div', { class: 'el-wa-badge' }, icon('whatsapp'), h('span', { text: 'WhatsApp' })),
+              h('div', { class: 'el-wa-pair__titles' },
+                h('h3', { text: 'Seleziona una conversazione' }),
+                h('p', { text: 'Tocca una conversazione a sinistra per leggerla e rispondere.' }),
+                h('p', { text: 'Il WhatsApp del salone si collega dall’area riservata di Maurizio Barber Shop, sezione Eliseo → Conversazioni.' })
+              )
+            ));
+            return;
+          }
           const pairCard = h('div', { class: 'el-wa-pair' },
             h('div', { class: 'el-wa-pair__header' },
               h('div', { class: 'el-wa-badge' }, icon('whatsapp'), h('span', { text: 'WhatsApp del Salone' })),
