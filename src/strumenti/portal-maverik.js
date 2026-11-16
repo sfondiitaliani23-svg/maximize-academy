@@ -75,10 +75,11 @@ export function mount(box, root) {
       nav,
       h('p', { class: 'mav-group', text: 'Numeri' }),
       h('div', { class: 'mav-nums' },
-        num('Scontrino medio', '29,50 €'),
-        num('Clienti monitorati', '420'),
-        num('A rischio distacco', '38'),
-        num('Potenziale crescita', '+18.400 €')
+        // 16/11/2026: prima qui c'erano numeri inventati. Restano vuoti finché non colleghiamo i dati veri.
+        num('Scontrino medio', '—'),
+        num('Clienti monitorati', '—'),
+        num('A rischio distacco', '—'),
+        num('Potenziale crescita', '—')
       )
     ),
     h('div', { class: 'mav-stage' },
@@ -135,26 +136,27 @@ export function mount(box, root) {
     detailBody.replaceChildren(h('article', { class: 'mav-sheet' },
       h('p', { class: 'mav-kicker', text: kicker }),
       h('h2', { text: title }),
+      h('p', { class: 'mav-note', text: 'Dati non ancora collegati: i numeri compariranno quando collegheremo iscrizioni, corsi e prenotazioni veri.' }),
       ...nodes
     ));
   }
 
   function drawRadar() {
     const segmenti = [
-      { titolo: 'VIP & Ambassador', n: 85, lettera: 'V', tone: '0', desc: 'Vengono ogni 2-3 settimane, acquistano combo e prodotti, portano amici. Sono il cuore economico del negozio.', azione: 'Accesso prioritario, anteprime e trattamenti omaggio periodici.' },
-      { titolo: 'Regolari Fedeli', n: 215, lettera: 'R', tone: '1', desc: 'Taglio e rifinitura regolari (ogni 3-4 settimane). Servizio standard con ottima costanza.', azione: 'Proporre il passaggio a trattamenti completi (Luxury Gold) e abbonamenti.' },
-      { titolo: 'Nuovi in Prova (30 gg)', n: 82, lettera: 'N', tone: '2', desc: 'Prima visita negli ultimi 30 giorni. È la fase critica in cui si decide se diventeranno clienti stabili o spariranno.', azione: 'Follow-up entro 14 giorni con proposta di controllo barba o secondo taglio.' },
-      { titolo: 'Dormienti / A Rischio (>45 gg)', n: 38, lettera: 'D', tone: '3', desc: 'Hanno superato la loro frequenza media senza riprenotare. Rischio abbandono verso concorrenti o pigrizia.', azione: 'Campagna riattivazione mirata via Eliseo (promemoria + invito dedicato).' },
+      { titolo: 'VIP & Ambassador', n: null, lettera: 'V', tone: '0', desc: 'Vengono ogni 2-3 settimane, acquistano combo e prodotti, portano amici. Sono il cuore economico del negozio.', azione: 'Accesso prioritario, anteprime e trattamenti omaggio periodici.' },
+      { titolo: 'Regolari Fedeli', n: null, lettera: 'R', tone: '1', desc: 'Taglio e rifinitura regolari (ogni 3-4 settimane). Servizio standard con ottima costanza.', azione: 'Proporre il passaggio a trattamenti completi (Luxury Gold) e abbonamenti.' },
+      { titolo: 'Nuovi in Prova (30 gg)', n: null, lettera: 'N', tone: '2', desc: 'Prima visita negli ultimi 30 giorni. È la fase critica in cui si decide se diventeranno clienti stabili o spariranno.', azione: 'Follow-up entro 14 giorni con proposta di controllo barba o secondo taglio.' },
+      { titolo: 'Dormienti / A Rischio (>45 gg)', n: null, lettera: 'D', tone: '3', desc: 'Hanno superato la loro frequenza media senza riprenotare. Rischio abbandono verso concorrenti o pigrizia.', azione: 'Campagna riattivazione mirata via Eliseo (promemoria + invito dedicato).' },
     ];
-    listCount.textContent = '420';
+    listCount.textContent = '—';
     const show = () => {
       const s = segmenti[picked];
       sheet('Radar Clienti', s.titolo,
-        h('p', { class: 'mav-lead', text: `${s.n} clienti` }),
+        h('p', { class: 'mav-lead', text: s.n == null ? 'Numero di clienti: da collegare' : `${s.n} clienti` }),
         h('p', { text: s.desc }),
         h('p', { class: 'mav-label', text: 'Strategia consigliata' }),
         h('p', { text: s.azione }),
-        h('p', { class: 'mav-note', text: 'Maverik individua i clienti a rischio distacco (38 contatti). Con un clic puoi passare il segmento ad Eliseo per inviare loro un promemoria personalizzato o un avviso riservato.' }),
+        h('p', { class: 'mav-note', text: 'Maverik individuerà i clienti a rischio distacco. Con un clic puoi passare il segmento ad Eliseo per inviare loro un promemoria personalizzato o un avviso riservato.' }),
         h('div', { class: 'mav-actions' },
           h('button', {
             type: 'button',
@@ -165,26 +167,20 @@ export function mount(box, root) {
               root.querySelector('[data-nav="eliseo"]')?.click();
             },
           }),
-          h('button', {
-            type: 'button',
-            class: 'btn btn--secondary',
-            text: 'Scarica analisi segmenti CSV',
-            onClick: () => say('Report segmenti generato per l’analisi interna.'),
-          })
         )
       );
     };
-    list.replaceChildren(...segmenti.map((s, i) => row(s.lettera, s.tone, s.titolo, `${s.n} clienti`, s.desc, () => { picked = i; markRows(); show(); })));
+    list.replaceChildren(...segmenti.map((s, i) => row(s.lettera, s.tone, s.titolo, s.n == null ? '—' : `${s.n} clienti`, s.desc, () => { picked = i; markRows(); show(); })));
     markRows();
     show();
   }
 
   function drawCrescita() {
     const kpis = [
-      { label: 'Scontrino Medio Servizi', valore: '25,40 €', target: 'Obiettivo: 28,00 €', note: '+1,80 € rispetto al mese scorso', lettera: 'S', tone: '1' },
-      { label: 'Scontrino Combo & Luxury', valore: '44,50 €', target: 'Obiettivo: 48,00 €', note: 'Richiesto dal 28% dei clienti', lettera: 'C', tone: '4' },
-      { label: 'Incidenza Vendita Prodotti', valore: '13,8%', target: 'Target M×E: 20,0%', note: 'Area a massimo margine puro', lettera: 'P', tone: '3' },
-      { label: 'Resa Oraria per Poltrona', valore: '36,50 € / h', target: 'Obiettivo: 42,00 € / h', note: 'Tempo medio a poltrona: 42 min', lettera: 'R', tone: '0' },
+      { label: 'Scontrino Medio Servizi', valore: '—', target: 'Obiettivo da decidere', note: 'Dato da collegare', lettera: 'S', tone: '1' },
+      { label: 'Scontrino Combo & Luxury', valore: '—', target: 'Obiettivo da decidere', note: 'Dato da collegare', lettera: 'C', tone: '4' },
+      { label: 'Incidenza Vendita Prodotti', valore: '—', target: 'Obiettivo da decidere', note: 'Dato da collegare', lettera: 'P', tone: '3' },
+      { label: 'Resa Oraria per Poltrona', valore: '—', target: 'Obiettivo da decidere', note: 'Dato da collegare', lettera: 'R', tone: '0' },
     ];
     listCount.textContent = '4';
     const show = () => {
@@ -192,14 +188,10 @@ export function mount(box, root) {
       sheet('Crescita & KPI', k.label,
         h('p', { class: 'mav-figure', text: k.valore }),
         h('p', { text: `${k.target} · ${k.note}` }),
-        h('h3', { text: 'Distribuzione per Categoria di Servizio' }),
-        h('ul', { class: 'mav-points' },
-          point('Capelli & Sfumature (Classic, Fade, Styling)', '62% del volume (incasso stabile)'),
-          point('Barba & Rituali (Traditional Shave, Deluxe)', '26% del volume (fidelizzazione alta)'),
-          point('Massaggi & Benessere (con Michela)', '12% del volume (+4% questo mese, alta redditività)')
-        ),
+        h('h3', { text: 'Distribuzione per Categoria' }),
+        h('p', { text: 'Comparirà quando collegheremo i dati veri.' }),
         h('h3', { text: 'Consiglio Commerciale di Maverik per il Team' }),
-        h('p', { text: 'I dati mostrano che il 74% dei clienti barba non usa prodotti specifici a casa. Un semplice rituale con olio caldo o balsamo barba provato in poltrona aumenta la vendita prodotti del 35% senza forzature.' }),
+        h('p', { text: 'Proporre in poltrona il prodotto usato durante il servizio aiuta la vendita senza forzature. Misureremo l’effetto quando avremo i dati.' }),
         h('div', { class: 'mav-actions' },
           h('button', {
             type: 'button',
@@ -269,7 +261,7 @@ export function mount(box, root) {
       h('p', { class: 'mav-label', text: 'Incasso Annuo Stimato' }),
       resAnnuale,
       resDelta,
-      h('p', { class: 'mav-note', text: 'Nota strategica: aumentare anche solo di 2€ il prezzo medio o portare la vendita prodotti al 20% produce una crescita di oltre 12.000€ l’anno di margine puro, a parità di ore lavorate.' }),
+      h('p', { class: 'mav-note', text: 'Nota: il simulatore calcola solo con i valori che imposti qui sopra. Con i dati veri collegati useremo i numeri reali.' }),
       h('p', { class: 'mav-note', text: 'Modella i parametri per visualizzare l’impatto immediato sul fatturato e sulla marginalità del salone.' })
     ));
     ricalcola();
@@ -277,9 +269,9 @@ export function mount(box, root) {
 
   function drawCopilota() {
     const priorita = [
-      { id: 1, lettera: '1', tone: '4', titolo: '1. Riattivazione 38 Clienti Dormienti', desc: '38 clienti storici non prenotano da più di 45 giorni. Il costo di acquisire un cliente nuovo è 5 volte superiore a riattivarne uno esistente.', azione: 'Inviare avviso dedicato: "Maurizio ti aspetta per il rituale d\'autunno".', tempo: 'Tempo stimato: 5 minuti (tramite Eliseo)' },
-      { id: 2, lettera: '2', tone: '1', titolo: '2. Valorizzare il Trattamento Gold Luxury sui clienti Classic', desc: 'Il 35% dei clienti che fanno il Taglio Classic ha mostrato interesse per la cura della barba e del viso, ma non prenota il servizio completo per abitudine.', azione: 'Istruire il team a proporre il trattamento completo alla consulenza iniziale.', tempo: 'Impatto stimato: +450 € / mese' },
-      { id: 3, lettera: '3', tone: '3', titolo: '3. Allineamento Settimanale sulla Vendita Prodotti', desc: 'La vendita di balsamo barba e cera opaca è concentrata su Maurizio. Manuel e Claudio possono raddoppiare i loro numeri con 2 semplici domande post-taglio.', azione: 'Fare mini-briefing operativo di 10 minuti venerdì mattina prima dell\'apertura.', tempo: 'Obiettivo: +1 prodotto al giorno per barbiere' },
+      { id: 1, lettera: '1', tone: '4', titolo: '1. Riattivare i clienti che non tornano da tempo', desc: 'Chi ha superato la sua frequenza abituale senza riprenotare è il primo da richiamare: costa meno riattivarlo che trovarne uno nuovo.', azione: 'Preparare in Eliseo un messaggio dedicato e inviarlo a mano.', tempo: 'Quanti sono: da collegare' },
+      { id: 2, lettera: '2', tone: '1', titolo: '2. Proporre il servizio completo a chi fa solo il taglio', desc: 'Molti clienti fanno sempre lo stesso servizio per abitudine: una proposta alla consulenza iniziale può farli passare al trattamento completo.', azione: 'Concordare con il team una frase semplice da usare alla consulenza.', tempo: 'Effetto: da misurare' },
+      { id: 3, lettera: '3', tone: '3', titolo: '3. Allineamento settimanale sulla vendita prodotti', desc: 'Due domande semplici dopo il servizio aiutano tutti a proporre i prodotti, non solo chi lo fa già.', azione: 'Fare un mini-briefing di 10 minuti a inizio settimana.', tempo: 'Obiettivo: da decidere insieme' },
     ];
     listCount.textContent = '3';
     const show = () => {
