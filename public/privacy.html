@@ -64,7 +64,7 @@
       <li><strong>Dati di contatto</strong> — nome, cognome, numero di telefono/WhatsApp, indirizzo email forniti volontariamente tramite il modulo di contatto.</li>
       <li><strong>Dati dell'area privata</strong> — per chi crea un account o entra in <a href="/area">/area</a>: nome, email, telefono (facoltativo), corsi frequentati, completamento dei corsi e attestati. L'account è lo stesso del sito di Maurizio Barber Shop: chi ha già un account lì entra con le stesse credenziali, e un account creato qui vale anche lì. I dati dei corsi restano in tabelle separate, visibili solo all'allievo e allo staff di Maximize Academy.</li>
       <li><strong>Dati della barberia</strong> — inseriti volontariamente nel simulatore Barber Reset (numero di sedie, ricavi, ecc.). Questi dati sono trattati in modo aggregato e anonimo.</li>
-      <li><strong>Dati di navigazione</strong> — pagine visitate, tipo di dispositivo e di browser, paese di provenienza e tempi di caricamento delle pagine. Sono raccolti automaticamente, in forma aggregata, tramite Vercel Web Analytics e Vercel Speed Insights, senza cookie. L'indirizzo IP è usato solo dal servizio di hosting per consegnare il sito e per la sicurezza.</li>
+      <li><strong>Dati di navigazione</strong> — indirizzo IP, tipo di dispositivo e di browser, data e ora della visita. Il sito non usa strumenti di statistica. L'indirizzo IP e i dati tecnici sono usati solo dal servizio di hosting (Cloudflare) per consegnare il sito e per la sicurezza.</li>
     </ul>
 
     <h2>3. Finalità e Base Giuridica del Trattamento</h2>
@@ -85,8 +85,8 @@
           <td>Interesse legittimo del Titolare (art. 6.1.f)</td>
         </tr>
         <tr>
-          <td>Analisi statistica anonima della navigazione</td>
-          <td>Interesse legittimo — dati aggregati non personali (art. 6.1.f)</td>
+          <td>Funzionamento e sicurezza del sito</td>
+          <td>Interesse legittimo del Titolare (art. 6.1.f)</td>
         </tr>
         <tr>
           <td>Adempimento di obblighi di legge</td>
@@ -101,7 +101,6 @@
       <li><strong>Dati di contatto</strong>: massimo 24 mesi dall'ultimo contatto. Sono salvati nel database del sito (Supabase) e inviati per email al Titolare (Resend).</li>
       <li><strong>Dati dell'area privata</strong>: finché l'account è attivo. Sono salvati nel database Supabase condiviso con il sito di Maurizio Barber Shop; materiali dei corsi in uno spazio file privato. La sessione di accesso resta nel browser (memoria locale), come dato tecnico necessario.</li>
       <li><strong>Dati del simulatore</strong>: elaborazione in tempo reale, non persistiti su database.</li>
-      <li><strong>Dati di navigazione aggregati</strong>: secondo i tempi di conservazione di Vercel Analytics.</li>
       <li><strong>Registri tecnici del server</strong> (log): conservati per pochi giorni dal fornitore di hosting. Non contengono il nome, il telefono o il messaggio inviati con il modulo.</li>
     </ul>
 
@@ -110,7 +109,7 @@
     <ul>
       <li><strong>Resend Inc.</strong> (piattaforma di invio email transazionale) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
       <li><strong>Supabase Inc.</strong> (database in cui sono salvate le richieste inviate con il modulo) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
-      <li><strong>Vercel Inc.</strong> (hosting, Web Analytics e Speed Insights) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
+      <li><strong>Cloudflare Inc.</strong> (hosting, rete di distribuzione e protezione del sito) — responsabile del trattamento ai sensi dell'art. 28 GDPR.</li>
       <li>Il fornitore che gestisce tecnicamente il sito per conto del Titolare, nominato responsabile del trattamento e tenuto alla riservatezza.</li>
       <li>Autorità pubbliche, su richiesta di legge.</li>
     </ul>
@@ -136,10 +135,10 @@
       </tbody>
     </table>
     <p><strong>Non vengono utilizzati cookie di profilazione, tracciamento pubblicitario o terze parti di marketing.</strong></p>
-    <p>Vercel Web Analytics e Speed Insights non usano cookie e mostrano al Titolare solo dati aggregati, che non identificano il singolo visitatore.</p>
+    <p>Il sito non usa strumenti di statistica né di tracciamento.</p>
 
     <h2>7. Trasferimento Dati Extra-UE</h2>
-    <p>Vercel Inc., Resend Inc. e Supabase Inc. sono società statunitensi. Se i dati sono trasferiti fuori dall'Unione Europea, il trasferimento avviene con le garanzie previste dal GDPR: Clausole Contrattuali Standard (SCC) o EU-U.S. Data Privacy Framework, dove applicabile.</p>
+    <p>Cloudflare Inc., Resend Inc. e Supabase Inc. sono società statunitensi. I database Supabase si trovano nell'Unione Europea (Parigi e Francoforte). Se i dati sono trasferiti fuori dall'Unione Europea, il trasferimento avviene con le garanzie previste dal GDPR: Clausole Contrattuali Standard (SCC) o EU-U.S. Data Privacy Framework, dove applicabile.</p>
 
     <h2>8. Diritti dell'Interessato</h2>
     <p>Ai sensi degli artt. 15-22 del GDPR, l'interessato ha diritto di:</p>
