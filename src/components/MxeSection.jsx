@@ -301,14 +301,9 @@ export default function MxeSection() {
             
             {/* Blocco 3M */}
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 space-y-6">
-              <div className="flex items-center gap-3 border-b border-amber-500/20 pb-4">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-300 text-lg">
-                  M
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-white">Le 3 M — Le Radici & Il Percorso</h4>
-                  <p className="text-xs text-amber-300/80">L'esperienza e la costruzione dell'impresa nel tempo</p>
-                </div>
+              <div className="border-b border-amber-500/20 pb-4">
+                <h4 className="text-lg font-bold text-white">Le 3 M — Le Radici & Il Percorso</h4>
+                <p className="text-xs text-amber-300/80">L'esperienza e la costruzione dell'impresa nel tempo</p>
               </div>
 
               <div className="space-y-4">
@@ -336,14 +331,9 @@ export default function MxeSection() {
 
             {/* Blocco 3E */}
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 space-y-6">
-              <div className="flex items-center gap-3 border-b border-amber-500/20 pb-4">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-300 text-lg">
-                  E
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-white">Le 3 E — I Valori Condivisi</h4>
-                  <p className="text-xs text-amber-300/80">I principi guida che orientano ogni scelta</p>
-                </div>
+              <div className="border-b border-amber-500/20 pb-4">
+                <h4 className="text-lg font-bold text-white">Le 3 E — I Valori Condivisi</h4>
+                <p className="text-xs text-amber-300/80">I principi guida che orientano ogni scelta</p>
               </div>
 
               <div className="space-y-4">
