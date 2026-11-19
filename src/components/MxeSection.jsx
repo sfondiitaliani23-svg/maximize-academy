@@ -135,7 +135,7 @@ export default function MxeSection() {
 
                   {/* Card Eliseo */}
                   <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
-                    <Ritratto src="/assets/img/eliseo_ritratto.webp" alt="Eliseo Miraglia" sigla="EM" />
+                    <Ritratto src="/assets/img/eliseo-ufficiale-1511.webp" alt="Eliseo Miraglia" sigla="EM" />
                     <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Eliseo Miraglia</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Co-Founder & Sviluppo Digitale</p>
@@ -145,7 +145,7 @@ export default function MxeSection() {
 
                   {/* Card Enea */}
                   <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
-                    <Ritratto src="/assets/img/enea_ritratto.webp" alt="Enea Miraglia" sigla="EN" />
+                    <Ritratto src="/assets/img/enea-miraglia.webp" alt="Enea Miraglia" sigla="EN" />
                     <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Enea Miraglia</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Esperienza | Relazioni | Valore Umano</p>
@@ -155,7 +155,7 @@ export default function MxeSection() {
 
                   {/* Card Francesco */}
                   <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
-                    <Ritratto src="/assets/img/francesco_ritratto.webp" alt="Francesco" sigla="F" />
+                    <Ritratto src="/assets/img/francesco-corcio.webp" alt="Francesco" sigla="F" />
                     <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Francesco</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Videomaker | Creatività | Visivo</p>
@@ -211,7 +211,7 @@ export default function MxeSection() {
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
-                  <Ritratto src="/assets/img/enea_ritratto.webp" alt="Enea Miraglia" sigla="EN" grande />
+                  <Ritratto src="/assets/img/enea-miraglia.webp" alt="Enea Miraglia" sigla="EN" grande />
                   <div className="min-w-0">
                     <h4 className="text-xl font-bold text-white">Enea Miraglia</h4>
                     <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
@@ -249,7 +249,7 @@ export default function MxeSection() {
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
-                  <Ritratto src="/assets/img/francesco_ritratto.webp" alt="Francesco" sigla="F" grande />
+                  <Ritratto src="/assets/img/francesco-corcio.webp" alt="Francesco" sigla="F" grande />
                   <div className="min-w-0">
                     <h4 className="text-xl font-bold text-white">Francesco</h4>
                     <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
