@@ -28,8 +28,8 @@ export default function BarberMatchSection({ onSelectCourse }) {
 
         {/* Cohesive Luxury Container (Risolve il punto 4 delle Modifiche Pending: niente stacco blu sgraziato) */}
         <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/40 relative shadow-2xl overflow-hidden">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Edizione ancora in sviluppo: i dettagli restano nel codice, ma non si leggono né si cliccano. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center select-none pointer-events-none" aria-hidden="true" inert="">
             
             {/* Left: Event Details & Copy */}
             <div className="lg:col-span-7 space-y-6">
@@ -105,6 +105,9 @@ export default function BarberMatchSection({ onSelectCourse }) {
 
           </div>
 
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80 backdrop-blur-md">
+            <p className="text-center text-3xl sm:text-5xl font-display font-bold tracking-wide text-white">Prossimamente...</p>
+          </div>
         </div>
 
       </div>
