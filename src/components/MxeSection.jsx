@@ -23,6 +23,22 @@ const pilastriM = [
   },
 ];
 
+function Ritratto({ src, alt, sigla, grande = false }) {
+  return (
+    <div className={`relative shrink-0 overflow-hidden rounded-full border-amber-500/40 bg-neutral-900 ${grande ? 'h-14 w-14 border-2 shadow-lg' : 'h-12 w-12 border'}`}>
+      <span className={`absolute inset-0 flex items-center justify-center font-bold text-amber-300 select-none ${grande ? 'text-base' : 'text-sm'}`}>{sigla}</span>
+      <img
+        src={src}
+        alt={alt}
+        width="96"
+        height="96"
+        className="absolute inset-0 z-10 h-full w-full object-cover object-top"
+        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+      />
+    </div>
+  );
+}
+
 const pilastriE = [
   {
     icon: ShieldCheck,
