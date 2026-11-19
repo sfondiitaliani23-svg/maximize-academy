@@ -87,10 +87,10 @@ export default function MxeSection() {
         </div>
 
         {/* Panel Presentazione Fondatori & Marchio */}
-        <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/30 shadow-2xl">
+        <div className="glass-panel-gold rounded-3xl p-8 sm:p-12 border border-amber-500/30 shadow-2xl overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 min-w-0">
               <a href={brandLinks.mxe} target="_blank" rel="noopener noreferrer" className="logo-link inline-flex items-center gap-4" aria-label="Sito ufficiale M×E Barber Lab (si apre in una nuova scheda)">
                 <img
                   src="/assets/loghi/mxe-monogramma-oro.svg"
@@ -124,17 +124,9 @@ export default function MxeSection() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {/* Card Maurizio */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
-                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
-                      <img
-                        src="/assets/img/maurizio_ritratto.webp"
-                        alt="Maurizio Pizzuto"
-                        className="w-full h-full object-cover"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                      <span className="select-none">MP</span>
-                    </div>
-                    <div>
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
+                    <Ritratto src="/assets/img/maurizio_ritratto.webp" alt="Maurizio Pizzuto" sigla="MP" />
+                    <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Maurizio Pizzuto</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Co-Founder & Strategia Barber</p>
                       <p className="text-[11px] text-gray-400 mt-0.5">Mercato, persone, formazione e vendita.</p>
@@ -142,17 +134,9 @@ export default function MxeSection() {
                   </div>
 
                   {/* Card Eliseo */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
-                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
-                      <img
-                        src="/assets/img/eliseo_ritratto.webp"
-                        alt="Eliseo Miraglia"
-                        className="w-full h-full object-cover"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                      <span className="select-none">EM</span>
-                    </div>
-                    <div>
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
+                    <Ritratto src="/assets/img/eliseo_ritratto.webp" alt="Eliseo Miraglia" sigla="EM" />
+                    <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Eliseo Miraglia</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Co-Founder & Sviluppo Digitale</p>
                       <p className="text-[11px] text-gray-400 mt-0.5">Digitale, tecnologia, automazioni e IA.</p>
@@ -160,17 +144,9 @@ export default function MxeSection() {
                   </div>
 
                   {/* Card Enea */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
-                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
-                      <img
-                        src="/assets/img/enea_ritratto.webp"
-                        alt="Enea Miraglia"
-                        className="w-full h-full object-cover"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                      <span className="select-none">EN</span>
-                    </div>
-                    <div>
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
+                    <Ritratto src="/assets/img/enea_ritratto.webp" alt="Enea Miraglia" sigla="EN" />
+                    <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Enea Miraglia</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Esperienza | Relazioni | Valore Umano</p>
                       <p className="text-[11px] text-gray-400 mt-0.5">Maturità commerciale e relazioni autentiche.</p>
@@ -178,17 +154,9 @@ export default function MxeSection() {
                   </div>
 
                   {/* Card Francesco */}
-                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5">
-                    <div className="w-13 h-13 rounded-full overflow-hidden border border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-sm">
-                      <img
-                        src="/assets/img/francesco_ritratto.webp"
-                        alt="Francesco"
-                        className="w-full h-full object-cover"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                      <span className="select-none">F</span>
-                    </div>
-                    <div>
+                  <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center gap-3.5 min-w-0">
+                    <Ritratto src="/assets/img/francesco_ritratto.webp" alt="Francesco" sigla="F" />
+                    <div className="min-w-0">
                       <h4 className="text-sm font-bold text-white">Francesco</h4>
                       <p className="text-[11px] text-amber-300 font-medium">Videomaker | Creatività | Visivo</p>
                       <p className="text-[11px] text-gray-400 mt-0.5">Storytelling, contenuti digitali e video.</p>
@@ -210,14 +178,14 @@ export default function MxeSection() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 flex justify-center">
+            <div className="lg:col-span-5 flex justify-center min-w-0">
               <img
                 src="/assets/loghi/mxe-metallo.webp"
                 alt="Marchio M×E Barber Lab"
                 width="800"
                 height="800"
                 loading="lazy"
-                className="w-full max-w-sm rounded-3xl object-contain bg-black"
+                className="w-full max-w-sm h-auto rounded-3xl object-contain bg-black"
               />
             </div>
 
@@ -243,16 +211,8 @@ export default function MxeSection() {
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-base shadow-lg">
-                    <img
-                      src="/assets/img/enea_ritratto.webp"
-                      alt="Enea Miraglia"
-                      className="w-full h-full object-cover"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
-                    <span className="select-none">EN</span>
-                  </div>
-                  <div>
+                  <Ritratto src="/assets/img/enea_ritratto.webp" alt="Enea Miraglia" sigla="EN" grande />
+                  <div className="min-w-0">
                     <h4 className="text-xl font-bold text-white">Enea Miraglia</h4>
                     <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
                       <Handshake className="w-3.5 h-3.5 text-amber-400" />
@@ -289,16 +249,8 @@ export default function MxeSection() {
             <div className="glass-panel-gold rounded-3xl p-6 sm:p-8 border border-amber-500/30 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-4 border-b border-amber-500/20 pb-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-500/40 shrink-0 bg-neutral-900 flex items-center justify-center text-amber-300 font-bold text-base shadow-lg">
-                    <img
-                      src="/assets/img/francesco_ritratto.webp"
-                      alt="Francesco"
-                      className="w-full h-full object-cover"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
-                    <span className="select-none">F</span>
-                  </div>
-                  <div>
+                  <Ritratto src="/assets/img/francesco_ritratto.webp" alt="Francesco" sigla="F" grande />
+                  <div className="min-w-0">
                     <h4 className="text-xl font-bold text-white">Francesco</h4>
                     <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mt-1">
                       <Camera className="w-3.5 h-3.5 text-amber-400" />
