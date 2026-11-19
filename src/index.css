@@ -287,3 +287,27 @@ html[data-app] .cookie-bar { bottom: calc(118px + env(safe-area-inset-bottom)) !
 @property --mx { syntax: '<percentage>'; inherits: true; initial-value: 50%; }
 @property --my { syntax: '<percentage>'; inherits: true; initial-value: 40%; }
 @media (prefers-reduced-motion: reduce) { .wordmark__luce { animation: none; transition: none; } }
+
+/* Schema in home: formazione, forbice, prodotto, gestionale ed evento entrano in Maximize. */
+.flusso { margin: 1.5rem auto 0; max-width: 1100px; }
+.flusso__svg { display: block; width: 100%; height: auto; overflow: visible; }
+.flusso__svg--stretto { max-width: 440px; margin: 0 auto; }
+.flusso__svg--largo { display: none; }
+@media (min-width: 760px) { .flusso__svg--largo { display: block; } .flusso__svg--stretto { display: none; } }
+.flusso__base { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.flusso__part { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linecap: square; stroke-dasharray: 18 1000; stroke-dashoffset: 18; animation: flusso-corri var(--d) linear infinite; animation-delay: var(--r); animation-play-state: paused; }
+.flusso__part--esce { stroke: var(--gold-hover); }
+.flusso--attivo .flusso__part, .flusso--attivo .flusso__hub { animation-play-state: running; }
+@keyframes flusso-corri { from { stroke-dashoffset: 18; } to { stroke-dashoffset: -1000; } }
+.flusso__nodo polygon { fill: var(--ink-3); stroke: var(--line); stroke-width: 1; }
+.flusso__nodo--esce polygon { stroke: var(--gold); }
+.flusso text { fill: var(--text); font-family: Oswald, "Arial Narrow", Impact, sans-serif; font-weight: 600; font-size: var(--fs); text-anchor: middle; dominant-baseline: central; }
+.flusso__hub { animation: flusso-respira 3s ease-in-out infinite; animation-play-state: paused; transform-box: fill-box; transform-origin: center; }
+.flusso__hub polygon { fill: var(--gold); filter: drop-shadow(0 0 18px rgba(191, 161, 106, .45)); }
+.flusso__hub text { fill: var(--ink); font-weight: 700; }
+.flusso__hub .flusso__hub-sigla { font-size: calc(var(--fs) * 1.05); letter-spacing: .02em; }
+@keyframes flusso-respira { 50% { transform: scale(1.03); } }
+@media (prefers-reduced-motion: reduce) {
+  .flusso__part, .flusso__hub { animation: none; }
+  .flusso__part { stroke-dasharray: none; opacity: .45; }
+}

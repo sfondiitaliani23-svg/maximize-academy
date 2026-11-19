@@ -1,16 +1,8 @@
 import React from 'react';
-import { Target, Sparkles, Check } from 'lucide-react';
+import { Target } from 'lucide-react';
+import SchemaFlusso from './SchemaFlusso';
 
 export default function ManifestoSection() {
-  const tools = [
-    'Una formazione.',
-    'Una forbice.',
-    'Un prodotto.',
-    'Un gestionale.',
-    'Un evento.',
-    'Una strategia.'
-  ];
-
   return (
     <section className="py-28 relative overflow-hidden bg-black text-center">
       {/* Background radial gold glow */}
@@ -37,17 +29,7 @@ export default function ManifestoSection() {
           Voglio aiutarti a capire cosa può realmente far crescere te e la tua attività.
         </p>
 
-        {/* Tools Sequence */}
-        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 py-4 max-w-3xl mx-auto">
-          {tools.map((item, idx) => (
-            <div 
-              key={idx}
-              className="px-4 py-2 rounded-xl glass-panel border border-white/10 text-xs sm:text-sm font-semibold text-gray-200"
-            >
-              {item}
-            </div>
-          ))}
-        </div>
+        <SchemaFlusso />
 
         {/* Climax Statement */}
         <div className="pt-6 space-y-4">
