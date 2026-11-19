@@ -93,6 +93,9 @@ export default function Footer() {
             Via Benedetto Croce 8<br />71121 Foggia<br />
             <a href="mailto:mauriziomaximize@gmail.com" className="hover:text-amber-400 transition-colors">mauriziomaximize@gmail.com</a>
           </p>
+          <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="inline-flex mt-4 underline underline-offset-4 hover:text-amber-400 transition-colors">
+            Privacy e cookie
+          </a>
         </div>
       </div>
 
@@ -106,11 +109,8 @@ export default function Footer() {
         <span className="wordmark__luce">MAXIMIZE</span>
       </div>
 
-      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 sm:pr-[calc(clamp(1.25rem,6vw,4.5rem)+5rem)] text-[0.8rem]">
+      <div className="border-t border-[#3d3d3d] px-[clamp(1.25rem,6vw,4.5rem)] pt-5 pb-24 sm:pb-5 text-[0.8rem]">
         <small className="text-[0.8rem]">© 2026 Maximize Academy S.r.l.s. · P. IVA 02147290767</small>
-        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-amber-400 transition-colors">
-          Privacy e cookie
-        </a>
       </div>
     </footer>
   );
