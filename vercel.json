@@ -8,7 +8,7 @@
           "value": "maximize-academy.vercel.app"
         }
       ],
-      "destination": "https://maximize-academy.pages.dev/:path*",
+      "destination": "https://maximize-academy.it/:path*",
       "permanent": true
     }
   ],

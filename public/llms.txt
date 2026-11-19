@@ -5,18 +5,18 @@
 Informazioni aggiornate al 14/11/2026. I prezzi dei prodotti per professionisti non sono pubblici.
 
 ## Pagine principali
-- [Home](https://maximize-academy.pages.dev/): cos'è Maximize Academy e cosa offre.
-- [Ecosistema](https://maximize-academy.pages.dev/ecosistema): il percorso del barbiere (impara, migliora, attrezzati, organizzati, confrontati, cresci, digitalizza).
-- [Formazione](https://maximize-academy.pages.dev/formazione): percorso formativo con UAAMI.
-- [Barber National Academy](https://maximize-academy.pages.dev/barber-national-academy): progetto formativo 2027 per i collaboratori di barberia (in sviluppo).
-- [Barber Reset](https://maximize-academy.pages.dev/barber-reset): listino, margini, vendita e gestione della barberia.
-- [Sabey Scissors](https://maximize-academy.pages.dev/sabey): forbici professionali.
-- [ANAQA](https://maximize-academy.pages.dev/anaqa): rituale barba professionale, vendita riservata ai professionisti.
-- [Treatwell](https://maximize-academy.pages.dev/treatwell): agenda digitale e prenotazioni online per la barberia.
-- [M×E Barber Lab](https://maximize-academy.pages.dev/mxe): strategia, comunicazione e tecnologia per le imprese barber.
-- [Eventi](https://maximize-academy.pages.dev/eventi): Barber Match.
-- [Area professionisti](https://maximize-academy.pages.dev/pro): servizi B2B per barbieri e titolari.
-- [Contatti](https://maximize-academy.pages.dev/contatti): consulenza e corsi con Maurizio Pizzuto.
+- [Home](https://maximize-academy.it/): cos'è Maximize Academy e cosa offre.
+- [Ecosistema](https://maximize-academy.it/ecosistema): il percorso del barbiere (impara, migliora, attrezzati, organizzati, confrontati, cresci, digitalizza).
+- [Formazione](https://maximize-academy.it/formazione): percorso formativo con UAAMI.
+- [Barber National Academy](https://maximize-academy.it/barber-national-academy): progetto formativo 2027 per i collaboratori di barberia (in sviluppo).
+- [Barber Reset](https://maximize-academy.it/barber-reset): listino, margini, vendita e gestione della barberia.
+- [Sabey Scissors](https://maximize-academy.it/sabey): forbici professionali.
+- [ANAQA](https://maximize-academy.it/anaqa): rituale barba professionale, vendita riservata ai professionisti.
+- [Treatwell](https://maximize-academy.it/treatwell): agenda digitale e prenotazioni online per la barberia.
+- [M×E Barber Lab](https://maximize-academy.it/mxe): strategia, comunicazione e tecnologia per le imprese barber.
+- [Eventi](https://maximize-academy.it/eventi): Barber Match.
+- [Area professionisti](https://maximize-academy.it/pro): servizi B2B per barbieri e titolari.
+- [Contatti](https://maximize-academy.it/contatti): consulenza e corsi con Maurizio Pizzuto.
 
 ## Collegati
 - [Maurizio Barber Shop](https://maurizio-barbershop.it/): la barberia di Maurizio Pizzuto a Foggia.
