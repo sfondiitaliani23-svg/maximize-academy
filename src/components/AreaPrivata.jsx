@@ -290,13 +290,18 @@ function Accesso({ onEntrato, avviso }) {
   const [err, setErr] = useState(Boolean(avviso));
   const [busy, setBusy] = useState(false);
   const [mosso, setMosso] = useState(false);
-  const cambia = (m) => { setModo(m); setMsg(''); setErr(false); };
+  const [passo, setPasso] = useState(false);
+  const cambia = (m) => { setModo(m); setPasso(false); setMsg(''); setErr(false); };
   const scambia = () => { setMosso(true); cambia(modo === 'nuovo' ? 'entra' : 'nuovo'); };
+  useEffect(() => {
+    if (modo === 'entra' && passo) document.getElementById('password')?.focus();
+  }, [modo, passo]);
 
   const submit = async (e) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const email = String(f.get('email') || '').trim();
+    if (modo === 'entra' && !passo) { setPasso(true); return; }
     setBusy(true); setErr(false); setMsg('');
     try {
       if (modo === 'entra') { await login(email, String(f.get('password'))); onEntrato(); return; }
@@ -324,16 +329,17 @@ function Accesso({ onEntrato, avviso }) {
           {modo !== 'recupera' && <div className="gl-or">oppure</div>}
           {nuovo && <Linea id="nome" ico={<IcoUtente />} label="Nome e cognome" required maxLength={120} autoComplete="name" />}
           <Linea id="email" ico={<IcoMail />} label="Email" type="email" required autoComplete={nuovo ? 'email' : 'username'} />
-          {modo !== 'recupera' && <Linea id="password" ico={<IcoLucchetto />} label={nuovo ? 'Crea una password' : 'Password'} type="password" required minLength={nuovo ? 10 : undefined} autoComplete={nuovo ? 'new-password' : 'current-password'} />}
+          {nuovo && <Linea id="password" ico={<IcoLucchetto />} label="Crea una password" type="password" required minLength={10} autoComplete="new-password" />}
+          {modo === 'entra' && passo && <Linea id="password" ico={<IcoLucchetto />} label="Password" type="password" required autoComplete="current-password" />}
           {nuovo && (
             <label className="gl-check">
               <input type="checkbox" name="privacy" /> <span>Ho letto la <a href="/privacy.html" target="_blank" rel="noopener">privacy</a> e acconsento al trattamento dei dati per i corsi. L'account vale anche su Maurizio Barber Shop.</span>
             </label>
           )}
-          <button className="gl-btn gl-btn--oro" type="submit" disabled={busy}>{busy ? <><Anello /> Entro…</> : modo === 'entra' ? 'Entra' : nuovo ? 'Crea account' : 'Mandami il link'}</button>
+          <button className="gl-btn gl-btn--oro" type="submit" disabled={busy}>{busy ? <><Anello /> Entro…</> : modo === 'entra' ? (passo ? 'Entra' : 'Continua') : nuovo ? 'Crea account' : 'Mandami il link'}</button>
           {msg && <p className={`gl-msg${err ? ' is-err' : ''}`} role="status">{msg}</p>}
           <p className="gl-piede">
-            {modo === 'entra' && <>Non hai un account? <button type="button" onClick={scambia}>Registrati</button><br /><button type="button" className="gl-tenue" onClick={() => cambia('recupera')}>Password dimenticata?</button></>}
+            {modo === 'entra' && <>Non hai un account? <button type="button" onClick={scambia}>Registrati</button>{passo && <><br /><button type="button" className="gl-tenue" onClick={() => cambia('recupera')}>Password dimenticata?</button></>}</>}
             {nuovo && <>Hai già un account? <button type="button" onClick={scambia}>Accedi</button></>}
             {modo === 'recupera' && <button type="button" onClick={() => cambia('entra')}>Torna all'accesso</button>}
           </p>
