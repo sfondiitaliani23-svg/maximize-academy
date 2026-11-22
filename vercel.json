@@ -5,6 +5,17 @@
       "has": [
         {
           "type": "host",
+          "value": "www.maximize-academy.it"
+        }
+      ],
+      "destination": "https://maximize-academy.it/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
           "value": "maximize-academy.vercel.app"
         }
       ],
