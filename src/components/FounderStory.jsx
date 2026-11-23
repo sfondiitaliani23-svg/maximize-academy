@@ -1,5 +1,4 @@
 import React from 'react';
-import { CheckCircle2, Flame, Award, Sparkles } from 'lucide-react';
 
 export default function FounderStory() {
   return (
@@ -56,18 +55,15 @@ export default function FounderStory() {
               </p>
             </div>
 
-            {/* Badges / Values */}
+            {/* Badges / Values — 23/11/2026: senza iconcine, solo testo (richiesta di Eliseo) */}
             <div className="pt-4 flex flex-wrap gap-3">
               <div className="px-4 py-2.5 rounded-xl glass-panel border border-amber-500/20 text-xs font-semibold text-amber-200 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-400" />
                 <span>Esperienza sul campo</span>
               </div>
               <div className="px-4 py-2.5 rounded-xl glass-panel border border-amber-500/20 text-xs font-semibold text-amber-200 flex items-center gap-2">
-                <Flame className="w-4 h-4 text-amber-400" />
                 <span>Visione imprenditoriale</span>
               </div>
               <div className="px-4 py-2.5 rounded-xl glass-panel border border-amber-500/20 text-xs font-semibold text-amber-200 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
                 <span>Confronto diretto</span>
               </div>
             </div>
