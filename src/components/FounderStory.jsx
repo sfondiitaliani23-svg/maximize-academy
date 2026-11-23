@@ -75,14 +75,17 @@ export default function FounderStory() {
             {/* Sinergia con Eliseo Miraglia & M×E Barber Lab */}
             <div className="pt-4 border-t border-white/10 mt-6">
               <div className="p-4 rounded-2xl glass-panel border border-amber-500/20 bg-black/40 flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl overflow-hidden border border-amber-500/40 shrink-0 bg-gradient-to-br from-amber-500/20 to-black flex items-center justify-center text-amber-300 font-bold text-sm">
+                {/* 23/11/2026: foto ufficiale di Eliseo, la stessa del sito M×E Barber Lab. «EM» si vede solo se la foto non carica. */}
+                <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-amber-500/40 shrink-0 bg-gradient-to-br from-amber-500/20 to-black">
+                  <span className="absolute inset-0 flex items-center justify-center text-amber-300 font-bold text-sm select-none">EM</span>
                   <img
-                    src="/assets/img/eliseo_ritratto.webp"
+                    src="/assets/img/eliseo-ufficiale-1511.webp"
                     alt="Eliseo Miraglia"
-                    className="w-full h-full object-cover"
+                    width="112"
+                    height="112"
+                    className="absolute inset-0 z-10 w-full h-full object-cover object-top"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
-                  <span className="select-none">EM</span>
                 </div>
                 <div className="space-y-0.5">
                   <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-amber-400">
